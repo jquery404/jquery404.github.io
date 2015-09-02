@@ -2,22 +2,36 @@
 layout: default
 ---
 
-<div class="home">
 
-  <h1 class="page-heading">Posts</h1>
+<!-- Portfolio Grid Section -->
+<section id="portfolio">
+	<div class="container">		
+		<div class="row">
+			{% for post in site.posts %}
+			<div class="col-sm-4 portfolio-item">			
+				<a href="{{ post.url | prepend: site.baseurl }}" class="portfolio-link" data-toggle="modal">
+					<div class="caption">
+						<div class="caption-content">
+							{{ post.title }}<br/>
+							<i class="fa fa-search-plus fa-3x"><span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span></i>
+						</div>
+					</div>
+					{% if post.thumbnail %}
+						<img src="{{ post.thumbnail }}"  class="img-responsive"  />
+					{% else %}
+						<img src="http://ironsummitmedia.github.io/startbootstrap-freelancer/img/portfolio/cabin.png" class="img-responsive" alt="">
+					{% endif %}					
+				</a>
+			</div>			
+			{% endfor %}		
+		</div>
+	</div>
+</section>
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
 
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
 
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
 
-</div>
+
+
+
+
