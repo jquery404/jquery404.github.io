@@ -3,8 +3,33 @@ layout: default
 ---
 
 
-<!-- Portfolio Grid Section -->
+
+
+
+
+
 <section id="portfolio">
+	<div class="container">
+		<div class="row">
+		{% for post in site.posts %}
+			<div class="aspect">
+				{% if post.thumbnail %}
+				<div class="ratio" style="background-image:url('{{ post.thumbnail }}')"></div>
+				{% else %}
+				<div class="ratio" style="background-image:url('http://placehold.it/200x800')"></div>
+				{% endif %}			
+			</div>            
+		{% endfor %}	
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<!-- Portfolio Grid Section -->
+<!--<section id="portfolios">
 	<div class="container">		
 		<div class="row">
 			{% for post in site.posts %}
@@ -27,7 +52,7 @@ layout: default
 		</div>
 	</div>
 </section>
-
+-->
 
 
 
