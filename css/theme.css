@@ -26,6 +26,14 @@ a.active {
     color: #eee;
 }
 
+.nav>li>a:hover {
+    background: none;
+    text-decoration: underline;
+}
+.navbar-toggle .icon-bar {
+    background-color: #e8e8e8;
+}
+
 h1,
 h2,
 h3,
@@ -618,6 +626,38 @@ footer .footer-below {
 
 
 
+/*
+ * Custom styles
+ */
+.navbar-brand {
+    font-size: 24px;
+}
 
+.navbar-container {
+    padding: 20px 0 20px 0;
+}
+
+.navbar.navbar-fixed-top.fixed-theme {
+    background-color: #222;
+    border-color: #080808;
+    box-shadow: 0 0 5px rgba(0,0,0,.8);
+}
+
+.navbar-brand.fixed-theme {
+    font-size: 18px;
+}
+
+.navbar-container.fixed-theme {
+    padding: 0;
+}
+
+.navbar-brand.fixed-theme,
+.navbar-container.fixed-theme,
+.navbar.navbar-fixed-top.fixed-theme,
+.navbar-brand,
+.navbar-container{
+    transition: 0.8s;
+    -webkit-transition:  0.8s;
+}
 
 
