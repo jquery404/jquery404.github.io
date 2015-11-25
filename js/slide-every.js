@@ -22,6 +22,12 @@
             pagination: false,
             inherit_height_from: '.header-background'
         });
+		
+		$('#slides_contact').superslides({
+            hashchange: false,                       
+            pagination: false,
+            inherit_height_from: '.header-background'
+        });
     });
 
     $(window).resize(function(){
