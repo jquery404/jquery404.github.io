@@ -160,8 +160,8 @@ header .intro-text .skills {
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
-	background-color: #323130;
-    border-color: #080808;
+/* 	background-color: #323130;
+    border-color: #080808; */
 }
 
 .navbar a:focus {
