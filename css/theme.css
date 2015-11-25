@@ -640,8 +640,9 @@ footer .footer-below {
 }
 
 .navbar.navbar-fixed-top.fixed-theme {
-	background-color: #222;
-    border-color: #080808;
+    background: #222222;
+    -webkit-box-shadow: rgba(34,34,34,0.5) 0 0 4px;
+    box-shadow: rgba(34,34,34,0.5) 0 0 4px;
     box-shadow: 0 0 5px rgba(0,0,0,.8);
 }
 
