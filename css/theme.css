@@ -722,6 +722,7 @@ footer .footer-below {
   background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
   background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
   background-image: linear-gradient(from top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
+  background-color: rgba(0,0,0,0.5);
 }
 .aboutHead .userInfo a.resume,
 body.light .aboutHead.hasCover .userInfo a.resume {
