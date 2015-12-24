@@ -981,3 +981,12 @@ body.light #links li a:hover {
   .aboutContent #links { top: 0px; }
 }
 
+
+
+
+img.origin { display: block; width: 50%; }
+
+img.hue {
+  -webkit-filter: hue-rotate(180deg);
+  filter: hue-rotate(180deg);
+}
