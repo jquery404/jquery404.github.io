@@ -1,9 +1,10 @@
 ---
-layout: post
+layout: about
 title:  "Bad Monkeys"
 date:   2015-09-01 23:51:41
 thumbnail: /imgs/badmonkeys/main.jpg
 categories: web
+permalink: /portfolio/badmonkeys/
 ---
 
 ![Image alt]({{ site.baseurl }}/imgs/badmonkeys/main.jpg "image title")
