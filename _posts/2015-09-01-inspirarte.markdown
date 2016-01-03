@@ -1,10 +1,10 @@
 ---
 layout: portfolio
-title:  "PixarFS"
+title:  "Inspirarte"
 date:   2015-09-01 23:51:41
 thumbnail: /imgs/pixarfs/main.jpg
 categories: web
-permalink: /portfolio/pixarfs/index.html
+permalink: /portfolio/inspirarte/index.html
 ---
 
 ![Image alt]({{ site.baseurl }}/imgs/pixarfs/main.jpg "image title")

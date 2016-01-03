@@ -1,13 +1,12 @@
 ---
-layout: portfolio
-title:  "PixarFS"
+layout: post
+title:  "Rivality : Dominate the World"
 date:   2015-09-01 23:51:41
-thumbnail: /imgs/pixarfs/main.jpg
+thumbnail: /imgs/rivality/main.jpg
 categories: web
-permalink: /portfolio/pixarfs/index.html
 ---
 
-![Image alt]({{ site.baseurl }}/imgs/pixarfs/main.jpg "image title")
+![Image alt]({{ site.baseurl }}/imgs/rivality/main.jpg "image title")
 
 You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 

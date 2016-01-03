@@ -1,9 +1,10 @@
 ---
-layout: post
+layout: portfolio
 title:  "Rivality : Dominate the World"
 date:   2015-09-01 23:51:41
 thumbnail: /imgs/rivality/main.jpg
 categories: web
+permalink: /portfolio/rivality/index.html
 ---
 
 ![Image alt]({{ site.baseurl }}/imgs/rivality/main.jpg "image title")

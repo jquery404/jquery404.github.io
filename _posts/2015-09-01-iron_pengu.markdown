@@ -1,9 +1,10 @@
 ---
-layout: post
+layout: portfolio
 title:  "Iron Pengu"
 date:   2015-09-01 23:51:41
 thumbnail: /imgs/iron_pengu/main.jpg
 categories: web
+permalink: /portfolio/iron-pengu/index.html
 ---
 
 ![Image alt]({{ site.baseurl }}/imgs/iron_pengu/main.jpg "image title")

@@ -6,7 +6,11 @@
 
 body {
     overflow-x: hidden;
-	    font-family: "Lato";
+	font-family: "Lato";
+}
+
+body.main{
+    padding-top: 70px;
 }
 
 p {
@@ -164,6 +168,20 @@ header .intro-text .skills {
     border-color: #080808; */
 }
 
+.navbar.black-theme a{
+    color: #000;
+}
+
+.navbar.black-theme{	
+	border-bottom-color: rgba(0,0,0,0.1);
+	-webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 0px 0px;
+	-moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 0px 0px;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 0px 0px;
+	-webkit-transition: top 300ms ease-out;
+	-moz-transition: top 300ms ease-out;
+	-o-transition: top 300ms ease-out;
+}
+
 .navbar a:focus {
     outline: 0;
 }
@@ -182,7 +200,7 @@ header .intro-text .skills {
 }
 
 section {
-    padding: 100px 0;
+    padding: 10px 0;
 }
 
 section h2 {
@@ -569,7 +587,7 @@ footer .footer-below {
 }
 
 .navbar-container {
-    padding: 20px 0 20px 0;
+    padding: 10px 0;
 }
 
 .navbar.navbar-fixed-top.fixed-theme {
@@ -595,12 +613,23 @@ footer .footer-below {
     transition: 0.8s;
     -webkit-transition:  0.8s;
 }
+.portfolio_content a{
+	color:#19a69a;
+	text-decoration: none;
+}
 
+.portfolio_content a:hover{
+	color:#00FFE9;
+}
 
+.port-page-header{
+	margin-top: 80px;
+}
 
-
-
-
+.port-cover-bg
+{
+	background-image: url('../imgs/raindrop.jpg');
+}
 
 
 
@@ -647,8 +676,14 @@ footer .footer-below {
   margin-bottom: 0px;
   margin-top: 0px;
   padding-top: 8%;
-  padding-bottom: 8%;
+  padding-bottom: 8%;  
+}
+.aboutHead .gradient {  
   min-height: 250px;
+}
+
+.aboutHead.portHead .gradient {  
+  min-height: 100px;
 }
 .aboutHead.hasCover .gradient {
   background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));

@@ -26,6 +26,8 @@ $(function() {
 			if(this.flagAdd) {
 				for(var i=0; i < this.elements.length; i++) {
 					document.getElementById(this.elements[i]).className += " fixed-theme";
+					document.getElementById(this.elements[i]).className =
+						document.getElementById(this.elements[i]).className.replace( /(?:^|\s)black-theme(?!\S)/g , '' );
 				}
 				this.flagAdd = false;
 			}
@@ -35,6 +37,8 @@ $(function() {
 			for(var i=0; i < this.elements.length; i++) {
 				document.getElementById(this.elements[i]).className =
 						document.getElementById(this.elements[i]).className.replace( /(?:^|\s)fixed-theme(?!\S)/g , '' );
+				if($('#' + this.elements[i]).hasClass('black'))
+					document.getElementById(this.elements[i]).className += " black-theme";
 			}
 			this.flagAdd = true;
 		}
