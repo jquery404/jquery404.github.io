@@ -7,9 +7,13 @@ categories: 3d
 permalink: /portfolio/propeller/index.html
 ---
 
-![Image alt]({{ site.baseurl }}/imgs/pixarfs/13.jpg "Propeller"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/pixarfs/23.jpg "Propeller"){: .img-responsive}
+![Image alt]({{ site.baseurl }}/imgs/propeller/13.jpg "Propeller"){: .img-responsive}
+![Image alt]({{ site.baseurl }}/imgs/propeller/23.jpg "Propeller"){: .img-responsive}
 
-[jekyll]:      http://jekyllrb.com
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-help]: https://github.com/jekyll/jekyll-help
+
+### Propeller
+modeled and textured in [SolidWorks 2011][solidworks]. Rendered using [Photoview 360][photoview].
+
+
+[solidworks]:     http://www.solidworks.com/
+[photoview]:      http://www.solidworks.com/sw/products/3d-cad/photoview-360.htm

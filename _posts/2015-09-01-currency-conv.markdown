@@ -7,24 +7,19 @@ categories: mobile
 permalink: /portfolio/currency-conv/index.html
 ---
 
-![Image alt]({{ site.baseurl }}/imgs/rivality/main.jpg "image title")
+![Image alt]({{ site.baseurl }}/imgs/currency-conv/1.jpg "Currency Converter"){: .img-responsive}
+![Image alt]({{ site.baseurl }}/imgs/currency-conv/2.jpg "Currency Converter"){: .img-responsive}
+![Image alt]({{ site.baseurl }}/imgs/currency-conv/3.jpg "Currency Converter"){: .img-responsive}
+![Image alt]({{ site.baseurl }}/imgs/currency-conv/4.jpg "Currency Converter"){: .img-responsive}
 
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
-To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+### Currency Converter
 
-Jekyll also offers powerful support for code snippets:
+This is very simple and lite weight currency converter. In this app you can easily convert between your favorite currencies. Convert exchange rates for over 100 currencies. Type conversion amounts using a custom big-button keypad.
+You can search any currency using our search option. It allows you to find your own currency that you are looking for.
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
+<br/>
+Get it on [Google Play][currency]
 
-Check out the [Jekyll docs][jekyll] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll’s dedicated Help repository][jekyll-help].
 
-[jekyll]:      http://jekyllrb.com
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-help]: https://github.com/jekyll/jekyll-help
+[currency]:      https://tapfame.com/app/com.daydreamerslab.currency.converter/currency-converter-for-android/

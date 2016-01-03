@@ -7,13 +7,18 @@ categories: 3d
 permalink: /portfolio/medic-bottle/index.html
 ---
 
-![Image alt]({{ site.baseurl }}/imgs/pixarfs/12.jpg "Propeller"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/pixarfs/22.jpg "Propeller"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/pixarfs/32.jpg "Propeller"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/pixarfs/42.jpg "Propeller"){: .img-responsive}
+![Image alt]({{ site.baseurl }}/imgs/medic-bottle/5.jpg "Medic Bottle"){: .img-responsive}
+![Image alt]({{ site.baseurl }}/imgs/medic-bottle/12.jpg "Medic Bottle"){: .img-responsive}
+![Image alt]({{ site.baseurl }}/imgs/medic-bottle/22.jpg "Medic Bottle"){: .img-responsive}
+![Image alt]({{ site.baseurl }}/imgs/medic-bottle/32.jpg "Medic Bottle"){: .img-responsive}
+![Image alt]({{ site.baseurl }}/imgs/medic-bottle/42.jpg "Medic Bottle"){: .img-responsive}
 
 
 
-[jekyll]:      http://jekyllrb.com
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-help]: https://github.com/jekyll/jekyll-help
+### Medic Bottle
+
+modeled and textured in [SolidWorks 2011][solidworks]. Rendered using [Photoview 360][photoview].
+
+
+[solidworks]:     http://www.solidworks.com/
+[photoview]:      http://www.solidworks.com/sw/products/3d-cad/photoview-360.htm

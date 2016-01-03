@@ -17,7 +17,7 @@ permalink: /portfolio/cpu-cooler/index.html
 
 ### CPU Cooler
 
-Modeled and textured in [SolidWorks 2011][solidworks]. Rendered using [Photoview 360][photoview].
+modeled and textured in [SolidWorks 2011][solidworks]. Rendered using [Photoview 360][photoview].
 
 
 [solidworks]:     http://www.solidworks.com/
