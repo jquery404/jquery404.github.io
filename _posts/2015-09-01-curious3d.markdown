@@ -17,7 +17,7 @@ permalink: /portfolio/curious3d/index.html
 </div>
 
 ### Curious 3D
-[Curious : 3D][curious3d] from <a href="">jQuery404</a>.
+[Curious : 3D][curious3d] from [jQuery404][jquery404-vimeo].
 
 
 
