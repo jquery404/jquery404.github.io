@@ -4,6 +4,20 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+html.full {
+	background: url(../imgs/areas.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+body.full{
+	margin-top: 50px;
+	margin-bottom: 50px;
+	background: none;
+}
+
 body {
     overflow-x: hidden;
 	font-family: "Lato";
@@ -370,6 +384,16 @@ h1 {
     font-weight: normal;
     font-style: normal;
 }
+
+.contact-details h2{
+	font-family: 'lato';
+}
+
+.contact-details{
+	color: #fff;
+}
+
+
 /* end bg full height  */
 
 
