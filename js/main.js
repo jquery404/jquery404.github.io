@@ -1,5 +1,9 @@
 
 $(function() {
+	
+	$(".portfolio_content ul:eq(0)").responsiveSlides();
+	
+	
     $('body').on('click', '.page-scroll a', function(event) {
         var $anchor = $(this);
         $('html, body').stop().animate({

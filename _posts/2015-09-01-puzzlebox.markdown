@@ -7,11 +7,11 @@ categories: web
 permalink: /portfolio/puzzlebox/index.html
 ---
 
-![Image alt]({{ site.baseurl }}/imgs/puzzlebox/1.png "Puzzle Box"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/puzzlebox/2.png "Puzzle Box"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/puzzlebox/3.png "Puzzle Box"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/puzzlebox/4.png "Puzzle Box"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/puzzlebox/5.png "Puzzle Box"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/puzzlebox/1.png "Puzzle Box"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/puzzlebox/2.png "Puzzle Box"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/puzzlebox/3.png "Puzzle Box"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/puzzlebox/4.png "Puzzle Box"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/puzzlebox/5.png "Puzzle Box"){: .img-responsive}
 
 
 ### Puzzle box

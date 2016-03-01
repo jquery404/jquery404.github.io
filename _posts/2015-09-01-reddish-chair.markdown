@@ -7,10 +7,10 @@ categories: web
 permalink: /portfolio/reddish-chair/index.html
 ---
 
-![Image alt]({{ site.baseurl }}/imgs/reddish-chair/11.jpg "Chair Model"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/reddish-chair/21.jpg "Chair Model"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/reddish-chair/31.jpg "Chair Model"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/reddish-chair/41.jpg "Chair Model"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/reddish-chair/11.jpg "Chair Model"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/reddish-chair/21.jpg "Chair Model"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/reddish-chair/31.jpg "Chair Model"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/reddish-chair/41.jpg "Chair Model"){: .img-responsive}
 
 
 ### Chair Model

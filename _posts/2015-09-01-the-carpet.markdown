@@ -7,12 +7,12 @@ categories: web
 permalink: /portfolio/the-carpet/index.html
 ---
 
-![Image alt]({{ site.baseurl }}/imgs/thecarpet/7.jpg "The Carpet : Rescue The Kids"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/thecarpet/19.jpg "The Carpet : Rescue The Kids"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/thecarpet/37.jpg "The Carpet : Rescue The Kids"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/thecarpet/45.jpg "The Carpet : Rescue The Kids"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/thecarpet/52.jpg "The Carpet : Rescue The Kids"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/thecarpet/61.jpg "The Carpet : Rescue The Kids"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/thecarpet/7.jpg "The Carpet : Rescue The Kids"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/thecarpet/19.jpg "The Carpet : Rescue The Kids"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/thecarpet/37.jpg "The Carpet : Rescue The Kids"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/thecarpet/45.jpg "The Carpet : Rescue The Kids"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/thecarpet/52.jpg "The Carpet : Rescue The Kids"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/thecarpet/61.jpg "The Carpet : Rescue The Kids"){: .img-responsive}
 
 
 ### The Carpet – Rescue the Kids

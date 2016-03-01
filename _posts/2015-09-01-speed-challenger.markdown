@@ -7,9 +7,9 @@ categories: web
 permalink: /portfolio/speed-challenger/index.html
 ---
 
-![Image alt]({{ site.baseurl }}/imgs/speed-challenger/d.jpg "Speed Challenger"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/speed-challenger/36.jpg "Speed Challenger"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/speed-challenger/27.jpg "Speed Challenger"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/speed-challenger/d.jpg "Speed Challenger"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/speed-challenger/36.jpg "Speed Challenger"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/speed-challenger/27.jpg "Speed Challenger"){: .img-responsive}
 
 
 ### Speed Challenger

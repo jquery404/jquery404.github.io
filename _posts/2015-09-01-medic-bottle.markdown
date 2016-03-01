@@ -7,11 +7,11 @@ categories: 3d
 permalink: /portfolio/medic-bottle/index.html
 ---
 
-![Image alt]({{ site.baseurl }}/imgs/medic-bottle/5.jpg "Medic Bottle"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/medic-bottle/12.jpg "Medic Bottle"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/medic-bottle/22.jpg "Medic Bottle"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/medic-bottle/32.jpg "Medic Bottle"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/medic-bottle/42.jpg "Medic Bottle"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/medic-bottle/5.jpg "Medic Bottle"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/medic-bottle/12.jpg "Medic Bottle"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/medic-bottle/22.jpg "Medic Bottle"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/medic-bottle/32.jpg "Medic Bottle"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/medic-bottle/42.jpg "Medic Bottle"){: .img-responsive}
 
 
 

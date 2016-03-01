@@ -7,9 +7,9 @@ categories: web
 permalink: /portfolio/rivality/index.html
 ---
 
-![Image alt]({{ site.baseurl }}/imgs/rivality/main.jpg "Rivality : Dominate the World"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/rivality/riv.jpg "Rivality : Dominate the World"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/rivality/riv1.jpg "Rivality : Dominate the World"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/rivality/main.jpg "Rivality : Dominate the World"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/rivality/riv.jpg "Rivality : Dominate the World"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/rivality/riv1.jpg "Rivality : Dominate the World"){: .img-responsive}
 
 
 ### Rivality – Dominate the World

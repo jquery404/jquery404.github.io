@@ -12,5 +12,5 @@ github_username:  jquery404
 
 # Build settings
 markdown: kramdown
-#highlighter: pygments
-highlighter: rouge
+highlighter: pygments
+#highlighter: rouge

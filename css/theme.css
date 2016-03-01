@@ -16,11 +16,13 @@ body.full{
 	margin-top: 50px;
 	margin-bottom: 50px;
 	background: none;
+	color: #fff;
 }
 
 body {
+	background: #111;
     overflow-x: hidden;
-	font-family: "Lato";
+	font-family: 'Monda', sans-serif;
 }
 
 body.main{
@@ -176,15 +178,12 @@ header .intro-text .skills {
 
 .navbar {
     text-transform: uppercase;
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: 'Monda', sans-serif;
     font-weight: 700;
 /* 	background-color: #323130;
     border-color: #080808; */
 }
 
-.navbar.black-theme a{
-    color: #000;
-}
 
 .navbar.black-theme{	
 	border-bottom-color: rgba(0,0,0,0.1);
@@ -213,6 +212,11 @@ header .intro-text .skills {
     border: 0;
 }
 
+.about-desc p{
+	padding: 20px 0;
+	text-align:justify;
+}
+
 section {
     padding: 10px 0;
 }
@@ -226,7 +230,7 @@ section.success {
     color: #fff;
     background: #18bc9c;
 }
-
+pre{text-align:center;}
 section.success a,
 section.success a:hover,
 section.success a:focus,
@@ -269,6 +273,7 @@ section.success a.active {
     background: rgba(0,0,0,0.7);
 }
 
+
 .content-header{
 	color: #ffffff;
 	position: absolute;
@@ -284,7 +289,7 @@ section.success a.active {
 	text-align: center;
 	padding: 0 15px;
 }
-
+/*
 .content-header .sub-title span{
 	display: inline-block;
 	font-size: 14px;
@@ -307,6 +312,8 @@ section.success a.active {
 	clear: both;
 }
 .content-header p{font-size: 40px}
+
+
 
 @media (min-width: 768px) and (max-width: 991px){
     
@@ -379,6 +386,11 @@ section.success a.active {
 	.content-slide .hr{width: 80px;}
 
 }
+
+*/
+
+
+
 h1 {
     font-family: Montserrat;
     font-weight: normal;
@@ -496,7 +508,7 @@ footer .footer-col {
 
 footer .footer-below {
     padding: 25px 0;
-    background-color: #233140;
+    /* background-color: #233140; */
 }
 
 .btn-social {
@@ -995,3 +1007,37 @@ body.light #links li a:hover {
     -o-transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
     transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
 }
+
+/*! http://responsiveslides.com v1.54 by @viljamis */
+
+.rslides {
+  position: relative;
+  list-style: none;
+  overflow: hidden;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  }
+
+.rslides li {
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  display: none;
+  width: 100%;
+  left: 0;
+  top: 0;
+  }
+
+.rslides li:first-child {
+  position: relative;
+  display: block;
+  float: left;
+  }
+
+.rslides img {
+  display: block;
+  height: auto;
+  float: left;
+  width: 100%;
+  border: 0;
+  }

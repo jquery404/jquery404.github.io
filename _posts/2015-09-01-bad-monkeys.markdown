@@ -7,10 +7,10 @@ categories: web
 permalink: /portfolio/badmonkeys/index.html
 ---
 
-![Image alt]({{ site.baseurl }}/imgs/badmonkeys/main.jpg "Bad Monkeys"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/badmonkeys/11.jpg "Bad Monkeys"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/badmonkeys/17.jpg "Bad Monkeys"){: .img-responsive}
-![Image alt]({{ site.baseurl }}/imgs/badmonkeys/38.jpg "Bad Monkeys"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/badmonkeys/main.jpg "Bad Monkeys"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/badmonkeys/11.jpg "Bad Monkeys"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/badmonkeys/17.jpg "Bad Monkeys"){: .img-responsive}
+- ![Image alt]({{ site.baseurl }}/imgs/badmonkeys/38.jpg "Bad Monkeys"){: .img-responsive}
 
 
 ### Bad Monkeys
