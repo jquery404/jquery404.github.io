@@ -29,6 +29,7 @@ permalink: /vega/
 	    font-weight: 700;
 	    background: #000;
 	    padding: 10px 10px;
+	    opacity: .7;
 
 	}
 
@@ -36,6 +37,8 @@ permalink: /vega/
 		clear: both;
 
 	}
+
+	.pic{width:960px; margin:0 auto;}
 </style>
 
 
@@ -44,7 +47,7 @@ permalink: /vega/
 	<p>Vega Suite with Cyberjaya View</p>
 </div>
 <div class="clear"></div>
-<div>
+<div class="pic">
 	<img src="../imgs/vega/1.jpg" /> <br/>
 	<img src="../imgs/vega/2.png" /> <br/>
 	<img src="../imgs/vega/3.png" /> <br/>
