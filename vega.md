@@ -3,7 +3,33 @@ title: Vega
 permalink: /vega/
 ---
 
+<style type="text/css">
+	
+	.cover
+	{
+		background: url(../imgs/vega/1.jpg);
+		background-size: cover;
+		background-repeat: no-repeat;
+		height: 500px;
+		background-position: center center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
 
+	p
+	{
+		max-width: 600px;
+		margin: 0 auto 20px;
+
+	}
+</style>
+
+
+<div class="cover">
+	<p>Vega Suite with Cyberjaya View</p>
+</div>
 
 <img src="../imgs/vega/1.jpg" /> <br/>
 <img src="../imgs/vega/2.png" /> <br/>
