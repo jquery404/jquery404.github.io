@@ -1,29 +1,42 @@
 ---
-layout: default
+
 ---
 
+<!DOCTYPE html>
+<html class="">
+<head>
+	<meta charset="utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+
+	<title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+
+	<link rel="stylesheet" href="assets/css/main.css">
+ 	<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+
+</head>
+<body>
 
 
 
-
-<section id="portfolio">
-	<div class="container">
-		<div class="row clearfix mosaicflow">
-		{% for post in site.posts %}			
-			{% if post.thumbnail %}
-			<div class="mosaicflow__item"><a href="{{ post.permalink }}"><img src="..{{ post.thumbnail }}" alt=""><p>{{ post.title }}</p></a></div>
-			{% else %}
-			<div class="mosaicflow__item" style="background-image:url('http://placehold.it/200x800')"></div>
-			{% endif %}
-		{% endfor %}	
+	<section id="portfolio">
+		<div class="container">
+			<div class="row clearfix mosaicflow">
+			{% for post in site.posts %}			
+				{% if post.thumbnail %}
+				<div class="mosaicflow__item"><a href="{{ post.permalink }}"><img src="..{{ post.thumbnail }}" alt=""><p>{{ post.title }}</p></a></div>
+				{% else %}
+				<div class="mosaicflow__item" style="background-image:url('http://placehold.it/200x800')"></div>
+				{% endif %}
+			{% endfor %}	
+			</div>
 		</div>
-	</div>
-</section>
+	</section>
 
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="assets/js/all.js"></script>
 
-
-
-
-
-
-
+</body>
+</html>
