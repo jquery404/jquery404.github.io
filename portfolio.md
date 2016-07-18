@@ -8,10 +8,10 @@ permalink: /portfolio/
 
 <section id="portfolio">
 	<div class="container">
+		<div class="row clearfix">
+			<object width="600" height="400" data="../saxo_pano.swf"></object>
+		</div>	
 		<div class="row clearfix mosaicflow">
-
-		<object width="400" height="400" data="../saxo_pano.swf"></object><br/>
-
 		{% for post in site.posts %}			
 			{% if post.thumbnail %}
 			<div class="mosaicflow__item"><a href="{{ post.permalink }}"><img src="..{{ post.thumbnail }}" alt=""><p>{{ post.title }}</p></a></div>
