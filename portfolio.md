@@ -10,7 +10,7 @@ permalink: /portfolio/
 	<div class="container">
 		<div class="row clearfix mosaicflow">
 
-		<object width="400" height="400" data="../saxo_pano.swf"></object>
+		<object width="400" height="400" data="../saxo_pano.swf"></object><br/>
 
 		{% for post in site.posts %}			
 			{% if post.thumbnail %}
