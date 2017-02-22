@@ -12,8 +12,3 @@ permalink: /portfolio/reebok/index.html
 - ![Image alt]({{ site.baseurl }}/imgs/reebok-crossfit/3.jpg "Reebok Crossfit"){: .img-responsive}
 - ![Image alt]({{ site.baseurl }}/imgs/reebok-crossfit/4.jpg "Reebok Crossfit"){: .img-responsive}
 - ![Image alt]({{ site.baseurl }}/imgs/reebok-crossfit/11.jpg "Reebok Crossfit"){: .img-responsive}
-
-
-### Reebok Crossfit
-
-
