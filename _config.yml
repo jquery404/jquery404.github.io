@@ -4,7 +4,7 @@ email: jquery404@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   Welcome to jQuery404. This is the portfolio of Faisal Zaman.
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: http://jquery404.github.io # the base hostname & protocol for your site
+url: jquery404.github.io # the base hostname & protocol for your site
 twitter_username: jquery404
 github_username:  jquery404
 
