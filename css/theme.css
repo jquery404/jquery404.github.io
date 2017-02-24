@@ -295,6 +295,10 @@ section.success a.active {
 /*
  * Custom styles
  */
+ #navbar{
+	 background: #111;
+	 border-bottom: 1px solid #404040;
+ }
 .navbar-brand {
     font-size: 24px;
 }
