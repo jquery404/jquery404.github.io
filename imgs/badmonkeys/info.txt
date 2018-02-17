@@ -1,4 +1,0 @@
-Bad Monkeys
-
-Bad Monkeys is a HTML5 Canvas Game with full of fun. It is a strategy puzzle type game. I've designed and developed this game using Box2d(game physics), EaselJS and SoundJS, Photoshop(graphics). Play @ BadMonkeys
-http://jquery404.com/lab/badmonkeys/

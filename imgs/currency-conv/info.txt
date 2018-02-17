@@ -1,7 +1,0 @@
-Currency Converter
-
-This is very simple and lite weight currency converter. In this app you can easily convert between your favorite currencies. Convert exchange rates for over 100 currencies. Type conversion amounts using a custom big-button keypad.
-You can search any currency using our search option. It allows you to find your own currency that you are looking for.
-
-<br/>
-<a href="https://play.google.com/store/apps/details?id=com.daydreamerslab.currency.converter"><img alt="Get it on Google Play" src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" /></a>

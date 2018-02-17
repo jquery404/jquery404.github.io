@@ -1,4 +1,0 @@
-Virtualfs
-
-I worked on the design and production of this site. Check it out here .. Virtualfs
-http://virtualfs.co.nr/

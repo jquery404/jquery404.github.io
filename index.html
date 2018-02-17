@@ -1,31 +1,34 @@
----
-layout: default
----
 
-<!DOCTYPE html>
-<html class="">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset="utf-8">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-
-	<title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
-
-	<link rel="stylesheet" href="assets/css/main.css">
- 	<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery404</title>
+<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+<script type="text/javascript" src="jquery.min.js"></script> 
+<link href='http://fonts.googleapis.com/css?family=Josefin+Sans:600,700|Damion' rel='stylesheet' type='text/css'>
+<meta name="viewport" content="width=device-width, initial-scale = 1.0, user-scalable = no">
 
 </head>
 <body>
-
-	{% include header.html %}
-
-
-
-
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="assets/js/all.js"></script>
-
+<div class="black"></div>
+<div id="wrapper">
+	<div id="header">
+		<h1>jQuery404</h1>
+		<h2><strong class="sep-one"></strong>The way you wanna see your world<strong class="sep-two"></strong></h2>
+	</div>
+	<div id="middle">
+		<p>Welcome to jQuery404. I am currenty on a routine maintenance. Please come visit me <span>Next Week. :)</span></p>
+	</div>
+	<div id="footer">
+		<div>
+		<ul class="social">
+			<li class="facebook"><a href="https://fb.me/jquery404"></li>
+			<li class="twitter"><a href="https://twitter.com/jquery404"></li>
+			<li class="youtube"><a href="https://youtube.com/jquery404"></li>
+		</ul>
+		</div>
+	</div>
+</div>
 </body>
 </html>
