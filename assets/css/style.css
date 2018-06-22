@@ -29,9 +29,9 @@
 .material-icons.md-48 { font-size: 48px; }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Ubuntu Mono', monospace;
   padding-top: 54px;
-  color: #868e96;
+  color: #225;
 }
 
 @media (min-width: 992px) {
@@ -54,12 +54,11 @@ h6 {
 }
 
 h1 {
-  font-size: 6rem;
-  line-height: 5.5rem;
+  font-size: 2rem;
 }
 
 h2 {
-  font-size: 3.5rem;
+  font-size: 1.5rem;
 }
 
 #sideNav .navbar-nav .nav-item .nav-link {
@@ -183,5 +182,6 @@ a:hover, a:focus, a:active {
   color: #824027;
 }
 
-
-  
+.nav-pills li{
+  cursor: pointer;
+}
