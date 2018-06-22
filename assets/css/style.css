@@ -185,3 +185,14 @@ a:hover, a:focus, a:active {
 .nav-pills li{
   cursor: pointer;
 }
+
+
+.nav-pills li.active{
+    font-weight: 700;
+    color: #010f3e;
+    border-bottom: 1px solid #010f3e;
+    background: #fec204;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
