@@ -201,7 +201,7 @@ a:hover, a:focus, a:active {
   text-align: center;
   font-size: 18px;
   background: #fff;
-  height:100%;
+  height:100vh;
   max-width: 600px;
   margin:auto;
   /* Center slide text vertically */
@@ -217,4 +217,8 @@ a:hover, a:focus, a:active {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
+}
+
+.jq-project{
+  cursor: pointer;
 }
