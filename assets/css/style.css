@@ -31,7 +31,7 @@
 body {
   font-family: 'Ubuntu Mono', monospace;
   padding-top: 54px;
-  color: #225;
+  color: #111;
 }
 
 @media (min-width: 992px) {
