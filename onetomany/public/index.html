@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <title>MXRC</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/simplepeer.min.js"></script>
+    </head>
+
+    <body>
+        
+        <div id="videos" class="container">
+            <video id="localVideo" class="vid" autoplay muted></video>
+        </div>
+        <br />
+        <div style="display:block">
+            <button id="switchButton" class="settings" onclick="switchMedia()">Switch
+                Camera</button>
+            <button id="muteButton" class="settings" onclick="toggleMute()">Unmuted</button>
+            <button id="vidButton" class="settings" onclick="toggleVid()">Video Enabled</button>
+        </div>
+
+
+
+        <script src="rtcconfig.js"></script>
+        <script src="main.js"></script>
+    </body>
+
+</html>
