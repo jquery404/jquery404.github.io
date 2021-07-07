@@ -1,0 +1,124 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>MERE - Collab Zone</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MERE - Collab Zone">
+
+
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+    <script src="easyrtc/easyrtc.js"></script>
+    <script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script>
+    <script src="assets/js/aframe-ui-widgets.js"></script>
+    <script src="assets/js/TubePainter.js"></script>
+    <script src="assets/js/af.components.js"></script>
+
+</head>
+
+<body>
+  <a-scene merecs-room>
+    <a-assets>
+      
+      <img id="grid" src="assets/gfx/grid.png" />
+      <img id="sky" src="assets/gfx/sky.jpg" />
+
+      <!-- Templates -->
+        <a-asset-item id="boy-head-glb" src="/assets/model/curious_boy_head_5.glb"></a-asset-item>
+        <a-asset-item id="boy-body-glb" src="/assets/model/curious_boy_body_5.glb"></a-asset-item>
+        <a-asset-item id="hand-glb" src="/assets/model/hand.glb"></a-asset-item>
+        <a-asset-item id="env_arrow" src="/assets/model/env_arrow.obj"></a-asset-item>
+
+        <!-- Player -->
+        <template id="player-template">
+          <a-entity></a-entity>
+        </template>
+
+        <!-- Avatar -->
+        <template id="avatar-template">
+          <a-entity class="avatar">
+            <a-entity class="nametag" text="value: Hello; align:center;" position="0 0.6 0" rotation="0 180 0" scale="4 4 4"></a-entity>
+            <a-entity class="cartoon" gltf-model="#boy-head-glb" scale="1 1 1"></a-entity>
+          </a-entity>
+        </template>
+
+        <!-- Body -->
+        <template id="body-template">
+          <a-entity class="cartoon-body" gltf-model="#boy-body-glb" scale="1 1 1"></a-entity>
+        </template>
+
+
+        <!-- Hand -->
+        <template id="hand-template">
+          <a-entity>
+            <a-entity class="cartoon-hand" gltf-model="#hand-glb" scale=".3 .3 .3"></a-entity>
+          </a-entity>
+        </template>
+
+        <!-- Bullet -->
+        <template id="bullet-template">
+          <a-entity>
+            <a-sphere class="bullet" scale="0.1 0.1 0.1" color="#fff"></a-sphere>
+          </a-entity>
+        </template>
+
+        <!-- Lego model -->
+        <template id="lego-template">
+          <a-entity>
+            <a-sphere class="bullet" scale="0.1 0.1 0.1" color="#fff"></a-sphere>
+          </a-entity>
+        </template>
+
+      <!-- /Templates -->
+    </a-assets> 
+
+    <a-entity id="player"
+      networked="template:#player-template;attachTemplateToLocal:false;">
+      <a-entity id="playerHead"
+        networked="template:#avatar-template;attachTemplateToLocal:false;"
+        camera 
+        position="0 1.6 0" 
+        look-controls
+        wasd-controls>
+        <a-entity id="playerBody" body networked="template:#body-template;attachTemplateToLocal:false;"></a-entity>
+        <a-box class="head" visible="false"></a-box>
+        <a-entity class="nametag" visible="false"></a-entity>
+      </a-entity>
+
+      <!-- hand-controls="hand:right" <a-entity id="leftHandController" hand-controls="hand:left" debug-controls="menuID: menuActions" gun="bulletTemplate:#bullet-template" networked="template:#hand-template;"> -->
+      <a-entity id="leftHandController" oculus-touch-controls="hand: left" vive-controls="hand: left" debug-controls="menuID: menuActions" lego-model="legoTemplate:#lego-template" gun="bulletTemplate:#bullet-template" networked="template:#hand-template;attachTemplateToLocal:false;">
+        <a-entity  select-bar="controllerID: leftHandController" id="menuActions" scale="0.7 0.7 0.7" position="0 .1 0" rotation="-85 0 0">
+          <optgroup label="Actions" value="actions">
+            <option value="goal" src="./assets/gfx/icon_goal.png" selected>Goal</option>
+            <option value="pieces" src="./assets/gfx/icon_pieces.png">Pieces</option>
+            <option value="saveAs" src="./assets/gfx/icon_saveAs.png">Save As Copy</option>
+            <option value="new" src="./assets/gfx/icon_new.png">New</option>
+            <option value="erase" src="./assets/gfx/icon_erase.png">Erase</option>
+            <option value="paint" src="./assets/gfx/icon_paint.png">Paint</option>
+            <option value="shooter" src="./assets/gfx/gun_shot.png">Shooter</option>
+          </optgroup>
+        </a-entity>
+      </a-entity>
+      <a-entity id="rightHandController" laser-controls="hand: right" painter networked="template:#hand-template;attachTemplateToLocal:false;"></a-entity>
+    </a-entity>
+
+    
+    <a-entity class="syncManager" sync-paint></a-entity>
+
+    <a-entity class="dummy">
+      <a-entity template="src: #lego-template" position="0 0 0"></a-entity>
+    </a-entity>
+
+    <a-entity grid="src: #grid; env-map: #sky" intersect-change></a-entity>
+    <a-sky set-sky="#sky" rotation="0 -90 0"></a-sky>
+
+    <a-entity light="color: #ccccff; intensity: 1; type: ambient;" visible=""></a-entity>
+    <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity>
+
+  </a-scene>
+
+  <script src="assets/js/merengin.js"></script>
+</body>
+</html>
