@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>local</title>
+    <meta charset="UTF-8" />
+    <style>video{width: 300px;}</style>
+  </head>
+  <body>
+    <section class="select">
+        <label for="audioSource">Audio source: </label>
+        <select id="audioSource"></select>
+    </section>
+  
+    <section class="select">
+        <label for="videoSource">Video source: </label>
+        <select id="videoSource"></select>
+    </section>
+  
+    <video playsinline autoplay muted></video>
+    <button onclick='shareScreen()'>Share screen</button>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/rtcconfig.js"></script>
+    <script src="/local.js"></script>
+  </body>
+</html>
