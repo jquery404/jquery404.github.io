@@ -3,9 +3,14 @@
   <head>
     <title>local</title>
     <meta charset="UTF-8" />
-    <style>video{width: 300px;}</style>
+    <style>
+    video{width: 300px;}
+    video.host{position: absolute;bottom: 1em;right: 1em;}
+    canvas{border: 1px dashed;}
+    </style>
   </head>
   <body>
+    <pre></pre>
     <section class="select">
         <label for="audioSource">Audio source: </label>
         <select id="audioSource"></select>
@@ -16,7 +21,10 @@
         <select id="videoSource"></select>
     </section>
   
-    <video playsinline autoplay muted></video>
+    <video class="host" playsinline autoplay muted></video>
+    <canvas></canvas>
+
+    <button onclick='annotate()'>Annotate</button>
     <button onclick='shareScreen()'>Share screen</button>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/rtcconfig.js"></script>

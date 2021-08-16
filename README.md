@@ -5,5 +5,5 @@ complication of all xrc related dev
 
 - [x] broadcast
 - [x] many to many video
-- [ ] one to one video chat
-- [ ] one to many chat
+- [x] one to one video chat
+- [x] one to many chat

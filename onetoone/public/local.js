@@ -1,11 +1,13 @@
 let localStream = null;
 let peers = {}
 let streams = []
+let videos = []
 
 // Get camera and microphone
 const videoElement = document.querySelector("video");
 const audioSelect = document.querySelector("select#audioSource");
 const videoSelect = document.querySelector("select#videoSource");
+const video = document.querySelector("#video2");
 
 audioSelect.onchange = getStream;
 videoSelect.onchange = getStream;
@@ -41,6 +43,7 @@ function gotStream(stream) {
     videoElement.srcObject = stream;
     localStream = stream;
     init();
+    main();
 }
 
 function handleError(error) {
@@ -70,46 +73,72 @@ const socket = io.connect(window.location.origin);
 
 function init() {
 
-    socket.on('other user', socket_id => {
-        console.log('INIT RECEIVE ' + socket_id)
-        peers[socket_id] = addPeer(socket_id, false)
-        
-        localStream.getTracks().forEach(track => streams.push(peers[socket_id].addTrack(track, localStream)))
+    socket.emit('join room');
+
+    socket.on('other joined', (socket_id) => {
+      console.log(socket_id, ' joined')
+      peers[socket_id] = addPeer(socket_id, true);
+      localStream.getTracks().forEach(track => streams.push(peers[socket_id].addTrack(track, localStream)))
     })
-    
+
     socket.on('offer', (socket_id, description) => {
-        peers[socket_id] = addPeer(socket_id, true)
-    
-        peers[socket_id].setRemoteDescription(description)
-            .then(() => { localStream.getTracks().forEach(track => peers[socket_id].addTrack(track, localStream)); })
-            .then(() => peers[socket_id].createAnswer())
-            .then(sdp => peers[socket_id].setLocalDescription(sdp))
-            .then(() => {
-                socket.emit('answer', socket_id, peers[socket_id].localDescription);
-            });
+      console.log(socket_id, ' make peer')
+      peers[socket_id] = addPeer(socket_id, false)
+  
+      peers[socket_id].setRemoteDescription(description)
+          .then(() => { localStream.getTracks().forEach(track => streams.push(peers[socket_id].addTrack(track, localStream))); })
+          .then(() => peers[socket_id].createAnswer())
+          .then(sdp => peers[socket_id].setLocalDescription(sdp))
+          .then(() => {
+            console.log('received offer preparing ans for ', socket_id, peers[socket_id].localDescription.type)
+            socket.emit('answer', socket_id, peers[socket_id].localDescription);
+          });
     })
-    
+
     socket.on('answer', (socket_id, description) => {
-        peers[socket_id].setRemoteDescription(description);
+      console.log('received ans back from ', socket_id);
+      peers[socket_id].setRemoteDescription(description);
     })
 
     socket.on('candidate', (socket_id, candidate) => {
-        peers[socket_id].addIceCandidate(new RTCIceCandidate(candidate)).catch(e => console.error(e));
+      if (socket_id in peers) {
+        console.log('received candidate from ', socket_id);
+        peers[socket_id].addIceCandidate(new RTCIceCandidate(candidate));
+      }
+      
+      //peers[socket_id].addIceCandidate(new RTCIceCandidate(candidate)).catch(e => console.error(e));
+    })
+  
+    socket.on('remove peer', (socket_id) => {
+      console.log(socket_id, ' left')
+      removePeer(socket_id)
     })
 
 }
 
+function removePeer(socket_id) {
+  if (peers[socket_id]) {
+    peers[socket_id].close();
+    peers[socket_id].onicecandidate = null; 
+    delete peers[socket_id];
+    document.querySelector("#"+socket_id).remove();
+  }
+
+  document.querySelector("pre").innerHTML += socket_id + ' left\n';
+}
 
 function addPeer(socket_id, am_initiator) {
     const peers = new RTCPeerConnection(config);
 
     peers.onicecandidate = event => {
         if (event.candidate) {
+          console.log(socket_id, ' needs candidate');
           socket.emit('candidate', socket_id, event.candidate);
         }
     };
     
     peers.ontrack = event => {
+      if(!videos.includes(socket_id)){
         let newVid = document.createElement('video')
         newVid.srcObject = event.streams[0];
         newVid.id = socket_id
@@ -117,13 +146,20 @@ function addPeer(socket_id, am_initiator) {
         newVid.autoplay = true
         newVid.muted = true
         document.body.appendChild(newVid)
+        videos.push(socket_id);
+      }
+        
+
     };
 
-    if (am_initiator === false) {
+    if (am_initiator === true) {
         peers.onnegotiationneeded = () => {
             peers.createOffer()
             .then(sdp => peers.setLocalDescription(sdp))
-            .then(() => { socket.emit('offer', socket_id, peers.localDescription); });
+            .then(() => { 
+              console.log('making offer to ', socket_id, peers.localDescription.type)
+              socket.emit('offer', socket_id, peers.localDescription); 
+            });
         };
     }
 
@@ -138,4 +174,71 @@ function shareScreen() {
             streams.find(sender => sender.track.kind === 'video').replaceTrack(localStream.getTracks()[1]);
         }
     })
+}
+
+
+//.........
+let c, ctx, x, y, prevX, prevY, currX, currY, isDrawing, width = 10, height = 10;
+
+function main() {
+  c = document.querySelector("canvas");
+  ctx = c.getContext("2d");
+  var ratio = window.devicePixelRatio ? window.devicePixelRatio : 1;
+  // original is 480 x 270
+  c.width = 240 * ratio;
+  c.height = 180 * ratio;
+
+  x = c.width / 2;
+  y = c.height / 2;
+
+  c.addEventListener("mousemove", (e) => {findxy('move', e)}, false);
+  c.addEventListener("mousedown", (e) => {findxy('down', e)}, false);
+  c.addEventListener("mouseup",   (e) => {findxy('up', e)}, false);
+  render();
+}
+
+function findxy(res, e) {
+  if (res == 'down') {
+      prevX = currX;
+      prevY = currY;
+      currX = e.clientX - c.offsetLeft;
+      currY = e.clientY - c.offsetTop;
+
+      isDrawing = true;
+      ctx.beginPath();
+      ctx.fillStyle = 'red';
+      ctx.fillRect(currX, currY, 2, 2);
+      ctx.closePath();
+  }
+  if (res == 'up') {
+    isDrawing = false;
+  }
+  if (res == 'move' && isDrawing) {
+    prevX = currX;
+    prevY = currY;
+    currX = e.clientX - c.offsetLeft;
+    currY = e.clientY - c.offsetTop;
+    render();
+  }
+}
+
+function render() {
+  ctx.beginPath();
+  ctx.moveTo(prevX, prevY);
+  ctx.lineTo(currX, currY);
+  ctx.strokeStyle = 'red';
+  ctx.lineWidth = 5;
+  ctx.stroke();
+  ctx.closePath();
+}
+
+
+function annotate() {
+  //const canvasStream = c.captureStream();
+  //video.srcObject = canvasStream;
+
+  const screenTrack = c.captureStream().getTracks()[0];
+  streams.find(sender => sender.track.kind === 'video').replaceTrack(screenTrack);
+
+  
 }

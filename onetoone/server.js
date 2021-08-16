@@ -8,29 +8,53 @@ const server = http.createServer(app);
 const io = require("socket.io")(server);
 app.use(express.static(__dirname + "/public"));
 
-let peers = {};
+const peers = {};
 io.sockets.on("error", e => console.log(e));
 io.sockets.on("connection", socket => {
-    peers[socket.id] = socket
 
     /* Asking all other clients to setup the peer connection receiver */
-    for(let id in peers) {
-        if(id === socket.id) continue
-        console.log(id + ' sending receive to ' + socket.id)
-        peers[id].emit('other user', socket.id)
-    }
+
+    socket.on('join room', () => {
+        if (peers[socket.id]) {
+            //peers[socket.id].push(socket.id);
+        } else {
+            peers[socket.id] = [socket.id];
+        }
+       
+        for(let id in peers) {
+            if(id === socket.id) continue
+            console.log("sending init to '" + id + "' about " +  socket.id)
+            socket.to(id).emit('other joined', socket.id)
+        }
+
+        console.log(peers)
+    });
 
     socket.on('offer', (id, message) => {
+        console.log(id, ' send offer to ', socket.id)
         socket.to(id).emit('offer', socket.id, message);
     })
 
     socket.on('answer', (id, message) => {
+        console.log('ans from ', id, ' to ', socket.id)
         socket.to(id).emit('answer', socket.id, message);
     })
 
     socket.on('candidate', (id, message) => {
+        console.log('candidate from ', id, ' to ', socket.id, message)
         socket.to(id).emit('candidate', socket.id, message);
     })
+
+
+    socket.on('disconnect', () => {
+        console.log('socket disconnected ' + socket.id)
+        delete peers[socket.id]
+        for (let socket_id in peers) {
+            socket.to(socket_id).emit('remove peer', socket.id);
+        }
+        
+    })
+   
 
 });
 
