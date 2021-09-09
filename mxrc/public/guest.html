@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mxrc</title>
+    <style>
+        video{width: 300px;}
+        video.host{position: absolute;bottom: 1em;right: 1em;}
+        video.remote{position: absolute;top: 1em;left: 1em;}
+        canvas{border: 1px dashed;display: block;}
+    </style>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.2.0/dist/aframe-environment-component.min.js"></script>
+</head>
+<body>
+
+    <a-scene>
+        <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+        <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+        <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+        <a-entity environment="preset: forest" id="environment"></a-entity>
+    </a-scene>
+
+
+    <button onclick="toggleViewer()" type="button">Start viewer</button>
+
+    <video class="host" playsinline autoplay muted></video>
+    <pre></pre>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/rtcconfig.js"></script>
+    <script>
+
+        let localStream = null;
+        let peers = {}
+        let streams = []
+        let videos = []
+
+        // Get camera and microphone
+        const videoElement = document.querySelector(".host");
+        const video = document.querySelector("#video2");
+        let canvas;
+        let marginTop=0;
+        let toggle;
+
+        setTimeout(() => {
+            getStream();
+        }, 1000); 
+
+        function getStream() {
+            if (window.stream) {
+            window.stream.getTracks().forEach(track => {
+                track.stop();
+            });
+            }
+            canvas = document.querySelector('canvas');
+            canvas.getContext('2d');
+            var stream = canvas.captureStream(25);
+            videoElement.srcObject = stream;
+            localStream = stream;
+            init();
+        }
+        
+    
+        // .................................................
+        // .............
+        const socket = io.connect(window.location.origin);
+
+        function init() {
+
+            socket.emit('join room');
+
+            socket.on('other joined', (socket_id) => {
+                console.log(socket_id, ' joined')
+                peers[socket_id] = addPeer(socket_id, true);
+                localStream.getTracks().forEach(track => streams.push(peers[socket_id].addTrack(track, localStream)))
+            })
+
+            socket.on('offer', (socket_id, description) => {
+                console.log(socket_id, ' make peer')
+                peers[socket_id] = addPeer(socket_id, false)
+            
+                peers[socket_id].setRemoteDescription(description)
+                    .then(() => { localStream.getTracks().forEach(track => streams.push(peers[socket_id].addTrack(track, localStream))); })
+                    .then(() => peers[socket_id].createAnswer())
+                    .then(sdp => peers[socket_id].setLocalDescription(sdp))
+                    .then(() => {
+                        console.log('received offer preparing ans for ', socket_id, peers[socket_id].localDescription.type)
+                        socket.emit('answer', socket_id, peers[socket_id].localDescription);
+                    });
+            })
+
+            socket.on('answer', (socket_id, description) => {
+                console.log('received ans back from ', socket_id);
+                peers[socket_id].setRemoteDescription(description);
+            })
+
+            socket.on('candidate', (socket_id, candidate) => {
+                if (socket_id in peers) {
+                    console.log('received candidate from ', socket_id);
+                    peers[socket_id].addIceCandidate(new RTCIceCandidate(candidate));
+                }
+            })
+        
+            socket.on('remove peer', (socket_id) => {
+                console.log(socket_id, ' left')
+                removePeer(socket_id)
+            })
+
+        }
+
+        function removePeer(socket_id) {
+            if (peers[socket_id]) {
+                peers[socket_id].close();
+                peers[socket_id].onicecandidate = null; 
+                delete peers[socket_id];
+                console.log(socket_id);
+                
+                const highlightedItems = document.querySelectorAll("#"+socket_id);
+                highlightedItems.forEach(function(userItem) {
+                    userItem.remove();
+                });
+        }
+
+        document.querySelector("pre").innerHTML += socket_id + ' left\n';
+        }
+
+        function addPeer(socket_id, am_initiator) {
+            const peers = new RTCPeerConnection(config);
+
+            peers.onicecandidate = event => {
+                if (event.candidate) {
+                console.log(socket_id, ' needs candidate');
+                socket.emit('candidate', socket_id, event.candidate);
+                }
+            };
+            
+            peers.ontrack = event => {
+            //if(!videos.includes(socket_id)){
+                let newVid = document.createElement('video')
+                newVid.srcObject = event.streams[0];
+                newVid.id = socket_id
+                newVid.classList.add("remote")
+                newVid.setAttribute('style','margin-top:'+marginTop+'px');
+                newVid.playsinline = false
+                newVid.autoplay = true
+                newVid.muted = true
+                document.body.appendChild(newVid)
+                videos.push(socket_id);
+                marginTop+=200;
+            //}
+            };
+
+            if (am_initiator === true) {
+                peers.onnegotiationneeded = () => {
+                    peers.createOffer()
+                    .then(sdp => peers.setLocalDescription(sdp))
+                    .then(() => { 
+                    console.log('making offer to ', socket_id, peers.localDescription.type)
+                    socket.emit('offer', socket_id, peers.localDescription); 
+                    });
+                };
+            }
+
+            return peers;
+        }
+
+    </script>
+</body>
+</html>
