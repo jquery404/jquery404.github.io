@@ -4,8 +4,7 @@
     <title>One One Audio</title>
     <meta charset="UTF-8" />
     <style>
-    video{width: 300px;background: green;}
-    video.host{position: absolute;bottom: 1em;right: 1em;}
+    video{display: none;}
     </style>
   </head>
   <body>
@@ -16,7 +15,8 @@
     </section>
 
     <video class="host" playsinline autoplay muted></video>
-    <video class="guest" playsinline autoplay muted></video>
+    <canvas width="300" height="50"></canvas>
+    
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/rtcconfig.js"></script>
