@@ -16,14 +16,14 @@ AFRAME.registerComponent('lego-model', {
             var el = document.createElement('a-entity');
             el.id = 'legoGoal';
             el.setAttribute('scale', '.02 .02 .02');
-            el.setAttribute('position', '0 .2 0');
+            el.setAttribute('position', '0 .05 -.4');
             el.setAttribute('gltf-model', this.data.legoSrc)
             // setTimeout(this.toggleShowing.bind(this), 3 * 1000);
             this.data.isShowing = true;
             this.el.appendChild(el);
         }else{
             var el = document.getElementById('legoGoal');
-            el.setAttribute('remove-in-seconds', 1);
+            el.setAttribute('remove-in-seconds', .5);
             this.data.isShowing = false;
         }
     

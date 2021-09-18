@@ -34,29 +34,14 @@
             gun="bulletTemplate:#bullet-template" 
             networked="template:#hand-template;attachTemplateToLocal:false;">
             <a-entity id="controller-menu" opacity="0.8">
-                <a-entity id="menu" position="0 .05 0" rotation="45 0 0" scale=".15 .15 .15" layout="type: box; plane: xy; columns: 3; margin: 2; align: center" rotation="0 0 0">
-                    <!-- <a-cylinder src="<%= _url %>/img/ico_goal.jpg" class="menu-item clickable" position="-1 0 0" radius="0.5" height=".05" color="#FFC65D" data-target="#box"></a-cylinder>
-                    <a-cylinder src="<%= _url %>/img/ico_paint.jpg" class="menu-item clickable" position="0 0 0" radius="0.5" height=".05" color="#FFC65D" data-target="#sphere"></a-cylinder>
-                    <a-cylinder src="<%= _url %>/img/ico_shoot.jpg" class="menu-item clickable" position="1 0 0" radius="0.5" height=".05" color="#FFC65D" data-target="#cylinder"></a-cylinder> -->
-                    <% 
-                    var arc = 0;
-                    var angle = 360/4;
-                    var menus = ['lego-goal', 'paint', 'shoot', 'pointer'];
-                    for(var i=0; i<4; i++){ 
-                    %>
-                    <a-cylinder src="<%= _url %>/img/ico_goa.jpg" data-target="<%= menus[i] %>" color="#FFC65D" radius="0.5" height=".05" opacity=".5" theta-start="<%= arc %>" theta-length="<%= angle %>"></a-cylinder>
-                    <% arc += angle;} %>
-                    <a-gui-flex-container
-                        flex-direction="column" justify-content="center" align-items="normal" component-padding="0.1"
-                        opacity="1" width=".1" height=".1" panel-color="#000" panel-rounded="0.1" rotation="-90 0 0" position="-.2 0 .2">
-                        <a-gui-toggle 
-                            width="0.1" height="0.1" 
-                            onclick="testToggleAction"
-                            value=""
-                            font-size="0.2"
-                            margin="0 0 0.05 0">
-                        </a-gui-toggle>
-                    </a-gui-flex-container>
+                <a-entity id="menu" position="0 .05 0" rotation="0 0 0" scale=".15 .15 .15" layout="type: box; plane: xy; columns: 3; margin: 2; align: center" rotation="0 0 0">
+                    <a-box position="0 0 -1" depth=".5" height=".05" width="1" rotation="0 0 0" color="black">
+                        <a-text id="menulabel" width="1" position="0 .05 0" value= "Menu..."  align="center" scale="4 4 4" rotation="-90 0 0"></a-text>
+                    </a-box>                                        
+                    <a-cylinder class="menu-item clickable" src="<%= _url %>/img/ico_goa.jpg" data-target="paint" color="#FFC65D" radius="0.5" height=".05" opacity=".5" theta-start="0" theta-length="90"></a-cylinder>
+                    <a-cylinder class="menu-item clickable" src="<%= _url %>/img/ico_goa.jpg" data-target="shoot" color="#FFC65D" radius="0.5" height=".05" opacity=".5" theta-start="90" theta-length="90"></a-cylinder>
+                    <a-cylinder class="menu-item clickable" src="<%= _url %>/img/ico_goa.jpg" data-target="lego-goal" color="#FFC65D" radius="0.5" height=".05" opacity=".5" theta-start="180" theta-length="90"></a-cylinder>
+                    <a-cylinder class="menu-item clickable" src="<%= _url %>/img/ico_goa.jpg" data-target="pointer" color="#FFC65D" radius="0.5" height=".05" opacity=".5" theta-start="270" theta-length="90"></a-cylinder>
                     
                 </a-entity>
             </a-entity>
@@ -69,7 +54,7 @@
             raycaster="objects: [gui-interactable], .clickable, .cube; lineColor: black; far: 1000" 
             networked="template:#hand-template;attachTemplateToLocal:false;">
             
-            <a-entity id="playerPointer" networked="template:#pointer-template;attachTemplateToLocal:false;">
+            <a-entity id="playerPointer" networked="template:#pointer-template;attachTemplateToLocal:true;">
                 <a-entity class="pointer" visible="false"></a-entity>
             </a-entity>
         </a-entity>

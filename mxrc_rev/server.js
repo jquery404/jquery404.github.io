@@ -8,7 +8,6 @@ const httpsOptions = {
     key: fs.readFileSync('./cert/cert.key'),
     cert: fs.readFileSync('./cert/cert.pem')
 }
-const baseURL = 'https://localhost:4000';
 const server = https.createServer(httpsOptions, app);
 const io = require("socket.io")(server);
 
@@ -17,19 +16,19 @@ app.set('views', __dirname + '/public');
 app.set('view engine', 'ejs'); 
 
 app.get('/', (req, res) => {
-    res.render('index.ejs', { text: 'Hey', _url: baseURL })
+    res.render('index.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
 })
 
 app.get('/magic', (req, res) => {
-    res.render('magic.ejs', { text: 'Hey', _url: baseURL })
+    res.render('magic.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
 })
 
 app.get('/guest', (req, res) => {
-    res.render('guest.ejs', { text: 'Hey', _url: baseURL })
+    res.render('guest.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
 })
 
 app.get('/guest/:id', (req, res) => {
-    res.render('guest.ejs', { uname: req.params.id, _url: baseURL })
+    res.render('guest.ejs', { uname: req.params.id, _url: req.protocol+"://"+req.headers.host })
 })
 
 const peers = {};
