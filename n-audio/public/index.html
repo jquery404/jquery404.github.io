@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>One One Audio</title>
+    <meta charset="UTF-8" />
+    <style>
+    video{display: none;}
+    </style>
+  </head>
+  <body>
+    <pre></pre>
+    <section class="select">
+        <label for="audioSource">Audio source: </label>
+        <select id="audioSource"></select>
+    </section>
+
+    <video class="host" playsinline autoplay muted></video>
+    <canvas width="300" height="50"></canvas>
+    
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/rtcconfig.js"></script>
+    <script src="/audio.js"></script>
+  </body>
+</html>

@@ -105,12 +105,6 @@ function init(){
       console.log(socket_id, ' left')
       removePeer(socket_id)
     })
-
-    socket.on('full', () => {
-      var p = document.createElement("p"); 
-      p.innerHTML = "room is full";
-      document.body.appendChild(p); 
-    })
 }
 
 

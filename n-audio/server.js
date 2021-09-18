@@ -22,20 +22,16 @@ io.sockets.on("connection", socket => {
 
     socket.on('join room', () => {
         
-        if (Object.keys(peers).length <= 1) {
-            for(let id in peers) {
-                if(id === socket.id) continue
-                console.log("sending init to '" + id + "' about " +  socket.id)
-                socket.to(id).emit('other joined', socket.id)
-            }
+         for(let id in peers) {
+             if(id === socket.id) continue
+             console.log("sending init to '" + id + "' about " +  socket.id)
+             socket.to(id).emit('other joined', socket.id)
+         }
 
-            if (!peers[socket.id]) {
-                peers[socket.id] = [socket.id];
-            }
-        } else {
-            socket.emit('full');
-            console.log("room full")
-        }
+         if (!peers[socket.id]) {
+             peers[socket.id] = [socket.id];
+         }
+       
         console.log(peers)
     });
 
