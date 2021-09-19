@@ -2,6 +2,8 @@ let localStream = null;
 let peers = {}
 let streams = []
 let videos = []
+let myid;
+let clients = {sender: {tag: '', socket_id: ''}, receiver: []}
 
 // Get camera and microphone
 const videoElement = document.querySelector("video");
@@ -73,6 +75,7 @@ const socket = io.connect(window.location.origin);
 
 function init() {
 
+    myid = socket.id;
     socket.emit('join room');
 
     socket.on('other joined', (socket_id) => {
@@ -81,23 +84,31 @@ function init() {
       localStream.getTracks().forEach(track => streams.push(peers[socket_id].addTrack(track, localStream)))
     })
 
+
     socket.on('offer', (socket_id, description) => {
-      console.log(socket_id, ' make peer')
-      peers[socket_id] = addPeer(socket_id, false)
+      console.log('[2]', socket_id, ' make peer', description)
+      clients.receiver.push({socket_id: socket_id, tag: description.name});
+      
+      peers[socket_id] = addPeer(socket_id, false, description)
+
+      document.querySelectorAll("button")[0].innerHTML = description.name
   
-      peers[socket_id].setRemoteDescription(description)
+      peers[socket_id].setRemoteDescription(description.localDescription)
           .then(() => { localStream.getTracks().forEach(track => streams.push(peers[socket_id].addTrack(track, localStream))); })
           .then(() => peers[socket_id].createAnswer())
           .then(sdp => peers[socket_id].setLocalDescription(sdp))
           .then(() => {
-            console.log('received offer preparing ans for ', socket_id, peers[socket_id].localDescription.type)
-            socket.emit('answer', socket_id, peers[socket_id].localDescription);
+            let newLocalDescription = {name: 'fahad', localDescription: peers[socket_id].localDescription};
+            clients.sender = {socket_id: myid, tag: newLocalDescription.name};
+            console.log('[3] received offer preparing ans for ', socket_id, newLocalDescription)
+            socket.emit('answer', socket_id, newLocalDescription);
           });
     })
 
     socket.on('answer', (socket_id, description) => {
-      console.log('received ans back from ', socket_id);
-      peers[socket_id].setRemoteDescription(description);
+      console.log('[4] received ans back from ', socket_id, description);
+      clients.receiver.push({socket_id: socket_id, tag: description.name});
+      peers[socket_id].setRemoteDescription(description.localDescription);
     })
 
     socket.on('candidate', (socket_id, candidate) => {
@@ -127,7 +138,8 @@ function removePeer(socket_id) {
   document.querySelector("pre").innerHTML += socket_id + ' left\n';
 }
 
-function addPeer(socket_id, am_initiator) {
+function addPeer(socket_id, am_initiator, desc) {
+    console.log(desc);
     const peers = new RTCPeerConnection(config);
 
     peers.onicecandidate = event => {
@@ -147,6 +159,12 @@ function addPeer(socket_id, am_initiator) {
         newVid.muted = true
         document.body.appendChild(newVid)
         videos.push(socket_id);
+
+        console.log(clients.receiver, socket_id);
+        if(clients.receiver.socket_id == socket_id)
+          document.querySelectorAll("button")[1].innerHTML = "Left side";
+
+
       }
         
 
@@ -157,8 +175,10 @@ function addPeer(socket_id, am_initiator) {
             peers.createOffer()
             .then(sdp => peers.setLocalDescription(sdp))
             .then(() => { 
-              console.log('making offer to ', socket_id, peers.localDescription.type)
-              socket.emit('offer', socket_id, peers.localDescription); 
+              let newLocalDescription = {name: 'faisal', localDescription: peers.localDescription};
+              clients.sender = {socket_id: myid, tag: newLocalDescription.name};
+              console.log('[1] making offer to ', socket_id, newLocalDescription)
+              socket.emit('offer', socket_id, newLocalDescription); 
             });
         };
     }

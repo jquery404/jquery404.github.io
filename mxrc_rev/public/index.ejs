@@ -5,7 +5,7 @@
 </head>
 <body>
 
-    <a-scene>
+    <a-scene vr-mode-ui="enabled: false">
         <a-assets>
         <img id="grid" src="img/grid.png">
         <img id="sky" src="img/sky.jpg" />
@@ -44,6 +44,8 @@
         let peers = {}
         let streams = []
         let videos = []
+        let clients = {sender: {tag: '', socket_id: ''}, receiver: []}
+        let myId;
 
         // Get camera and microphone
         const videoElement = document.querySelector(".host");
@@ -121,6 +123,7 @@
         const socket = io.connect(window.location.origin);
 
         function init() {
+            myId = socket.id;
 
             socket.emit('join room');
 
@@ -131,36 +134,41 @@
             })
 
             socket.on('offer', (socket_id, description) => {
-                console.log(socket_id, ' make peer')
+                console.log(socket_id, ' make peer', description)
+                clients.receiver.push({socket_id: socket_id, tag: description.tag});
+                
                 peers[socket_id] = addPeer(socket_id, false)
             
-                peers[socket_id].setRemoteDescription(description)
+                peers[socket_id].setRemoteDescription(description.localDescription)
                     .then(() => { localStream.getTracks().forEach(track => streams.push(peers[socket_id].addTrack(track, localStream))); })
                     .then(() => peers[socket_id].createAnswer())
                     .then(sdp => peers[socket_id].setLocalDescription(sdp))
                     .then(() => {
                         console.log('received offer preparing ans for ', socket_id, peers[socket_id].localDescription.type)
-                        socket.emit('answer', socket_id, peers[socket_id].localDescription);
+                        let newLocalDescription = {tag: 'main', localDescription: peers[socket_id].localDescription};
+                        clients.sender = {socket_id: myId, tag: newLocalDescription.tag};
+                        socket.emit('answer', socket_id, newLocalDescription);
                     });
             })
 
             socket.on('answer', (socket_id, description) => {
-            console.log('received ans back from ', socket_id);
-            peers[socket_id].setRemoteDescription(description);
+                console.log('received ans back from ', socket_id);
+                clients.receiver.push({socket_id: socket_id, tag: description.tag});
+                peers[socket_id].setRemoteDescription(description.localDescription);
             })
 
             socket.on('candidate', (socket_id, candidate) => {
-            if (socket_id in peers) {
-                console.log('received candidate from ', socket_id);
-                peers[socket_id].addIceCandidate(new RTCIceCandidate(candidate));
-            }
+                if (socket_id in peers) {
+                    console.log('received candidate from ', socket_id);
+                    peers[socket_id].addIceCandidate(new RTCIceCandidate(candidate));
+                }
             
             //peers[socket_id].addIceCandidate(new RTCIceCandidate(candidate)).catch(e => console.error(e));
             })
         
             socket.on('remove peer', (socket_id) => {
-            console.log(socket_id, ' left')
-            removePeer(socket_id)
+                console.log(socket_id, ' left')
+                removePeer(socket_id)
             })
 
         }
@@ -184,8 +192,8 @@
 
             peers.onicecandidate = event => {
                 if (event.candidate) {
-                console.log(socket_id, ' needs candidate');
-                socket.emit('candidate', socket_id, event.candidate);
+                    console.log(socket_id, ' needs candidate');
+                    socket.emit('candidate', socket_id, event.candidate);
                 }
             };
             
@@ -198,8 +206,10 @@
                     peers.createOffer()
                     .then(sdp => peers.setLocalDescription(sdp))
                     .then(() => { 
-                    console.log('making offer to ', socket_id, peers.localDescription.type)
-                    socket.emit('offer', socket_id, peers.localDescription); 
+                        let newLocalDescription = {tag: 'main', localDescription: peers.localDescription};
+                        clients.sender = {socket_id: myId, tag: newLocalDescription.tag};
+                        console.log('making offer to ', socket_id, peers.localDescription.type)
+                        socket.emit('offer', socket_id, newLocalDescription); 
                     });
                 };
             }
