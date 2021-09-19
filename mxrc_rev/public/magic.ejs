@@ -13,6 +13,7 @@
         
         <%- include('_ass_model'); %>
         <%- include('_ass_player'); %>
+        <%- include('_ass_hud'); %>
 
         <template id="bullet-template">
             <a-entity>
@@ -146,7 +147,6 @@
         let localStream = null;
         let peers = {}
         let streams = []
-        let videos = []
         let clients = {sender: {tag: '', socket_id: ''}, receiver: []}
         let myId;
 
@@ -193,6 +193,9 @@
 
             socket.on('offer', (socket_id, description) => {
                 console.log(socket_id, ' make peer')
+                if (description.tag!=='main') 
+                    videoFeeds.push({tag:'hud', socket_id: socket_id});
+
                 clients.receiver.push({socket_id: socket_id, tag: description.tag});
 
                 peers[socket_id] = addPeer(socket_id, false)
@@ -234,15 +237,25 @@
                 peers[socket_id].close();
                 peers[socket_id].onicecandidate = null; 
                 delete peers[socket_id];
-                console.log(socket_id);
                 
-                const highlightedItems = document.querySelectorAll("#"+socket_id);
-                highlightedItems.forEach(function(userItem) {
-                    userItem.remove();
+                // remove <video> and <hud-video> elem, splice @id from clients.receiver
+                const videoEls = document.querySelectorAll("#vid_"+socket_id);
+                videoEls.forEach(function(vid) {
+                    vid.remove();
                 });
-        }
+                const hudVideoEls = document.querySelectorAll("#hud_"+socket_id);
+                hudVideoEls.forEach(function(vid) {
+                    vid.remove();
+                });
+                clients.receiver.forEach((v,k) => {
+                    if (v.socket_id == socket_id) {
+                        clients.receiver.splice(k,1);
+                    }
+                });
 
-        document.querySelector("pre").innerHTML += socket_id + ' left\n';
+            }
+
+            document.querySelector("pre").innerHTML += socket_id + ' left\n';
         }
 
         function addPeer(socket_id, am_initiator) {
@@ -257,10 +270,9 @@
             
             peers.ontrack = event => {
             //if(!videos.includes(socket_id)){
-                videos.push(socket_id);
                 let newVid = document.createElement('video')
                 newVid.srcObject = event.streams[0];
-                newVid.id = socket_id
+                newVid.id = 'vid_'+socket_id
                 if(marginTop==200) newVid.classList.add("remote")
                 newVid.setAttribute('style','margin-top:'+marginTop+'px');
                 newVid.playsinline = false
@@ -270,9 +282,7 @@
                 document.body.appendChild(newVid)
                 
                 marginTop+=200;
-
-                $('#player').append(`<a-plane id="hud_${videos[1]}" src="#${videos[1]}" shadow="receive: false" height=".5" width=".5" position="0 0 -5"></a-plane>`);
-                
+                initHUD();
             //}
             };
 
@@ -290,6 +300,14 @@
             }
 
             return peers;
+        }
+
+        function initHUD() {
+            clients.receiver.forEach((v,k) => {
+                if (v.tag !== 'main' && !document.querySelector(`#hud_${v.socket_id}`)) {
+                    $('#player').append(`<a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="cube" shadow="receive: false" height=".5" width=".5" position="0 0 -5"></a-plane>`);
+                }
+            });
         }
 
     </script>

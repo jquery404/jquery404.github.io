@@ -43,7 +43,6 @@
         let localStream2 = null;
         let peers = {}
         let streams = []
-        let videos = []
         let clients = {sender: {tag: '', socket_id: ''}, receiver: []}
         let myId;
 
@@ -178,10 +177,6 @@
                 peers[socket_id].close();
                 peers[socket_id].onicecandidate = null; 
                 delete peers[socket_id];
-                const index = videos.indexOf(socket_id);
-                if (index > -1) videos.splice(index, 1);
-                
-                if (document.querySelector("#"+socket_id)) document.querySelector("#"+socket_id).remove();
             }
 
             document.querySelector("pre").innerHTML += socket_id + ' left\n';

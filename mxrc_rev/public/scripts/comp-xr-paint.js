@@ -103,7 +103,7 @@ AFRAME.registerComponent('sync-paint', {
         networkId: networkedComponent.networkId,
         el: el,
         };
-        let currentOwnerId = usersMap[''].el.components.networked.data.owner;
+        //let currentOwnerId = usersMap[''].el.components.networked.data.owner;
     });
 
     document.body.addEventListener("clientDisconnected", function(evt) {
