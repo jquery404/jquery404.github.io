@@ -1,3 +1,10 @@
+<a-mixin id="hud-interactable" 
+        super-hands="colliderEvent: raycaster-intersection;
+                    colliderEventProperty: els;
+                    colliderEndEvent:raycaster-intersection-cleared;
+                    colliderEndEventProperty: clearedEls;">
+</a-mixin>
+
 <a-mixin id="plane"
     hoverable grabbable stretchable draggable droppable
     shadow="receive: false" 

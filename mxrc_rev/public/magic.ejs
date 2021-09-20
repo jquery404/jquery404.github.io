@@ -37,7 +37,8 @@
   
         <a-entity  id="rhand" 
             laser-controls="hand: right" 
-            raycaster="objects: [gui-interactable], .clickable; lineColor: #00FFFF; far: 1000">
+            mixin="hud-interactable"
+            raycaster="objects: [gui-interactable], .clickable, .hud; lineColor: #00FFFF; far: 1000">
         </a-entity>
 
         <a-entity class="syncManager" sync-paint></a-entity>
@@ -193,9 +194,6 @@
 
             socket.on('offer', (socket_id, description) => {
                 console.log(socket_id, ' make peer')
-                if (description.tag!=='main') 
-                    videoFeeds.push({tag:'hud', socket_id: socket_id});
-
                 clients.receiver.push({socket_id: socket_id, tag: description.tag});
 
                 peers[socket_id] = addPeer(socket_id, false)
@@ -305,7 +303,7 @@
         function initHUD() {
             clients.receiver.forEach((v,k) => {
                 if (v.tag !== 'main' && !document.querySelector(`#hud_${v.socket_id}`)) {
-                    $('#player').append(`<a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="cube" shadow="receive: false" height=".5" width=".5" position="0 0 -5"></a-plane>`);
+                    $('#playerHead').append(`<a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="hud"  mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5"></a-plane>`);
                 }
             });
         }
