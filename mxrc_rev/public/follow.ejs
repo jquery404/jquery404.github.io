@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+	<script src="https://unpkg.com/aframe-environment-component@1.2.0/dist/aframe-environment-component.min.js"></script>
     <script>
 
 	var coordinates = AFRAME.utils.coordinates;
@@ -9,23 +10,25 @@
 
     AFRAME.registerComponent('look-at', {
 	  schema: {
-	    default: '0 0 0',
+	    tar: {
+			default: '0 0 0',
 
-	    parse: function (value) {
-	      // A static position to look at.
-	      if (isCoordinates(value) || typeof value === 'object') {
-	        return coordinates.parse(value);
-	      }
-	      // A selector to a target entity.
-	      return value;
-	    },
+			parse: function (value) {
+				if (isCoordinates(value) || typeof value === 'object') {
+					return coordinates.parse(value);
+				}
+				return value;
+			},
 
-	    stringify: function (data) {
-	      if (typeof data === 'object') {
-	        return coordinates.stringify(data);
-	      }
-	      return data;
-	    }
+			stringify: function (data) {
+				if (typeof data === 'object') {
+					return coordinates.stringify(data);
+				}
+				return data;
+			}
+		},
+
+		speed: {default: 0.01}
 	  },
 
 	  init: function () {
@@ -42,7 +45,7 @@
 	   */
 	  update: function () {
 	    var self = this;
-	    var target = self.data;
+	    var target = self.data.tar;
 	    var targetEl;
 
 	    // No longer looking at anything (i.e., look-at="").
@@ -103,29 +106,139 @@
 	  lookAt: function (position) {
 	    var vector = this.vector;
 	    var object3D = this.el.object3D;
+		var speed = this.data.speed;
 
 	    if (this.el.getObject3D('camera')) {
-	      // Flip the vector to -z, looking away from target for camera entities. When using
-	      // lookat from THREE camera objects, this is applied for you, but since the camera is
-	      // nested into a Object3D, we need to apply this manually.
 	      vector.subVectors(object3D.position, position).add(object3D.position);
 	    } else {
 	      vector.copy(position);
 	    }
 
-        let npos = new THREE.Vector3(position.x-1, position.y-1, position.z-1);
+        //let npos = new THREE.Vector3(position.x-1, position.y-1, position.z-1);
         object3D.lookAt(vector);
-        object3D.position.lerp(npos, .01);
+        //object3D.position.lerp(npos, .01);
+
+		const distanceFromCamera = 3; 
+		var target3D = this.target3D;
+		const target = new THREE.Vector3(0, 0, -distanceFromCamera);
+		target.applyMatrix4(target3D.matrixWorld);    
+		
+		const distance = object3D.position.distanceTo(target);
+		if (distance > 0) {
+			// const amount = Math.min(moveSpeed * deltaTime, distance) / distance;
+			object3D.position.lerp(target, speed);
+		} 
 	  }
 	});
-    </script>
+    
+	function main() {
+		const canvas = document.querySelector('#c');
+		const renderer = new THREE.WebGLRenderer({canvas});
+
+		const fov = 45;
+		const aspect = 2;  // the canvas default
+		const near = 0.1;
+		const far = 1000;
+		const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+		camera.position.set(0, 10, 20);
+
+		const controls = new THREE.OrbitControls(camera, canvas);
+		controls.target.set(0, 0, 0);
+		controls.update();
+
+		const scene = new THREE.Scene();
+		scene.background = new THREE.Color('lightblue');
+
+		{
+			const color = 0xFFFFFF;
+			const intensity = 1;
+			const light = new THREE.DirectionalLight(color, intensity);
+			light.position.set(0, 10, 0);
+			light.target.position.set(-5, 0, 0);
+			scene.add(light);
+			scene.add(light.target);
+		}
+
+		const gridHelper = new THREE.GridHelper(100, 10);
+		scene.add(gridHelper);
+		gridHelper.position.set(0, -5, 0);
+
+		const cube = new THREE.Mesh(
+			new THREE.BoxBufferGeometry(1, 1, 1),
+			new THREE.MeshPhongMaterial({color: 'red'}),
+		);
+		scene.add(cube);
+
+		function resizeRendererToDisplaySize(renderer) {
+			const canvas = renderer.domElement;
+			const width = canvas.clientWidth;
+			const height = canvas.clientHeight;
+			const needResize = canvas.width !== width || canvas.height !== height;
+			if (needResize) {
+			renderer.setSize(width, height, false);
+			}
+			return needResize;
+		}
+
+		let then = 0;
+		function render(now) {
+			now *= 0.001; // convert to seconds
+			const deltaTime = now - then;
+			then = now;
+
+			if (resizeRendererToDisplaySize(renderer)) {
+			const canvas = renderer.domElement;
+			camera.aspect = canvas.clientWidth / canvas.clientHeight;
+			camera.updateProjectionMatrix();
+			}
+			
+			cube.rotation.x = now;
+			cube.rotation.y = now * 1.1;
+			
+			// move cube in front of camera
+			{
+			const distanceFromCamera = 3;  // 3 units
+			const target = new THREE.Vector3(0, 0, -distanceFromCamera);
+			target.applyMatrix4(camera.matrixWorld);    
+			
+			const moveSpeed = 15;  // units per second
+			const distance = cube.position.distanceTo(target);
+			if (distance > 0) {
+				const amount = Math.min(moveSpeed * deltaTime, distance) / distance;
+				cube.position.lerp(target, amount);
+				cube.material.color.set('green');
+			} else {
+				cube.material.color.set('red');
+			}
+			}
+
+			renderer.render(scene, camera);
+
+			requestAnimationFrame(render);
+		}
+
+		requestAnimationFrame(render);
+	}
+
+
+	</script>
 </head>
 <body>
 
     <a-scene>
-        <a-entity position="-4 4 -8" look-at="#player">
-            <a-cone height="1" color="#C388A3" radius-bottom="0.5" radius-top="0" rotation="90 0 0"></a-cone>
+		<a-entity environment="preset: forest"></a-entity>
+        <a-entity position="-4 4 -8" look-at="tar: #player; speed: .005">
+            <a-cone height=".25" color="#C388A3" radius-bottom="0.5" radius-top="0" rotation="90 0 0"></a-cone>
         </a-entity>
+
+		<a-entity position="-2 2 -4" look-at="tar: #player; speed: .001">
+            <a-cone height=".75" color="#FEFA88" radius-bottom="0.5" radius-top="0" rotation="90 0 0"></a-cone>
+        </a-entity>
+
+		<a-entity position="-0 0 -0" look-at="tar: #player">
+            <a-cone height=".5" color="#9900DD" radius-bottom="0.5" radius-top="0" rotation="90 0 0"></a-cone>
+        </a-entity>
+
         <a-box width="1" depth="1" height="1" color="#4CC3D9" position="-4 0 -2"></a-box>
         <a-entity id="player" camera position="0 1.6 0" look-controls wasd-controls></a-entity>
     </a-scene>
