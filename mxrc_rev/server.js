@@ -27,6 +27,10 @@ app.get('/guest', (req, res) => {
     res.render('guest.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
 })
 
+app.get('/follow', (req, res) => {
+    res.render('follow.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
+})
+
 const peers = {};
 const rooms = {};
 
