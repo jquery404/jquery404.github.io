@@ -332,10 +332,14 @@
         function initHUD() {
             videoFeeds.forEach((v,k) => {
                 if (v.tag == 'main' && !isSkyset) {
+                    console.log('mainland ', v.socket_id);
+                    
                     let skybox = document.querySelector("a-sky");
                     skybox.setAttribute('set-sky', `#vid_${v.socket_id}`);
                     isSkyset = true;
-                } else if(v.tag !== 'main' && !document.querySelector(`#hud_${v.socket_id}`)) {
+                }
+                
+                if(v.tag !== 'main' && !document.querySelector(`#hud_${v.socket_id}`)) {
                     $('#playerHead').append(`<a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="hud"  mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5"></a-plane>`);
                 }
             });

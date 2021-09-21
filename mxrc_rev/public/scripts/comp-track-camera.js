@@ -30,9 +30,9 @@ AFRAME.registerComponent('track-camera', {
 
         // target tracking
         this.target.forEach((elem, i) => {
-            var target3D = this.el.sceneEl.querySelector(elem).object3D;	
-            if (target3D) {
-                this.lookAt(target3D, position, i);
+            var targetEl = this.el.sceneEl.querySelector(elem);	
+            if (targetEl) {
+                this.lookAt(targetEl.object3D, position, i);
             }
         });
       }

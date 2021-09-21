@@ -240,19 +240,14 @@
                 
                 // remove <video> and <hud-video> elem, splice @id from clients.receiver
                 const videoEls = document.querySelectorAll("#vid_"+socket_id);
-                videoEls.forEach(function(vid) {
-                    vid.remove();
-                });
                 const hudVideoEls = document.querySelectorAll("#hud_"+socket_id);
-                hudVideoEls.forEach(function(vid) {
-                    vid.remove();
-                });
-                clients.receiver.forEach((v,k) => {
-                    if (v.socket_id == socket_id) {
-                        clients.receiver.splice(k,1);
-                    }
-                });
+                
+                hudList.forEach((v,k) => { if (v == socket_id) hudList.splice(k,1); });
+                document.querySelector('#playerHead').setAttribute('track-camera', 'target: ' + hudList.join(','));
 
+                videoEls.forEach((vid) => { vid.remove(); });
+                hudVideoEls.forEach((vid) => { vid.remove(); });
+                clients.receiver.forEach((v,k) => { if (v.socket_id == socket_id) clients.receiver.splice(k,1); });
             }
 
             document.querySelector("pre").innerHTML += socket_id + ' left\n';
@@ -303,9 +298,10 @@
         }
 
         function initHUD() {
+            var sceneEl = $('a-scene');
             clients.receiver.forEach((v,k) => {
                 if (v.tag !== 'main' && !document.querySelector(`#hud_${v.socket_id}`)) {
-                    $('#playerHead').append(`<a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="hud"  mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5"></a-plane>`);
+                    sceneEl.append(`<a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="hud"  mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5"></a-plane>`);
                     hudList.push('#hud_' + v.socket_id);
                     document.querySelector('#playerHead').setAttribute('track-camera', 'target: ' + hudList.join(','));
                 }
