@@ -28,6 +28,7 @@
             <a-entity id="playerHead"
                 camera 
                 position="0 1.6 0" 
+                track-camera
                 look-controls
                 wasd-controls>
                 <a-entity class="nametag" visible="false"></a-entity>
@@ -35,7 +36,7 @@
         </a-entity>
 
   
-        <a-entity  id="rhand" 
+        <a-entity id="rhand" 
             laser-controls="hand: right" 
             mixin="hud-interactable"
             raycaster="objects: [gui-interactable], .clickable, .hud; lineColor: #00FFFF; far: 1000">
@@ -148,6 +149,7 @@
         let localStream = null;
         let peers = {}
         let streams = []
+        let hudList = []
         let clients = {sender: {tag: '', socket_id: ''}, receiver: []}
         let myId;
 
@@ -304,6 +306,8 @@
             clients.receiver.forEach((v,k) => {
                 if (v.tag !== 'main' && !document.querySelector(`#hud_${v.socket_id}`)) {
                     $('#playerHead').append(`<a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="hud"  mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5"></a-plane>`);
+                    hudList.push('#hud_' + v.socket_id);
+                    document.querySelector('#playerHead').setAttribute('track-camera', 'target: ' + hudList.join(','));
                 }
             });
         }

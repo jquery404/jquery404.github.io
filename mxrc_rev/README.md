@@ -1,7 +1,5 @@
 # Welcome
 
-just thinking outloud, for ieeevr can we do 
-
 - 1st part: evaluate the benefits of an exo- and egocentric perspective in multi-user collaboration
 give user two options 
     - suggestive transition  

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-	<script src="https://unpkg.com/aframe-environment-component@1.2.0/dist/aframe-environment-component.min.js"></script>
+	<script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script>
     <script>
 
 	var coordinates = AFRAME.utils.coordinates;
@@ -77,6 +77,10 @@
 	  tick: (function () {
 	    var vec3 = new THREE.Vector3();
 
+		const pos = new THREE.Vector3();
+        const rot = new THREE.Quaternion();
+		const matrix = new THREE.Matrix4();
+		
 	    return function (t) {
 	      // Track target object position. Depends on parent object keeping global transforms up
 	      // to state with updateMatrixWorld(). In practice, this is handled by the renderer.
@@ -84,7 +88,16 @@
 	      if (target3D) {
 	        target3D.getWorldPosition(vec3);
 	        this.lookAt(vec3);
+
+			// pos.setFromMatrixPosition(target3D.matrixWorld); // Vector3
+			// rot.setFromRotationMatrix(matrix.extractRotation(target3D.matrixWorld));
+				
+			// var debug = document.getElementById("debug");
+			// debug.setAttribute("value", "Positionsss: " + pos.x + " " + pos.y + " " + pos.z + " ," + "Rotationss: " + rot.x + " " + rot.y + " " + rot.z);
+
 	      }
+
+		  
 	    }
 	  })(),
 
@@ -131,116 +144,101 @@
 	  }
 	});
     
-	function main() {
-		const canvas = document.querySelector('#c');
-		const renderer = new THREE.WebGLRenderer({canvas});
 
-		const fov = 45;
-		const aspect = 2;  // the canvas default
-		const near = 0.1;
-		const far = 1000;
-		const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-		camera.position.set(0, 10, 20);
+    
+	AFRAME.registerComponent('track-camera', {
+		schema: {
+	    	target: {default: []},
+		},
 
-		const controls = new THREE.OrbitControls(camera, canvas);
-		controls.target.set(0, 0, 0);
-		controls.update();
+		init: function(){
+			this.target = this.data.target;
+		},
 
-		const scene = new THREE.Scene();
-		scene.background = new THREE.Color('lightblue');
+		update: function(){
+			this.target = this.data.target;
+		},
 
-		{
-			const color = 0xFFFFFF;
-			const intensity = 1;
-			const light = new THREE.DirectionalLight(color, intensity);
-			light.position.set(0, 10, 0);
-			light.target.position.set(-5, 0, 0);
-			scene.add(light);
-			scene.add(light.target);
-		}
-
-		const gridHelper = new THREE.GridHelper(100, 10);
-		scene.add(gridHelper);
-		gridHelper.position.set(0, -5, 0);
-
-		const cube = new THREE.Mesh(
-			new THREE.BoxBufferGeometry(1, 1, 1),
-			new THREE.MeshPhongMaterial({color: 'red'}),
-		);
-		scene.add(cube);
-
-		function resizeRendererToDisplaySize(renderer) {
-			const canvas = renderer.domElement;
-			const width = canvas.clientWidth;
-			const height = canvas.clientHeight;
-			const needResize = canvas.width !== width || canvas.height !== height;
-			if (needResize) {
-			renderer.setSize(width, height, false);
-			}
-			return needResize;
-		}
-
-		let then = 0;
-		function render(now) {
-			now *= 0.001; // convert to seconds
-			const deltaTime = now - then;
-			then = now;
-
-			if (resizeRendererToDisplaySize(renderer)) {
-			const canvas = renderer.domElement;
-			camera.aspect = canvas.clientWidth / canvas.clientHeight;
-			camera.updateProjectionMatrix();
-			}
+        tick: (function () {
+          const position = new THREE.Vector3();
+          const rotation = new THREE.Quaternion();
+		  const direction = new THREE.Vector3();
+          const euler = new THREE.Euler();
+          const matrix = new THREE.Matrix4();
+          return function () {
 			
-			cube.rotation.x = now;
-			cube.rotation.y = now * 1.1;
+            this.el.object3D.updateMatrixWorld();
+            position.setFromMatrixPosition(this.el.object3D.matrixWorld); // Vector3
+            rotation.setFromRotationMatrix(matrix.extractRotation(this.el.object3D.matrixWorld ));
+			var e = this.el.object3D.matrixWorld.elements;
+            direction.set(e[8], e[9], e[10]).normalize();
+            
+            var debug = document.getElementById("debug");
+			debug.setAttribute("value", "Position: " + position.x.toFixed(2) + " " + position.y.toFixed(2) + " " + position.z.toFixed(2) + " ," + "Rotation: " + rotation.x.toFixed(2) + " " + rotation.y.toFixed(2) + " " + rotation.z.toFixed(2) + " ," + "Direction: " + direction.x.toFixed(2) + " " + direction.y.toFixed(2) + " " + direction.z.toFixed(2));
+
 			
-			// move cube in front of camera
-			{
-			const distanceFromCamera = 3;  // 3 units
-			const target = new THREE.Vector3(0, 0, -distanceFromCamera);
-			target.applyMatrix4(camera.matrixWorld);    
+			// target tracking
+			this.target.forEach((elem, i) => {
+				var target3D = this.el.sceneEl.querySelector(elem).object3D;	
+				if (target3D) {
+					this.lookAt(target3D, position, i);
+				}
+			});
+          }
+        })(),
+
+		lookAt: function(obj, pos, i){
+			obj.lookAt(pos);
+			const distanceFromCamera = 3; 
+			const target = new THREE.Vector3(i*-3 + 1, 0, -distanceFromCamera);
+			target.applyMatrix4(this.el.object3D.matrixWorld);    
 			
-			const moveSpeed = 15;  // units per second
-			const distance = cube.position.distanceTo(target);
+			const distance = obj.position.distanceTo(target);
 			if (distance > 0) {
-				const amount = Math.min(moveSpeed * deltaTime, distance) / distance;
-				cube.position.lerp(target, amount);
-				cube.material.color.set('green');
-			} else {
-				cube.material.color.set('red');
-			}
-			}
-
-			renderer.render(scene, camera);
-
-			requestAnimationFrame(render);
+				// const amount = Math.min(moveSpeed * deltaTime, distance) / distance;
+				obj.position.lerp(target, 0.05 + i/100*4);
+			} 
 		}
-
-		requestAnimationFrame(render);
-	}
-
+      });
 
 	</script>
 </head>
 <body>
 
     <a-scene>
-		<a-entity environment="preset: forest"></a-entity>
-        <a-entity position="-4 4 -8" look-at="tar: #player; speed: .005">
+		<a-assets>
+			<%- include('_ass_hud'); %>
+			<img id="paint" src="<%= _url %>/img/ico_paint.jpg" />
+			<img id="shoot" src="<%= _url %>/img/ico_shoot.jpg" />
+		</a-assets>
+		
+		<a-entity  id="rhand" 
+            laser-controls="hand: right" 
+            mixin="hud-interactable"
+            raycaster="objects: .hud; lineColor: #00FFFF; far: 1000">
+        </a-entity>
+	
+        <a-entity position="-4 4 -8" look-at="tar: #player; speed: .01">
             <a-cone height=".25" color="#C388A3" radius-bottom="0.5" radius-top="0" rotation="90 0 0"></a-cone>
         </a-entity>
 
-		<a-entity position="-2 2 -4" look-at="tar: #player; speed: .001">
-            <a-cone height=".75" color="#FEFA88" radius-bottom="0.5" radius-top="0" rotation="90 0 0"></a-cone>
+		<a-entity id="horse" position="-2 2 -4">
+            <a-circle src="#shoot" radius=".5" rotation="0 0 0"></a-circle>
         </a-entity>
 
-		<a-entity position="-0 0 -0" look-at="tar: #player">
-            <a-cone height=".5" color="#9900DD" radius-bottom="0.5" radius-top="0" rotation="90 0 0"></a-cone>
+		<a-entity id="camel" position="-1 2 -5">
+            <a-plane src="#paint" rotation="0 0 0"></a-plane>
         </a-entity>
 
-        <a-box width="1" depth="1" height="1" color="#4CC3D9" position="-4 0 -2"></a-box>
-        <a-entity id="player" camera position="0 1.6 0" look-controls wasd-controls></a-entity>
+		<a-entity position="-0 0 -6">
+            <a-cone mixin="plane" class="hud" height=".25" color="#9900DD" radius-bottom="0.5" radius-top="0" rotation="90 0 0"></a-cone>
+        </a-entity>
+		<a-text id="debug" value="Hello World" color="red" position="0 2 -5" scale="2 2 2"></a-text>
+
+        <a-box width="1" mixin="plane" class="hud" depth="1" height="1" color="#4CC3D9" position="-4 0 -2"></a-box>
+        <a-camera track-camera id="player" position="0 1.6 0"></a-camera>
+        <!-- <a-camera track-camera="target: #horse, #camel" id="player" position="0 1.6 0"></a-camera> -->
+		<!-- <a-entity id="player" camera position="0 1.6 0" look-controls></a-entity> -->
     </a-scene>
 
 </body>
