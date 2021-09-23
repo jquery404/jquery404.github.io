@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+	<style>
+		video{
+		position: absolute;
+		top: 0;
+		width: 200px;
+		border: 1px solid;
+		margin: 1em;
+		}
+	</style>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 	<script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script>
     <script>
@@ -143,9 +153,8 @@
 		} 
 	  }
 	});
-    
-
-    
+	
+	
 	AFRAME.registerComponent('track-camera', {
 		schema: {
 	    	target: {default: []},
@@ -240,6 +249,21 @@
         <a-camera track-camera="target: #horse, #camel" id="player" position="0 1.6 0"></a-camera>
 		<!-- <a-entity id="player" camera position="0 1.6 0" look-controls></a-entity> -->
     </a-scene>
+	
+	<video class="host" playsinline autoplay muted></video>
 
+	<script src="scripts/jquery-latest.min.js"></script>
+    <script>
+		let localStream = null;
+		let canvas;
+		let stream;
+		const videoElement = document.querySelector(".host");
+
+		canvas = document.querySelector('canvas');
+		canvas.getContext('2d');
+        stream = canvas.captureStream(25);
+        videoElement.srcObject = stream;
+        localStream = stream;
+	</script>
 </body>
 </html>
