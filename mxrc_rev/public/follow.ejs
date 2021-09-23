@@ -263,7 +263,87 @@
 		canvas.getContext('2d');
         stream = canvas.captureStream(25);
         videoElement.srcObject = stream;
-        localStream = stream;
+		localStream = stream;
+		
+		document.addEventListener('keydown', (e) => {
+			if (e.code === "Space") {
+				
+				let wd = 64;
+				let ht = 48;
+				let isReadyToDiff = false;
+				let pixelDiffThreshold = 32;
+				
+				let diffCanvas = document.createElement('canvas');
+				diffCanvas.width = wd;
+				diffCanvas.height = ht;
+				let diffContext = diffCanvas.getContext('2d');
+				diffContext.globalCompositeOperation = 'difference';
+				diffContext.drawImage(videoElement, 0, 0, 300, 200);
+				var diffImageData = diffContext.getImageData(0, 0, 300, 200);
+				
+				var rgba = diffImageData.data;
+				
+				var score = 0;
+				var motionPixels = [];
+				var motionBox = undefined;
+
+				for (var i = 0; i < rgba.length; i += 4) {
+					var pixelDiff = rgba[i] * 0.3 + rgba[i + 1] * 0.6 + rgba[i + 2] * 0.1;
+					var normalized = Math.min(255, pixelDiff * (255 / pixelDiffThreshold));
+					rgba[i] = 0;
+					rgba[i + 1] = normalized;
+					rgba[i + 2] = 0;
+
+					if (pixelDiff >= pixelDiffThreshold) {
+						score++;
+						let coords = calculateCoordinates(i / 4);
+						motionBox = calculateMotionBox(motionBox, coords.x, coords.y);
+						motionPixels = calculateMotionPixels(motionPixels, coords.x, coords.y, pixelDiff);
+					}
+				}
+
+				let motionCanvas = document.createElement('canvas');
+				motionCanvas.width = wd;
+				motionCanvas.height = ht;
+				let motionContext = motionCanvas.getContext('2d');
+				motionContext.putImageData(diffImageData, 0, 0);
+				motionContext.strokeStyle = '#fff';
+				motionContext.strokeRect(
+					motionBox.x.min + 0.5,
+					motionBox.y.min + 0.5,
+					motionBox.x.max - motionBox.x.min,
+					motionBox.y.max - motionBox.y.min
+				);
+				diffContext.globalCompositeOperation = 'source-over';
+				diffContext.drawImage(video, 0, 0, wd, ht);
+
+			}
+		});
+		
+
+		function calculateCoordinates(pixelIndex) {
+			return {x: pixelIndex % wd, y: Math.floor(pixelIndex / wd)};
+		}
+
+		function calculateMotionBox(currentMotionBox, x, y) {
+			var motionBox =  currentMotionBox;
+
+			motionBox.x.min = Math.min(motionBox.x.min, x);
+			motionBox.x.max = Math.max(motionBox.x.max, x);
+			motionBox.y.min = Math.min(motionBox.y.min, y);
+			motionBox.y.max = Math.max(motionBox.y.max, y);
+
+			return motionBox;
+		}
+
+		function calculateMotionPixels(motionPixels, x, y, pixelDiff) {
+			motionPixels[x] = motionPixels[x];
+			motionPixels[x][y] = true;
+
+			return motionPixels;
+		}
+
+
 	</script>
 </body>
 </html>
