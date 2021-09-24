@@ -7,7 +7,7 @@
     {
         "qus":"Somehow I felt that the virtual world surrounded me.",
         "cat":"spatial presence",
-        "scl":["fully disagree", "disagree", "somewhat disagree", "neither agree nor disagree", "somewhat agree", "agree", "fully agree"]
+        "scl":["fully disagree", "fully agree"]
     },
     {
         "qus":"I felt like I was just perceiving pictures.",
@@ -17,22 +17,22 @@
     {
         "qus":"I did not feel present in the virtual space.",
         "cat":"spatial presence",
-        "scl":["fully disagree", "disagree", "somewhat disagree", "neither agree nor disagree", "somewhat agree", "agree", "fully agree"]
+        "scl":["did not feel", "felt present"]
     },
     {
         "qus":"I felt present in the virtual space.",
         "cat":"spatial presence",
-        "scl":["fully disagree", "disagree", "somewhat disagree", "neither agree nor disagree", "somewhat agree", "agree", "fully agree"]
+        "scl":["fully disagree", "fully agree"]
     },
     {
         "qus":"I had a sense of acting in the virtual space, rather than operating something from outside.",
         "cat":"spatial presence",
-        "scl":["fully disagree", "disagree", "somewhat disagree", "neither agree nor disagree", "somewhat agree", "agree", "fully agree"]
+        "scl":["fully disagree","fully agree"]
     },
     {
         "qus":"How aware were you of the real world surrounding you while navigating in the virtual world? (i.e. sounds, room temperature, other people, etc.)?",
         "cat":"spatial presence",
-        "scl":["not aware at all", "low awareness", "slightly aware", "neither aware or not aware", "moderately aware", "aware", "fully aware"]
+        "scl":["extremely aware", "moderately aware", "not aware at all"]
     },
     {
         "qus":"I still paid attention to the real environment.",
@@ -51,7 +51,7 @@
         "qus":"How much did your experience in the virtual environment seem consistent with your real world experience?",
         "cat":"spatial presence",
         "scl":[
-            "not consistent", "inconsistent", "somewhat inconsistent", "neither consistent nor inconsistent", 
+            "not consistent", "inconsistent", "somewhat inconsistent", "moderately consistent", 
             "somewhat consistent", "consistent", "very consistent"
         ]
     },
