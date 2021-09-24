@@ -3,6 +3,12 @@
 <head>
     <%- include('_head'); %>
     <%- include('_head_vr'); %>
+    <style>
+        video{
+            position: absolute;
+            top: 0;
+        }
+    </style>
 </head>
 <body>
 
@@ -33,7 +39,7 @@
             raycaster="objects: [gui-interactable]; lineColor: #7B98F7; far: 1000" 
             lego-model="legoTemplate:#lego-template" 
             gun="bulletTemplate:#bullet-template" 
-            networked="template:#hand-template;attachTemplateToLocal:false;">
+            networked="template:#hand-l-template;attachTemplateToLocal:false;">
             <a-entity id="controller-menu" opacity="0.8">
                 <a-entity id="menu" position="0 .05 0" rotation="0 0 0" scale=".15 .15 .15" layout="type: box; plane: xy; columns: 3; margin: 2; align: center" rotation="0 0 0">
                     <a-box position="0 0 -1" depth=".5" height=".05" width="1" rotation="0 0 0" color="black">
@@ -53,8 +59,8 @@
             gun="bulletTemplate:#bullet-template" 
             laser-controls="hand: right" 
             mixin="hud-interactable"
-            raycaster="objects: [gui-interactable], .clickable, .hud; lineColor: black; far: 1000" 
-            networked="template:#hand-template;attachTemplateToLocal:false;">
+            raycaster="objects: [gui-interactable], .clickable, .hud; lineColor: #7B98F7; far: 1000" 
+            networked="template:#hand-r-template;attachTemplateToLocal:false;">
             
             <a-entity id="playerPointer" networked="template:#pointer-template;attachTemplateToLocal:true;">
                 <a-entity class="pointer" visible="false"></a-entity>
@@ -175,6 +181,7 @@
         let localStream = null;
         let peers = {}
         let streams = []
+        let hudList = []
         let videoFeeds = []
         let clients = {sender: {tag: '', socket_id: ''}, receiver: []}
         let myId;
@@ -269,18 +276,14 @@
                 
                 // remove <video> and <hud-video> elem, pop @id from videoFeeds
                 const videoEls = document.querySelectorAll("#vid_"+socket_id);
-                videoEls.forEach(function(vid) {
-                    vid.remove();
-                });
                 const hudVideoEls = document.querySelectorAll("#hud_"+socket_id);
-                hudVideoEls.forEach(function(vid) {
-                    vid.remove();
-                });
-                videoFeeds.forEach((v,k) => {
-                    if (v.socket_id == socket_id) {
-                        videoFeeds.splice(k,1);
-                    }
-                });
+
+                hudList.forEach((v,k) => { if (v == socket_id) hudList.splice(k,1); });
+                document.querySelector('#playerHead').setAttribute('track-camera', 'target: ' + hudList.join(','));
+
+                videoEls.forEach(function(vid) { vid.remove(); });
+                hudVideoEls.forEach(function(vid) { vid.remove(); });
+                videoFeeds.forEach((v,k) => { if (v.socket_id == socket_id) videoFeeds.splice(k,1); });
         }
 
         document.querySelector("pre").innerHTML += socket_id + ' left\n';
@@ -301,7 +304,7 @@
                 let newVid = document.createElement('video')
                 newVid.srcObject = event.streams[0];
                 newVid.id = 'vid_'+socket_id
-                if(marginTop==200) newVid.classList.add("remote")
+                if(marginTop>=200) newVid.classList.add("remote")
                 newVid.setAttribute('style','margin-top:'+marginTop+'px');
                 newVid.playsinline = false
                 newVid.autoplay = true
@@ -309,7 +312,7 @@
                 newVid.play()
                 document.body.appendChild(newVid)
                 marginTop+=200;
-                initHUD();
+                setTimeout(() => { initHUD(); }, 5000);
             //}
             };
 
@@ -330,17 +333,19 @@
         }
 
         function initHUD() {
+            var sceneEl = $('a-scene');
+
             videoFeeds.forEach((v,k) => {
-                if (v.tag == 'main' && !isSkyset) {
-                    console.log('mainland ', v.socket_id);
-                    
+                if (v.tag == 'main') {
                     let skybox = document.querySelector("a-sky");
                     skybox.setAttribute('set-sky', `#vid_${v.socket_id}`);
                     isSkyset = true;
                 }
                 
                 if(v.tag !== 'main' && !document.querySelector(`#hud_${v.socket_id}`)) {
-                    $('#playerHead').append(`<a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="hud"  mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5"></a-plane>`);
+                    sceneEl.append(`<a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="hud"  mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5"></a-plane>`);
+                    hudList.push('#hud_' + v.socket_id);
+                    document.querySelector('#playerHead').setAttribute('track-camera', 'target: ' + hudList.join(','));
                 }
             });
         }

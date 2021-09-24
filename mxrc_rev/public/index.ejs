@@ -20,19 +20,10 @@
         <a-sky src="#broadcaster" rotation="0 -90 0"></a-sky>
     </a-scene>
 
-
-    <section class="select">
-        <label for="audioSource">Audio source: </label>
-        <select id="audioSource"></select>
-    </section>
-  
-    <section class="select">
-        <label for="videoSource">Video source: </label>
-        <select id="videoSource"></select>
-    </section>
-
-    <pre></pre>
+   
+    <%- include('_device_list'); %>
     <video id="broadcaster" class="host" playsinline autoplay muted></video>
+    <pre></pre>
 
     
     <script src="scripts/rtcconfig.js"></script>

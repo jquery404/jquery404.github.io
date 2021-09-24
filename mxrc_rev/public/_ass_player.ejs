@@ -13,16 +13,23 @@
 </template>
 
 <!-- Hand -->
-<template id="hand-template">
+<template id="hand-l-template">
     <a-entity>
-      <a-sphere color="#ffad34" radius=".05"></a-sphere>
+      <!-- <a-sphere color="#ffad34" radius=".05"></a-sphere> -->
+      <a-entity gltf-model="#hand-l-glb" scale=".08 .08 .08"></a-entity>
+    </a-entity>
+</template>
+
+<template id="hand-r-template">
+    <a-entity>
+      <a-entity gltf-model="#hand-r-glb" scale=".08 .08 .08"></a-entity>
     </a-entity>
 </template>
 
 <!-- Hand -->
 <template id="pointer-template">
     <a-entity>
-        <a-entity class="pointer" gltf-model="#pointer-glb" position="0 0 0" rotation="-90 0 0"></a-entity>
+        <a-entity class="pointer" visible="false" gltf-model="#pointer-glb" position="0 0 0" rotation="-90 0 0"></a-entity>
     </a-entity>
 </template>
 

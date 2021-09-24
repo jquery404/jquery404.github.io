@@ -15,7 +15,7 @@ AFRAME.registerComponent('lego-model', {
         if(!this.data.isShowing){
             var el = document.createElement('a-entity');
             el.id = 'legoGoal';
-            el.setAttribute('scale', '.02 .02 .02');
+            el.setAttribute('scale', '.1 .1 .1');
             el.setAttribute('position', '0 .05 -.4');
             el.setAttribute('gltf-model', this.data.legoSrc)
             // setTimeout(this.toggleShowing.bind(this), 3 * 1000);

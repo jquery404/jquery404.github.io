@@ -139,6 +139,7 @@
 
     <button onclick="toggleViewer()" type="button">Start viewer</button>
 
+    <%- include('_device_list'); %>
     <video class="host" playsinline autoplay muted></video>
     <pre></pre>
     
@@ -155,28 +156,65 @@
 
         // Get camera and microphone
         const videoElement = document.querySelector(".host");
-        const video = document.querySelector("#video2");
-        let canvas;
+        const videoSelect = document.querySelector("select#videoSource");
+                
         let marginTop=0;
         let skyset=false;
 
         setTimeout(() => {
-            getStream();
+            getStream().then(getDevices).then(gotDevices);
         }, 1000); 
 
         function getStream() {
             if (window.stream) {
-            window.stream.getTracks().forEach(track => {
-                track.stop();
-            });
+                window.stream.getTracks().forEach(track => {
+                    track.stop();
+                });
             }
-            canvas = document.querySelector('canvas');
-            canvas.getContext('2d');
-            var stream = canvas.captureStream(25);
+            const videoSource = videoSelect.value;
+            const constraints = {
+            audio: false,
+            video: { deviceId: videoSource ? { exact: videoSource } : undefined }
+            };
+            return navigator.mediaDevices
+            .getUserMedia(constraints)
+            .then(gotStream)
+            .catch(handleError);
+        }
+
+        function gotStream(stream) {
+            window.stream = stream;
+            videoSelect.selectedIndex = [...videoSelect.options].findIndex(
+            option => option.text === stream.getVideoTracks()[0].label
+            );
             videoElement.srcObject = stream;
+            videoElement.play();
+            
             localStream = stream;
+            
             init();
         }
+
+        function handleError(error) {
+            console.error("Error: ", error);
+        }
+
+        function getDevices() {
+            return navigator.mediaDevices.enumerateDevices();
+        }
+
+        function gotDevices(deviceInfos) {
+            window.deviceInfos = deviceInfos;
+            for (const deviceInfo of deviceInfos) {
+            const option = document.createElement("option");
+            option.value = deviceInfo.deviceId;
+            if (deviceInfo.kind === "videoinput") {
+                option.text = deviceInfo.label || `Camera ${videoSelect.length + 1}`;
+                videoSelect.appendChild(option);
+            }
+            }
+        }
+    
         
     
         // .................................................

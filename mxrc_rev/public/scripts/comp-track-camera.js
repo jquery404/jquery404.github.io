@@ -48,7 +48,7 @@ AFRAME.registerComponent('track-camera', {
         obj.lookAt(pos);
         const distanceFromCamera = 3; 
         const target = new THREE.Vector3(0, 0, -distanceFromCamera);
-        // const target = new THREE.Vector3(i*-3 + 1, 0, -distanceFromCamera);
+        // const target = new THREE.Vector3(i*-1 + 1, 0, -distanceFromCamera);
         target.applyMatrix4(this.el.object3D.matrixWorld);    
         
         const distance = obj.position.distanceTo(target);
