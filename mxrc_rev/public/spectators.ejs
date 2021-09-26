@@ -1,0 +1,66 @@
+<script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+<script>
+AFRAME.registerComponent('spectator',{
+    schema: {
+        canvas: {default: ''},
+        fps: {default: 90.0}
+    },
+        
+    init: function() {
+        var targetEl = document.querySelector(this.data.canvas);
+        this.counter = 0;
+        this.renderer = new THREE.WebGLRenderer( { antialias: true } );
+        this.renderer.setPixelRatio( window.devicePixelRatio );
+        this.renderer.setSize( targetEl.offsetWidth, targetEl.offsetHeight );
+        // creates spectator canvas
+        targetEl.appendChild(this.renderer.domElement);
+        this.renderer.domElement.id = "canvas";
+        this.renderer.domElement.crossorigin="anonymous"
+        this.renderer.domElement.height=300; 
+        this.renderer.domElement.width=400;
+        this.el.removeAttribute('look-controls');
+        this.el.removeAttribute('wasd-controls');
+        console.log(this.renderer.domElement);
+        console.log(document.querySelector('a-scene'))
+    },
+        
+    tick: function(time, timeDelta) {
+        var loopFPS = 1000.0 / timeDelta;
+        var hmdIsXFasterThanDesiredFPS = loopFPS / this.data.fps;
+        var renderEveryNthFrame = Math.round(hmdIsXFasterThanDesiredFPS);
+        if(this.counter % renderEveryNthFrame === 0){
+            this.render(timeDelta);
+        }
+        this.counter += 1;  
+    },
+        
+    render: function(){
+        this.renderer.render( this.el.sceneEl.object3D , this.el.object3DMap.camera );
+    }
+});
+</script>
+
+
+<div style="height:300px; width:400px;">
+
+    <a-scene embedded>
+
+        <a-sky color="#ECECEC"></a-sky>
+        <a-entity id="secondaryCamera" position="2 1.8 4.8" rotation="-20 45 0">
+            <a-camera spectator="canvas:#spectatorDiv;" active="false"></a-camera>
+        </a-entity>
+        <a-entity id="primaryCamera" position="0 0 3.8" >
+            <a-camera position="0 1.6 0" wasd-controls>
+                <a-entity geometry="primitive:box;width:1;height:1;depth:1;" position="-1 0.5 1" rotation="0 45 0"></a-entity>
+            </a-camera>
+        </a-entity>
+        <a-entity geometry="primitive:box;width:1;height:1;depth:1;" position="-1 0.5 1" rotation="0 45 0" ></a-entity>
+        <a-entity position="0 1.25 -1" geometry="primitive:sphere;radius:1.25" rotation="0 225 0" ></a-entity>
+        <a-entity position="1 0.75 1" geometry="primitive:cylinder;radius:0.5;height:1.5"></a-entity>
+        <a-entity position="0 1.6 -6" geometry="primitive:plane;width:2; height:2" material="src:#canvas;side: double"></a-entity>
+
+        <a-entity rotation="-90 0 0" geometry="primitive:plane;width:4; height:4"></a-entity>
+    </a-scene>
+</div>
+<div  style="height:300px; width:400px;" id='spectatorDiv'></div>
+        

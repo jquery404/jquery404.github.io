@@ -335,6 +335,7 @@
         function initHUD() {
             var sceneEl = $('a-scene');
 
+            // videofeed list
             videoFeeds.forEach((v,k) => {
                 if (v.tag == 'main') {
                     let skybox = document.querySelector("a-sky");
@@ -348,6 +349,18 @@
                     document.querySelector('#playerHead').setAttribute('track-camera', 'target: ' + hudList.join(','));
                 }
             });
+
+            // sometimes video object doesn't appear in the videofeeds, so check the client list
+            clients.receiver.forEach((v, k) => {
+                if(v.tag !== 'main' && !document.querySelector(`#hud_${v.socket_id}`)) {
+                    sceneEl.append(`<a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="hud"  mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5"></a-plane>`);
+                    hudList.push('#hud_' + v.socket_id);
+                    document.querySelector('#playerHead').setAttribute('track-camera', 'target: ' + hudList.join(','));
+                }
+
+            });
+
+
         }
 
     </script>
