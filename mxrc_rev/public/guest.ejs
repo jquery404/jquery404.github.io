@@ -14,7 +14,6 @@
 
     <a-scene mxrc-room>
         <a-assets>
-
         <img id="grid" src="<%= _url %>/img/grid.png">
         <img id="sky" src="<%= _url %>/img/sky.jpg" />
         
@@ -30,9 +29,7 @@
         <!-- /Templates -->
         </a-assets>
 
-        <%- include('_player'); %>
-
-        
+        <%- include('_player_vr'); %>
 
         <a-entity id="lhand" 
             laser-controls="hand: left"
@@ -206,6 +203,12 @@
             var stream = canvas.captureStream(25);
             videoElement.srcObject = stream;
             localStream = stream;
+
+            // canvas = document.querySelector('#cam');
+            // canvas.getContext('2d');
+            // var stream = canvas.captureStream(25);
+            // videoElement.srcObject = stream;
+            // localStream = stream;
 
             init();
         }

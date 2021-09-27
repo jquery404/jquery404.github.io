@@ -1,5 +1,5 @@
 AFRAME.registerComponent('camrender',{
-    'schema': {
+    schema: {
        // desired FPS
        fps: {
             type: 'number',
@@ -19,9 +19,11 @@ AFRAME.registerComponent('camrender',{
        width: {
             type: 'number',
             default: 400
-       }
+       },
+       isPresenting:{default:false}
+
     },
-    'update': function(oldData) {
+    update: function(oldData) {
         var data = this.data
         if (oldData.cid !== data.cid) {
             // Find canvas element to be used for rendering
@@ -46,8 +48,17 @@ AFRAME.registerComponent('camrender',{
             this.tick = AFRAME.utils.throttleTick(this.tick, 1000 / data.fps , this);
         };
     },
-    'tick': function(time, timeDelta) {
+    tick: function(time, timeDelta) {
         this.renderer.render( this.el.sceneEl.object3D , this.el.object3DMap.camera );
+
+        this.renderer.xr.enabled = false;
+        let oldFramebuffer = this.renderer._framebuffer;
+        if(this.data.isPresenting)
+            console.log(this.renderer.xr);
+        //this.renderer.state.bindXRFramebuffer( null );
+        this.renderer.render( this.el.sceneEl.object3D , this.el.object3DMap.camera );
+        // this.renderer.xr.enabled = true;
+        //this.renderer.state.bindXRFramebuffer(oldFramebuffer);
     }
 });
 

@@ -175,6 +175,11 @@ AFRAME.registerComponent('sync-paint', {
         return;
         }
         let clientData = usersMap[sender];
+
+        if (clientData.indicator) {
+            clientData.el.removeChild(clientData.indicator);
+            clientData.indicator = null;
+        }
         
         that.userData.isSelecting = false;
         that.painter.update();

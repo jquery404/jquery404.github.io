@@ -29,7 +29,10 @@ app.get('/guest', (req, res) => {
 
 
 app.get('/follow', (req, res) => {
-    res.render('spectator.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
+    res.render('follow.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
+    // res.render('spectator.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
+    // res.render('spectators.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
+    // res.render('three.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
 })
 
 

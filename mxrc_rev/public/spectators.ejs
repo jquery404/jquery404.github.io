@@ -18,10 +18,8 @@ AFRAME.registerComponent('spectator',{
         this.renderer.domElement.crossorigin="anonymous"
         this.renderer.domElement.height=300; 
         this.renderer.domElement.width=400;
-        this.el.removeAttribute('look-controls');
-        this.el.removeAttribute('wasd-controls');
-        console.log(this.renderer.domElement);
-        console.log(document.querySelector('a-scene'))
+
+        console.log(this.el.object3DMap.camera.type)
     },
         
     tick: function(time, timeDelta) {
@@ -57,10 +55,16 @@ AFRAME.registerComponent('spectator',{
         <a-entity geometry="primitive:box;width:1;height:1;depth:1;" position="-1 0.5 1" rotation="0 45 0" ></a-entity>
         <a-entity position="0 1.25 -1" geometry="primitive:sphere;radius:1.25" rotation="0 225 0" ></a-entity>
         <a-entity position="1 0.75 1" geometry="primitive:cylinder;radius:0.5;height:1.5"></a-entity>
-        <a-entity position="0 1.6 -6" geometry="primitive:plane;width:2; height:2" material="src:#canvas;side: double"></a-entity>
+        <a-entity position="0 1.6 -6" geometry="primitive:plane;width:12; height:12" material="src:#canvas;side: double"></a-entity>
 
         <a-entity rotation="-90 0 0" geometry="primitive:plane;width:4; height:4"></a-entity>
     </a-scene>
 </div>
 <div  style="height:300px; width:400px;" id='spectatorDiv'></div>
-        
+
+<script>
+    document.querySelector('a-scene').addEventListener('enter-vr', function () {
+        console.log("ENTERED VR");
+        console.log(this.el.object3DMap.camera.type)
+    });
+</script>

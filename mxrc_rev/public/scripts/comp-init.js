@@ -15,7 +15,10 @@
     });
 
     $(rhand).on("triggerdown", function(e) {
-
+        var myPointer = document.querySelectorAll('.pointer');
+                    myPointer.forEach(elem => {
+                        elem.setAttribute('visible', 'true');
+                    });  
         if(isMenuHovered) {
             isMenuSelected = true;
             selectedMenu = menulabel.getAttribute('value');

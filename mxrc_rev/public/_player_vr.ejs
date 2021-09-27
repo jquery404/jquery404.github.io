@@ -1,0 +1,10 @@
+<a-entity id="player" networked="template:#player-template;attachTemplateToLocal:false;">
+    <a-entity id="playerHead"
+        networked="template:#avatar-template;attachTemplateToLocal:false;"
+        camera
+        position="0 1.6 0" 
+        look-controls
+        wasd-controls>
+        <a-entity class="nametag" visible="false"></a-entity>
+    </a-entity>
+</a-entity>
