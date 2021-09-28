@@ -3,6 +3,7 @@
 <head>
     <%- include('_head'); %>
     <%- include('_head_vr'); %>
+    <script src="<%= _url %>/scripts/comp-cam-renderer.js"></script>
     <style>
         video{
             position: absolute;
@@ -16,7 +17,8 @@
         <a-assets>
         <img id="grid" src="<%= _url %>/img/grid.png">
         <img id="sky" src="<%= _url %>/img/sky.jpg" />
-        
+        <canvas id="cam"></canvas>
+
         <%- include('_ass_model'); %>
         <%- include('_ass_player'); %>
         <%- include('_ass_hud'); %>
@@ -198,17 +200,17 @@
                 track.stop();
             });
             }
-            canvas = document.querySelector('canvas');
-            canvas.getContext('2d');
-            var stream = canvas.captureStream(25);
-            videoElement.srcObject = stream;
-            localStream = stream;
-
-            // canvas = document.querySelector('#cam');
+            // canvas = document.querySelector('canvas');
             // canvas.getContext('2d');
             // var stream = canvas.captureStream(25);
             // videoElement.srcObject = stream;
             // localStream = stream;
+
+            canvas = document.querySelector('#cam');
+            canvas.getContext('2d');
+            var stream = canvas.captureStream(25);
+            videoElement.srcObject = stream;
+            localStream = stream;
 
             init();
         }

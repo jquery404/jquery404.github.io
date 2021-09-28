@@ -217,56 +217,108 @@
 </head>
 <body>
 
-    <a-scene>
-		<a-assets>
-			<%- include('_ass_hud'); %>
-			<img id="paint" src="<%= _url %>/img/ico_paint.jpg" />
-			<img id="shoot" src="<%= _url %>/img/ico_shoot.jpg" />
-		</a-assets>
-		<a-entity environment="preset: forest"></a-entity>
-		<a-entity  id="rhand" 
-            laser-controls="hand: right" 
-            mixin="hud-interactable"
-            raycaster="objects: .hud; lineColor: #00FFFF; far: 1000">
-        </a-entity>
-	
-        <a-entity position="-4 4 -8" look-at="tar: #player; speed: .01">
-            <a-cone height=".25" color="#C388A3" radius-bottom="0.5" radius-top="0" rotation="90 0 0"></a-cone>
-        </a-entity>
+	<a-scene vr-mode-ui="enabled: false">
+        <a-assets>
+        <img id="grid" src="img/grid.png">
+        <img id="sky" src="img/sky.jpg" />
+        </a-assets>
 
-		<a-entity id="horse" position="-2 2 -4">
-            <a-circle src="#shoot" radius=".5" rotation="0 0 0"></a-circle>
-        </a-entity>
+        <a-entity id="player" camera position="0 1.6 0" wasd-controls look-controls></a-entity>
 
-		<a-entity id="camel" position="-1 2 -5">
-            <a-plane src="#paint" rotation="0 0 0"></a-plane>
-        </a-entity>
+        <a-entity position="0 0 0"
+        geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
+        material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
 
-		<a-entity position="-0 0 -6">
-            <a-cone mixin="plane" class="hud" height=".25" color="#9900DD" radius-bottom="0.5" radius-top="0" rotation="90 0 0"></a-cone>
-        </a-entity>
-		<a-text id="debug" value="Hello World" color="red" position="0 2 -5" scale="2 2 2"></a-text>
-
-        <a-box width="1" mixin="plane" class="hud" depth="1" height="1" color="#4CC3D9" position="-4 0 -2"></a-box>
-        <!-- <a-camera track-camera id="player" position="0 1.6 0"></a-camera> -->
-        <a-camera track-camera="target: #horse, #camel" id="player" position="0 1.6 0"></a-camera>
-		<!-- <a-entity id="player" camera position="0 1.6 0" look-controls></a-entity> -->
+        <a-sky src="#broadcaster" rotation="0 -90 0"></a-sky>
     </a-scene>
 	
-	<video class="host" playsinline autoplay muted></video>
-	<span id="score">0</span>
+	<%- include('_device_list'); %>
+    <video id="broadcaster" class="host" playsinline autoplay muted></video>
+	<span id="score" style="position:absolute;top:50%;left: 50%;font-size:3em;color:white;">0</span>
+
+	<div class="params" style="position: absolute;bottom:0; left:0">
+		<input type="checkbox" id="pointer" name="pointer" value="">
+		<label for="pointer"> Pointer</label><br>
+		<input type="checkbox" id="drawing" name="drawing" value="">
+		<label for="drawing"> Drawing</label><br>
+		<input type="checkbox" id="gesture" name="gesture" value="">
+		<label for="gesture"> Gesture</label><br> 
+	</div>
+
+
+    <pre></pre>
+	
+	<script src="scripts/rtcconfig.js"></script>
 	<script src="scripts/jquery-latest.min.js"></script>
     <script>
-		let localStream = null;
-		let canvas;
-		let stream;
-		const videoElement = document.querySelector(".host");
+		// Get camera and microphone
+        const videoElement = document.querySelector(".host");
+        const videoTwoElement = document.querySelector(".host2");
+        const audioSelect = document.querySelector("select#audioSource");
+        const videoSelect = document.querySelector("select#videoSource");
+        const video = document.querySelector("#video2");
+        let canvas;
+        let toggle;
 
-		canvas = document.querySelector('canvas');
-		canvas.getContext('2d');
-        stream = canvas.captureStream(25);
-        videoElement.srcObject = stream;
-		localStream = stream;
+        audioSelect.onchange = getStream;
+        videoSelect.onchange = getStream;
+
+        getStream().then(getDevices).then(gotDevices);
+
+        function getStream() {
+            if (window.stream) {
+                window.stream.getTracks().forEach(track => {
+                    track.stop();
+                });
+            }
+            const audioSource = audioSelect.value;
+            const videoSource = videoSelect.value;
+            const constraints = {
+            audio: false,
+            video: { deviceId: videoSource ? { exact: videoSource } : undefined }
+            };
+            return navigator.mediaDevices
+            .getUserMedia(constraints)
+            .then(gotStream)
+            .catch(handleError);
+        }
+
+        function gotStream(stream) {
+            window.stream = stream;
+            audioSelect.selectedIndex = [...audioSelect.options].findIndex(
+            option => option.text === stream.getAudioTracks()[0].label
+            );
+            videoSelect.selectedIndex = [...videoSelect.options].findIndex(
+            option => option.text === stream.getVideoTracks()[0].label
+            );
+            videoElement.srcObject = stream;
+            videoElement.play();
+            
+            localStream = stream;
+        }
+
+        function handleError(error) {
+            console.error("Error: ", error);
+        }
+
+        function getDevices() {
+            return navigator.mediaDevices.enumerateDevices();
+        }
+
+        function gotDevices(deviceInfos) {
+            window.deviceInfos = deviceInfos;
+            for (const deviceInfo of deviceInfos) {
+            const option = document.createElement("option");
+            option.value = deviceInfo.deviceId;
+            if (deviceInfo.kind === "audioinput") {
+                option.text = deviceInfo.label || `Microphone ${audioSelect.length + 1}`;
+                audioSelect.appendChild(option);
+            } else if (deviceInfo.kind === "videoinput") {
+                option.text = deviceInfo.label || `Camera ${videoSelect.length + 1}`;
+                videoSelect.appendChild(option);
+            }
+            }
+        }
 
 
 		// motion canvas
@@ -288,8 +340,22 @@
 			alert('Something went wrong.');
 		}
 
+		var justchecked = false;
 		function capture(payload) {
-			score.textContent = payload.score;
+			if(payload.score>200 && !justchecked){
+				score.textContent = "Switch";
+				videoElement.pause();
+				setTimeout(()=> {
+					justchecked = true;
+					videoElement.play();
+					setTimeout(()=> {
+						justchecked = false;
+					}, 1000)
+				}, 1000)
+			}
+			else{
+				score.textContent = "Inactive " + payload.score;
+			}
 		}
 
 		DiffCamEngine.init({
@@ -299,6 +365,14 @@
 			initErrorCallback: initError,
 			captureCallback: capture
 		});
+
+
+		// options
+		let pointerEl = document.querySelector('#pointer');
+		let drawEl = document.querySelector('#drawing');
+		let gestureEl = document.querySelector('#gesture');
+
+		console.log(pointerEl.checked, drawEl.checked, gestureEl.checked)
 		
 
 

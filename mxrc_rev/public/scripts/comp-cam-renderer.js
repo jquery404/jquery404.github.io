@@ -49,16 +49,7 @@ AFRAME.registerComponent('camrender',{
         };
     },
     tick: function(time, timeDelta) {
-        this.renderer.render( this.el.sceneEl.object3D , this.el.object3DMap.camera );
-
-        this.renderer.xr.enabled = false;
-        let oldFramebuffer = this.renderer._framebuffer;
-        if(this.data.isPresenting)
-            console.log(this.renderer.xr);
-        //this.renderer.state.bindXRFramebuffer( null );
-        this.renderer.render( this.el.sceneEl.object3D , this.el.object3DMap.camera );
-        // this.renderer.xr.enabled = true;
-        //this.renderer.state.bindXRFramebuffer(oldFramebuffer);
+        this.renderer.render( this.el.sceneEl.object3D , this.el.object3DMap.camera );        
     }
 });
 
