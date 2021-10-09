@@ -16,6 +16,7 @@
 	<script src="https://unpkg.com/aframe-environment-component@1.2.0/dist/aframe-environment-component.min.js"></script>
 	<script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script>
 	<script src="<%= _url %>/scripts/diffCam.js"></script>
+	<script src="<%= _url %>/scripts/comp-shader-wave.js"></script>
     <script>
 
 	var coordinates = AFRAME.utils.coordinates;
@@ -228,6 +229,13 @@
         <a-entity position="0 0 0"
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
         material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
+
+		<a-plane postion="0 -2 0" 
+			width="25" height="40" 
+			rotation="-90 180 -90" 
+			segments-height="100" 
+			segments-width="100" 
+			material="shader:makewaves; uMap: #sky; repeat: 500 500;"></a-plane>
 
         <a-sky src="#broadcaster" rotation="0 -90 0"></a-sky>
     </a-scene>
