@@ -30,17 +30,17 @@ AFRAME.registerComponent('track-camera', {
             direction.set(e[8], e[9], e[10]).normalize();
 
             
-            var debug = document.getElementById("debug");
-            debug.setAttribute("value", "Position: " + position.x.toFixed(2) + " " + position.y.toFixed(2) + " " + position.z.toFixed(2) + " ," + "Rotation: " + rotation.x.toFixed(2) + " " + rotation.y.toFixed(2) + " " + rotation.z.toFixed(2) + " ," + "Direction: " + direction.x.toFixed(2) + " " + direction.y.toFixed(2) + " " + direction.z.toFixed(2));
+            // var debug = document.getElementById("debug");
+            // debug.setAttribute("value", "Position: " + position.x.toFixed(2) + " " + position.y.toFixed(2) + " " + position.z.toFixed(2) + " ," + "Rotation: " + rotation.x.toFixed(2) + " " + rotation.y.toFixed(2) + " " + rotation.z.toFixed(2) + " ," + "Direction: " + direction.x.toFixed(2) + " " + direction.y.toFixed(2) + " " + direction.z.toFixed(2));
 
-            if(document.querySelector('.arrow'))
-            if (direction.x > 0.5) {
-                document.querySelector('.arrow').setAttribute('hud-indicator', {dir:'left'})
-            } else if (direction.x < -0.5) {
-                document.querySelector('.arrow').setAttribute('hud-indicator', {dir:'right'})
-            } else {
-                document.querySelector('.arrow').setAttribute('hud-indicator', {dir:'none'})
-            }
+            // if(document.querySelector('.arrow'))
+            // if (direction.x > 0.5) {
+            //     document.querySelector('.arrow').setAttribute('hud-indicator', {dir:'left'})
+            // } else if (direction.x < -0.5) {
+            //     document.querySelector('.arrow').setAttribute('hud-indicator', {dir:'right'})
+            // } else {
+            //     document.querySelector('.arrow').setAttribute('hud-indicator', {dir:'none'})
+            // }
 
     
             // target tracking
