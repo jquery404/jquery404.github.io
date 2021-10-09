@@ -14,3 +14,20 @@ which is the added benefit of having a 360-degree camera
 
 ideally you'd do :
 **manual view switching with no suggestions** vs **suggested view switching** vs **automatic view switching**
+
+Supporting multiple remote user to interact with multiple ar spaces
+
+Exploring … 
+Contextualise limit of 10 people
+
+Varies people 
+Limitation : currently 2 users
+
+AR user will try both system = 2
+VR both use the systems
+All 3 experiments spaces
+
+System design 
+..
+Is that sound like a plan
+Yeah potentially

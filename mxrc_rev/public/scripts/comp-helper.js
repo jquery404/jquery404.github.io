@@ -71,3 +71,40 @@
           return {x: x, y: y};
         }
     });
+
+    // Indicator of hud direction
+    AFRAME.registerComponent('hud-indicator', {
+        schema: {
+          dir: {default: 'left'}
+        },
+        
+        init: function() {
+            var el = this.el;
+            
+            el.setAttribute('position', '0 0 -90');
+            el.setAttribute('rotation', '.25 0 0');
+            el.setAttribute('animation', 'property: position; to: .5 0 0; dur: 1000; loop: true');
+        },
+
+        update: function() {
+            var el = this.el;
+            var data = this.data;
+            var animation = el.getAttribute('animation');
+
+            if (data.dir == 'left') {
+                el.setAttribute('visible', 'true');
+                el.setAttribute('rotation', '0 0 90');
+                el.setAttribute('position', '-.25 0 0');
+                el.setAttribute('animation', 'property: position; to: -.5 0 0; dur: 1000; loop: true');
+            } else if (data.dir == 'right') {
+                el.setAttribute('visible', 'true');
+                el.setAttribute('rotation', '0 0 -90');
+                el.setAttribute('position', '.25 0 0');
+                el.setAttribute('animation', 'property: position; to: .5 0 0; dur: 1000; loop: true');
+            } else if (data.dir == 'none') {
+                el.setAttribute('visible', 'false');
+            }
+            
+        },
+
+    });

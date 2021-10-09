@@ -65,12 +65,9 @@
                 <a-entity class="pointer" visible="false"></a-entity>
             </a-entity>
         </a-entity>
-
         
-
-
-
         <a-entity class="syncManager" sync-paint></a-entity>
+
         <!-- question -->
         <a-entity id="questionnaires" 
             visible= "false"    
@@ -169,7 +166,7 @@
 
 
     <button onclick="toggleViewer()" type="button">Start viewer</button>
-
+    <input id='debug' type="text" style="position: absolute;right: 0;top: 0;width: 490px;">
     <video class="host" playsinline autoplay muted></video>
     <pre></pre>
     
@@ -358,7 +355,9 @@
             // sometimes video object doesn't appear in the videofeeds, so check the client list
             clients.receiver.forEach((v, k) => {
                 if(v.tag !== 'main' && !document.querySelector(`#hud_${v.socket_id}`)) {
-                    sceneEl.append(`<a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="hud"  mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5"></a-plane>`);
+                    sceneEl.append(`<a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="hud" mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5">
+                        <a-entity class="arrow" hud-indicator gltf-model="#arrow-glb" scale=".1 .1 .1"></a-entity>
+                        </a-plane>`);
                     hudList.push('#hud_' + v.socket_id);
                     document.querySelector('#playerHead').setAttribute('track-camera', 'target: ' + hudList.join(','));
                 }

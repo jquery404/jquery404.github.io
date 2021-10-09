@@ -342,20 +342,20 @@
 
 		var justchecked = false;
 		function capture(payload) {
-			if(payload.score>200 && !justchecked){
-				score.textContent = "Switch";
-				videoElement.pause();
-				setTimeout(()=> {
-					justchecked = true;
-					videoElement.play();
-					setTimeout(()=> {
-						justchecked = false;
-					}, 1000)
-				}, 1000)
-			}
-			else{
+			// if(payload.score>100 && !justchecked){
+			// 	score.textContent = "Switch";
+			// 	videoElement.pause();
+			// 	setTimeout(()=> {
+			// 		justchecked = true;
+			// 		videoElement.play();
+			// 		setTimeout(()=> {
+			// 			justchecked = false;
+			// 		}, 5000)
+			// 	}, 5000)
+			// }
+			// else{
 				score.textContent = "Inactive " + payload.score;
-			}
+			//}
 		}
 
 		DiffCamEngine.init({
