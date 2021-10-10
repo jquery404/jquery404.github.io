@@ -17,6 +17,7 @@
 	<script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script>
 	<script src="<%= _url %>/scripts/diffCam.js"></script>
 	<script src="<%= _url %>/scripts/comp-shader-wave.js"></script>
+	<script src="<%= _url %>/scripts/comp-shader-outline.js"></script>
     <script>
 
 	var coordinates = AFRAME.utils.coordinates;
@@ -186,8 +187,8 @@
 			var e = this.el.object3D.matrixWorld.elements;
             direction.set(e[8], e[9], e[10]).normalize();
             
-            var debug = document.getElementById("debug");
-			debug.setAttribute("value", "Position: " + position.x.toFixed(2) + " " + position.y.toFixed(2) + " " + position.z.toFixed(2) + " ," + "Rotation: " + rotation.x.toFixed(2) + " " + rotation.y.toFixed(2) + " " + rotation.z.toFixed(2) + " ," + "Direction: " + direction.x.toFixed(2) + " " + direction.y.toFixed(2) + " " + direction.z.toFixed(2));
+            // var debug = document.getElementById("debug");
+			// debug.setAttribute("value", "Position: " + position.x.toFixed(2) + " " + position.y.toFixed(2) + " " + position.z.toFixed(2) + " ," + "Rotation: " + rotation.x.toFixed(2) + " " + rotation.y.toFixed(2) + " " + rotation.z.toFixed(2) + " ," + "Direction: " + direction.x.toFixed(2) + " " + direction.y.toFixed(2) + " " + direction.z.toFixed(2));
 
 			
 			// target tracking
@@ -203,7 +204,8 @@
 		lookAt: function(obj, pos, i){
 			obj.lookAt(pos);
 			const distanceFromCamera = 3; 
-			const target = new THREE.Vector3(i*-3 + 1, 0, -distanceFromCamera);
+			// const target = new THREE.Vector3(i*-3 + 1, 0, -distanceFromCamera);
+			const target = new THREE.Vector3(i*-1 + 1, 0, -distanceFromCamera); // 1, 0, -1
 			target.applyMatrix4(this.el.object3D.matrixWorld);    
 			
 			const distance = obj.position.distanceTo(target);
@@ -222,27 +224,32 @@
         <a-assets>
         <img id="grid" src="img/grid.png">
         <img id="sky" src="img/sky.jpg" />
+		<%- include('_ass_hud'); %>
         </a-assets>
 
-        <a-entity id="player" camera position="0 1.6 0" wasd-controls look-controls></a-entity>
+        <a-entity id="player" camera track-camera="target:#camel,#horse,#chicken" position="0 1.6 0" wasd-controls look-controls></a-entity>
+
+		<a-plane id="camel" material="shader:outline;color:#9900DD;" mixin="plane" class="hud" width="1" height="1" rotation="90 0 0"></a-plane>
+		<a-plane id="horse" mixin="plane" class="hud" width="1" height="1" color="#343434" rotation="90 0 0"></a-plane>
+		<a-plane id="chicken" mixin="plane" class="hud" width="1" height="1" color="#990000" rotation="90 0 0"></a-plane>
 
         <a-entity position="0 0 0"
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
         material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
 
-		<a-plane postion="0 -2 0" 
+		<!-- <a-plane postion="0 -2 0" 
 			width="25" height="40" 
 			rotation="-90 180 -90" 
 			segments-height="100" 
 			segments-width="100" 
-			material="shader:makewaves; uMap: #sky; repeat: 500 500;"></a-plane>
+			material="shader:makewaves; uMap: #sky; repeat: 500 500;"></a-plane> -->
 
         <a-sky src="#broadcaster" rotation="0 -90 0"></a-sky>
     </a-scene>
 	
 	<%- include('_device_list'); %>
     <video id="broadcaster" class="host" playsinline autoplay muted></video>
-	<span id="score" style="position:absolute;top:50%;left: 50%;font-size:3em;color:white;">0</span>
+	<!-- <span id="score" style="position:absolute;top:50%;left: 50%;font-size:3em;color:white;">0</span> -->
 
 	<div class="params" style="position: absolute;bottom:0; left:0">
 		<input type="checkbox" id="pointer" name="pointer" value="">
@@ -340,13 +347,13 @@
 		document.body.appendChild(motionCanvas);
 
 
-		function initSuccess() {
-			DiffCamEngine.start();
-		}
+		// function initSuccess() {
+		// 	DiffCamEngine.start();
+		// }
 
-		function initError() {
-			alert('Something went wrong.');
-		}
+		// function initError() {
+		// 	alert('Something went wrong.');
+		// }
 
 		var justchecked = false;
 		function capture(payload) {
@@ -366,13 +373,13 @@
 			//}
 		}
 
-		DiffCamEngine.init({
-			video: videoElement,
-			motionCanvas: motionCanvas,
-			initSuccessCallback: initSuccess,
-			initErrorCallback: initError,
-			captureCallback: capture
-		});
+		// DiffCamEngine.init({
+		// 	video: videoElement,
+		// 	motionCanvas: motionCanvas,
+		// 	initSuccessCallback: initSuccess,
+		// 	initErrorCallback: initError,
+		// 	captureCallback: capture
+		// });
 
 
 		// options
