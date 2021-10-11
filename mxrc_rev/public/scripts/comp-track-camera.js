@@ -33,14 +33,14 @@ AFRAME.registerComponent('track-camera', {
             // var debug = document.getElementById("debug");
             // debug.setAttribute("value", "Position: " + position.x.toFixed(2) + " " + position.y.toFixed(2) + " " + position.z.toFixed(2) + " ," + "Rotation: " + rotation.x.toFixed(2) + " " + rotation.y.toFixed(2) + " " + rotation.z.toFixed(2) + " ," + "Direction: " + direction.x.toFixed(2) + " " + direction.y.toFixed(2) + " " + direction.z.toFixed(2));
 
-            // if(document.querySelector('.arrow'))
-            // if (direction.x > 0.5) {
-            //     document.querySelector('.arrow').setAttribute('hud-indicator', {dir:'left'})
-            // } else if (direction.x < -0.5) {
-            //     document.querySelector('.arrow').setAttribute('hud-indicator', {dir:'right'})
-            // } else {
-            //     document.querySelector('.arrow').setAttribute('hud-indicator', {dir:'none'})
-            // }
+            if(document.querySelector('.arrow'))
+            if (direction.x > 0.5) {
+                document.querySelector('.arrow').setAttribute('hud-indicator', {dir:'left'})
+            } else if (direction.x < -0.5) {
+                document.querySelector('.arrow').setAttribute('hud-indicator', {dir:'right'})
+            } else {
+                document.querySelector('.arrow').setAttribute('hud-indicator', {dir:'none'})
+            }
 
     
             // target tracking
@@ -58,8 +58,8 @@ AFRAME.registerComponent('track-camera', {
     lookAt: function(obj, pos, i){
         obj.lookAt(pos);
         const distanceFromCamera = 3; 
-        const target = new THREE.Vector3(0, 0, -distanceFromCamera);
-        // const target = new THREE.Vector3(i*-1 + 1, 0, -distanceFromCamera);
+        // const target = new THREE.Vector3(0, 0, -distanceFromCamera);
+        const target = new THREE.Vector3(i*-1 + 1, 0, -distanceFromCamera); // 1, 0, -1
         target.applyMatrix4(this.el.object3D.matrixWorld);    
         
         const distance = obj.position.distanceTo(target);
