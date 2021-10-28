@@ -29,9 +29,20 @@ All 3 experiments spaces
 
 System design 
 ..
+
 Is that sound like a plan
 Yeah potentially
 https://github.com/areai51/js-camera-motion-detect
 https://github.com/asilvas/salient-maps
 https://github.com/alexanderkroner/saliency
 https://github.com/anvaka/oflow
+
+
+### Feedback
+
+- hard to focus on HUD object in AR (VR view more clearer)
+- AVATAR and HUD need someway to sync
+- AVATAR position was confusing 
+- GUIDE/TUTORIAL is a must to have.
+
+
