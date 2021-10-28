@@ -31,3 +31,7 @@ System design
 ..
 Is that sound like a plan
 Yeah potentially
+https://github.com/areai51/js-camera-motion-detect
+https://github.com/asilvas/salient-maps
+https://github.com/alexanderkroner/saliency
+https://github.com/anvaka/oflow

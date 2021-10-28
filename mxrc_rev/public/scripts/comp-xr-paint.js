@@ -100,8 +100,8 @@ AFRAME.registerComponent('sync-paint', {
         const el = evt.detail.el;
         const networkedComponent = el.getAttribute("networked");
         usersMap[networkedComponent.creator] = {
-        networkId: networkedComponent.networkId,
-        el: el,
+            networkId: networkedComponent.networkId,
+            el: el,
         };
         //let currentOwnerId = usersMap[''].el.components.networked.data.owner;
     });
@@ -163,9 +163,9 @@ AFRAME.registerComponent('sync-paint', {
         var painter = that.painter;
     
         if (userData.isSelecting === true) {
-        that.cursor.setFromMatrixPosition(data);
-        painter.lineTo(that.cursor);
-        painter.update();          
+            that.cursor.setFromMatrixPosition(data);
+            painter.lineTo(that.cursor);
+            painter.update();          
         }
     });
 

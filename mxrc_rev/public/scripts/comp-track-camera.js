@@ -47,7 +47,7 @@ AFRAME.registerComponent('track-camera', {
             this.target.forEach((elem, i) => {
                 var targetEl = this.el.sceneEl.querySelector(elem);	
                 if (targetEl) {
-                    this.lookAt(targetEl.object3D, position, i);
+                    this.lookAt(targetEl.object3D, position, i, this.target.length);
                 }
             });
         }
@@ -55,11 +55,20 @@ AFRAME.registerComponent('track-camera', {
       }
     })(),
 
-    lookAt: function(obj, pos, i){
+    lookAt: function(obj, pos, i, l){
         obj.lookAt(pos);
+        let x = [];
         const distanceFromCamera = 3; 
         // const target = new THREE.Vector3(0, 0, -distanceFromCamera);
-        const target = new THREE.Vector3(i*-1 + 1, 0, -distanceFromCamera); // 1, 0, -1
+        if (l==1) {
+            x = [0];
+        } else if (l==2) {
+            x = [-.25, .25]
+        } else if (l==3) {
+            x = [-.625, -.125, .375]
+        }
+
+        let target = new THREE.Vector3(x[i], 0, -distanceFromCamera); // 1, 0, -1
         target.applyMatrix4(this.el.object3D.matrixWorld);    
         
         const distance = obj.position.distanceTo(target);

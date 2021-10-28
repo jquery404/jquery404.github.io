@@ -1,6 +1,6 @@
-AFRAME.registerShader('outline', {
+AFRAME.registerShader('zoom', {
     schema: {
-      color: {type: 'color', is: 'uniform', default: '#ff0000'},
+      color: {type: 'color', is: 'uniform', default: '#0051da'},
       timeMsec: {type: 'time', is: 'uniform'},
       uMap: {type: 'map', is: 'uniform'},
       isActive: {type: 'bool', is: 'uniform', default: false}
@@ -10,6 +10,8 @@ AFRAME.registerShader('outline', {
     #define SCALE 10.0
     
     varying vec2 vUv;
+
+    uniform bool isActive;
     
     uniform float timeMsec;  
     
@@ -27,16 +29,15 @@ AFRAME.registerShader('outline', {
         vec3 pos = position;
         float strength = 1.0;
         //pos.y += strength * calculateSurface(pos.x, pos.z);
+        pos.z += strength * calculateSurface(pos.x, pos.y);
         //pos.y -= strength * calculateSurface(0.0, 0.0);
         gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
     }  
     `,
-      fragmentShader: `
+    fragmentShader: `
     varying vec2 vUv;
     
     uniform sampler2D uMap;
-
-    uniform bool isActive;
     
     uniform vec3 color;
     
@@ -45,17 +46,12 @@ AFRAME.registerShader('outline', {
     void main() {
         float uTime = timeMsec / 1000.0;     
         vec2 uv = vUv;
-        vec4 tex1 = texture2D(uMap, uv);
-        float texValue = texture2D(uMap, uv).r;
+        vec4 tex1 = texture2D(uMap, uv * 1.0);
     
-        vec4 bordercolor = vec4(1, 0, 0, .1);
-        vec4 backgroundcolor = vec4(0, 0, 0, 1);
+        vec3 blue = color;
     
         gl_FragColor = tex1;
-        if(isActive){
-          gl_FragColor = mix(gl_FragColor, bordercolor, texValue);
-        }
     
     }`
     
-    });
+});

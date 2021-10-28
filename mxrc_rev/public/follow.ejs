@@ -17,6 +17,7 @@
 	<script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script>
 	<script src="<%= _url %>/scripts/diffCam.js"></script>
 	<script src="<%= _url %>/scripts/comp-shader-wave.js"></script>
+	<script src="<%= _url %>/scripts/comp-shader-zoom.js"></script>
 	<script src="<%= _url %>/scripts/comp-shader-outline.js"></script>
     <script>
 
@@ -226,10 +227,10 @@
         <img id="sky" src="img/sky.jpg" />
 		<%- include('_ass_hud'); %>
         </a-assets>
-
+		<a-entity id="mouseCursor" cursor="rayOrigin: mouse"></a-entity>
         <a-entity id="player" camera track-camera="target:#camel,#horse,#chicken" position="0 1.6 0" wasd-controls look-controls></a-entity>
 
-		<a-plane id="camel" material="shader:outline;color:#9900DD;" mixin="plane" class="hud" width="1" height="1" rotation="90 0 0"></a-plane>
+		<a-plane id="camel" animation="property: scale; to: 5 5 5; dur: 2000; easing: linear;startEvents: mouseenter;" material="shader:outline; uMap: #broadcaster;" mixin="plane" class="hud" width="1" height="1" rotation="90 0 0"></a-plane>
 		<a-plane id="horse" mixin="plane" class="hud" width="1" height="1" color="#343434" rotation="90 0 0"></a-plane>
 		<a-plane id="chicken" mixin="plane" class="hud" width="1" height="1" color="#990000" rotation="90 0 0"></a-plane>
 

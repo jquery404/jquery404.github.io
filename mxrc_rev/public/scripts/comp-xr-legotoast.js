@@ -2,7 +2,7 @@
 AFRAME.registerComponent('lego-model', {
     schema: {
     legoTemplate: {default: '#lego-template'},
-    legoSrc: {default: '#goal-glb'},
+    legoSrc: {default: '#goal0-glb'},
     isShowing: {default: false},
     },
 

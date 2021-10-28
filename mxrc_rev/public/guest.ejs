@@ -35,8 +35,9 @@
 
         <a-entity id="lhand" 
             laser-controls="hand: left"
-            raycaster="objects: [gui-interactable]; lineColor: #7B98F7; far: 1000" 
-            lego-model="legoTemplate:#lego-template" 
+            mixin="hud-interactable"
+            raycaster="objects: [gui-interactable], .hud; lineColor: #7B98F7; far: 1000" 
+            lego-model="legoSrc:#goal0-glb" 
             gun="bulletTemplate:#bullet-template" 
             networked="template:#hand-l-template;attachTemplateToLocal:false;">
             <a-entity id="controller-menu" opacity="0.8">
@@ -365,10 +366,20 @@
             sceneEl.append(`
             <a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="hud" mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5">
                 <a-entity class="arrow" hud-indicator gltf-model="#arrow-glb" scale=".1 .1 .1"></a-entity>
+                <a-text value="username" scale=".35 .35 1" position="-0.25 0.3 0"></a-text>
             </a-plane>`);
             hudList.push('#hud_' + v.socket_id);
             document.querySelector('#playerHead').setAttribute('track-camera', 'target: ' + hudList.join(','));
         }
+
+        $('document').ready(function(){
+
+            $(this).on("keydown", function(e){
+                if(e.keyCode == 32){
+
+                }
+            });
+        });
 
     </script>
     <script src="<%= _url %>/scripts/comp-naf.js"></script>
