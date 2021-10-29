@@ -33,44 +33,13 @@
 
         <%- include('_player_vr'); %>
 
-        <a-entity id="lhand" 
-            laser-controls="hand: left"
-            mixin="hud-interactable"
-            raycaster="objects: [gui-interactable], .hud; lineColor: #7B98F7; far: 1000" 
-            lego-model="legoSrc:#goal0-glb" 
-            gun="bulletTemplate:#bullet-template" 
-            networked="template:#hand-l-template;attachTemplateToLocal:false;">
-            <a-entity id="controller-menu" opacity="0.8">
-                <a-entity id="menu" position="0 .05 0" rotation="0 0 0" scale=".15 .15 .15" layout="type: box; plane: xy; columns: 3; margin: 2; align: center" rotation="0 0 0">
-                    <a-box position="0 0 -1" depth=".5" height=".05" width="1" rotation="0 0 0" color="black">
-                        <a-text id="menulabel" width="1" position="0 .05 0" value= "Menu..."  align="center" scale="4 4 4" rotation="-90 0 0"></a-text>
-                    </a-box>                                        
-                    <a-cylinder class="menu-item clickable" src="<%= _url %>/img/ico_goa.jpg" data-target="paint" color="#FFC65D" radius="0.5" height=".05" opacity=".5" theta-start="0" theta-length="90"></a-cylinder>
-                    <a-cylinder class="menu-item clickable" src="<%= _url %>/img/ico_goa.jpg" data-target="shoot" color="#FFC65D" radius="0.5" height=".05" opacity=".5" theta-start="90" theta-length="90"></a-cylinder>
-                    <a-cylinder class="menu-item clickable" src="<%= _url %>/img/ico_goa.jpg" data-target="lego-goal" color="#FFC65D" radius="0.5" height=".05" opacity=".5" theta-start="180" theta-length="90"></a-cylinder>
-                    <a-cylinder class="menu-item clickable" src="<%= _url %>/img/ico_goa.jpg" data-target="pointer" color="#FFC65D" radius="0.5" height=".05" opacity=".5" theta-start="270" theta-length="90"></a-cylinder>
-                    
-                </a-entity>
-            </a-entity>
-        </a-entity>
-  
-        <a-entity id="rhand" 
-            painter 
-            gun="bulletTemplate:#bullet-template" 
-            laser-controls="hand: right" 
-            mixin="hud-interactable"
-            raycaster="objects: [gui-interactable], .clickable, .hud; lineColor: #7B98F7; far: 1000" 
-            networked="template:#hand-r-template;attachTemplateToLocal:false;">
-            
-            <a-entity id="playerPointer" networked="template:#pointer-template;attachTemplateToLocal:true;">
-                <a-entity class="pointer" visible="false"></a-entity>
-            </a-entity>
-        </a-entity>
         
-        <a-entity class="syncManager" sync-paint></a-entity>
+        <a-entity class="syncManager_Painter" sync-paint="vicarious: guided"></a-entity>
+        <a-entity class="syncManager_Pointer" sync-pointer="vicarious: guided"></a-entity>
+
 
         <!-- question -->
-        <a-entity id="questionnaires" 
+        <!-- <a-entity id="questionnaires" 
             visible= "false"    
             questions 
             geometry="primitive: plane; width: 6; height: 5" 
@@ -153,7 +122,7 @@
             <a-text class="choice-7" width="5" position="2 .5 0" value="7" align="center"></a-text>
 
             <a-text id="answerLblY" width="2" position="2 .2 0" wrap-count="20" value="..." align="center"></a-text>
-        </a-entity>
+        </a-entity> -->
 
         <a-entity position="0 0 0"
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
@@ -162,7 +131,7 @@
         <a-entity light="color: #ccccff; intensity: 1; type: ambient;" visible=""></a-entity>
         <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity>
 
-        <a-sky set-sky="#sky" rotation="0 -90 0"></a-sky>
+        <a-sky set-sky="#sky" rotation="0 180 0"></a-sky>
     </a-scene>
 
 
@@ -287,9 +256,9 @@
                 videoEls.forEach(function(vid) { vid.remove(); });
                 hudVideoEls.forEach(function(vid) { vid.remove(); });
                 videoFeeds.forEach((v,k) => { if (v.socket_id == socket_id) videoFeeds.splice(k,1); });
-        }
+            }
 
-        document.querySelector("pre").innerHTML += socket_id + ' left\n';
+            document.querySelector("pre").innerHTML += socket_id + ' left\n';
         }
 
         function addPeer(socket_id, am_initiator) {
@@ -361,25 +330,34 @@
 
         }
 
+
+
         function addHUD(v){
             var sceneEl = $('a-scene');
+            $('.avatar').each(function(){
+                var creator = $(this).attr('networked').creator;
+                if (avatarHudPair.filter(e => e.creator === creator).length == 0) {
+                    avatarHudPair.push({creator: $(this).attr('networked').creator, hud: 'hud_' + v.socket_id, avatar: $('.nametag', this)[0].getAttribute('text').value})
+                }
+            });
+            var username = avatarHudPair.filter(e => e.hud === 'hud_'+v.socket_id)[0].avatar;
             sceneEl.append(`
-            <a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="hud" mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5">
+            <a-plane id="hud_${v.socket_id}"  material="shader:outline; uMap: #vid_${v.socket_id};" class="hud" mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5">
                 <a-entity class="arrow" hud-indicator gltf-model="#arrow-glb" scale=".1 .1 .1"></a-entity>
-                <a-text value="username" scale=".35 .35 1" position="-0.25 0.3 0"></a-text>
+                <a-text value="${username}" scale=".35 .35 1" position="-0.25 0.3 0"></a-text>
             </a-plane>`);
             hudList.push('#hud_' + v.socket_id);
             document.querySelector('#playerHead').setAttribute('track-camera', 'target: ' + hudList.join(','));
+            
+            var newp = [];
+            avatarHudPair.forEach(function(v, k){
+                newp.push(v.creator);
+                newp.push(v.hud);
+            });
+            document.querySelector('.syncManager_Painter').setAttribute('sync-paint', 'avatarHudList: ' + newp.join(','));
+            document.querySelector('.syncManager_Pointer').setAttribute('sync-pointer', 'avatarHudList: ' + newp.join(','));
         }
 
-        $('document').ready(function(){
-
-            $(this).on("keydown", function(e){
-                if(e.keyCode == 32){
-
-                }
-            });
-        });
 
     </script>
     <script src="<%= _url %>/scripts/comp-naf.js"></script>

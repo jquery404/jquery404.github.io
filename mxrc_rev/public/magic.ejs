@@ -42,7 +42,8 @@
             raycaster="objects: [gui-interactable], .clickable, .hud; lineColor: #00FFFF; far: 1000">
         </a-entity>
 
-        <a-entity class="syncManager" sync-paint></a-entity>
+        <a-entity class="syncManager_Painter" sync-paint="vicarious: auto"></a-entity>
+        <a-entity class="syncManager_Pointer" sync-pointer="vicarious: auto"></a-entity>
 
         <!-- question -->
         <a-entity id="questionnaires" 
@@ -337,13 +338,43 @@
 
         function initHUD() {
             var sceneEl = $('a-scene');
+
             clients.receiver.forEach((v,k) => {
                 if (v.tag !== 'main' && !document.querySelector(`#hud_${v.socket_id}`)) {
-                    sceneEl.append(`<a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="hud"  mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5"></a-plane>`);
-                    hudList.push('#hud_' + v.socket_id);
-                    document.querySelector('#playerHead').setAttribute('track-camera', 'target: ' + hudList.join(','));
+                    // sceneEl.append(`<a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="hud"  mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5"></a-plane>`);
+                    // hudList.push('#hud_' + v.socket_id);
+                    // document.querySelector('#playerHead').setAttribute('track-camera', 'target: ' + hudList.join(','));
+                    addHUD(v);
                 }
             });
+
+            
+        }
+
+        function addHUD(v){
+            var sceneEl = $('a-scene');
+            $('.avatar').each(function(){
+                var creator = $(this).attr('networked').creator;
+                if (avatarHudPair.filter(e => e.creator === creator).length == 0) {
+                    avatarHudPair.push({creator: $(this).attr('networked').creator, hud: 'hud_' + v.socket_id, avatar: $('.nametag', this)[0].getAttribute('text').value})
+                }
+            });
+            var username = avatarHudPair.filter(e => e.hud === 'hud_'+v.socket_id)[0].avatar;
+            sceneEl.append(`
+            <a-plane id="hud_${v.socket_id}"  material="shader:outline; uMap: #vid_${v.socket_id};" class="hud" mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5">
+                <a-entity class="arrow" hud-indicator gltf-model="#arrow-glb" scale=".1 .1 .1"></a-entity>
+                <a-text value="${username}" scale=".35 .35 1" position="-0.25 0.3 0"></a-text>
+            </a-plane>`);
+            hudList.push('#hud_' + v.socket_id);
+            document.querySelector('#playerHead').setAttribute('track-camera', 'target: ' + hudList.join(','));
+            
+            var newp = [];
+            avatarHudPair.forEach(function(v, k){
+                newp.push(v.creator);
+                newp.push(v.hud);
+            });
+            document.querySelector('.syncManager_Painter').setAttribute('sync-paint', 'avatarHudList: ' + newp.join(','));
+            document.querySelector('.syncManager_Pointer').setAttribute('sync-pointer', 'avatarHudList: ' + newp.join(','));
         }
 
     </script>

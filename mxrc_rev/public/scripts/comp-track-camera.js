@@ -1,6 +1,8 @@
 AFRAME.registerComponent('track-camera', {
     schema: {
         target: {default: []},
+        vicarious: {default: 'manual'},
+        // vicarious: {default: 'auto'},
         isTracking: {default: true},
     },
 
@@ -68,7 +70,15 @@ AFRAME.registerComponent('track-camera', {
             x = [-.625, -.125, .375]
         }
 
-        let target = new THREE.Vector3(x[i], 0, -distanceFromCamera); // 1, 0, -1
+        let target;
+        //new THREE.Vector3(x[i], -.1, -distanceFromCamera); // 1, 0, -1
+        
+        if(this.data.vicarious == 'auto'){
+            target = new THREE.Vector3(0, 0, -distanceFromCamera-i*.05);
+        }else {
+            target = new THREE.Vector3(x[i], -.1, -distanceFromCamera); 
+        }
+                
         target.applyMatrix4(this.el.object3D.matrixWorld);    
         
         const distance = obj.position.distanceTo(target);

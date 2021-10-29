@@ -5,7 +5,7 @@ AFRAME.registerComponent('painter', {
 
     schema: {
         color: {default: 'red', type: 'color'},
-        canDraw: {default: false, type: 'boolean'}
+        canDraw: {default: false, type: 'boolean'},
     },
 
     init: function () {
@@ -89,6 +89,12 @@ AFRAME.registerComponent('painter', {
 
 // Synchronize drawing for all participants
 AFRAME.registerComponent('sync-paint', {
+    schema: {
+        isFlickering: {default: false},
+        vicarious: {default: 'manual'},
+        avatarHudList: {default: []},
+    },
+
     init: function() {
     // keep track of each avatar / networkID / clientID
 
@@ -134,16 +140,29 @@ AFRAME.registerComponent('sync-paint', {
 
     NAF.connection.subscribeToDataChannel("stroke-start", function newData(sender, type, data, target) {
         if (!usersMap[sender]) {
-        console.log("unknown sender");
-        return;
+            console.log("unknown sender");
+            return;
         }
         let clientData = usersMap[sender];
 
+        if(that.data.vicarious == 'guided'){
+            that.data.avatarHudList.forEach((v, i) => {
+                if(v == sender)
+                    that.flicker('#'+that.data.avatarHudList[i+1]);                
+            })
+        }else if(that.data.vicarious == 'auto'){
+            that.data.avatarHudList.forEach((v, i) => {
+                if(v == sender)
+                    that.zoom('#'+that.data.avatarHudList[i+1]);
+            })
+        }
+        
+
         if (clientData.indicator) {
-        clientData.el.removeChild(clientData.indicator);
-        clientData.indicator = null;
+            clientData.el.removeChild(clientData.indicator);
+            clientData.indicator = null;
         } else {
-        clientData.indicator = createIndicator(clientData.el);
+            clientData.indicator = createIndicator(clientData.el);
         }
 
         that.initPaint();
@@ -182,8 +201,10 @@ AFRAME.registerComponent('sync-paint', {
         }
         
         that.userData.isSelecting = false;
-        that.painter.update();
-        that.painter.removeInTime(that.el.sceneEl.object3D, 5);
+        if(that.painter !== undefined) {
+            that.painter.update();
+            that.painter.removeInTime(that.el.sceneEl.object3D, 5);
+        }
     });
 
     this.userData.isSelecting = false;
@@ -199,4 +220,146 @@ AFRAME.registerComponent('sync-paint', {
         this.hand = this.el;
         this.hand.sceneEl.object3D.add(this.painter.mesh);
     },
+
+    flicker(id){
+        let that = this;
+        if(that.data.isFlickering && document.querySelector(id) == undefined) return;
+
+        var startTime = new Date().getTime();
+        let isActive = false;
+
+        var interval = setInterval(function(){
+            that.data.isFlickering = true;
+            isActive = !isActive;
+            document.querySelector(id).setAttribute('material', 'isActive:'+isActive);
+            if(new Date().getTime() - startTime > 2000){
+                document.querySelector(id).setAttribute('material', 'isActive:false');
+                clearInterval(interval);
+                that.data.isFlickering = false;
+                return;
+            }
+        },500);
+    },
+
+    zoom(id){
+        let that = this;
+        if(that.data.isFlickering && document.querySelector(id) == undefined) return;
+
+        var startTime = new Date().getTime();
+        let isActive = false;
+
+        var interval = setInterval(function(){
+            that.data.isFlickering = true;
+            
+            document.querySelector(id).setAttribute('material', 'isActive:true');
+            if(new Date().getTime() - startTime > 5000){
+                document.querySelector(id).setAttribute('material', 'isActive:false');
+                clearInterval(interval);
+                that.data.isFlickering = false;
+                return;
+            }
+        },500);
+    },
 });
+
+
+// Synchronize pointer for all participants
+AFRAME.registerComponent('sync-pointer', {
+    schema: {
+        isFlickering: {default: false},
+        vicarious: {default: 'manual'},
+        avatarHudList: {default: []},
+    },
+
+    init: function() {
+        // keep track of each avatar / networkID / clientID
+
+        this.userData = {};
+        let that = this;
+
+        document.body.addEventListener("entityCreated", function(evt) {
+            console.log("entityCreated event. clientId =", evt.detail.el);
+            const el = evt.detail.el;
+            const networkedComponent = el.getAttribute("networked");
+            usersMap[networkedComponent.creator] = {
+                networkId: networkedComponent.networkId,
+                el: el,
+            };
+            //let currentOwnerId = usersMap[''].el.components.networked.data.owner;
+        });
+
+        document.body.addEventListener("clientDisconnected", function(evt) {
+            if (usersMap[evt.detail.clientId])
+            delete usersMap[evt.detail.clientId];
+        });
+        
+    
+
+        NAF.connection.subscribeToDataChannel("pointer-start", function newData(sender, type, data, target) {
+            console.log('someone pointing', sender);
+
+            if(that.data.vicarious == 'guided'){
+                that.data.avatarHudList.forEach((v, i) => {
+                    if(v == sender)
+                        that.flicker('#'+that.data.avatarHudList[i+1]);                
+                })
+            }else if(that.data.vicarious == 'auto'){
+                that.data.avatarHudList.forEach((v, i) => {
+                    if(v == sender)
+                        that.zoom('#'+that.data.avatarHudList[i+1]);
+                })
+            }
+            
+            
+        });
+
+        NAF.connection.subscribeToDataChannel("pointer-close", function newData(sender, type, data, target) {
+            console.log('someone closed pointing', sender);
+        });
+
+    },
+		
+    flicker(id){
+        let that = this;
+        if(that.data.isFlickering && document.querySelector(id) == undefined) return;
+
+        var startTime = new Date().getTime();
+        let isActive = false;
+
+        var interval = setInterval(function(){
+            that.data.isFlickering = true;
+            isActive = !isActive;
+            document.querySelector(id).setAttribute('material', 'shader:outline;isActive:'+isActive);
+            if(new Date().getTime() - startTime > 2000){
+                document.querySelector(id).setAttribute('material', 'shader:outline;isActive:false');
+                clearInterval(interval);
+                that.data.isFlickering = false;
+                return;
+            }
+        },500);
+    },
+
+    zoom(id){
+        let that = this;
+        if(that.data.isFlickering && document.querySelector(id) == undefined) return;
+
+        var startTime = new Date().getTime();
+        let isActive = false;
+
+        var interval = setInterval(function(){
+            that.data.isFlickering = true;
+            
+            document.querySelector(id).setAttribute('material', 'shader:zoom;isActive:true');
+            if(new Date().getTime() - startTime > 5000){
+                document.querySelector(id).setAttribute('material', 'shader:zoom;isActive:false');
+                clearInterval(interval);
+                that.data.isFlickering = false;
+                return;
+            }
+        },500);
+    },
+
+   
+});
+
+

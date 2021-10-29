@@ -52,7 +52,7 @@
       
           var angleRad = this.getRandomAngleInRadians();
           var circlePoint = this.randomPointOnCircle(this.data.radius, angleRad);
-          var worldPoint = {x: circlePoint.x + center.x, y: center.y, z: circlePoint.y + center.z};
+          var worldPoint = {x: circlePoint.x + center.x, y: center.y+.2, z: circlePoint.y + center.z};
           el.setAttribute('position', worldPoint);
       
           var angleDeg = angleRad * 180 / Math.PI;

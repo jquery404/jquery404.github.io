@@ -9,6 +9,7 @@
     let toggleMenu = ['lego-goal', 'pointer'];
     let isMenuSelected;
     let isMenuHovered;
+    let avatarHudPair = []
 
     $(lhand).on("triggerdown triggerup", function(e) {
         visibility(menu);
@@ -33,6 +34,13 @@
                     var myPointer = document.querySelectorAll('.pointer');
                     myPointer.forEach(elem => {
                         elem.setAttribute('visible', thisMenu.hasClass('on') ? 'true' : 'false');
+                        //.... broadcast pointing
+                        const networkedComponent = document.querySelector('#player').getAttribute("networked");
+                        if(thisMenu.hasClass('on'))
+                            NAF.connection.broadcastDataGuaranteed("pointer-start", networkedComponent.networkId);
+                        else
+                            NAF.connection.broadcastDataGuaranteed("pointer-close", networkedComponent.networkId);
+                        
                     });                    
                 }
             }

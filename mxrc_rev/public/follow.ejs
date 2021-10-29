@@ -206,7 +206,8 @@
 			obj.lookAt(pos);
 			const distanceFromCamera = 3; 
 			// const target = new THREE.Vector3(i*-3 + 1, 0, -distanceFromCamera);
-			const target = new THREE.Vector3(i*-1 + 1, 0, -distanceFromCamera); // 1, 0, -1
+			// const target = new THREE.Vector3(i*-1 + 1, 0, -distanceFromCamera); // 1, 0, -1
+			const target = new THREE.Vector3(0, 0, -distanceFromCamera-i*.05); // 1, 0, -1
 			target.applyMatrix4(this.el.object3D.matrixWorld);    
 			
 			const distance = obj.position.distanceTo(target);
@@ -230,9 +231,9 @@
 		<a-entity id="mouseCursor" cursor="rayOrigin: mouse"></a-entity>
         <a-entity id="player" camera track-camera="target:#camel,#horse,#chicken" position="0 1.6 0" wasd-controls look-controls></a-entity>
 
-		<a-plane id="camel" animation="property: scale; to: 5 5 5; dur: 2000; easing: linear;startEvents: mouseenter;" material="shader:outline; uMap: #broadcaster;" mixin="plane" class="hud" width="1" height="1" rotation="90 0 0"></a-plane>
+		<a-plane id="camel" mixin="plane" class="hud" width="1" height="1" rotation="90 0 0"></a-plane>
 		<a-plane id="horse" mixin="plane" class="hud" width="1" height="1" color="#343434" rotation="90 0 0"></a-plane>
-		<a-plane id="chicken" mixin="plane" class="hud" width="1" height="1" color="#990000" rotation="90 0 0"></a-plane>
+		<a-plane id="chicken" material="shader:zoom; uMap: #broadcaster;" mixin="plane" class="hud" width="1" height="1" color="#990000" rotation="90 0 0"></a-plane>
 
         <a-entity position="0 0 0"
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
@@ -387,8 +388,27 @@
 		let pointerEl = document.querySelector('#pointer');
 		let drawEl = document.querySelector('#drawing');
 		let gestureEl = document.querySelector('#gesture');
+		
+		let isFlickering = false;
+		
+		function flicker(){
+			if(isFlickering) return;
 
-		console.log(pointerEl.checked, drawEl.checked, gestureEl.checked)
+			var startTime = new Date().getTime();
+			let isActive = false;
+
+			var interval = setInterval(function(){
+				isFlickering = true;
+				isActive = !isActive;
+				document.querySelector('#camel').setAttribute('material', 'isActive:'+isActive);
+				if(new Date().getTime() - startTime > 2000){
+					document.querySelector('#camel').setAttribute('material', 'isActive:false');
+					clearInterval(interval);
+					isFlickering = false;
+					return;
+				}
+			},500);
+		}
 		
 
 
