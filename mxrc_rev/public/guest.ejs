@@ -34,8 +34,8 @@
         <%- include('_player_vr'); %>
 
         
-        <a-entity class="syncManager_Painter" sync-paint="vicarious: guided"></a-entity>
-        <a-entity class="syncManager_Pointer" sync-pointer="vicarious: guided"></a-entity>
+        <a-entity class="syncManager_Painter" sync-paint="vicarious: auto"></a-entity>
+        <a-entity class="syncManager_Pointer" sync-pointer="vicarious: auto"></a-entity>
 
 
         <!-- question -->
@@ -342,7 +342,7 @@
             });
             var username = avatarHudPair.filter(e => e.hud === 'hud_'+v.socket_id)[0].avatar;
             sceneEl.append(`
-            <a-plane id="hud_${v.socket_id}"  material="shader:outline; uMap: #vid_${v.socket_id};" class="hud" mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5">
+            <a-plane id="hud_${v.socket_id}"  material="shader:viewpoint; uMap: #vid_${v.socket_id};" class="hud" mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5">
                 <a-entity class="arrow" hud-indicator gltf-model="#arrow-glb" scale=".1 .1 .1"></a-entity>
                 <a-text value="${username}" scale=".35 .35 1" position="-0.25 0.3 0"></a-text>
             </a-plane>`);
