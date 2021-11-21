@@ -26,8 +26,8 @@ AFRAME.registerShader('outline', {
         vUv = uv;
         vec3 pos = position;
         float strength = 1.0;
-        //pos.y += strength * calculateSurface(pos.x, pos.z);
-        //pos.y -= strength * calculateSurface(0.0, 0.0);
+        pos.y += strength * calculateSurface(pos.x, pos.z);
+        pos.y -= strength * calculateSurface(0.0, 0.0);
         gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
     }  
     `,
@@ -47,14 +47,23 @@ AFRAME.registerShader('outline', {
         vec2 uv = vUv;
         vec4 tex1 = texture2D(uMap, uv);
         float texValue = texture2D(uMap, uv).r;
-    
-        vec4 bordercolor = vec4(1, 0, 0, .1);
+
+        vec4 bordercolor = vec4(1, 0, 1, 1);
         vec4 backgroundcolor = vec4(0, 0, 0, 1);
+
+        
+        vec4 noiseGeneratorTimeShift = bordercolor;
+        vec2 uvNoiseTimeShift = uv + vec2(noiseGeneratorTimeShift.r, noiseGeneratorTimeShift.b);
+        vec4 baseColor = texture2D(uMap, uvNoiseTimeShift);
     
-        gl_FragColor = tex1;
-        if(isActive){
-          gl_FragColor = mix(gl_FragColor, bordercolor, texValue);
-        }
+        
+
+        gl_FragColor = baseColor;
+    
+        //gl_FragColor = tex1;
+        // if(isActive){
+        //   gl_FragColor = mix(gl_FragColor, bordercolor, texValue);
+        // }
     
     }`
     

@@ -206,8 +206,8 @@
 			obj.lookAt(pos);
 			const distanceFromCamera = 3; 
 			// const target = new THREE.Vector3(i*-3 + 1, 0, -distanceFromCamera);
-			// const target = new THREE.Vector3(i*-1 + 1, 0, -distanceFromCamera); // 1, 0, -1
-			const target = new THREE.Vector3(0, 0, -distanceFromCamera-i*.05); // 1, 0, -1
+			const target = new THREE.Vector3(i*-1 + 1, 0, -distanceFromCamera); // 1, 0, -1
+			// const target = new THREE.Vector3(0, 0, -distanceFromCamera-i*.05); // 1, 0, -1
 			target.applyMatrix4(this.el.object3D.matrixWorld);    
 			
 			const distance = obj.position.distanceTo(target);
@@ -233,7 +233,8 @@
 
 		<a-plane id="camel" mixin="plane" class="hud" width="1" height="1" rotation="90 0 0"></a-plane>
 		<a-plane id="horse" mixin="plane" class="hud" width="1" height="1" color="#343434" rotation="90 0 0"></a-plane>
-		<a-plane id="chicken" material="shader:zoom; uMap: #broadcaster;" mixin="plane" class="hud" width="1" height="1" color="#990000" rotation="90 0 0"></a-plane>
+		<a-plane id="chicken" material="shader:outline; uMap: #broadcaster;isActive:true" mixin="plane" class="hud" width="1" height="1" rotation="90 0 0"></a-plane>
+		
 
         <a-entity position="0 0 0"
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"

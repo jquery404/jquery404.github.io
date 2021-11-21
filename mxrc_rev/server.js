@@ -35,7 +35,20 @@ app.get('/follow', (req, res) => {
     // res.render('three.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
 })
 
-
+app.get('/plot/:id', (req, res) => {
+    let path = '';
+    switch (req.params.id) {
+        case 'usability': path = 'data/usability.ejs'; break;
+        case 'spatial': path = 'data/spatial.ejs'; break;
+        case 'social': path = 'data/social.ejs'; break;
+        case 'preference': path = 'data/preference.ejs'; break;
+        case 'postcard': path = 'data/postcard.ejs'; break;
+    
+        default: path = 'index.ejs'; break;
+    }
+    
+    res.render(path, { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
+})
 
 const peers = {};
 const rooms = {};

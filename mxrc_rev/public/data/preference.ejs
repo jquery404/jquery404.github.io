@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>...</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+  <style>
+    .progress {
+        border-radius: 0;
+        font-size: 1rem;
+        height: 2rem;
+    }
+    span {
+        width: 32.3%;
+        display: inline-block;
+        text-align: center;
+    }
+    span, p{
+        font-size: smaller;
+        padding: 0;
+        margin: 0;
+        line-height: normal;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="row">
+        
+        
+    </div>
+</div>
+
+
+<script>
+let data = [
+    ['... did you find the easiest to use?', 20, 45, 35],
+    ['... made you feel more present in the virtual environment?', 10, 53, 37],
+    ['... made it feel more like the remote partner was present with you?', 13, 47, 40],
+    ['... did you prefer overall?', 21, 37, 42],
+], color = ['#6aa1cc', '#EE7786', '#4FA490']
+
+$('.row').append(`<div class="col-12 text-center">
+        <p>Which of the three viewpoint selection and transition techniques ...</p>
+    </div>`);
+
+for (let i = 0; i < data.length; i++) {
+    $('.row').append(`<div class="col-4 p-0 my-auto text-right"><p>${data[i][0]}</p></div>
+    <div class="col-8 my-auto py-1">
+        <div class="progress">
+            <div class="progress-bar" style="background:${color[0]};width:${data[i][1]}%">${data[i][1]} %</div>
+            <div class="progress-bar" style="background:${color[1]};width:${data[i][2]}%">${data[i][2]} %</div>
+            <div class="progress-bar" style="background:${color[2]};width:${data[i][3]}%">${data[i][3]} %</div>
+        </div>
+    </div>`);
+
+    if (i== data.length-1) {
+        $('.row').append(`<div class="col-4 p-0 my-auto text-right"></div>
+        <div class="col-8 my-auto">
+            <span style="color: ${color[0]};">manual selection</span>
+            <span style="color: ${color[1]};">suggestive selection</span>
+            <span style="color: ${color[2]};">automatic selection</span>
+        </div>`);
+    }
+    
+}
+</script>
+
+</body>
+</html>

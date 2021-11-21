@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <meta charset="utf-8">
+    <title>punchcard-js</title>
+    <style>
+        body {
+        background-color: #fff;
+        }
+
+        text {
+        fill: black;
+        font: 16px sans-serif;
+        cursor: default;
+        }
+
+        .dot-label text {
+        font-size: 12px;
+        }
+        .l{
+        position: absolute;
+        top: 52px;
+        width: 100px;
+        text-align: right;
+        padding: 0px 10px;
+        }
+    </style>
+  </head>
+  <body>
+
+
+    <div id="chart"></div>
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+var margin = {top: 10, right: 10, bottom: 10, left: 10}
+var width = 960 - margin.left - margin.right
+var height = 500 - margin.top - margin.bottom
+var padding = 1
+var xLabelHeight = 30
+var yLabelWidth = 80
+var borderWidth = 1
+var duration = 500
+var col = -1, col1 = -1;
+var colorScale = [
+    '#F1A073', '#57BED1', '#EB5E58',
+    '#F1A073', '#57BED1', '#EB5E58',
+    '#F1A073', '#57BED1', '#EB5E58',
+    '#F1A073', '#57BED1', '#EB5E58',
+    '#F1A073', '#57BED1', '#EB5E58',
+    '#F1A073', '#57BED1', '#EB5E58',
+    '#F1A073', '#57BED1', '#EB5E58',
+];
+var colorScale2 = [
+    '#b97b59', '#3f8997', '#9d433f',
+    '#b97b59', '#3f8997', '#9d433f',
+    '#b97b59', '#3f8997', '#9d433f',
+    '#b97b59', '#3f8997', '#9d433f',
+    '#b97b59', '#3f8997', '#9d433f',
+    '#F1A073', '#57BED1', '#EB5E58',
+    '#F1A073', '#57BED1', '#EB5E58',
+];
+
+var chart = d3.select('#chart').append('svg')
+    .attr('width', width + margin.left + margin.right)
+    .attr('height', height + margin.top + margin.bottom)
+    .append('g')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+
+var border = chart.append('rect')
+    .attr('x', yLabelWidth)
+    .attr('y', xLabelHeight)
+    .style('fill-opacity', 0)
+    .style('stroke', '#ccc')
+    .style('stroke-width', borderWidth)
+    .style('shape-rendering', 'crispEdges')
+
+load('../data/data.csv')
+
+function load(name) {
+    d3.text(name, function(dataCSV) {
+
+        var labelsX = null
+        var data = []
+
+        d3.csv.parseRows(dataCSV, function(d) {
+
+          if (labelsX === null) return labelsX = d.slice(1)
+
+          var values = d.slice(1)
+          var i = 0
+
+          for (; i < values.length; i++) {
+            values[i] = parseInt(values[i], 10)
+          }
+
+          data.push({
+            label: d[0],
+            values: values
+          })
+
+        })
+
+        update(data, labelsX)
+    })
+}
+
+function update(data, labelsX) {
+
+    var allValues = Array.prototype.concat.apply([], data.map(function(d) { return d.values }))
+    var maxWidth = d3.max(data.map(function(d) { return d.values.length }))
+    var maxR = d3.min([(width - yLabelWidth) / maxWidth, (height - xLabelHeight) / data.length]) / 2
+
+    var r = function(d) {
+      if (d === 0) return 0
+
+      f = d3.scale.sqrt()
+          .domain([d3.min(allValues), d3.max(allValues)])
+          .rangeRound([2, maxR - padding])
+
+      return f(d)
+    }
+
+    var c = d3.scale.linear()
+        .domain([d3.min(allValues), d3.max(allValues)])
+        .rangeRound([255, 0])
+
+    var rows = chart.selectAll('.row')
+        .data(data, function(d){ return d.label })
+
+    rows.enter().append('g').attr('class', 'row')
+
+    rows.exit()
+        .transition()
+        .duration(duration)
+        .style('fill-opacity', 1)
+        .remove()
+
+    rows.transition()
+        .duration(duration)
+        .attr('transform', function(d, i){ return 'translate(' + yLabelWidth + ',' + (maxR * i * 2 + maxR + xLabelHeight) + ')' })
+
+    var dots = rows.selectAll('circle')
+        .data(function(d){ return d.values })
+
+    dots.enter().append('circle')
+        .attr('cy', 0)
+        .attr('r', 0)
+        .style('fill', '#111')
+        .text(function(d){ return d })
+
+    dots.exit()
+        .transition()
+        .duration(duration)
+        .attr('r', 0)
+        .remove()
+
+    dots.transition()
+        .duration(duration)
+        .attr('r', function(d){ return r(d) })
+        .attr('cx', function(d, i){ return i * maxR * 2 + maxR })
+        .attr('stroke', function(d, i){ if(i%7 == 0) col1++; return colorScale2[col1] })
+        .attr('stroke-width', 1)
+        .style('fill', function(d, i){ if(i%7 == 0) col++; return colorScale[col] })
+
+    var dotLabels = rows.selectAll('.dot-label')
+        .data(function(d){ return d.values })
+
+    var dotLabelEnter = dotLabels.enter().append('g')
+        .attr('class', 'dot-label')
+        .on('mouseover', function(d){
+            var selection = d3.select(this)
+            selection.select('rect').transition().duration(100).style('opacity', 0)
+            selection.select("text").transition().duration(100).style('opacity', 1)
+        })
+        .on('mouseout', function(d){
+            var selection = d3.select(this)
+            selection.select('rect').transition().style('opacity', 0)
+            selection.select("text").transition().style('opacity', 1)
+        })
+
+    dotLabelEnter.append('rect')
+        .style('fill', '#000000')
+        .style('opacity', 0)
+
+    dotLabelEnter.append('text')
+        .style('text-anchor', 'middle')
+        .style('fill', function(d){ return d > 0 ? '#ffffff' : '#000000'})
+        .style('opacity', 1)
+
+    dotLabels.exit().remove()
+
+    dotLabels
+        .attr('transform', function(d, i){ return 'translate(' + (i * maxR * 2) + ',' + (-maxR) + ')' })
+        .select('text')
+            .text(function(d){ return d })
+            .attr('y', maxR + 4)
+            .attr('x', maxR)
+
+    dotLabels
+        .select('rect')
+        .attr('width', maxR * 2)
+        .attr('height', maxR * 2)
+
+    var xLabels = chart.selectAll('.xLabel')
+        .data(labelsX)
+
+    xLabels.enter().append('line')
+        .attr('y2', 6)
+        .attr('stroke', 'black')
+        .attr('transform', function(d, i){ return 'translate('+ (maxR * i * 2 + maxR + yLabelWidth )+', 20)'})
+
+    xLabels.exit()
+        .transition()
+        .duration(duration)
+        .style('fill-opacity', 0)
+        .remove()
+
+    xLabels.transition()
+        .text(function (d) { return d })
+        .duration(duration)
+        .attr('x', function(d, i){ return maxR * i * 2 + maxR + yLabelWidth })
+        .style('fill-opacity', 1)
+
+    var yLabels = chart.selectAll('.yLabel')
+        .data(data, function(d){ return d.label })
+
+    yLabels.enter().append('text')
+        .text(function (d) { return d.label })
+        .attr('x', yLabelWidth)
+        .attr('class', 'yLabel')
+        .style('text-anchor', 'end')
+        .style('fill-opacity', 0)
+
+    yLabels.exit()
+        .transition()
+        .duration(duration)
+        .style('fill-opacity', 0)
+        .remove()
+
+    yLabels.transition()
+        .duration(duration)
+        .attr('y', function(d, i){ return maxR * i * 2 + maxR + xLabelHeight })
+        .attr('transform', 'translate(-6,' + maxR / 2.5 + ')')
+        .style('fill-opacity', 1)
+
+    
+    dotLabelEnter.append('text')
+        .style('text-anchor', 'middle')
+        .style('fill', function(d){ return d > 0 ? '#ffffff' : '#000000'})
+        .style('opacity', 1)
+
+    chart.append('line').attr('y2', 80)
+        .attr('transform', 'translate(60,37)')
+        .attr('stroke', 'black')
+    chart.append('line').attr('y2', 80)
+        .attr('transform', 'translate(60,156)')
+        .attr('stroke', 'black')
+    chart.append('line').attr('y2', 80)
+        .attr('transform', 'translate(60,275)')
+        .attr('stroke', 'black')
+    chart.append('line').attr('y2', 80)
+        .attr('transform', 'translate(60,394)')
+        .attr('stroke', 'black')
+
+    // chart.append('text')
+    //     .text('strongly agree')
+    //     .attr('x', 250)
+    //     .attr('y', 10)
+    //     .style('text-anchor', 'start')
+
+        
+
+    // var vert = chart.selectAll('.vert').data(labelsX)
+
+    // vert.exit()
+    //     .transition()
+    //     .duration(duration)
+    //     .style('stroke-opacity', 0)
+    //     .remove()
+
+    // vert.transition()
+    //     .duration(duration)
+    //     .attr('x1', function(d, i){ return maxR * i * 2 + yLabelWidth })
+    //     .attr('x2', function(d, i){ return maxR * i * 2 + yLabelWidth })
+    //     .attr('y2', maxR * 2 * data.length + xLabelHeight - borderWidth / 2)
+    //     .style('stroke-opacity', function(d, i){ return i ? 1 : 0 })
+
+    // var horiz = chart.selectAll('.horiz').data(data, function(d){ return d.label })
+
+    // horiz.enter().append('line')
+    //     .attr('class', 'horiz')
+    //     .attr('x1', yLabelWidth + borderWidth / 2)
+    //     .attr('stroke', '#888')
+    //     .attr('stroke-width', 1)
+    //     .style('shape-rendering', 'crispEdges')
+    //     .style('stroke-opacity', 0)
+
+    // horiz.exit()
+    //     .transition()
+    //     .duration(duration)
+    //     .style('stroke-opacity', 0)
+    //     .remove()
+
+    // horiz.transition()
+    //     .duration(duration)
+    //     .attr('x2', maxR * 2 * labelsX.length + yLabelWidth - borderWidth / 2)
+    //     .attr('y1', function(d, i){ return i * maxR * 2 + xLabelHeight })
+    //     .attr('y2', function(d, i){ return i * maxR * 2 + xLabelHeight })
+    //     .style('stroke-opacity', function(d, i){ return i ? 1 : 0 })
+
+    // border.transition()
+    //     .duration(duration)
+    //     .attr('width', maxR * 2 * labelsX.length)
+    //     .attr('height', maxR * 2 * data.length)
+
+}
+
+let data = [
+    '... did you find the easiest to use?',
+    '... made you feel more present in the virtual environment?',
+    '... made it feel more like the remote partner was present with you?',
+    '... did you prefer overall?',
+],
+topcss = [110, 212, 335, 480] 
+color = ['#6aa1cc', '#EE7786', '#4FA490']
+
+// for (let i = 0; i < data.length; i++) {
+//     $('body').append(`<p class="l" style="top: ${topcss[i]}px">${data[i]}</p>`)
+    
+// }
+
+// $('body').append(`<p class="l" style="top: 0;text-align: left;width: 190px;">Which of the three viewpoint selection and transition techniques ...</p>`);
+
+
+
+
+    </script>
+  </body>
+</html>
