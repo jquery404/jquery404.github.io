@@ -167,19 +167,39 @@
                 track.stop();
             });
             }
+
+            const constraints = {audio: true, video: false};
+            return navigator.mediaDevices
+            .getUserMedia(constraints)
+            .then(gotStream)
+            .catch(handleError);
+
+
             // canvas = document.querySelector('canvas');
             // canvas.getContext('2d');
             // var stream = canvas.captureStream(25);
             // videoElement.srcObject = stream;
             // localStream = stream;
 
+            
+        }
+
+        function gotStream(audioStream){
             canvas = document.querySelector('#cam');
             canvas.getContext('2d');
             var stream = canvas.captureStream(25);
+            var audioTrack = audioStream.getTracks().filter(function(track) {
+                return track.kind === 'audio'
+            })[0];
+            stream.addTrack(audioTrack);
             videoElement.srcObject = stream;
             localStream = stream;
 
             init();
+        }
+
+        function handleError(error) {
+            console.error("Error: ", error);
         }
         
     
