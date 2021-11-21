@@ -34,8 +34,8 @@
         <%- include('_player_vr'); %>
 
         
-        <a-entity class="syncManager_Painter" sync-paint="vicarious: auto"></a-entity>
-        <a-entity class="syncManager_Pointer" sync-pointer="vicarious: auto"></a-entity>
+        <a-entity class="syncManager_Painter" sync-paint="vicarious: guided"></a-entity>
+        <a-entity class="syncManager_Pointer" sync-pointer="vicarious: guided"></a-entity>
 
 
         <!-- question -->
@@ -47,7 +47,7 @@
         <a-entity light="color: #ccccff; intensity: 1; type: ambient;" visible=""></a-entity>
         <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity>
 
-        <a-sky set-sky="#sky" rotation="0 180 0"></a-sky>
+        <a-sky set-sky="#sky" rotation="0 45 0"></a-sky>
     </a-scene>
 
 
@@ -83,19 +83,39 @@
                 track.stop();
             });
             }
+
+            const constraints = {audio: true, video: false};
+            return navigator.mediaDevices
+            .getUserMedia(constraints)
+            .then(gotStream)
+            .catch(handleError);
+
+
             // canvas = document.querySelector('canvas');
             // canvas.getContext('2d');
             // var stream = canvas.captureStream(25);
             // videoElement.srcObject = stream;
             // localStream = stream;
 
+            
+        }
+
+        function gotStream(audioStream){
             canvas = document.querySelector('#cam');
             canvas.getContext('2d');
             var stream = canvas.captureStream(25);
+            var audioTrack = audioStream.getTracks().filter(function(track) {
+                return track.kind === 'audio'
+            })[0];
+            stream.addTrack(audioTrack);
             videoElement.srcObject = stream;
             localStream = stream;
 
             init();
+        }
+
+        function handleError(error) {
+            console.error("Error: ", error);
         }
         
     

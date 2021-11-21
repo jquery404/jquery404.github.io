@@ -28,6 +28,10 @@ app.get('/guest', (req, res) => {
 })
 
 
+app.get('/setting', (req, res) => {
+    res.render('setting.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
+})
+
 app.get('/follow', (req, res) => {
     res.render('follow.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
     // res.render('spectator.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })

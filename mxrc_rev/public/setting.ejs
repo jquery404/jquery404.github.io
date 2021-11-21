@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setting</title>
+</head>
+<body>
+    <h2>Vicarious Settings</h2>
+
+    <form id="settingForm" onsubmit="event.preventDefault(); myFunction();">
+        <label for="model">Model ID:</label><br>
+        <select name="model" id="model">
+            <option value="blocks">blocks</option>
+            <option value="block_1">block_1</option>
+            <option value="block_2">block_2</option>
+            <option value="block_3">block_3</option>
+            <option value="block_4">block_4</option>
+        </select><br>
+        <label for="model">Method ID:</label><br>
+        <select name="method" id="methods">
+            <option value="manual">manual</option>
+            <option value="suggestive">suggestive</option>
+            <option value="automatic">automatic</option>
+        </select>
+        <br><br>
+        <input type="submit" value="Submit">
+    </form> 
+
+
+    <script>
+        (function() {
+            var retrievedObj = JSON.parse(localStorage.getItem('vicarious_setting'));
+            document.getElementById("model").value = retrievedObj.model;
+            document.getElementById("methods").value = retrievedObj.method;
+        })();
+
+        function myFunction() {
+            var obj = { 
+                method: document.getElementById("methods").value, 
+                model: document.getElementById("model").value 
+            };
+            localStorage.setItem('vicarious_setting', JSON.stringify(obj));
+            return false;
+        }        
+
+    </script>
+</body>
+</html>
