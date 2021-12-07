@@ -209,17 +209,30 @@
             
             peers.ontrack = event => {
             //if(!videos.includes(socket_id)){
-                let newVid = document.createElement('video')
-                newVid.srcObject = event.streams[0];
-                newVid.id = 'vid_'+socket_id
-                if(marginTop>=200) newVid.classList.add("remote")
-                newVid.setAttribute('style','margin-top:'+marginTop+'px');
-                newVid.playsinline = false
-                newVid.autoplay = true
-                newVid.muted = true
-                newVid.play()
-                document.body.appendChild(newVid)
-                marginTop+=200;
+                let newVid;
+
+                if(document.getElementById('vid_'+socket_id)){
+                    newVid = document.getElementById('vid_'+socket_id)
+                    newVid.srcObject = event.streams[0];
+                    newVid.playsinline = false
+                    newVid.autoplay = true
+                    newVid.muted = false
+                    newVid.play()
+                }
+                else{
+                    newVid = document.createElement('video')
+                    newVid.srcObject = event.streams[0];
+                    newVid.id = 'vid_'+socket_id
+                    if(marginTop>=200) newVid.classList.add("remote")
+                    newVid.setAttribute('style','margin-top:'+marginTop+'px');
+                    newVid.playsinline = false
+                    newVid.autoplay = true
+                    newVid.muted = false
+                    newVid.play()
+                    document.body.appendChild(newVid)
+                    marginTop+=200;
+                }
+                
                 setTimeout(() => { initHUD(); }, 5000);
             //}
             };
