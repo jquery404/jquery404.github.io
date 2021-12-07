@@ -90,7 +90,7 @@
             }
             const videoSource = videoSelect.value;
             const constraints = {
-            audio: false,
+            audio: true,
             video: { deviceId: videoSource ? { exact: videoSource } : undefined }
             };
             return navigator.mediaDevices
