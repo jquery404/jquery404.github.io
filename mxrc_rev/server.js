@@ -47,6 +47,7 @@ app.get('/plot/:id', (req, res) => {
         case 'social': path = 'data/social.ejs'; break;
         case 'preference': path = 'data/preference.ejs'; break;
         case 'postcard': path = 'data/postcard.ejs'; break;
+        case 'tlx': path = 'data/tlx.ejs'; break;
     
         default: path = 'index.ejs'; break;
     }
