@@ -229,11 +229,11 @@
 		<%- include('_ass_hud'); %>
         </a-assets>
 		<a-entity id="mouseCursor" cursor="rayOrigin: mouse"></a-entity>
-        <a-entity id="player" camera track-camera="target:#camel,#horse,#chicken" position="0 1.6 0" wasd-controls look-controls></a-entity>
+        <a-entity id="player" camera position="0 1.6 0" wasd-controls look-controls></a-entity>
 
-		<a-plane id="camel" mixin="plane" class="hud" width="1" height="1" color="green" rotation="90 0 0" animation="property: width; to: 2; dur: 2000; easing: linear; loop: true"></a-plane>
-		<a-plane id="horse" mixin="plane" class="hud" width="1" height="1" color="#343434" rotation="90 0 0"></a-plane>
-		<a-plane id="chicken" material="shader:outline; uMap: #broadcaster;isActive:true" mixin="plane" class="hud" width="1" height="1" rotation="90 0 0"></a-plane>
+		<!-- <a-plane id="camel" mixin="plane" class="hud" width="3" height="1" color="green" rotation="90 0 0" ></a-plane> -->
+		<!-- <a-plane id="horse" mixin="plane" class="hud" width="1" height="1" color="#343434" rotation="90 0 0"></a-plane> -->
+		<!-- <a-plane id="chicken" material="shader:outline; uMap: #broadcaster;isActive:true" mixin="plane" class="hud" width="1" height="1" rotation="90 0 0"></a-plane> -->
 		
 
         <a-entity position="0 0 0"
