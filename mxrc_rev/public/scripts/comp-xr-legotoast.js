@@ -2,7 +2,7 @@
 AFRAME.registerComponent('lego-model', {
     schema: {
     legoTemplate: {default: '#lego-template'},
-    legoSrc: {default: '#goal0-glb'},
+    legoSrc: {default: '#goal3-glb'},
     isShowing: {default: false},
     },
 
@@ -14,10 +14,12 @@ AFRAME.registerComponent('lego-model', {
 
         if(!this.data.isShowing){
             var el = document.createElement('a-entity');
+            var modelName = this.data.legoSrc; 
             el.id = 'legoGoal';
             el.setAttribute('scale', '.1 .1 .1');
             el.setAttribute('position', '0 .05 -.4');
-            el.setAttribute('gltf-model', this.data.legoSrc)
+            el.setAttribute('gltf-model', modelName)
+            // el.setAttribute('gltf-model', this.data.legoSrc)
             // setTimeout(this.toggleShowing.bind(this), 3 * 1000);
             this.data.isShowing = true;
             this.el.appendChild(el);

@@ -132,7 +132,9 @@
         }
         // Bye bye part 1, hello part 2
         document.getElementById('div_part1').style.display = 'none';
-        document.getElementById('div_part2').style.display = '';
+        //document.getElementById('div_part2').style.display = '';
+        document.getElementById('div_part3').style.display = '';
+        setPairLabels();
         return true;
       }
       // User done reading the part 2 instructions
@@ -209,6 +211,7 @@
       // Move to the next pair
       function nextPair() {
         pair_num++;
+        
         if (pair_num >= 15) {
           document.getElementById('div_part3').style.display = 'none';
           document.getElementById('div_part4').style.display = '';
@@ -219,7 +222,46 @@
           setPairLabels();
         }
       }
-      // 
+      //
+      
+      function calculateRaw() {
+        var indexes = new Array();
+        indexes = pair[pair_num].split(" ");
+        results_tally[indexes[0]]++;
+        //nextPair();
+        for (let index = 0; index < 14; index++) {
+          pair_num++;
+
+          var indexes = new Array();
+          indexes = pair[pair_num].split(" ");
+          results_tally[indexes[0]]++;
+          
+        }
+
+        
+        if (pair_num == 14) {
+          document.getElementById('div_part1').style.display = 'none';
+          document.getElementById('div_part4').style.display = '';
+          calcResults();
+          document.getElementById('div_part4').innerHTML = getResultsHTML();
+          console.log(results_overall, results_rating);
+
+          fetch('/savetlx', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json, text/plain, */*',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({content: results_rating.toString()+ ',' + results_overall+ '\n'})
+          }).then(res => res.json())
+            .then(res => console.log(res));
+
+
+
+        } else {
+          setPairLabels();
+        }
+      }
     </script>
     <style>
       td.bottom {
@@ -294,7 +336,7 @@
       <div id="scale4"></div>
       <div id="scale5"></div>
       <br />
-      <input class="next" id="next" type="button" value="Continue >>" onClick="buttonPart1();">
+      <input class="next" id="next" type="button" value="Continue >>" onClick="calculateRaw();">
     </div>
     <div id="div_part2" style="display:none"> Task Questionnaire - Part 2 <br />
       <br /> One each of the following 15 screens, click on the scale title that represents the more important contributor to workload for the task <br />

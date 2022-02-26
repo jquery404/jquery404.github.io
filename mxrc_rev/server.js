@@ -14,6 +14,10 @@ const io = require("socket.io")(server);
 app.use(express.static(__dirname + "/public"));
 app.set('views', __dirname + '/public');
 app.set('view engine', 'ejs'); 
+//--- body parser -----------
+app.use(express.urlencoded())
+app.use(express.json())
+//---------------------------
 
 app.get('/', (req, res) => {
     res.render('index.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
@@ -54,6 +58,21 @@ app.get('/plot/:id', (req, res) => {
     
     res.render(path, { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
 })
+
+app.post('/savetlx', (req, res) => {
+
+    let writeStream = fs.createWriteStream('./public/data/nasatlx.csv', {flags:'a'});
+    req.pipe(writeStream);
+    writeStream.end(req.body.content);
+
+    writeStream.on('error', function (err) {
+        res.status(200).json({status:0});
+    });
+
+    writeStream.on('finish', function(evt) {
+        res.status(200).json({status: 1});  
+    });
+});
 
 const peers = {};
 const rooms = {};
