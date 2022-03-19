@@ -432,3 +432,17 @@ width: 100%;
   background-size: cover;
   text-indent: -999em;
 }
+
+.jq-project{
+  overflow: hidden;
+}
+
+.jq-project-img-wrap{
+  object-fit: contain;
+  -webkit-transition: all .9s ease;
+}
+
+.jq-project-img-wrap:hover {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
