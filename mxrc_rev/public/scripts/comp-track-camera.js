@@ -1,7 +1,7 @@
 AFRAME.registerComponent('track-camera', {
     schema: {
         target: {default: []},
-        vicarious: {default: 'auto'},
+        vicarious: {default: 'guided'},
         isTracking: {default: true},
     },
 

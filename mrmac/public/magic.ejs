@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('_head'); %>
+    <%- include('_head_ar'); %>
+</head>
+<body>
+
+    <a-scene mxrc-room>
+        <a-assets>
+
+        <img id="grid" src="img/grid.png">
+        
+        <%- include('_ass_model'); %>
+        <%- include('_ass_player'); %>
+        <%- include('_ass_hud'); %>
+
+        <template id="bullet-template">
+            <a-entity>
+              <a-sphere class="bullet" scale="0.1 0.1 0.1" color="#ff00000"></a-sphere>
+            </a-entity>
+        </template>
+
+        <!-- /Templates -->
+        </a-assets>
+
+        <a-entity id="player">
+            <a-entity id="playerHead"
+                camera 
+                position="0 1.6 0" 
+                track-camera
+                look-controls
+                wasd-controls>
+                <a-entity class="nametag" visible="false"></a-entity>
+            </a-entity>
+        </a-entity>
+
+  
+        <a-entity id="rhand" 
+            laser-controls="hand: right" 
+            mixin="hud-interactable"
+            raycaster="objects: [gui-interactable], .clickable, .hud; lineColor: #00FFFF; far: 1000">
+        </a-entity>
+
+        <a-entity class="syncManager_Painter" sync-paint="vicarious: suggestive"></a-entity>
+        <a-entity class="syncManager_Pointer" sync-pointer="vicarious: suggestive"></a-entity>
+
+        <!-- question -->
+        
+        <a-entity position="0 0 0"
+        geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
+        material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
+
+    </a-scene>
+
+
+    <button onclick="toggleViewer()" type="button">Start viewer</button>
+
+    <%- include('_device_list'); %>
+    <video class="host" playsinline autoplay muted></video>
+    <pre></pre>
+    
+    <script src="scripts/rtcconfig.js"></script>
+    <script src="scripts/jquery-latest.min.js"></script>
+    <script>
+
+        let localStream = null;
+        let peers = {}
+        let streams = []
+        let hudList = []
+        let clients = {sender: {tag: '', socket_id: ''}, receiver: []}
+        let myId;
+
+        // Get camera and microphone
+        const videoElement = document.querySelector(".host");
+        const videoSelect = document.querySelector("select#videoSource");
+                
+        let marginTop=0;
+        let skyset=false;
+
+        setTimeout(() => {
+            getStream().then(getDevices).then(gotDevices);
+        }, 1000); 
+
+        function getStream() {
+            if (window.stream) {
+                window.stream.getTracks().forEach(track => {
+                    track.stop();
+                });
+            }
+            const videoSource = videoSelect.value;
+            const constraints = {
+            audio: true,
+            video: { deviceId: videoSource ? { exact: videoSource } : undefined }
+            };
+            return navigator.mediaDevices
+            .getUserMedia(constraints)
+            .then(gotStream)
+            .catch(handleError);
+        }
+
+        function gotStream(stream) {
+            window.stream = stream;
+            videoSelect.selectedIndex = [...videoSelect.options].findIndex(
+            option => option.text === stream.getVideoTracks()[0].label
+            );
+            videoElement.srcObject = stream;
+            videoElement.play();
+            
+            localStream = stream;
+            
+            init();
+        }
+
+        function handleError(error) {
+            console.error("Error: ", error);
+        }
+
+        function getDevices() {
+            return navigator.mediaDevices.enumerateDevices();
+        }
+
+        function gotDevices(deviceInfos) {
+            window.deviceInfos = deviceInfos;
+            for (const deviceInfo of deviceInfos) {
+            const option = document.createElement("option");
+            option.value = deviceInfo.deviceId;
+            if (deviceInfo.kind === "videoinput") {
+                option.text = deviceInfo.label || `Camera ${videoSelect.length + 1}`;
+                videoSelect.appendChild(option);
+            }
+            }
+        }
+    
+        
+    
+        // .................................................
+        // .............
+        const socket = io.connect(window.location.origin);
+
+        function init() {
+            myId = socket.id;
+
+            socket.emit('join room');
+
+            socket.on('other joined', (socket_id) => {
+                console.log(socket_id, ' joined')
+                peers[socket_id] = addPeer(socket_id, true);
+                localStream.getTracks().forEach(track => streams.push(peers[socket_id].addTrack(track, localStream)))
+            })
+
+            socket.on('offer', (socket_id, description) => {
+                console.log(socket_id, ' make peer')
+                clients.receiver.push({socket_id: socket_id, tag: description.tag});
+
+                peers[socket_id] = addPeer(socket_id, false)
+            
+                peers[socket_id].setRemoteDescription(description.localDescription)
+                    .then(() => { localStream.getTracks().forEach(track => streams.push(peers[socket_id].addTrack(track, localStream))); })
+                    .then(() => peers[socket_id].createAnswer())
+                    .then(sdp => peers[socket_id].setLocalDescription(sdp))
+                    .then(() => {
+                        console.log('received offer preparing ans for ', socket_id, peers[socket_id].localDescription.type)
+                        let newLocalDescription = {tag: 'fahad', localDescription: peers[socket_id].localDescription};
+                        clients.sender = {socket_id: myId, tag: newLocalDescription.tag};
+                        socket.emit('answer', socket_id, newLocalDescription);
+                    });
+            })
+
+            socket.on('answer', (socket_id, description) => {
+                console.log('received ans back from ', socket_id);
+                clients.receiver.push({socket_id: socket_id, tag: description.tag});
+                peers[socket_id].setRemoteDescription(description.localDescription);
+            })
+
+            socket.on('candidate', (socket_id, candidate) => {
+                if (socket_id in peers) {
+                    console.log('received candidate from ', socket_id);
+                    peers[socket_id].addIceCandidate(new RTCIceCandidate(candidate));
+                }
+            })
+        
+            socket.on('remove peer', (socket_id) => {
+                console.log(socket_id, ' left')
+                removePeer(socket_id)
+            })
+            
+        }
+
+        function removePeer(socket_id) {
+            if (peers[socket_id]) {
+                peers[socket_id].close();
+                peers[socket_id].onicecandidate = null; 
+                delete peers[socket_id];
+                
+                // remove <video> and <hud-video> elem, splice @id from clients.receiver
+                const videoEls = document.querySelectorAll("#vid_"+socket_id);
+                const hudVideoEls = document.querySelectorAll("#hud_"+socket_id);
+                
+                hudList.forEach((v,k) => { if (v == socket_id) hudList.splice(k,1); });
+                document.querySelector('#playerHead').setAttribute('track-camera', 'target: ' + hudList.join(','));
+
+                videoEls.forEach((vid) => { vid.remove(); });
+                hudVideoEls.forEach((vid) => { vid.remove(); });
+                clients.receiver.forEach((v,k) => { if (v.socket_id == socket_id) clients.receiver.splice(k,1); });
+            }
+
+            document.querySelector("pre").innerHTML += socket_id + ' left\n';
+        }
+
+        function addPeer(socket_id, am_initiator) {
+            const peers = new RTCPeerConnection(config);
+
+            peers.onicecandidate = event => {
+                if (event.candidate) {
+                console.log(socket_id, ' needs candidate');
+                socket.emit('candidate', socket_id, event.candidate);
+                }
+            };
+            
+            peers.ontrack = event => {
+            //if(!videos.includes(socket_id)){
+                let newVid;
+
+                if(document.getElementById('vid_'+socket_id)){
+                    newVid = document.getElementById('vid_'+socket_id)
+                    newVid.srcObject = event.streams[0];
+                    newVid.playsinline = false
+                    newVid.autoplay = true
+                    newVid.muted = false
+                    newVid.play()
+                }
+                else{
+                    newVid = document.createElement('video')
+                    newVid.srcObject = event.streams[0];
+                    newVid.id = 'vid_'+socket_id
+                    if(marginTop>=200) newVid.classList.add("remote")
+                    newVid.setAttribute('style','margin-top:'+marginTop+'px');
+                    newVid.playsinline = false
+                    newVid.autoplay = true
+                    newVid.muted = false
+                    newVid.play()
+                    document.body.appendChild(newVid)
+                    marginTop+=200;
+                }
+                initHUD();
+            //}
+            };
+
+            if (am_initiator === true) {
+                peers.onnegotiationneeded = () => {
+                    peers.createOffer()
+                    .then(sdp => peers.setLocalDescription(sdp))
+                    .then(() => { 
+                        let newLocalDescription = {tag: 'magic', localDescription: peers.localDescription};
+                        clients.sender = {socket_id: myId, tag: newLocalDescription.tag};
+                        console.log('making offer to ', socket_id, peers.localDescription)
+                        socket.emit('offer', socket_id, newLocalDescription); 
+                    });
+                };
+            }
+
+            return peers;
+        }
+
+        function initHUD() {
+            var sceneEl = $('a-scene');
+
+            clients.receiver.forEach((v,k) => {
+                if (v.tag !== 'main' && !document.querySelector(`#hud_${v.socket_id}`)) {
+                    // sceneEl.append(`<a-plane id="hud_${v.socket_id}" src="#vid_${v.socket_id}" class="hud"  mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5"></a-plane>`);
+                    // hudList.push('#hud_' + v.socket_id);
+                    // document.querySelector('#playerHead').setAttribute('track-camera', 'target: ' + hudList.join(','));
+                    addHUD(v);
+                }
+            });
+
+            
+        }
+
+        function addHUD(v){
+            var sceneEl = $('a-scene');
+            $('.avatar').each(function(){
+                var creator = $(this).attr('networked').creator;
+                if (avatarHudPair.filter(e => e.creator === creator).length == 0) {
+                    avatarHudPair.push({creator: $(this).attr('networked').creator, hud: 'hud_' + v.socket_id, avatar: $('.nametag', this)[0].getAttribute('text').value})
+                }
+            });
+            var username = avatarHudPair.filter(e => e.hud === 'hud_'+v.socket_id)[0].avatar;
+            sceneEl.append(`
+            <a-plane id="hud_${v.socket_id}"  material="shader:viewpoint; uMap: #vid_${v.socket_id};" class="hud" mixin="plane" shadow="receive: false" height=".5" width=".5" position="0 0 -5">
+                <a-entity class="arrow" hud-indicator gltf-model="#arrow-glb" scale=".1 .1 .1"></a-entity>
+                <a-text value="${username}" scale=".35 .35 1" position="-0.25 0.3 0"></a-text>
+            </a-plane>`);
+            hudList.push('#hud_' + v.socket_id);
+            document.querySelector('#playerHead').setAttribute('track-camera', 'target: ' + hudList.join(','));
+            
+            var newp = [];
+            avatarHudPair.forEach(function(v, k){
+                newp.push(v.creator);
+                newp.push(v.hud);
+            });
+            document.querySelector('.syncManager_Painter').setAttribute('sync-paint', 'avatarHudList: ' + newp.join(','));
+            document.querySelector('.syncManager_Pointer').setAttribute('sync-pointer', 'avatarHudList: ' + newp.join(','));
+        }
+
+    </script>
+    <script src="scripts/comp-naf.js"></script>
+    <script src="scripts/comp-init.js"></script>
+</body>
+</html>

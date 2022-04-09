@@ -4,6 +4,7 @@ AFRAME.registerComponent('lego-model', {
     legoTemplate: {default: '#lego-template'},
     legoSrc: {default: '#goal3-glb'},
     isShowing: {default: false},
+    currentLegoId: {default: 1},
     },
 
     init: function () {
@@ -14,7 +15,8 @@ AFRAME.registerComponent('lego-model', {
 
         if(!this.data.isShowing){
             var el = document.createElement('a-entity');
-            var modelName = this.data.legoSrc; 
+            // var modelName = this.data.legoSrc; 
+            var modelName = '#goal'+this.data.currentLegoId+'-glb'; 
             el.id = 'legoGoal';
             el.setAttribute('scale', '.1 .1 .1');
             el.setAttribute('position', '0 .05 -.4');
@@ -22,6 +24,7 @@ AFRAME.registerComponent('lego-model', {
             // el.setAttribute('gltf-model', this.data.legoSrc)
             // setTimeout(this.toggleShowing.bind(this), 3 * 1000);
             this.data.isShowing = true;
+            this.data.currentLegoId  = this.data.currentLegoId >=9 ? 1: this.data.currentLegoId + 1;
             this.el.appendChild(el);
         }else{
             var el = document.getElementById('legoGoal');

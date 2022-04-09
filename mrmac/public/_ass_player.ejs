@@ -1,0 +1,35 @@
+<!-- Player -->
+<template id="player-template">
+    <a-entity></a-entity>
+</template>
+
+<!-- Avatar -->
+<template id="avatar-template">
+    <a-entity class="avatar">
+        <a-entity class="nametag" text="value: Hello; align:center;" position="0 0.6 0" rotation="0 180 0" scale="4 4 4"></a-entity>
+        <a-entity class="head" gltf-model="#boy-head-glb" scale="1 1 1"></a-entity>
+        <a-entity class="body" gltf-model="#boy-body-glb" scale="1 1 1"></a-entity>
+    </a-entity>
+</template>
+
+<!-- Hand -->
+<template id="hand-l-template">
+    <a-entity>
+      <!-- <a-sphere color="#ffad34" radius=".05"></a-sphere> -->
+      <a-entity gltf-model="#hand-l-glb" scale=".08 .08 .08"></a-entity>
+    </a-entity>
+</template>
+
+<template id="hand-r-template">
+    <a-entity>
+      <a-entity gltf-model="#hand-r-glb" scale=".08 .08 .08"></a-entity>
+    </a-entity>
+</template>
+
+<!-- Hand -->
+<template id="pointer-template">
+    <a-entity>
+        <a-entity class="pointer" visible="false" gltf-model="#pointer-glb" position="0 0 0" rotation="-90 0 0"></a-entity>
+    </a-entity>
+</template>
+

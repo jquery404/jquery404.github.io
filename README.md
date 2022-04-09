@@ -10,3 +10,4 @@ complication of all xrc related dev
 - [x] one to many video
 - [x] many to many audio
 - [x] mxrc
+- [x] mrmac - mixed reality multiuser asynchronous collaboration system

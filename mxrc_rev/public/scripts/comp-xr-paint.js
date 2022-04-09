@@ -267,7 +267,7 @@ AFRAME.registerComponent('sync-paint', {
 AFRAME.registerComponent('sync-pointer', {
     schema: {
         isFlickering: {default: false},
-        vicarious: {default: 'manual'},
+        vicarious: {default: 'guided'},
         avatarHudList: {default: []},
     },
 

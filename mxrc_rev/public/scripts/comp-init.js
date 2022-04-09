@@ -9,7 +9,7 @@
     let toggleMenu = ['lego-goal', 'pointer'];
     let isMenuSelected;
     let isMenuHovered;
-    let avatarHudPair = []
+    let avatarHudPair = [];
 
     $(lhand).on("triggerdown triggerup", function(e) {
         visibility(menu);
