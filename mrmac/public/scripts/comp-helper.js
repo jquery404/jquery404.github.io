@@ -6,7 +6,9 @@
         },
 
         init: function () {
-            var person = prompt("Please enter your name", "Harry Potter");
+            var namelist = ["Smith","Johnson","Williams","Brown","Jones","Miller","Davis","Garcia","Rodriguez","Wilson","Martinez","Anderson","Taylor","Thomas","Hernandez","Moore","Martin","Jackson","Thompson","White","Lopez","Lee","Gonzalez","Harris","Clark","Lewis","Robinson","Walker","Perez","Hall","Young","Allen","Sanchez"];
+            var pickaname = namelist[Math.floor(Math.random()*namelist.length -1)];
+            var person = prompt("Please enter your name", pickaname);
 
             if (person != null) {
                 var el = this.el;
@@ -55,10 +57,11 @@
           var worldPoint = {x: circlePoint.x + center.x, y: center.y+.2, z: circlePoint.y + center.z};
           el.setAttribute('position', worldPoint);
       
-          var angleDeg = angleRad * 180 / Math.PI;
-          var angleToCenter = -1 * angleDeg + 90;
-          var angleRad = THREE.Math.degToRad(angleToCenter);
-          el.object3D.rotation.set(0, angleRad, 0);
+          // we dont want the avatar to rotate
+          //   var angleDeg = angleRad * 180 / Math.PI;
+          //   var angleToCenter = -1 * angleDeg + 90;
+          //   var angleRad = THREE.Math.degToRad(angleToCenter);
+          //   el.object3D.rotation.set(0, angleRad, 0);
         },
       
         getRandomAngleInRadians: function() {

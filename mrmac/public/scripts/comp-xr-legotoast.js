@@ -24,7 +24,8 @@ AFRAME.registerComponent('lego-model', {
             // el.setAttribute('gltf-model', this.data.legoSrc)
             // setTimeout(this.toggleShowing.bind(this), 3 * 1000);
             this.data.isShowing = true;
-            this.data.currentLegoId  = this.data.currentLegoId >=9 ? 1: this.data.currentLegoId + 1;
+            // randomly go through each lego
+            // this.data.currentLegoId  = this.data.currentLegoId >=9 ? 1: this.data.currentLegoId + 1;
             this.el.appendChild(el);
         }else{
             var el = document.getElementById('legoGoal');

@@ -34,8 +34,8 @@
         <%- include('_player_vr'); %>
 
         
-        <a-entity class="syncManager_Painter" sync-paint="vicarious: guided"></a-entity>
-        <a-entity class="syncManager_Pointer" sync-pointer="vicarious: guided"></a-entity>
+        <a-entity class="syncManager_Painter" sync-paint></a-entity>
+        <a-entity class="syncManager_Pointer" sync-pointer></a-entity>
 
 
         <!-- question -->
@@ -265,14 +265,14 @@
                 }
                 
                 if(v.tag !== 'main' && !document.querySelector(`#hud_${v.socket_id}`)) {
-                    addHUD(v);
+                    //addHUD(v);
                 }
             });
 
             // sometimes video object doesn't appear in the videofeeds, so check the client list
             clients.receiver.forEach((v, k) => {
                 if(v.tag !== 'main' && !document.querySelector(`#hud_${v.socket_id}`)) {
-                    addHUD(v);
+                    //addHUD(v);
                 }
             });
 
