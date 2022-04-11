@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('_head'); %>
+    <%- include('_head_vr'); %>
+</head>
+<body>
+
+    <a-scene>
+        <a-assets>
+            <a-asset-item id="girl-head-glb" src="<%= _url %>/model/_avatars/curious_girl_blue_head.glb"></a-asset-item>
+            <a-asset-item id="boy-head-glb" src="<%= _url %>/model/_avatars/curious_boy_black_head.glb"></a-asset-item>
+        </a-assets>
+        
+        <a-entity camera look-controls>
+            <a-entity cursor="fuse: true; fuseTimeout: 1500"
+                      position="0 0 -1"
+                      animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
+                      animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
+                      animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: 500; to: 1 1 1"
+                      geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                      material="color: black; shader: flat">
+            </a-entity>
+        </a-entity>
+        
+        <a-entity id="avatar" cursor-listener position="0 0 -4" rotation="0 180 0" gltf-model="#girl-head-glb"></a-entity>
+        <a-sky color="#222"></a-sky>
+    </a-scene>
+
+
+    <script>
+
+        // Component to change to a sequential color on click.
+        AFRAME.registerComponent('cursor-listener', {
+            init: function () {
+                this.el.addEventListener('click', function (evt) {
+                    document.querySelector('#avatar').setAttribute('gltf-model', '/model/_avatars/curious_boy_black_head.glb')
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
