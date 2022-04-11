@@ -28,7 +28,8 @@ AFRAME.registerComponent('painter', {
     this.el.addEventListener('triggerup', () => {
         this.userData.isSelecting = false;
         NAF.connection.broadcastDataGuaranteed("stroke-ended", this.hand.object3D.matrixWorld);
-        this.painter.removeInTime(this.hand.sceneEl.object3D, 5);
+        // remove paint after certain seconds
+        this.painter.removeInTime(this.hand.sceneEl.object3D, 20);
     });
 
 

@@ -6,10 +6,16 @@
 </head>
 <body>
 
-    <a-scene>
+    <a-scene networked-scene="app: myApp;room: room1;debug: true;">
         <a-assets>
             <a-asset-item id="girl-head-glb" src="<%= _url %>/model/_avatars/curious_girl_blue_head.glb"></a-asset-item>
             <a-asset-item id="boy-head-glb" src="<%= _url %>/model/_avatars/curious_boy_black_head.glb"></a-asset-item>
+
+            <template id="avatar-template">
+                <a-entity class="avatar">
+                    <a-entity class="head" gltf-model="#girl-head-glb" scale="1 1 1"></a-entity>
+                </a-entity>
+            </template>
         </a-assets>
         
         <a-entity camera look-controls>
@@ -23,18 +29,42 @@
             </a-entity>
         </a-entity>
         
-        <a-entity id="avatar" cursor-listener position="0 0 -4" rotation="0 180 0" gltf-model="#girl-head-glb"></a-entity>
+        <!-- <a-entity id="avatar" cursor-listener position="0 0 -4" rotation="0 180 0" gltf-model="#girl-head-glb"></a-entity> -->
+        <!-- Player -->
+        <template id="player-template">
+            <a-entity></a-entity>
+        </template>
+
+        <a-entity id="player" 
+            networked="template:#player-template;attachTemplateToLocal:true;">
+            <a-entity id="playerHead"
+                networked="template:#avatar-template;attachTemplateToLocal:true;"
+                spawn-in-circle
+                cursor-listener>
+            </a-entity>
+        </a-entity>
+
+
         <a-sky color="#222"></a-sky>
     </a-scene>
 
-
     <script>
+
+
+
+        // syncing avatar
+        NAF.schemas.add({template: '#player-template', components: ['position', 'rotation']});
+        NAF.schemas.add({template: '#avatar-template', components: ['position', 'rotation', {
+            selector: '.head',
+            component: 'gltf-model',
+        }]});
+
 
         // Component to change to a sequential color on click.
         AFRAME.registerComponent('cursor-listener', {
             init: function () {
                 this.el.addEventListener('click', function (evt) {
-                    document.querySelector('#avatar').setAttribute('gltf-model', '/model/_avatars/curious_boy_black_head.glb')
+                    document.querySelector('.head').setAttribute('gltf-model', '/model/_avatars/curious_boy_black_head.glb')
                 });
             }
         });
