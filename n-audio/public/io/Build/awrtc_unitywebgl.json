@@ -1,0 +1,12 @@
+{
+"companyName": "because-why-not.com",
+"productName": "awrtc_unity_0.9845",
+"dataUrl": "awrtc_unitywebgl.data.unityweb",
+"wasmCodeUrl": "awrtc_unitywebgl.wasm.code.unityweb",
+"wasmFrameworkUrl": "awrtc_unitywebgl.wasm.framework.unityweb",
+"TOTAL_MEMORY": 268435456,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20"
+}

@@ -4,7 +4,7 @@ AFRAME.registerComponent('lego-model', {
     legoTemplate: {default: '#lego-template'},
     legoSrc: {default: '#goal3-glb'},
     isShowing: {default: false},
-    currentLegoId: {default: 1},
+    currentLegoId: {default: 6},
     },
 
     init: function () {
