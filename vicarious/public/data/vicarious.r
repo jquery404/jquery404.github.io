@@ -11,7 +11,7 @@ fontsize = 14
 ##############################
 bar_color = c("#ffbd66", "#52c2cc")
 # create a data frame
-social_data =read.csv('csv/social-presence.csv', sep=",")
+social_data =read.csv('csv/social presence.csv', sep=",")
 attach(social_data)
 
 # analysis of variance
@@ -41,10 +41,12 @@ social_plt <- ggplot(data = social_data, mapping = aes(x = params, y = score, fi
         axis.text.x = element_text(color="black", size=fontsize),
         axis.text.y = element_text(color="black", size=fontsize),
         text = element_text(size=fontsize),
+        strip.background = element_blank(),
         plot.background = element_blank(),
         plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        panel.border = element_blank(),
         panel.spacing = unit(c(0, 0, 0, 0), "null"),
-        panel.grid.major = element_blank(),
+        #panel.grid.major = element_blank(),
         legend.position = c(.95, 0.2),
         legend.justification = c("right", "top"),
         legend.title=element_blank(),
@@ -64,7 +66,7 @@ ggsave("social_presence.png", width = 6, height = 6, dpi = 1000)
 ##############################
 
 # create a data frame
-spatial_data=read.csv('csv/spatial-presence.csv', sep=",")
+spatial_data=read.csv('csv/spatial presence.csv', sep=",")
 attach(spatial_data)
 
 # analysis of variance
@@ -98,8 +100,8 @@ spatial_plt <- ggplot(data = spatial_data, mapping = aes(x = params, y = score, 
         text = element_text(size=fontsize),
         plot.background = element_blank(),
         plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        panel.border = element_blank(),
         panel.spacing = unit(c(0, 0, 0, 0), "null"),
-        panel.grid.major = element_blank(),
         legend.position = c(.95, 0.2),
         legend.justification = c("right", "top"),
         legend.title=element_blank(),
@@ -147,10 +149,11 @@ ggsave("rtlx.png", width = 6, height = 6, dpi = 1000)
 #######################################
 
 gfg=read.csv('csv/nasa-tlx.csv', sep=",")
+pref_color = c("#90d7de", "#ffbd66","#ffebd0")
 attach(gfg)
 
 cleandata <- gfg %>%
-  group_by(params, vrar) %>%
+  group_by(params, mode) %>%
   summarise(mean_score = mean(score), 
             counts = n(), 
             sd_score = sd(score), 
@@ -160,13 +163,13 @@ cleandata <- gfg %>%
 View(cleandata)
 
 # grouped box plot
-level_order <- c('mental',	'physical',	'temporal',	'effort',	'performance', 'frustration', 'overall')
-ggplot(data=cleandata, mapping= aes(x=factor(params, level = level_order), y=mean_score, fill=vrar)) +
+level_order <- c('remote user',	'local user',	'overall')
+ggplot(data=cleandata, mapping= aes(x=factor(params, level = level_order), y=mean_score, fill=mode)) +
   geom_col(width=.5, position=position_dodge(.6)) +
   geom_errorbar(aes(ymin=mean_score-se_score, ymax=mean_score+se_score), width=.2, position=position_dodge(.6))+
-  scale_fill_manual(values = coloring) +
+  scale_fill_manual(values = pref_color) +
   scale_y_continuous(expand = c(0, 0)) +
-  coord_flip(ylim = c(0, 100)) +
+  coord_flip(ylim = c(0, 50)) +
   guides(fill=guide_legend(title="")) +
   theme_bw() +
   theme(axis.line = element_blank(),
@@ -175,10 +178,12 @@ ggplot(data=cleandata, mapping= aes(x=factor(params, level = level_order), y=mea
         axis.text.x = element_text(color="black", size=fontsize),
         axis.text.y = element_text(color="black", size=fontsize),
         text = element_text(size=fontsize),
+        strip.background = element_blank(),
         plot.background = element_blank(),
         plot.margin = unit(c(0.005, .025, 0, 0), "null"),
         panel.spacing = unit(c(0, 0, 0, 0), "null"),
         panel.grid.major = element_blank(),
+        panel.border = element_blank(),
         legend.position = c(.95, 0.3),
         legend.justification = c("right", "top"),
         legend.title=element_blank(),
@@ -192,32 +197,55 @@ ggsave("rtlx.png", width = 6, height = 6, dpi = 1000)
 
 
 #######################################
-# usability likert bar chart #
+# usability box plot
 #######################################
 
 
 data=read.csv('csv/usability.csv', sep=",")
-data <- as.data.frame(data) 
-data[2:5] <- lapply(data[2:5], factor, levels=1:5, labels=c("Strongly Disagree", "Disagree", "Neutral","Agree","Strongly Agree"))
-likt <- likert(data[,c(2:5)], grouping = data$item)
-plot(likt, colors = c("#ffbd66", "#ffebd0","#d7f0f2","#90d7de","#52c2cc")) + 
+pref_color = c("#90d7de", "#ffbd66","#ffebd0")
+attach(gfg)
+
+cleandata <- gfg %>%
+  group_by(params, mode) %>%
+  summarise(mean_score = mean(score), 
+            counts = n(), 
+            sd_score = sd(score), 
+            se_score = (sd_score/sqrt(sd_score))
+  )
+
+View(cleandata)
+
+# grouped box plot
+level_order <- c('remote user',	'local user',	'overall')
+ggplot(data=cleandata, mapping= aes(x=factor(params, level = level_order), y=mean_score, fill=mode)) +
+  geom_col(width=.5, position=position_dodge(.6)) +
+  geom_errorbar(aes(ymin=mean_score-se_score, ymax=mean_score+se_score), width=.2, position=position_dodge(.6))+
+  scale_fill_manual(values = pref_color) +
+  scale_y_continuous(expand = c(0, 0)) +
+  coord_flip(ylim = c(0, 50)) +
+  guides(fill=guide_legend(title="")) +
   theme_bw() +
   theme(axis.line = element_blank(),
         axis.title.x=element_blank(),
         axis.title.y=element_blank(),
         axis.text.x = element_text(color="black", size=fontsize),
         axis.text.y = element_text(color="black", size=fontsize),
-        strip.text = element_text(color="black", face="bold", size = fontsize),
-        strip.background = element_blank(),
         text = element_text(size=fontsize),
-        panel.border = element_blank(),
+        strip.background = element_blank(),
         plot.background = element_blank(),
-        plot.margin = unit(c(0.005, .025, 1, 0), "null"),
+        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        panel.grid.major = element_blank(),
+        panel.border = element_blank(),
+        legend.position = c(.95, 0.3),
+        legend.justification = c("right", "top"),
         legend.title=element_blank(),
-        legend.direction="horizontal",
-        legend.position = c(.5, -.1),
-        legend.justification = c("center", "top"))
-write.csv(foo,"File Name.csv", row.names = FALSE)
+        legend.text=element_text(size=fontsize),
+        legend.box.just = "right",
+        legend.box.background = element_rect(fill = "white", color = "black", size = 1))
+
+# saving the final figure
+ggsave("usability.png", width = 6, height = 6, dpi = 1000)
 
 
 #######################################
@@ -225,11 +253,7 @@ write.csv(foo,"File Name.csv", row.names = FALSE)
 #######################################
 pref_color = c("#90d7de", "#ffbd66","#ffebd0")
 data=read.csv('csv/preference.csv', sep=",")
-data <- data.frame(
-  qus = c(rep(1, 4),rep(2, 4), rep(3, 4), rep(4, 4)),
-  tech = rep(c('a', 'b', 'c', 'd'), 4),
-  ans = rpois(16, 10)
-)
+
 data$tech <- factor(data$tech, levels = c("manual", "suggestive", "automatic"))
 data$qus <- factor(data$qus, levels = c("q4... did you prefer overall?",
                                         "q3... made you feel more present with the remote users?", 

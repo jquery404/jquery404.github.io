@@ -1,0 +1,73 @@
+id,params,mode,score
+1,local user,manual,24
+,remote user,manual,35
+,overall,manual,25.54
+2,local user,suggestive,35
+,remote user,suggestive,25
+,overall,suggestive,28.33
+3,local user,automatic,12
+,remote user,automatic,21
+,overall,automatic,21.87
+4,local user,manual,18
+,remote user,manual,17
+,overall,manual,15
+5,local user,suggestive,18
+,remote user,suggestive,22
+,overall,suggestive,22
+6,local user,automatic,21
+,remote user,automatic,25
+,overall,automatic,31
+7,local user,manual,32
+,remote user,manual,32
+,overall,manual,25
+8,local user,suggestive,24
+,remote user,suggestive,23
+,overall,suggestive,38
+9,local user,automatic,27
+,remote user,automatic,19
+,overall,automatic,29
+10,local user,manual,16
+,remote user,manual,30
+,overall,manual,33
+11,local user,suggestive,21
+,remote user,suggestive,27
+,overall,suggestive,32
+12,local user,automatic,24
+,remote user,automatic,18
+,overall,automatic,18
+13,local user,manual,19
+,remote user,manual,21
+,overall,manual,22
+14,local user,suggestive,23
+,remote user,suggestive,25
+,overall,suggestive,26
+15,local user,automatic,28
+,remote user,automatic,29
+,overall,automatic,31
+16,local user,manual,33
+,remote user,manual,33
+,overall,manual,35
+17,local user,suggestive,36
+,remote user,suggestive,18
+,overall,suggestive,26
+18,local user,automatic,17
+,remote user,automatic,16
+,overall,automatic,16
+19,local user,manual,20
+,remote user,manual,25
+,overall,manual,29
+20,local user,suggestive,34
+,remote user,suggestive,38
+,overall,suggestive,31
+21,local user,automatic,34
+,remote user,automatic,21
+,overall,automatic,15
+22,local user,manual,11
+,remote user,manual,31
+,overall,manual,37
+23,local user,suggestive,36
+,remote user,suggestive,19
+,overall,suggestive,36
+24,local user,automatic,18
+,remote user,automatic,26
+,overall,automatic,17
