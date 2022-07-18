@@ -201,11 +201,11 @@ ggsave("rtlx.png", width = 6, height = 6, dpi = 1000)
 #######################################
 
 
-data=read.csv('csv/usability.csv', sep=",")
+usability_data=read.csv('csv/usability.csv', sep=",")
 pref_color = c("#90d7de", "#ffbd66","#ffebd0")
-attach(gfg)
+attach(usability_data)
 
-cleandata <- gfg %>%
+cleandata <- usability_data %>%
   group_by(params, mode) %>%
   summarise(mean_score = mean(score), 
             counts = n(), 
@@ -216,13 +216,13 @@ cleandata <- gfg %>%
 View(cleandata)
 
 # grouped box plot
-level_order <- c('remote user',	'local user',	'overall')
+level_order <- c('remote user',	'local user')
 ggplot(data=cleandata, mapping= aes(x=factor(params, level = level_order), y=mean_score, fill=mode)) +
   geom_col(width=.5, position=position_dodge(.6)) +
   geom_errorbar(aes(ymin=mean_score-se_score, ymax=mean_score+se_score), width=.2, position=position_dodge(.6))+
   scale_fill_manual(values = pref_color) +
   scale_y_continuous(expand = c(0, 0)) +
-  coord_flip(ylim = c(0, 50)) +
+  coord_flip(ylim = c(0, 100)) +
   guides(fill=guide_legend(title="")) +
   theme_bw() +
   theme(axis.line = element_blank(),

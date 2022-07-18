@@ -41,10 +41,12 @@ social_plt <- ggplot(data = social_data, mapping = aes(x = params, y = score, fi
         axis.text.x = element_text(color="black", size=fontsize),
         axis.text.y = element_text(color="black", size=fontsize),
         text = element_text(size=fontsize),
+        strip.background = element_blank(),
         plot.background = element_blank(),
-        panel.border = element_blank(),
         plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        panel.border = element_blank(),
         panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        #panel.grid.major = element_blank(),
         legend.position = c(.95, 0.2),
         legend.justification = c("right", "top"),
         legend.title=element_blank(),
@@ -96,10 +98,12 @@ spatial_plt <- ggplot(data = spatial_data, mapping = aes(x = params, y = score, 
         axis.text.x = element_text(color="black", size=fontsize),
         axis.text.y = element_text(color="black", size=fontsize),
         text = element_text(size=fontsize),
+        strip.background = element_blank(),
         plot.background = element_blank(),
-        panel.border = element_blank(),
         plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        panel.border = element_blank(),
         panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        #panel.grid.major = element_blank(),
         legend.position = c(.95, 0.2),
         legend.justification = c("right", "top"),
         legend.title=element_blank(),
@@ -166,7 +170,7 @@ ggplot(data=cleandata, mapping= aes(x=factor(params, level = level_order), y=mea
   geom_errorbar(aes(ymin=mean_score-se_score, ymax=mean_score+se_score), width=.2, position=position_dodge(.6))+
   scale_fill_manual(values = coloring) +
   scale_y_continuous(expand = c(0, 0)) +
-  coord_flip(ylim = c(0, 40)) +
+  coord_flip(ylim = c(0, 100)) +
   guides(fill=guide_legend(title="")) +
   theme_bw() +
   theme(axis.line = element_blank(),
@@ -175,7 +179,6 @@ ggplot(data=cleandata, mapping= aes(x=factor(params, level = level_order), y=mea
         axis.text.x = element_text(color="black", size=fontsize),
         axis.text.y = element_text(color="black", size=fontsize),
         text = element_text(size=fontsize),
-        strip.text = element_text(color="black", face="bold", size = fontsize),
         strip.background = element_blank(),
         plot.background = element_blank(),
         plot.margin = unit(c(0.005, .025, 0, 0), "null"),
@@ -205,8 +208,8 @@ likt <- likert(data[,c(2:5)], grouping = data$item)
 plot(likt, colors = c("#E76469", "#F8D85E","#EDA645","#4FA490","#3B7F9F")) + 
   theme_bw() +
   theme(axis.line = element_blank(),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
         axis.text.x = element_text(color="black", size=fontsize),
         axis.text.y = element_text(color="black", size=fontsize),
         strip.text = element_text(color="black", face="bold", size = fontsize),
@@ -242,18 +245,20 @@ ggplot(data %>% count(qus, ans) %>%
 data=read.csv('csv/preference.csv', sep=",")
 pref_bg="#E76469"
 pref_color= "#d1353b"
-level_order <- c("Q10 ...overall experience comfortable for you?",
-                 "Q9 ...feel the presence of the remote users?",
-                 "Q8 ...feel you were there in the remote space?",
-                 "Q7 ...tools were sufficient to perform your tasks?",
-                 "Q6 ...got necessary feedback from others?",
-                 "Q5 ...comfortable communicating with remote user avatar?",
-                 "Q4 ...able to effectively communicate with others?",
-                 "Q3 ...rate the overall audio quality?",
-                 "Q2 ...rate the overall video quality?",
-                 "Q1 ...able to clearly hear and see in the remote space?")
+data$qus <- factor(data$qus, levels = c(
+  "Q10 ...overall experience comfortable for you?",
+  "Q9 ...feel the presence of the remote users?",
+  "Q8 ...feel you were there in the remote space?",
+  "Q7 ...tools were sufficient to perform your tasks?",
+  "Q6 ...got necessary feedback from others?",
+  "Q5 ...comfortable communicating with remote user avatar?",
+  "Q4 ...able to effectively communicate with others?",
+  "Q3 ...rate the overall audio quality?",
+  "Q2 ...rate the overall video quality?",
+  "Q1 ...able to clearly hear and see in the remote space?"))
 
-g <- ggplot(data = data, mapping = aes(x=factor(qus, level = level_order), y = ans, fill = qus)) +
+
+g <- ggplot(data = data, mapping = aes(x = qus, y = ans, fill = qus)) +
   stat_boxplot(geom = "errorbar", width=.2, color=pref_color, position=position_dodge(.75)) +
   geom_boxplot(color=pref_bg, fill=pref_bg) +
   stat_summary(fun="mean", geom="point", shape=1, size=3, position=position_dodge(width=0.75), color=pref_color) + 
