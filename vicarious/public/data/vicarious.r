@@ -5,11 +5,12 @@ library(dplyr)
 library(likert) 
 coloring = c("#ffbd66", "#ffebd0","#d7f0f2","#90d7de","#52c2cc","#b56576","#6d597a","#355070")
 fontsize = 14
+dodge = .35
 
 ##############################
 ###### Social Presence #######
 ##############################
-bar_color = c("#ffbd66", "#52c2cc")
+bar_color = c("#ffbd66", "#90d7de")
 # create a data frame
 social_data =read.csv('csv/social presence.csv', sep=",")
 attach(social_data)
@@ -24,13 +25,13 @@ print(tukey)
 
 # grouped box plot
 social_plt <- ggplot(data = social_data, mapping = aes(x = params, y = score, fill = vrar)) +
-  stat_boxplot(geom = "errorbar", width=.2, position=position_dodge(.75)) +
-  geom_boxplot(aes(color=vrar), coef = 0, outlier.alpha = 0, show.legend = F) +
+  stat_boxplot(geom = "errorbar", width=.2, position=position_dodge(dodge)) +
+  geom_boxplot(aes(color=vrar), width = dodge, coef = 0, outlier.alpha = 0, show.legend = F) +
   # geom_point(position=position_jitterdodge(dodge.width=0.9)) +
   stat_compare_means(method="t.test") + 
   geom_segment(data=social_data, aes(x=params, xend=params, y=3.5, yend=3.5), colour="red", size=2, inherit.aes = F)  + 
-  stat_summary(fun="mean", geom="point", shape=1, size=3, position=position_dodge(width=0.75), color="black") + 
-  stat_summary(geom = "crossbar", width=0.65, fatten=0, color="black", fun.data = function(x){c(y=median(x), ymin=median(x), ymax=median(x))}, position=position_dodge(width=0.75)) +
+  stat_summary(fun="mean", geom="point", shape=1, size=3, position=position_dodge(width=dodge), color="black") + 
+  stat_summary(geom = "crossbar", width=dodge*.9, fatten=0, color="black", fun.data = function(x){c(y=median(x), ymin=median(x), ymax=median(x))}, position=position_dodge(width=dodge)) +
   scale_fill_manual(name= "vrar", values = bar_color) +
   scale_color_manual(name = "vrar", values = bar_color) + 
   scale_y_continuous(minor_breaks = seq(0, 7, 1), breaks = seq(1, 7.1, by=1), limits=c(1,7.1)) + 
@@ -64,6 +65,7 @@ ggsave("social_presence.png", width = 6, height = 6, dpi = 1000)
 ##############################
 ###### Spatial Presence ######
 ##############################
+dodge = .75
 
 # create a data frame
 spatial_data=read.csv('csv/spatial presence.csv', sep=",")
@@ -81,13 +83,13 @@ print(tukey)
 
 # grouped box plot
 spatial_plt <- ggplot(data = spatial_data, mapping = aes(x = params, y = score, fill = vrar)) +
-  stat_boxplot(geom = "errorbar", width=.2, position=position_dodge(.75)) +
+  stat_boxplot(geom = "errorbar", width=.2, position=position_dodge(dodge)) +
   geom_boxplot() +
   geom_boxplot(aes(color=vrar), coef = 0, outlier.alpha = 0, show.legend = F) +
   # geom_point(position=position_jitterdodge(dodge.width=0.9)) +
   #stat_compare_means(method="t.test") + 
-  stat_summary(fun="mean", geom="point", shape=1, size=3, position=position_dodge(width=0.75), color="black") + 
-  stat_summary(geom = "crossbar", width=0.65, fatten=0, color="black", fun.data = function(x){c(y=median(x), ymin=median(x), ymax=median(x))}, position=position_dodge(width=0.75)) +
+  stat_summary(fun="mean", geom="point", shape=1, size=3, position=position_dodge(width=dodge), color="black") + 
+  stat_summary(geom = "crossbar", width=dodge*.9, fatten=0, color="black", fun.data = function(x){c(y=median(x), ymin=median(x), ymax=median(x))}, position=position_dodge(width=dodge)) +
   scale_fill_manual(name= "vrar", values = bar_color)+
   scale_color_manual(name = "vrar", values = bar_color) + 
   scale_y_continuous(minor_breaks = seq(0, 7, 1), breaks = seq(1, 7.1, by=1), limits=c(1,7.1)) +
