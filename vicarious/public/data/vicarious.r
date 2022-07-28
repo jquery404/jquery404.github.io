@@ -1,3 +1,9 @@
+#1. social presence and spatial presence 
+#2. task workload using Raw-TLX
+#3. system usability scale (also add table)
+#4. user preference from post q&a 
+
+
 # library
 library(ggplot2)
 library(ggpubr)
@@ -29,7 +35,7 @@ social_plt <- ggplot(data = social_data, mapping = aes(x = params, y = score, fi
   geom_boxplot(aes(color=vrar), width = dodge, coef = 0, outlier.alpha = 0, show.legend = F) +
   # geom_point(position=position_jitterdodge(dodge.width=0.9)) +
   stat_compare_means(method="t.test") + 
-  geom_segment(data=social_data, aes(x=params, xend=params, y=3.5, yend=3.5), colour="red", size=2, inherit.aes = F)  + 
+  #geom_segment(data=social_data, aes(x=params, xend=params, y=3.5, yend=3.5), colour="red", size=2, inherit.aes = F)  + 
   stat_summary(fun="mean", geom="point", shape=1, size=3, position=position_dodge(width=dodge), color="black") + 
   stat_summary(geom = "crossbar", width=dodge*.9, fatten=0, color="black", fun.data = function(x){c(y=median(x), ymin=median(x), ymax=median(x))}, position=position_dodge(width=dodge)) +
   scale_fill_manual(name= "vrar", values = bar_color) +
@@ -58,14 +64,13 @@ social_plt <- ggplot(data = social_data, mapping = aes(x = params, y = score, fi
 social_plt
 
 # saving the final figure
-ggsave("social_presence.png", width = 6, height = 6, dpi = 1000)
+ggsave("social-presence.pdf")
 
 
 
 ##############################
 ###### Spatial Presence ######
 ##############################
-dodge = .75
 
 # create a data frame
 spatial_data=read.csv('csv/spatial presence.csv', sep=",")
@@ -84,26 +89,28 @@ print(tukey)
 # grouped box plot
 spatial_plt <- ggplot(data = spatial_data, mapping = aes(x = params, y = score, fill = vrar)) +
   stat_boxplot(geom = "errorbar", width=.2, position=position_dodge(dodge)) +
-  geom_boxplot() +
-  geom_boxplot(aes(color=vrar), coef = 0, outlier.alpha = 0, show.legend = F) +
+  geom_boxplot(aes(color=vrar), width = dodge, coef = 0, outlier.alpha = 0, show.legend = F) +
   # geom_point(position=position_jitterdodge(dodge.width=0.9)) +
-  #stat_compare_means(method="t.test") + 
+  stat_compare_means(method="t.test") + 
+  #geom_segment(data=social_data, aes(x=params, xend=params, y=3.5, yend=3.5), colour="red", size=2, inherit.aes = F)  + 
   stat_summary(fun="mean", geom="point", shape=1, size=3, position=position_dodge(width=dodge), color="black") + 
   stat_summary(geom = "crossbar", width=dodge*.9, fatten=0, color="black", fun.data = function(x){c(y=median(x), ymin=median(x), ymax=median(x))}, position=position_dodge(width=dodge)) +
-  scale_fill_manual(name= "vrar", values = bar_color)+
+  scale_fill_manual(name= "vrar", values = bar_color) +
   scale_color_manual(name = "vrar", values = bar_color) + 
-  scale_y_continuous(minor_breaks = seq(0, 7, 1), breaks = seq(1, 7.1, by=1), limits=c(1,7.1)) +
-  theme_bw() +
+  scale_y_continuous(minor_breaks = seq(0, 7, 1), breaks = seq(1, 7.1, by=1), limits=c(1,7.1)) + 
+  theme_bw() + 
   theme(axis.line = element_blank(),
         axis.title.x=element_blank(),
         axis.title.y=element_blank(),
         axis.text.x = element_text(color="black", size=fontsize),
         axis.text.y = element_text(color="black", size=fontsize),
         text = element_text(size=fontsize),
+        strip.background = element_blank(),
         plot.background = element_blank(),
         plot.margin = unit(c(0.005, .025, 0, 0), "null"),
         panel.border = element_blank(),
         panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        #panel.grid.major = element_blank(),
         legend.position = c(.95, 0.2),
         legend.justification = c("right", "top"),
         legend.title=element_blank(),
@@ -112,7 +119,7 @@ spatial_plt <- ggplot(data = spatial_data, mapping = aes(x = params, y = score, 
         legend.box.background = element_rect(fill = "white", color = "black", size = 1))
 spatial_plt
 
-ggsave("spatial_presence.png", width = 6, height = 6, dpi = 1000)
+ggsave("spatial-presence.pdf")
 
 
 #############################
@@ -150,11 +157,12 @@ ggsave("rtlx.png", width = 6, height = 6, dpi = 1000)
 ############ RTLX BARCHART ############
 #######################################
 
-gfg=read.csv('csv/nasa-tlx.csv', sep=",")
+rtlx_data=read.csv('csv/nasa-tlx.csv', sep=",")
 pref_color = c("#90d7de", "#ffbd66","#ffebd0")
-attach(gfg)
+rtlx_data$mode <- factor(rtlx_data$mode, level = c("automatic", "suggestive", "manual"))
+attach(rtlx_data)
 
-cleandata <- gfg %>%
+cleandata <- rtlx_data %>%
   group_by(params, mode) %>%
   summarise(mean_score = mean(score), 
             counts = n(), 
@@ -179,7 +187,7 @@ level_order <- c('remote user',	'local user',	'overall')
 ggplot(data=cleandata, mapping= aes(x=factor(params, level = level_order), y=mean_score, fill=mode)) +
   geom_col(width=.5, position=position_dodge(.6)) +
   geom_errorbar(aes(ymin=mean_score-se_score, ymax=mean_score+se_score), width=.2, position=position_dodge(.6))+
-  scale_fill_manual(values = pref_color) +
+  scale_fill_manual(breaks=c('manual', 'suggestive', 'automatic'), values = pref_color) +
   scale_y_continuous(expand = c(0, 0)) +
   coord_flip(ylim = c(0, 50)) +
   guides(fill=guide_legend(title="")) +
@@ -204,7 +212,7 @@ ggplot(data=cleandata, mapping= aes(x=factor(params, level = level_order), y=mea
         legend.box.background = element_rect(fill = "white", color = "black", size = 1))
 
 # saving the final figure
-ggsave("rtlx.png", width = 6, height = 6, dpi = 1000)
+ggsave("rtlx.pdf")
 
 
 
@@ -215,6 +223,9 @@ ggsave("rtlx.png", width = 6, height = 6, dpi = 1000)
 
 usability_data=read.csv('csv/usability.csv', sep=",")
 pref_color = c("#90d7de", "#ffbd66","#ffebd0")
+usability_data$mode <- factor(usability_data$mode, level = c("automatic", "suggestive", "manual"))
+
+
 attach(usability_data)
 
 cleandata <- usability_data %>%
@@ -235,10 +246,10 @@ level_order <- c('remote user',	'local user')
 ggplot(data=cleandata, mapping= aes(x=factor(params, level = level_order), y=mean_score, fill=mode)) +
   geom_col(width=.5, position=position_dodge(.6)) +
   geom_errorbar(aes(ymin=mean_score-se_score, ymax=mean_score+se_score), width=.2, position=position_dodge(.6))+
-  scale_fill_manual(values = pref_color) +
+  scale_fill_manual(breaks=c('manual', 'suggestive', 'automatic'), values = pref_color) +
   scale_y_continuous(expand = c(0, 0)) +
   coord_flip(ylim = c(0, 100)) +
-  guides(fill=guide_legend(title="")) +
+  guides(fill=guide_legend(title="", override.aes = list(color = NA))) +
   theme_bw() +
   theme(axis.line = element_blank(),
         axis.title.x=element_blank(),
@@ -260,7 +271,7 @@ ggplot(data=cleandata, mapping= aes(x=factor(params, level = level_order), y=mea
         legend.box.background = element_rect(fill = "white", color = "black", size = 1))
 
 # saving the final figure
-ggsave("usability.png", width = 6, height = 6, dpi = 1000)
+ggsave("usability.pdf")
 
 
 #######################################
@@ -269,7 +280,7 @@ ggsave("usability.png", width = 6, height = 6, dpi = 1000)
 pref_color = c("#90d7de", "#ffbd66","#ffebd0")
 data=read.csv('csv/preference.csv', sep=",")
 
-data$tech <- factor(data$tech, levels = c("manual", "suggestive", "automatic"))
+data$tech <- factor(data$tech, levels = c("automatic", "suggestive", "manual"))
 data$qus <- factor(data$qus, levels = c("q4... did you prefer overall?",
                                         "q3... made you feel more present with the remote users?", 
                                         "q2... made you feel more present in the virtual environment?", 
@@ -277,7 +288,7 @@ data$qus <- factor(data$qus, levels = c("q4... did you prefer overall?",
 
 ggplot(data, aes(x=tech, y=ans, fill=tech)) +
   geom_col(aes(x = qus, y = ans, fill = tech)) +
-  scale_fill_manual(values = pref_color) +
+  scale_fill_manual(breaks=c('manual', 'suggestive', 'automatic'), values = pref_color) +
   scale_color_manual(values = pref_color) + 
   coord_flip(ylim = c(0, 100)) +
   geom_text(aes(x = qus, y = ans, label = paste0(ans,"%")), position = position_stack(vjust = .5)) +
@@ -291,17 +302,19 @@ ggplot(data, aes(x=tech, y=ans, fill=tech)) +
         strip.text = element_text(color="black", face="bold", size = fontsize),
         strip.background = element_blank(),
         panel.border = element_blank(),
-        plot.title = element_text(hjust = -1.5, vjust = 1),
+        plot.title = element_text(size = fontsize, face = "bold", hjust = 0, vjust = .5),
         plot.background = element_blank(),
-        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        plot.margin = unit(c(0, .025, 0, 0), "null"),
         panel.spacing = unit(c(0, 0, 0, 0), "null"),
         legend.position = "bottom",
         legend.justification = c("center", "top"),
         legend.title=element_blank(),
         legend.text=element_text(size=fontsize),
         legend.box.just = "center",
-        legend.box.background = element_blank())
+        legend.box.background = element_blank()) 
 
+# saving the final figure
+ggsave("preference.pdf")
 
 
 #######################################
