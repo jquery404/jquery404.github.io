@@ -164,6 +164,16 @@ cleandata <- gfg %>%
 
 View(cleandata)
 
+friedman.test(y=cleandata$mean_score, groups=cleandata$mode, blocks=cleandata$params)
+wilcox <- pairwise.wilcox.test(cleandata$mean_score, cleandata$mode, p.adj = "bonf")
+
+print(wilcox)
+
+Zstat<-qnorm(wilcox$p.value/2)
+print(Zstat)
+print(abs(Zstat)/sqrt(20))
+
+
 # grouped box plot
 level_order <- c('remote user',	'local user',	'overall')
 ggplot(data=cleandata, mapping= aes(x=factor(params, level = level_order), y=mean_score, fill=mode)) +
@@ -216,6 +226,9 @@ cleandata <- usability_data %>%
   )
 
 View(cleandata)
+
+friedman.test(y=cleandata$mean_score, groups=cleandata$mode, blocks=cleandata$params)
+pairwise.wilcox.test(cleandata$mean_score, cleandata$mode, p.adj = "bonf")
 
 # grouped box plot
 level_order <- c('remote user',	'local user')
