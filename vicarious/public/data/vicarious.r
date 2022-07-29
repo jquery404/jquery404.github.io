@@ -349,4 +349,19 @@ g +
 
 
 ggsave("spatial_presence.png", width = 6, height = 6, dpi = 1000)
-  
+
+
+
+
+#######################################
+# task completion 
+#######################################
+data=read.csv('csv/timecompletion.csv', sep=",")
+
+shapiro.test(data$time)
+
+res.aov <- aov(data$time ~ data$tech, data = data)
+summary(res.aov)
+
+plot(TukeyHSD(res.aov, conf.level = .95))
+plot(TukeyHSD(res.aov, "tension"))
