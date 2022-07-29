@@ -7,8 +7,10 @@
 # library
 library(ggplot2)
 library(ggpubr)
+library(ggstatsplot)
 library(dplyr)
 library(likert) 
+library(report)
 coloring = c("#ffbd66", "#ffebd0","#d7f0f2","#90d7de","#52c2cc","#b56576","#6d597a","#355070")
 fontsize = 14
 dodge = .35
@@ -172,7 +174,8 @@ cleandata <- rtlx_data %>%
 
 View(cleandata)
 
-friedman.test(y=cleandata$mean_score, groups=cleandata$mode, blocks=cleandata$params)
+f <- friedman.test(y=cleandata$mean_score, groups=cleandata$mode, blocks=cleandata$params)
+?report(f)
 wilcox <- pairwise.wilcox.test(cleandata$mean_score, cleandata$mode, p.adj = "bonf")
 
 print(wilcox)
@@ -357,11 +360,20 @@ ggsave("spatial_presence.png", width = 6, height = 6, dpi = 1000)
 # task completion 
 #######################################
 data=read.csv('csv/timecompletion.csv', sep=",")
+task_1 = filter(data, task == "1")
+task_2 = filter(data, task == "2")
+task_3 = filter(data, task == "3")
+task_4 = filter(data, task == "4")
+task_5 = filter(data, task == "5")
+task_6 = filter(data, task == "6")
+
 
 shapiro.test(data$time)
 
-res.aov <- aov(data$time ~ data$tech, data = data)
+
+friedman.test(y = data$time, groups = data$tech, blocks = data$task)
 summary(res.aov)
+model.tables(res.aov, "means")
 
 plot(TukeyHSD(res.aov, conf.level = .95))
 plot(TukeyHSD(res.aov, "tension"))
