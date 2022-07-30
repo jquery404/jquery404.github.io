@@ -11,6 +11,7 @@ library(ggstatsplot)
 library(dplyr)
 library(likert) 
 library(report)
+library(tidyverse)
 coloring = c("#ffbd66", "#ffebd0","#d7f0f2","#90d7de","#52c2cc","#b56576","#6d597a","#355070")
 fontsize = 14
 dodge = .35
@@ -359,7 +360,7 @@ ggsave("spatial_presence.png", width = 6, height = 6, dpi = 1000)
 #######################################
 # task completion 
 #######################################
-data=read.csv('csv/timecompletion.csv', sep=",")
+data=read.csv('csv/timecompletion2.csv', sep=",")
 task_1 = filter(data, task == "1")
 task_2 = filter(data, task == "2")
 task_3 = filter(data, task == "3")
@@ -368,12 +369,28 @@ task_5 = filter(data, task == "5")
 task_6 = filter(data, task == "6")
 
 
-shapiro.test(data$time)
+
+set.seed(1)
+ggwithinstats(
+  data = data,
+  x = tech,
+  y = time,
+  type = "nonparametric",
+  p.adjust.method = "bonferroni",
+  pairwise.display = "all"
+)
 
 
-friedman.test(y = data$time, groups = data$tech, blocks = data$task)
-summary(res.aov)
-model.tables(res.aov, "means")
+plot(data$time)
+shapiro.test(d$score)
 
-plot(TukeyHSD(res.aov, conf.level = .95))
-plot(TukeyHSD(res.aov, "tension"))
+
+
+data=read.csv('csv/timecompletion3.csv', sep=",")
+summary(aov(data$time~data$tech))
+TukeyHSD(aov(data$time~as.factor(data$tech)))
+
+
+ ss-as > ms-as
+
+
