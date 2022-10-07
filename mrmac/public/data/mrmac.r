@@ -284,3 +284,14 @@ g +
 
 ggsave("spatial_presence.png", width = 6, height = 6, dpi = 1000)
   
+
+
+# latency and scalibility
+dat <- read.table(text = "A   B   C   D   E   F    G
+1 10 80 30 90 70 60  90
+2 20 50 70 50 40 10  40
+3 60 80 80 60  60 30 160
+4 20 40 70 80 20 10  70", header = TRUE)
+
+g <- barplot(as.matrix(dat), horiz = TRUE) 
+
