@@ -287,11 +287,29 @@ ggsave("spatial_presence.png", width = 6, height = 6, dpi = 1000)
 
 
 # latency and scalibility
-dat <- read.table(text = "A   B   C   D   E   F    G
-1 10 80 30 90 70 60  90
-2 20 50 70 50 40 10  40
-3 60 80 80 60  60 30 160
-4 20 40 70 80 20 10  70", header = TRUE)
+data=read.csv('csv/latency.csv', sep=",")
 
-g <- barplot(as.matrix(dat), horiz = TRUE) 
+g <- barplot(as.matrix(data), horiz = TRUE) 
 
+
+df2 <- data.frame(supp=rep(c("VC", "OJ"), each=3),
+                  dose=rep(c("D0.5", "D1", "D2"),2),
+                  len=c(6.8, 15, 33, 4.2, 10, 29.5))
+g <- ggplot(data=df2, aes(x=dose, y=len, fill=supp)) +
+  geom_bar(stat="identity") +
+  coord_flip()
+
+g + 
+  theme_bw() + 
+  theme(axis.line = element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.x = element_text(color="black", size=fontsize),
+        axis.text.y = element_text(color="black", size=fontsize),
+        strip.text = element_text(color="black", face="bold", size = fontsize),
+        strip.background = element_blank(),
+        panel.border = element_blank(),
+        plot.background = element_blank(),
+        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        legend.position = "none")
