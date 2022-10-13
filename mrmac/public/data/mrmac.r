@@ -243,8 +243,8 @@ ggplot(data %>% count(qus, ans) %>%
 # preference horizontal box plot #
 #######################################
 data=read.csv('csv/preference.csv', sep=",")
-pref_bg="#E76469"
-pref_color= "#d1353b"
+pref_bg=coloring[6]
+pref_color= coloring[7]
 data$qus <- factor(data$qus, levels = c(
   "Q10 ...overall experience comfortable for you?",
   "Q9 ...feel the presence of the remote users?",
@@ -258,11 +258,12 @@ data$qus <- factor(data$qus, levels = c(
   "Q1 ...able to clearly hear and see in the remote space?"))
 
 
-g <- ggplot(data = data, mapping = aes(x = qus, y = ans, fill = qus)) +
+g <- ggplot(data = data, mapping = aes(x = qus, y = ans, fill = role)) +
   stat_boxplot(geom = "errorbar", width=.2, color=pref_color, position=position_dodge(.75)) +
   geom_boxplot(color=pref_bg, fill=pref_bg) +
   stat_summary(fun="mean", geom="point", shape=1, size=3, position=position_dodge(width=0.75), color=pref_color) + 
   stat_summary(geom = "crossbar", width=0.7, fatten=3, color=pref_color, fun.data = function(x){c(y=median(x), ymin=median(x), ymax=median(x))}, position=position_dodge(width=0.75))+
+  scale_fill_manual(values = coloring) +
   scale_y_continuous(minor_breaks = seq(1, 7, 1), breaks = seq(1, 7.1, by=1), limits=c(1,7.1), c(0, 0)) +
   coord_flip(ylim = c(1, 7))
 
@@ -285,31 +286,85 @@ g +
 ggsave("spatial_presence.png", width = 6, height = 6, dpi = 1000)
   
 
+#######################################
+############ RTLX BARCHART ############
+#######################################
 
-# latency and scalibility
-data=read.csv('csv/latency.csv', sep=",")
-
-g <- barplot(as.matrix(data), horiz = TRUE) 
+gfg=read.csv('csv/preference.csv', sep=",")
 
 
-df2 <- data.frame(supp=rep(c("VC", "OJ"), each=3),
-                  dose=rep(c("D0.5", "D1", "D2"),2),
-                  len=c(6.8, 15, 33, 4.2, 10, 29.5))
-g <- ggplot(data=df2, aes(x=dose, y=len, fill=supp)) +
-  geom_bar(stat="identity") +
-  coord_flip()
-
-g + 
-  theme_bw() + 
+# grouped box plot
+level_order <- c(
+  "Q10 ...overall experience comfortable for you?",
+  "Q9 ...feel the presence of the remote users?",
+  "Q8 ...feel you were there in the remote space?",
+  "Q7 ...tools were sufficient to perform your tasks?",
+  "Q6 ...got necessary feedback from others?",
+  "Q5 ...comfortable communicating with remote user avatar?",
+  "Q4 ...able to effectively communicate with others?",
+  "Q3 ...rate the overall audio quality?",
+  "Q2 ...rate the overall video quality?",
+  "Q1 ...able to clearly hear and see in the remote space?")
+box_width = .45
+box_dodge = .75
+err_width = .15
+err_size = .25
+mean_radius = .75
+fontsize = 10
+ggplot(data=gfg, mapping= aes(x=factor(qus, level = level_order), y=ans, fill=role)) +
+  stat_boxplot(geom = "errorbar", width=err_width, size=err_size, position=position_dodge(box_dodge)) +
+  geom_boxplot(width = box_width, position = position_dodge(box_dodge), aes(color=role), coef = 0, outlier.alpha = 0, show.legend = F) +
+  stat_summary(fun="mean", geom="point", shape=1, size=mean_radius, position=position_dodge(width=box_dodge), color="black") + 
+  stat_summary(geom = "crossbar", width=box_width, fatten=0, color="black", fun.data = function(x){c(y=median(x), ymin=median(x), ymax=median(x))}, position=position_dodge(width=box_dodge)) +
+  scale_fill_manual(values = coloring) +
+  guides(fill=guide_legend(title="")) +
+  scale_color_manual(name = "role", values = c("#E76469", "#F8D85E")) + 
+  scale_y_continuous(minor_breaks = seq(0, 7, 1), breaks = seq(1, 7.1, by=1), limits=c(1,7.1)) + 
+  coord_flip(ylim = c(0, 7)) +
+  theme_bw() +
   theme(axis.line = element_blank(),
         axis.title.x=element_blank(),
         axis.title.y=element_blank(),
         axis.text.x = element_text(color="black", size=fontsize),
         axis.text.y = element_text(color="black", size=fontsize),
-        strip.text = element_text(color="black", face="bold", size = fontsize),
+        text = element_text(size=fontsize),
+        strip.background = element_blank(),
+        plot.background = element_blank(),
+        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        panel.border = element_blank(),
+        panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        legend.position = "none")
+
+
+#########
+# latency and scalibility
+data=read.csv('csv/latency.csv', sep=",")
+
+write.csv(df,'csv/latency.csv')
+
+g <- ggplot(data=data, aes(x=A, y=B, group=1)) +
+  geom_area(fill = coloring[1],
+            alpha = 0.2,
+            color = coloring[1],
+            lwd = 0.5,    # Line width
+            linetype = 1)+
+  geom_point(color=coloring[1])
+
+g + 
+  theme_bw() + 
+  theme(axis.line = element_blank(),
+        axis.text.x = element_text(color="black", size=fontsize),
+        axis.text.y = element_text(color="black", size=fontsize),
+        strip.text = element_blank(),
         strip.background = element_blank(),
         panel.border = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
         plot.background = element_blank(),
         plot.margin = unit(c(0.005, .025, 0, 0), "null"),
         panel.spacing = unit(c(0, 0, 0, 0), "null"),
-        legend.position = "none")
+        legend.position = "none") +
+  scale_x_continuous(name="Number of users", breaks = seq(1, 20, by = 1)) +
+  scale_y_continuous(name="Latency (ms)", breaks=seq(0, 1000, by=150))
+
