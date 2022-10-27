@@ -67,7 +67,16 @@ ggsave("social_presence.png", width = 6, height = 6, dpi = 1000)
 
 # create a data frame
 spatial_data=read.csv('csv/spatial-presence.csv', sep=",")
+
+sp=read.csv('csv/sp.csv', sep=",")
+iv=read.csv('csv/involvement.csv', sep=",")
+gp=read.csv('csv/gp.csv', sep=",")
+rl=read.csv('csv/real.csv', sep=",")
+attach(sp)
+names(sp)
+
 attach(spatial_data)
+names(spatial_data)
 
 # analysis of variance
 anova = aov(score ~params, data=spatial_data)
@@ -79,13 +88,38 @@ shapiro.test(gfg$score)
 tukey = TukeyHSD(anova)
 print(tukey)
 
+# wilcox
+boxplot(sp$VR, sp$AR, horizontal = T)
+text(x=fivenum(sp$VR),labels=fivenum(sp$VR), y = 1.50)
+wsr_sp <- wilcox.test(sp$VR, sp$AR, mu=0, alt="two.sided", paired=T, conf.int=T, conf.level = 0.99, exact=F)
+print(wsr_sp)
+Zstat<-qnorm(wsr$p.value/2)  
+Zstat
+abs(Zstat)/sqrt(20)   
+
+
+wsr_gp <-wilcox.test(gp$VR, gp$AR, mu=0, alt="two.sided", paired=T, conf.int=T, conf.level = 0.99, exact=F)
+wsr_iv <-wilcox.test(iv$VR, iv$AR, mu=0, alt="two.sided", paired=T, conf.int=T, conf.level = 0.99, exact=F)
+wsr_rl <-wilcox.test(rl$VR, rl$AR, mu=0, alt="two.sided", paired=T, conf.int=T, conf.level = 0.99, exact=F)
+
+print(wsr_gp)
+print(wsr_iv)
+print(wsr_rl)
+Zstat<-qnorm(wsr$p.value/2)  
+abs(Zstat)/sqrt(20)   
+
+# two-t-test
+t.test(spatial_data$score[params="VR"], spatial_data$score[params="AR"])
+
+
+spatial_data=read.csv('csv/spatial-presence.csv', sep=",")
 # grouped box plot
 spatial_plt <- ggplot(data = spatial_data, mapping = aes(x = params, y = score, fill = vrar)) +
   stat_boxplot(geom = "errorbar", width=.2, position=position_dodge(.75)) +
   geom_boxplot() +
   geom_boxplot(aes(color=vrar), coef = 0, outlier.alpha = 0, show.legend = F) +
   # geom_point(position=position_jitterdodge(dodge.width=0.9)) +
-  #stat_compare_means(method="t.test") + 
+  stat_compare_means(method="t.test") + 
   stat_summary(fun="mean", geom="point", shape=1, size=3, position=position_dodge(width=0.75), color="black") + 
   stat_summary(geom = "crossbar", width=0.65, fatten=0, color="black", fun.data = function(x){c(y=median(x), ymin=median(x), ymax=median(x))}, position=position_dodge(width=0.75)) +
   scale_fill_manual(name= "vrar", values = c("#E76469", "#F8D85E"))+
@@ -164,13 +198,13 @@ cleandata <- gfg %>%
 View(cleandata)
 
 # grouped box plot
-level_order <- c('mental',	'physical',	'temporal',	'effort',	'performance', 'frustration', 'overall')
+level_order <- c('Mental Demand',	'Physical Demand',	'Temporal Demand',	'Effort',	'Performance', 'Frustration', 'Overall')
 ggplot(data=cleandata, mapping= aes(x=factor(params, level = level_order), y=mean_score, fill=vrar)) +
   geom_col(width=.5, position=position_dodge(.6)) +
   geom_errorbar(aes(ymin=mean_score-se_score, ymax=mean_score+se_score), width=.2, position=position_dodge(.6))+
   scale_fill_manual(values = coloring) +
   scale_y_continuous(expand = c(0, 0)) +
-  coord_flip(ylim = c(0, 100)) +
+  coord_flip(ylim = c(0, 40)) +
   guides(fill=guide_legend(title="")) +
   theme_bw() +
   theme(axis.line = element_blank(),
@@ -212,7 +246,7 @@ plot(likt, colors = c("#E76469", "#F8D85E","#EDA645","#4FA490","#3B7F9F")) +
         axis.title.y=element_blank(),
         axis.text.x = element_text(color="black", size=fontsize),
         axis.text.y = element_text(color="black", size=fontsize),
-        strip.text = element_text(color="black", face="bold", size = fontsize),
+        strip.text = element_text(color="black", size = fontsize),
         strip.background = element_blank(),
         text = element_text(size=fontsize),
         panel.border = element_blank(),
@@ -305,12 +339,12 @@ level_order <- c(
   "Q3 ...rate the overall audio quality?",
   "Q2 ...rate the overall video quality?",
   "Q1 ...able to clearly hear and see in the remote space?")
-box_width = .45
-box_dodge = .75
-err_width = .15
-err_size = .25
-mean_radius = .75
-fontsize = 10
+box_width = .55
+box_dodge = .65
+err_width = .25
+err_size = .35
+mean_radius = 2
+fontsize = 14
 ggplot(data=gfg, mapping= aes(x=factor(qus, level = level_order), y=ans, fill=role)) +
   stat_boxplot(geom = "errorbar", width=err_width, size=err_size, position=position_dodge(box_dodge)) +
   geom_boxplot(width = box_width, position = position_dodge(box_dodge), aes(color=role), coef = 0, outlier.alpha = 0, show.legend = F) +
@@ -368,3 +402,124 @@ g +
   scale_x_continuous(name="Number of users", breaks = seq(1, 20, by = 1)) +
   scale_y_continuous(name="Latency (ms)", breaks=seq(0, 1000, by=150))
 
+
+
+### time
+data=read.csv('csv/time-completion.csv', sep=",")
+attach(data)
+names(data)
+
+## 1
+data$game <- as.factor(data$game)
+data$game = factor(data$game, labels = c("Session 1", "Session 2", "Session 3"))
+class(data$game)
+
+# normal distribution
+Session1 <- subset(data, game== "Session 1")
+Session2 <- subset(data, game== "Session 2")
+Session3 <- subset(data, game== "Session 3")
+
+qqnorm(Session1$time)
+qqline(Session1$time)
+
+# homogeneity
+bartlett.test(time ~ game, data = data)
+
+model1 = lm(time ~ game, data = data)
+anova(model1)
+
+
+
+
+### tlx-overall
+sp=read.csv('csv/tlx-overall.csv', sep=",")
+
+names(sp)
+
+attach(spatial_data)
+names(spatial_data)
+
+# analysis of variance
+anova = aov(score ~params, data=spatial_data)
+summary(anova)
+shapiro.test(gfg$score)
+
+
+# pairwise comp
+tukey = TukeyHSD(anova)
+print(tukey)
+
+# wilcox
+boxplot(sp$VR, sp$AR, horizontal = T)
+text(x=fivenum(sp$VR),labels=fivenum(sp$VR), y = 1.50)
+wsr <- wilcox.test(sp$VR, sp$AR, mu=0, alt="two.sided", paired=T, conf.int=T, conf.level = 0.99, exact=F)
+wilcox.test(gp$VR, gp$AR, mu=0, alt="two.sided", paired=T, conf.int=T, conf.level = 0.99, exact=F)
+wilcox.test(iv$VR, iv$AR, mu=0, alt="two.sided", paired=T, conf.int=T, conf.level = 0.99, exact=F)
+wilcox.test(rl$VR, rl$AR, mu=0, alt="two.sided", paired=T, conf.int=T, conf.level = 0.99, exact=F)
+print(wsr)
+Zstat<-qnorm(wsr$p.value/2)  
+abs(Zstat)/sqrt(20)   
+
+
+### tlx-workload
+sp=read.csv('csv/tlx-mental.csv', sep=",")
+
+names(sp)
+
+attach(spatial_data)
+names(spatial_data)
+
+# analysis of variance
+anova = aov(score ~params, data=spatial_data)
+summary(anova)
+shapiro.test(gfg$score)
+
+
+# pairwise comp
+tukey = TukeyHSD(anova)
+print(tukey)
+
+# wilcox
+boxplot( sp$AR, sp$VR, horizontal = T)
+text(x=fivenum(sp$VR),labels=fivenum(sp$VR), y = 1.50)
+wsr <- wilcox.test(sp$AR, sp$VR, mu=0, alt="two.sided", paired=T, conf.int=T, conf.level = 0.99, exact=F)
+wilcox.test(gp$VR, gp$AR, mu=0, alt="two.sided", paired=T, conf.int=T, conf.level = 0.99, exact=F)
+wilcox.test(iv$VR, iv$AR, mu=0, alt="two.sided", paired=T, conf.int=T, conf.level = 0.99, exact=F)
+wilcox.test(rl$VR, rl$AR, mu=0, alt="two.sided", paired=T, conf.int=T, conf.level = 0.99, exact=F)
+print(wsr)
+Zstat<-qnorm(wsr$p.value/2)  
+abs(Zstat)/sqrt(20)  
+
+
+
+
+
+### sus-overall
+sp=read.csv('csv/sus-overall.csv', sep=",")
+
+names(sp)
+
+attach(spatial_data)
+names(spatial_data)
+
+# analysis of variance
+anova = aov(score ~params, data=spatial_data)
+summary(anova)
+shapiro.test(gfg$score)
+
+
+# pairwise comp
+tukey = TukeyHSD(anova)
+print(tukey)
+
+# wilcox
+boxplot( sp$AR, sp$VR, horizontal = T)
+text(x=fivenum(sp$VR),labels=fivenum(sp$VR), y = 1.50)
+wsr <- wilcox.test(sp$AR, sp$VR, mu=0, alt="two.sided", paired=T, conf.int=T, conf.level = 0.99, exact=F)
+wilcox.test(gp$VR, gp$AR, mu=0, alt="two.sided", paired=T, conf.int=T, conf.level = 0.99, exact=F)
+wilcox.test(iv$VR, iv$AR, mu=0, alt="two.sided", paired=T, conf.int=T, conf.level = 0.99, exact=F)
+wilcox.test(rl$VR, rl$AR, mu=0, alt="two.sided", paired=T, conf.int=T, conf.level = 0.99, exact=F)
+print(wsr)
+Zstat<-qnorm(wsr$p.value/2)  
+Zstat
+abs(Zstat)/sqrt(20)  

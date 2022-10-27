@@ -1,0 +1,117 @@
+---
+title: "Upwork game triads"
+author: "Ewan Donnachie"
+date: "2022-10-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+up_pref <- readr::read_csv("upwrk_pref.csv") |> 
+  mutate(qus = factor(qus, levels = paste0("Q", c(1:5, 10))))
+up1 <- readr::read_csv("upwrk_q1.csv")
+up2 <- readr::read_csv("upwrk_q2.csv") |> 
+  fill(id, .direction = "down")
+
+up_c <- bind_rows(
+  up_pref |> 
+    rename(question = qus, score = ans),
+  up1 |> 
+    rename(question = queston_type,
+           device = cat),
+  up2 |> 
+    rename(question = ques_type,
+           device = cat) |> 
+    select(-id)
+)
+```
+
+
+
+
+```{r}
+up_c |> 
+  filter(substr(question, 1, 1) == "Q") |> 
+  ggplot() +
+  aes(x = device,
+      y = score,
+      group = paste(question, device), fill = device) +
+  geom_boxplot() +
+  guides(fill = guide_none()) +
+  facet_wrap(~reorder(question, question), nrow = 2) +
+  labs(
+    y = "Score",
+    x = ""
+  )
+```
+
+
+
+
+```{r}
+ggplot(up1) +
+  aes(x = cat,
+      y = score,
+      group = paste(queston_type, cat), fill = cat) +
+  geom_boxplot() +
+  guides(fill = guide_none()) +
+  facet_wrap(~queston_type, nrow = 1) +
+  labs(
+    y = "Score",
+    x = ""
+  )
+```
+
+
+```{r}
+ggplot(up2) +
+  aes(x = cat,
+      y = score,
+      group = paste(ques_type, cat), fill = cat) +
+  geom_boxplot() +
+  guides(fill = guide_none()) +
+  facet_wrap(~ques_type, nrow = 1) +
+  labs(
+    y = "Score",
+    x = ""
+  )
+```
+
+
+```{r}
+tab_a <- up_c |> 
+  group_by(question, device) |> 
+  summarise(
+    n = n(),
+    mean = mean(score),
+    sd = sd(score),
+    .groups = "drop"
+  )
+
+tab_b <- up_c |> 
+  nest(data = -question) |> 
+  mutate(
+    lm = map(data, \(x) lm(score ~ device, data = x)),
+    coef_device = map(lm, \(x) broom::tidy(x)[2, ])
+    ) |> 
+  select(question, coef_device) |> 
+  unnest(cols = coef_device) |> 
+  select(question, Difference = estimate, `p-value` = p.value)
+```
+
+```{r}
+tab <- left_join(tab_a,
+           tab_b |> mutate(device = "PC"),
+           by = c("question", "device"))
+openxlsx::write.xlsx(tab, file = "~/files/transfer/upwork_results_table.xlsx")
+
+tab |>
+  rename(Question = question,
+         Device = device,
+         Mean = mean) |> 
+  gt::gt() |> 
+  gt::fmt_number(c("Mean", "sd", "Difference", "p-value"))
+```
+

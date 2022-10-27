@@ -1,29 +1,64 @@
-params,vrar,score
-mental,vr,24
-physical,vr,35
-temporal,vr,25
-performance,vr,36
-effort,vr,23
-frustration,vr,33
-overall,vr,25.54
-mental,ar,35
-physical,ar,25
-temporal,ar,33
-performance,ar,23
-effort,ar,22
-frustration,ar,36
-overall,ar,28.33
-mental,vr,12
-physical,vr,21
-temporal,vr,34
-performance,vr,20
-effort,vr,13
-frustration,vr,31
-overall,vr,21.87
-mental,ar,21
-physical,ar,22
-temporal,ar,10
-performance,ar,23
-effort,ar,33
-frustration,ar,21
-overall,ar,34.66
+params,vrar,score,
+Mental Demand,VR,24,
+Physical Demand,VR,35,
+Temporal Demand,VR,25,
+Performance,VR,36,
+Effort,VR,23,
+Frustration,VR,33,
+Overall,VR,25.54,
+Mental Demand,VR,35,
+Physical Demand,VR,25,
+Temporal Demand,VR,33,
+Performance,VR,23,
+Effort,VR,22,
+Frustration,VR,36,
+Overall,VR,28.33,
+Mental Demand,AR,12,
+Physical Demand,AR,21,
+Temporal Demand,AR,34,
+Performance,AR,20,
+Effort,AR,13,
+Frustration,AR,31,
+Overall,AR,21.87,
+Mental Demand,VR,21,
+Physical Demand,VR,22,
+Temporal Demand,VR,10,
+Performance,VR,23,
+Effort,VR,33,
+Frustration,VR,21,
+Overall,VR,34.66,
+Mental Demand,VR,20,
+Physical Demand,VR,20,
+Temporal Demand,VR,20,
+Performance,VR,20,
+Effort,VR,25,
+Frustration,VR,20,
+Overall,VR,21,
+Mental Demand,AR,3,
+Physical Demand,AR,2,
+Temporal Demand,AR,2,
+Performance,AR,2,
+Effort,AR,3,
+Frustration,AR,3,
+Overall,AR,17.67,
+Mental Demand,VR,20,
+Physical Demand,VR,25,
+Temporal Demand,VR,20,
+Performance,VR,20,
+Effort,VR,20,
+Frustration,VR,15,
+Overall,VR,20.33,
+Mental Demand,VR,25,
+Physical Demand,VR,20,
+Temporal Demand,VR,20,
+Performance,VR,15,
+Effort,VR,20,
+Frustration,VR,10,
+Overall,VR,18.33,
+Mental Demand,AR,15,
+Physical Demand,AR,30,
+Temporal Demand,AR,15,
+Performance,AR,25,
+Effort,AR,10,
+Frustration,AR,20,
+Overall,AR,20,
