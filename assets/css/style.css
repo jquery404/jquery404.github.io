@@ -476,3 +476,14 @@ width: 100%;
   left: 50%;
   margin-left: -60px;
 }
+
+/* project details */
+.projd-title {
+  border-bottom: 2px solid #000;
+}
+.projd-tags {
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 0.85rem;
+  letter-spacing: 0.0625rem;
+}
