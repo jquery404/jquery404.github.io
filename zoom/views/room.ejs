@@ -6,13 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2D Video Call</title>
 
+    <style>
+        video{width: 150px; height: 150px; object-fit: cover;}
+        video.guest{width: 50%;}
+        video.host{position: absolute;bottom: 1em;right: 1em;}
+        canvas{border: 1px dashed;}
+        img{position: absolute; cursor: pointer; z-index: 1111; }
+    </style>
+
     <script>
         const ROOM_ID = "<%= roomId %>";
     </script>
     <script src="/socket.io/socket.io.js" defer></script>
     <script src="script.js" defer></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.138.0/build/three.module.js",
+                "OrbitControls": "https://unpkg.com/three@0.138.0/examples/jsm/controls/OrbitControls.js",
+                "GLTFLoader": "https://unpkg.com/three@0.138.0/examples/jsm/loaders/GLTFLoader.js",
+                "RoomEnvironment": "https://unpkg.com/three@0.138.0/examples/jsm/environments/RoomEnvironment.js"
+            }
+        }
+    </script>
+    <script src="annotate.js" defer></script>
+    <script type="module" src="loadmodel.js" defer></script>
 </head>
 <body>
-    <div id="video-grid"></div>
+    <pre></pre>
+    <section class="select">
+        <label for="audioSource">Audio source: </label>
+        <select id="audioSource"></select>
+    </section>
+  
+    <section class="select">
+        <label for="videoSource">Video source: </label>
+        <select id="videoSource"></select>
+    </section>
+    <input type="checkbox" id="builder" name="builder" value="builder"><label for="builder"> builder</label><br>
+
+    <img src="models/ic_call.svg" alt="ic_call" onclick="startCall()" width="36px" />
+    <button onclick="shareScreen()">share</button>
+  
+    <video class="host" playsinline autoplay muted></video>
+    <video class="guest" playsinline autoplay muted></video>
+    <div>
+        <button onclick="clearCanvas()" style="position: absolute;">Clear</button>
+        <canvas id="annotate"></canvas>
+    </div>
+    <div id="model_canvas"></div>
+    
 </body>
 </html>

@@ -1,22 +1,17 @@
 {
-  "name": "zoom",
+  "name": "tsixvdo",
   "version": "1.0.0",
-  "description": "",
+  "description": "360-video-call",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "jquery404",
   "license": "ISC",
   "dependencies": {
-    "ejs": "^3.1.8",
+    "body-parser": "^1.20.1",
     "express": "^4.18.2",
-    "socket.io": "^4.6.0",
-    "uuid": "^9.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.20"
+    "@mapbox/node-pre-gyp": "1.x",
+    "wrtc": "^0.4.7"
   }
 }

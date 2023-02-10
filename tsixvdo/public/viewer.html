@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viewer</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="comp-skybox.js"></script>
+    <script src='viewer.js'></script>  
+</head>
+<body>
+
+    <a-scene vr-mode-ui="enabled: true">
+        <a-assets>
+        <img id="grid" src="img/grid.png">
+        <img id="sky" src="img/sky.jpg" />
+        </a-assets>
+
+        <!-- <a-entity id="player" camera position="0 0 0" wasd-controls look-controls></a-entity> -->
+
+        <a-entity position="0 0 0"
+        geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
+        material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
+
+        <a-sky set-sky="#sky" rotation="0 0 0"></a-sky>
+    </a-scene>
+    <h1>Viewer</h1>
+    <video autoplay id='video'></video>
+    <button id="my-button">View Stream</button>
+</body>
+</html>
