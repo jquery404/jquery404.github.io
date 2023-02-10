@@ -34,6 +34,9 @@ app.get('/guest', (req, res) => {
 app.get('/test', (req, res) => {
     res.render('test.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
 })
+app.get('/tlx', (req, res) => {
+    res.render('data/tlx.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
+})
 
 
 const peers = {};

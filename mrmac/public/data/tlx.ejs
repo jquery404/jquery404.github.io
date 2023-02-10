@@ -246,17 +246,22 @@
           document.getElementById('div_part4').innerHTML = getResultsHTML();
           console.log(results_overall, results_rating);
 
-          fetch('/savetlx', {
+          let formData = new FormData();
+          formData.append("Id", document.getElementById('_id').value);
+          formData.append("Condition", document.getElementById('conditions').value);
+          formData.append("Overall", results_overall);
+          formData.append("Mental", results_rating[0]);
+          formData.append("Physical", results_rating[1]);
+          formData.append("Temporal", results_rating[2]);
+          formData.append("Performance", results_rating[3]);
+          formData.append("Effort", results_rating[4]);
+          formData.append("Frustration", results_rating[5]);
+          console.log(formData.getAll('Overall'));
+
+          let response = fetch('https://sheetdb.io/api/v1/hvrhzu4f02cdm', {
             method: 'POST',
-            headers: {
-              'Accept': 'application/json, text/plain, */*',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({content: results_rating.toString()+ ',' + results_overall+ '\n'})
-          }).then(res => res.json())
-            .then(res => console.log(res));
-
-
+            body: formData
+          });
 
         } else {
           setPairLabels();
@@ -327,6 +332,14 @@
   </head>
   <body onLoad="onLoad();">
     <div id="div_part1"> Task Questionnaire - Part 1 <br />
+      <br /> 
+      <label for="cars">Choose a condition:</label>
+      <select name="conditions" id="conditions">
+        <option value="2D Video Call">2D Video Call</option>
+        <option value="360° Video-only Call">360° Video-only Call</option>
+        <option value="Augmented 360° Call">Augmented 360° Call</option>
+      </select> <br />
+      <br /> <label for="_id">_ID:</label><input type="text" id="_id" name="_id"> <br />
       <br /> Click on each scale at the point that best indicates your experience of the task <br />
       <br />
       <div id="scale0"></div>
