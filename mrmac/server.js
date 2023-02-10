@@ -36,6 +36,11 @@ app.get('/test', (req, res) => {
 })
 
 
+app.get('/gd', (req, res) => {
+    res.render('argdc.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
+})
+
+
 const peers = {};
 const rooms = {};
 

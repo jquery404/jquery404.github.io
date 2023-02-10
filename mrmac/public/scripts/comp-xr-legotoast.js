@@ -18,14 +18,15 @@ AFRAME.registerComponent('lego-model', {
             // var modelName = this.data.legoSrc; 
             var modelName = '#goal'+this.data.currentLegoId+'-glb'; 
             el.id = 'legoGoal';
-            el.setAttribute('scale', '.1 .1 .1');
+            el.setAttribute('scale', '.05 .05 .05');
             el.setAttribute('position', '0 .05 -.4');
             el.setAttribute('gltf-model', modelName)
             // el.setAttribute('gltf-model', this.data.legoSrc)
             // setTimeout(this.toggleShowing.bind(this), 3 * 1000);
             this.data.isShowing = true;
-            // randomly go through each lego
-            // this.data.currentLegoId  = this.data.currentLegoId >=9 ? 1: this.data.currentLegoId + 1;
+            // @start: randomly go through each lego
+            this.data.currentLegoId  = this.data.currentLegoId >=9 ? 1: this.data.currentLegoId + 1;
+            // @end
             this.el.appendChild(el);
         }else{
             var el = document.getElementById('legoGoal');
