@@ -5,8 +5,8 @@ function drawMain() {
   ctx = c.getContext("2d");
   var ratio = window.devicePixelRatio ? window.devicePixelRatio : 1;
   // original is 480 x 270
-  c.width = 240 * ratio;
-  c.height = 180 * ratio;
+  c.width = 480 * ratio;
+  c.height = 270 * ratio;
 
   x = c.width / 2;
   y = c.height / 2;

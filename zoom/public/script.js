@@ -7,6 +7,7 @@ let guestUser;
 let peerRef;
 let senders = []
 let clients = {sender: {tag: '', socket_id: ''}, receiver: []}
+let isSharing = false;
 
 // Get camera and microphone
 const videoElement = document.querySelector(".host");
@@ -48,11 +49,13 @@ function gotStream(stream) {
     );
     videoElement.srcObject = stream;
     localStream = stream;
-    init();
+    // init();
 }
 
 function startCall() {
-    console.log('asd')
+    if (document.getElementById('builder').checked) {
+        document.getElementById('model_canvas').removeAttribute("hidden"); 
+    }
     init();
 }
 
@@ -188,10 +191,19 @@ function handleAnswer(message) {
 }
 
 function shareScreen() {
-    const screenTrack = c.captureStream().getTracks()[0];
-    senders.find(sender => sender.track.kind === 'video').replaceTrack(screenTrack);
-
-    screenTrack.onended = function () {
+    isSharing = !isSharing;
+    
+    
+    if (!isSharing) {
+        document.getElementById('drawShare').innerHTML = "Drawing Share OFF";
         senders.find(sender => sender.track.kind === 'video').replaceTrack(localStream.getTracks()[1]);
+    }else{
+        const screenTrack = c.captureStream().getTracks()[0];
+        senders.find(sender => sender.track.kind === 'video').replaceTrack(screenTrack);
+        document.getElementById('drawShare').innerHTML = "Drawing Share ON";
     }
+    
+        // screenTrack.onended = function () {
+        //     senders.find(sender => sender.track.kind === 'video').replaceTrack(localStream.getTracks()[1]);
+        // }
 }

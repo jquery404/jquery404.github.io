@@ -8,10 +8,11 @@
 
     <style>
         video{width: 150px; height: 150px; object-fit: cover;}
-        video.guest{width: 50%;}
+        video.guest {width: 70%; height: 100%; background: #747474; float: left;}
         video.host{position: absolute;bottom: 1em;right: 1em;}
+        div#model_canvas {width: 30%; float:left;}
         canvas{border: 1px dashed;}
-        img{position: absolute; cursor: pointer; z-index: 1111; }
+        div.annotate-wrapper{float: left; clear:both; width: 50%;}
     </style>
 
     <script>
@@ -43,18 +44,19 @@
         <label for="videoSource">Video source: </label>
         <select id="videoSource"></select>
     </section>
-    <input type="checkbox" id="builder" name="builder" value="builder"><label for="builder"> builder</label><br>
-
-    <img src="models/ic_call.svg" alt="ic_call" onclick="startCall()" width="36px" />
-    <button onclick="shareScreen()">share</button>
+    <input type="checkbox" id="builder" name="builder" value="builder"><label for="builder"> builder</label>
+    <button onclick="startCall()">call</button>
+    <br>
   
     <video class="host" playsinline autoplay muted></video>
     <video class="guest" playsinline autoplay muted></video>
-    <div>
+    <div hidden id="model_canvas"></div>
+    <div class="annotate-wrapper">
         <button onclick="clearCanvas()" style="position: absolute;">Clear</button>
+        <button onclick="shareScreen()" style="position: absolute; left:30%;" id="drawShare">Drawing Share OFF</button>
+
         <canvas id="annotate"></canvas>
     </div>
-    <div id="model_canvas"></div>
     
 </body>
 </html>

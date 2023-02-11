@@ -7,7 +7,7 @@ const lego = 'models/model1.glb';
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 const renderer = new THREE.WebGLRenderer( { antialias: true } );
 renderer.setPixelRatio( window.devicePixelRatio );
-renderer.setSize( window.innerWidth*.5, window.innerHeight*.6 );
+renderer.setSize( window.innerWidth*.3, window.innerHeight*.6 );
 renderer.outputEncoding = THREE.sRGBEncoding;
 const pmremGenerator = new THREE.PMREMGenerator( renderer );
 
