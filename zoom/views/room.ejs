@@ -7,12 +7,45 @@
     <title>2D Video Call</title>
 
     <style>
+        body { padding:0; margin:0; box-sizing:border-box;}
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            gap: 10px;
+            background-color: #2196F3;
+            padding: 5px;
+            height:calc(100vh - 10px);
+        }
+
+        .grid-container-item {
+            background-color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+
+        .item1 {
+            grid-area: 1/1/3/2;
+            height:calc(100vh - 10px);
+        }
+        #overlay {
+            position: fixed;
+            display: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 2;
+            cursor: pointer;
+        }
+        #overlay_content{position: absolute;font-size: 50px;color: white;}
         video{width: 150px; height: 150px; object-fit: cover;}
-        video.guest {width: 70%; height: 100%; background: #747474; float: left;}
+        video.guest {width: 100%; height: 100%; background: #747474; float: left;}
         video.host{position: absolute;bottom: 1em;right: 1em;}
-        div#model_canvas {width: 30%; float:left;}
+        div#model_canvas {width: 100%; height: 100%;}
         canvas{border: 1px dashed;}
-        div.annotate-wrapper{float: left; clear:both; width: 50%;}
     </style>
 
     <script>
@@ -34,29 +67,44 @@
     <script type="module" src="loadmodel.js" defer></script>
 </head>
 <body>
-    <pre></pre>
-    <section class="select">
-        <label for="audioSource">Audio source: </label>
-        <select id="audioSource"></select>
-    </section>
-  
-    <section class="select">
-        <label for="videoSource">Video source: </label>
-        <select id="videoSource"></select>
-    </section>
-    <input type="checkbox" id="builder" name="builder" value="builder"><label for="builder"> builder</label>
-    <button onclick="startCall()">call</button>
-    <br>
+
+    <div class="grid-container">
+        <div class="grid-container-item item1">
+            <video class="guest" controls playsinline autoplay muted></video>
+        </div>
+        <div class="grid-container-item item2">
+            <button onclick="on()" style="position: absolute; right: 5px;">&#x2699;</button>
+            <div id="model_canvas"></div>
+        </div>
+        <div class="grid-container-item item3">
+            <button onclick="clearCanvas()" style="position: absolute; right: 5px;">Clear</button>
+            <button onclick="shareScreen()" style="position: absolute;" id="drawShare">Start Sharing</button>
+        
+            <canvas id="annotate"></canvas>
+        </div> 
+    </div>
+
+
+    <div id="overlay">
+        <div id="overlay_content">
+            <pre></pre>
+            <section class="select">
+                <label for="audioSource">Audio source: </label>
+                <select id="audioSource"></select>
+            </section>
+        
+            <section class="select">
+                <label for="videoSource">Video source: </label>
+                <select id="videoSource"></select>
+            </section>
+            <input type="checkbox" id="builder" name="builder" value="builder"><label for="builder"> builder</label>
+            <button onclick="startCall()">call</button>
+            <button onclick="off()">close</button>
+        </div>
+    </div>
   
     <video class="host" playsinline autoplay muted></video>
-    <video class="guest" playsinline autoplay muted></video>
-    <div hidden id="model_canvas"></div>
-    <div class="annotate-wrapper">
-        <button onclick="clearCanvas()" style="position: absolute;">Clear</button>
-        <button onclick="shareScreen()" style="position: absolute; left:30%;" id="drawShare">Drawing Share OFF</button>
-
-        <canvas id="annotate"></canvas>
-    </div>
+    
     
 </body>
 </html>

@@ -195,15 +195,23 @@ function shareScreen() {
     
     
     if (!isSharing) {
-        document.getElementById('drawShare').innerHTML = "Drawing Share OFF";
+        document.getElementById('drawShare').innerHTML = "Stop Sharing";
         senders.find(sender => sender.track.kind === 'video').replaceTrack(localStream.getTracks()[1]);
     }else{
         const screenTrack = c.captureStream().getTracks()[0];
         senders.find(sender => sender.track.kind === 'video').replaceTrack(screenTrack);
-        document.getElementById('drawShare').innerHTML = "Drawing Share ON";
+        document.getElementById('drawShare').innerHTML = "Start Sharing";
     }
     
         // screenTrack.onended = function () {
         //     senders.find(sender => sender.track.kind === 'video').replaceTrack(localStream.getTracks()[1]);
         // }
+}
+
+function on() {
+    document.getElementById("overlay").style.display = "block";
+}
+  
+function off() {
+    document.getElementById("overlay").style.display = "none";
 }

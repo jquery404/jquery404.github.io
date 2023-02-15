@@ -3,11 +3,11 @@ import { OrbitControls } from 'OrbitControls';
 import { GLTFLoader } from 'GLTFLoader';
 import { RoomEnvironment } from 'RoomEnvironment';
 
-const lego = 'models/model1.glb';
+const lego = 'models/model3_.glb';
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 const renderer = new THREE.WebGLRenderer( { antialias: true } );
 renderer.setPixelRatio( window.devicePixelRatio );
-renderer.setSize( window.innerWidth*.3, window.innerHeight*.6 );
+renderer.setSize( window.innerWidth*.5, window.innerHeight*.5 );
 renderer.outputEncoding = THREE.sRGBEncoding;
 const pmremGenerator = new THREE.PMREMGenerator( renderer );
 
@@ -17,7 +17,7 @@ scene.environment = pmremGenerator.fromScene( new RoomEnvironment(), 0.04 ).text
 
 document.getElementById("model_canvas").appendChild( renderer.domElement );
 
-camera.position.z = 5;
+camera.position.z = 3;
 
 const controls = new OrbitControls( camera, renderer.domElement );
 controls.target.set( 0, 0.5, 0 );

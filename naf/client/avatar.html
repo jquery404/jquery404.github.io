@@ -1,0 +1,210 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>MERE - Collab Zone</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MERE - Collab Zone">
+
+
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+    <script src="easyrtc/easyrtc.js"></script>
+    <script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js"></script>
+
+    <script>
+        function onConnect() {
+            console.log('onConnect', new Date());
+        }
+
+        NAF.schemas.getComponentsOriginal = NAF.schemas.getComponents;
+        NAF.schemas.getComponents = (template) => {
+        if (!NAF.schemas.hasTemplate('#avatar-template')) {
+            NAF.schemas.add({
+                template: '#avatar-template', 
+                components: [
+                    'position', 
+                    'rotation',
+                    {
+                    selector: '.nametag',
+                    component: 'text',
+                    property: 'value'
+                    }
+                ]
+            });
+            
+            NAF.schemas.add({template: '#player-template', components: ['position', 'rotation']});
+            NAF.schemas.add({template: '#hand-template', components: ['position', 'rotation']});
+            NAF.schemas.add({template: '#body-template', components: ['position', 'rotation', 'visible']});
+
+        }
+        const components = NAF.schemas.getComponentsOriginal(template);
+        return components;
+        };
+
+        AFRAME.registerComponent('avatar-room', {
+            init: function () {
+            var el = this.el;
+            var params = this.getUrlParams();
+        
+            if (!params.room) {
+                window.alert('Please add a room name in the URL, eg. ?room=myroom');
+            }
+        
+            var host = params.hasOwnProperty('host');
+            var webrtc = params.hasOwnProperty('webrtc');
+            var adapter = webrtc ? 'easyrtc' : 'wseasyrtc';
+            var voice = params.hasOwnProperty('voice');
+            isHosting = host ? true : false;
+            
+            // Set local user's name
+            var myNametag = document.querySelector('.nametag');
+            myNametag.setAttribute('text', 'value', (host?'(HOST)': '') + params.username);
+            
+            // Setup networked-scene
+            var networkedComp = {
+                room: params.room,
+                adapter: adapter,
+                audio: true,
+                video: true,
+            };
+            console.info('Init settings:', networkedComp);
+            el.setAttribute('networked-scene', networkedComp);
+            
+            },
+        
+            getUrlParams: function () {
+            var match;
+            var pl = /\+/g;  // Regex for replacing addition symbol with a space
+            var search = /([^&=]+)=?([^&]*)/g;
+            var decode = function (s) { return decodeURIComponent(s.replace(pl, ' ')); };
+            var query = window.location.search.substring(1);
+            var urlParams = {};
+        
+            match = search.exec(query);
+            while (match) {
+                urlParams[decode(match[1])] = decode(match[2]);
+                match = search.exec(query);
+            }
+            return urlParams;
+            }
+        });
+
+        // Managing skybox src attribute like a boss
+        AFRAME.registerComponent('set-sky', {
+            schema: {default:''},
+            init: function() {
+            this.timeout = setTimeout(this.updateSky.bind(this), 100);
+            this.sky = this.el;
+            },
+            remove: function() {
+            clearInterval(this.timeout);
+            this.el.removeObject3D(this.object3D);
+            },
+            updateSky: function() {
+            if(this.data == 'null') 
+                this.sky.removeAttribute('src');
+            else
+                this.sky.setAttribute('src', this.data);
+            }
+        });
+
+        // Grid components
+        AFRAME.registerComponent('grid', {
+            init: function(){
+            this.grid = this.el;
+            this.grid.setAttribute('geometry', 'primitive: plane; width: 10000; height: 10000;');
+            this.grid.setAttribute('material', 'src: '+this.data.src+'; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.1; sphericalEnvMap: '+this.data.envMap+';');
+            this.grid.setAttribute('position', '0 0 0');
+            this.grid.setAttribute('rotation', '-90 0 0');
+            },
+            remove: function(){
+            this.el.removeObject3D(this.object3D);
+            },
+
+
+        });
+
+        AFRAME.registerComponent('body', {
+            init: function () {
+                this.head = this.el.parentNode;
+            },
+
+            tick: function (time, delta) {
+                if (!this.head) return;
+                var rot = this.head.getAttribute('rotation');
+                this.el.setAttribute('rotation', {x: -rot.x * 0.5, y: 0, z: -rot.z * 0.5});
+            }
+        });
+    </script>
+</head>
+
+<body>
+  <a-scene avatar-room>
+    <a-assets>
+      
+      <img id="grid" src="assets/gfx/grid.png" />
+      <img id="sky" src="assets/gfx/sky.jpg" />
+
+      <!-- Templates -->
+        <a-asset-item id="head-glb" src="/assets/model/av_irina_head.glb"></a-asset-item>
+        <a-asset-item id="body-glb" src="/assets/model/av_irina_body.glb"></a-asset-item>
+        <a-asset-item id="hand-glb" src="/assets/model/hand.glb"></a-asset-item>
+        <a-asset-item id="env_arrow" src="/assets/model/env_arrow.obj"></a-asset-item>
+
+        <!-- Player -->
+        <template id="player-template">
+          <a-entity></a-entity>
+        </template>
+
+        <!-- Avatar -->
+        <template id="avatar-template">
+          <a-entity class="avatar">
+            <a-entity class="nametag" text="value: Hello; align:center;" position="0 0.6 0" rotation="0 180 0" scale="4 4 4"></a-entity>
+            <a-entity class="cartoon" gltf-model="#head-glb" scale="1 1 1"></a-entity>
+          </a-entity>
+        </template>
+
+        <!-- Body -->
+        <template id="body-template">
+          <a-entity class="cartoon-body" gltf-model="#body-glb" scale="1 1 1"></a-entity>
+        </template>
+
+
+        <!-- Hand -->
+        <template id="hand-template">
+          <a-entity>
+            <a-entity class="cartoon-hand" gltf-model="#hand-glb" scale=".3 .3 .3"></a-entity>
+          </a-entity>
+        </template>
+
+      <!-- /Templates -->
+    </a-assets> 
+
+    <a-entity id="player"
+      networked="template:#player-template;attachTemplateToLocal:false;">
+      <a-entity id="playerHead"
+        networked="template:#avatar-template;attachTemplateToLocal:false;"
+        camera 
+        position="0 1.6 0" 
+        look-controls
+        wasd-controls>
+        <a-entity id="playerBody" body networked="template:#body-template;attachTemplateToLocal:false;"></a-entity>
+        <a-box class="head" visible="false"></a-box>
+        <a-entity class="nametag" visible="false"></a-entity>
+      </a-entity>
+
+      <a-entity id="leftHandController" laser-controls="hand: left" networked="template:#hand-template;attachTemplateToLocal:false;"></a-entity>
+      <a-entity id="rightHandController" laser-controls="hand: right" networked="template:#hand-template;attachTemplateToLocal:false;"></a-entity>
+    </a-entity>
+
+    <a-entity grid="src: #grid; env-map: #sky" intersect-change></a-entity>
+    <a-sky set-sky="#sky" rotation="0 -90 0"></a-sky>
+
+    <a-entity light="color: #ccccff; intensity: 1; type: ambient;" visible=""></a-entity>
+    <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity>
+
+  </a-scene>
+
+</body>
+</html>
