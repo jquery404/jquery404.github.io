@@ -195,12 +195,12 @@ function shareScreen() {
     
     
     if (!isSharing) {
-        document.getElementById('drawShare').innerHTML = "Stop Sharing";
+        document.getElementById('drawShare').innerHTML = "Start Sharing";
         senders.find(sender => sender.track.kind === 'video').replaceTrack(localStream.getTracks()[1]);
     }else{
         const screenTrack = c.captureStream().getTracks()[0];
         senders.find(sender => sender.track.kind === 'video').replaceTrack(screenTrack);
-        document.getElementById('drawShare').innerHTML = "Start Sharing";
+        document.getElementById('drawShare').innerHTML = "Stop Sharing";
     }
     
         // screenTrack.onended = function () {

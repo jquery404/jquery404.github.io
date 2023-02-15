@@ -23,11 +23,8 @@
         <a-asset-item id="boy-hand-l-glb" src="model/man_hand_l.glb"></a-asset-item>
         <a-asset-item id="boy-hand-r-glb" src="model/man_hand_r.glb"></a-asset-item>
 
-        <a-asset-item id="goal1-glb" src="model/model2.glb"></a-asset-item>
+        <a-asset-item id="goal1-glb" src="model/_model2.glb"></a-asset-item>
 
-        <a-asset-item id="pointer-glb" src="model/pointer.glb"></a-asset-item>
-        <a-asset-item id="env_arrow" src="model/env_arrow.obj"></a-asset-item>
-        <a-asset-item id="arrow-glb" src="model/arrow.glb"></a-asset-item>
         <!-- Player -->
         <template id="player-template">
             <a-entity></a-entity>
@@ -45,7 +42,6 @@
         <!-- Hand -->
         <template id="hand-l-template">
             <a-entity>
-            <!-- <a-sphere color="#ffad34" radius=".05"></a-sphere> -->
             <a-entity gltf-model="#boy-hand-l-glb" scale=".08 .08 .08"></a-entity>
             </a-entity>
         </template>
@@ -53,19 +49,6 @@
         <template id="hand-r-template">
             <a-entity>
             <a-entity gltf-model="#boy-hand-r-glb" scale=".08 .08 .08"></a-entity>
-            </a-entity>
-        </template>
-
-        <!-- Hand -->
-        <template id="pointer-template">
-            <a-entity>
-                <a-entity class="pointer" visible="false" gltf-model="#pointer-glb" position="0 0 0" rotation="-90 0 0"></a-entity>
-            </a-entity>
-        </template>
-
-        <template id="bullet-template">
-            <a-entity>
-              <a-sphere class="bullet" scale="0.1 0.1 0.1" color="#ff00000"></a-sphere>
             </a-entity>
         </template>
         </a-assets>
@@ -89,18 +72,6 @@
                 lego-model="legoSrc:#goal1-glb" 
                 gun="bulletTemplate:#bullet-template" 
                 networked="template:#hand-l-template;attachTemplateToLocal:false;">
-                <a-entity id="controller-menu" opacity="0.8">
-                    <a-entity id="menu" position="0 .05 0" rotation="0 0 0" scale=".15 .15 .15" layout="type: box; plane: xy; columns: 3; margin: 2; align: center" rotation="0 0 0">
-                        <a-box position="0 0 -1" depth=".5" height=".05" width="1" rotation="0 0 0" color="black">
-                            <a-text id="menulabel" width="1" position="0 .05 0" value= "Menu..."  align="center" scale="4 4 4" rotation="-90 0 0"></a-text>
-                        </a-box>                                        
-                        <a-cylinder class="menu-item" src="img/ico_goa.jpg" data-target="paint" color="#FFC65D" radius="0.5" height=".05" opacity=".5" theta-start="0" theta-length="90"></a-cylinder>
-                        <a-cylinder class="menu-item clickable" src="img/ico_goa.jpg" data-target="shoot" color="#FFC65D" radius="0.5" height=".05" opacity=".5" theta-start="90" theta-length="90"></a-cylinder>
-                        <a-cylinder class="menu-item clickable" src="img/ico_goa.jpg" data-target="lego-goal" color="#FFC65D" radius="0.5" height=".05" opacity=".5" theta-start="180" theta-length="90"></a-cylinder>
-                        <a-cylinder class="menu-item" src="img/ico_goa.jpg" data-target="pointer" color="#FFC65D" radius="0.5" height=".05" opacity=".5" theta-start="270" theta-length="90"></a-cylinder>
-                        
-                    </a-entity>
-                </a-entity>
                 <a-entity 
                     id="glbtest"
                     gltf-model="#goal1-glb"
@@ -116,15 +87,15 @@
                 mixin="hud-interactable"
                 raycaster="objects: [gui-interactable], .clickable, .hud; lineColor: #7B98F7; far: 1000" 
                 networked="template:#hand-r-template;attachTemplateToLocal:false;">
-                
-                <a-entity id="playerPointer" networked="template:#pointer-template;attachTemplateToLocal:true;">
-                    <a-entity class="pointer" visible="false"></a-entity>
-                </a-entity>
             </a-entity>
         </a-entity>
         
 
-        <!-- <a-entity id="player" camera position="0 0 0" wasd-controls look-controls></a-entity> -->
+        <!-- light -->
+        <a-entity light="type: ambient; color: #FFF"></a-entity>
+        <a-entity light="type: ambient; color: #CCC"></a-entity>
+        <a-entity light="type: ambient; color: #EEE"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 0.4" position="-0.5 1 1"></a-entity>
 
         <a-entity position="0 0 0"
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
