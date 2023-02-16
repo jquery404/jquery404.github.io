@@ -55,6 +55,11 @@ function gotStream(stream) {
 function startCall() {
     if (document.getElementById('builder').checked) {
         document.getElementById('model_canvas').removeAttribute("hidden"); 
+    }else{
+        document.querySelector('.item1').style.gridArea = "1/1/3/3";
+        document.querySelector('.item2').remove();
+        document.querySelector('.item3').remove();
+        document.querySelector('.host').style.bottom = "5em";
     }
     init();
 }

@@ -1,12 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%- include('_head'); %>
-    <%- include('_head_vr'); %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <title>mxrc</title>
+    <style>
+        video{width: 300px;}
+        canvas{border: 1px dashed;display: block;}
+    </style>
+    
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+    <script src="https://unpkg.com/networked-aframe@^0.7.1/dist/networked-aframe.min.js"></script>
+    <script>
+        AFRAME.registerComponent('faisal-room', {
+            schema: { 
+                name: {type: 'string', default: 'Hello 👋'} 
+            },
+
+            init: function () {
+                var el = this.el;
+            
+                var networkedComp = {
+                    room: 'basic',
+                    debug: true,
+                };
+                el.setAttribute('networked-scene', networkedComp);
+            }
+        });
+
+        AFRAME.registerComponent('set-sky', {
+            schema: {default:'#sky'},
+            init: function() {
+                this.sky = this.el;
+            },
+            update: function() {
+                this.sky.setAttribute('src', this.data);
+            }
+        });
+
+        AFRAME.registerComponent('spawn-in-circle', {
+            schema: {
+                radius: {type: 'number', default: 1}
+            },
+
+            init: function() {
+                var el = this.el;
+                var center = el.getAttribute('position');
+
+                var angleRad = this.getRandomAngleInRadians();
+                var circlePoint = this.randomPointOnCircle(this.data.radius, angleRad);
+                var worldPoint = {x: circlePoint.x + center.x, y: center.y+.2, z: circlePoint.y + center.z};
+                el.setAttribute('position', worldPoint);
+
+                // we dont want the avatar to rotate
+                var angleDeg = angleRad * 180 / Math.PI;
+                var angleToCenter = -1 * angleDeg + 90;
+                var angleRad = THREE.Math.degToRad(angleToCenter);
+                el.object3D.rotation.set(0, angleRad, 0);
+            },
+
+            getRandomAngleInRadians: function() {
+                return Math.random()*Math.PI*2;
+            },
+
+            randomPointOnCircle: function (radius, angleRad) {
+                var x = Math.cos(angleRad)*radius;
+                var y = Math.sin(angleRad)*radius;
+                return {x: x, y: y};
+            }
+        });
+    </script>
+
+
 </head>
 <body>
 
-    <a-scene networked-scene="app: myApp;room: room1;debug: true;">
+    <a-scene faisal-room>
         <a-assets>
             <a-asset-item id="girl-head-glb" src="<%= _url %>/model/_avatars/curious_girl_blue_head.glb"></a-asset-item>
             <a-asset-item id="boy-head-glb" src="<%= _url %>/model/_avatars/curious_boy_black_head.glb"></a-asset-item>
@@ -18,39 +89,27 @@
             </template>
         </a-assets>
         
-        <a-entity camera look-controls>
-            <a-entity cursor="fuse: true; fuseTimeout: 1500"
-                      position="0 0 -1"
-                      animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
-                      animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
-                      animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: 500; to: 1 1 1"
-                      geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
-                      material="color: black; shader: flat">
-            </a-entity>
-        </a-entity>
+        <a-entity camera look-controls wasd-controls></a-entity>
         
-        <!-- <a-entity id="avatar" cursor-listener position="0 0 -4" rotation="0 180 0" gltf-model="#girl-head-glb"></a-entity> -->
         <!-- Player -->
         <template id="player-template">
             <a-entity></a-entity>
         </template>
 
         <a-entity id="player" 
-            networked="template:#player-template;attachTemplateToLocal:true;">
+            networked="template:#player-template;attachTemplateToLocal:false;">
             <a-entity id="playerHead"
-                networked="template:#avatar-template;attachTemplateToLocal:true;"
-                spawn-in-circle
-                cursor-listener>
+                networked="template:#avatar-template;attachTemplateToLocal:false;"
+                spawn-in-circle>
             </a-entity>
         </a-entity>
 
-
-        <a-sky color="#222"></a-sky>
+        <a-sky set-sky="#sky" rotation="0 0 0"></a-sky>
     </a-scene>
 
+    <video id="video" playsinline autoplay muted src="img/360_hollywood.mp4"></video>
+
     <script>
-
-
 
         // syncing avatar
         NAF.schemas.add({template: '#player-template', components: ['position', 'rotation']});
@@ -59,13 +118,15 @@
             component: 'gltf-model',
         }]});
 
+        let skybox = document.querySelector("a-sky");
+        skybox.setAttribute('set-sky', `#video`);
 
-        // Component to change to a sequential color on click.
-        AFRAME.registerComponent('cursor-listener', {
-            init: function () {
-                this.el.addEventListener('click', function (evt) {
-                    document.querySelector('.head').setAttribute('gltf-model', '/model/_avatars/curious_boy_black_head.glb')
-                });
+        document.addEventListener('keydown', function(ev){
+            if(ev.which === 32){
+                console.log(NAF.connection.connectedClients)
+                if(Object.keys(NAF.connection.connectedClients).length > 0){
+                    skybox.setAttribute('rotation', `0 180 0`);
+                }
             }
         });
     </script>
