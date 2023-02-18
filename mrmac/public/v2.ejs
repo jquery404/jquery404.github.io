@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <title>mxrc</title>
+    <style>
+        video{width: 300px;position: absolute;top: 0;}
+        canvas{border: 1px dashed;display: block;}
+    </style>
+
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+    
+    <script src="https://unpkg.com/networked-aframe@^0.7.1/dist/networked-aframe.min.js"></script>
+    <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+
+    <script>
+        AFRAME.registerComponent('set-sky', {
+            schema: {default:'#sky'},
+            init: function() {
+                this.sky = this.el;
+            },
+            update: function() {
+                this.sky.setAttribute('src', this.data);
+            }
+        });
+    </script>
+
+</head>
+<body>
+
+    <a-scene>
+        <a-assets>
+        <img id="grid" src="<%= _url %>/img/grid.png" />
+        <img id="sky" src="<%= _url %>/img/sky.jpg" />
+
+        <!-- lego-domino -->
+        <a-asset-item id="lego0" src="<%= _url %>/model/lego.glb/lego_0.glb"></a-asset-item>
+        <a-asset-item id="lego1" src="<%= _url %>/model/lego.glb/lego_1.glb"></a-asset-item>
+        <a-asset-item id="lego2" src="<%= _url %>/model/lego.glb/lego_2.glb"></a-asset-item>
+        <a-asset-item id="lego3" src="<%= _url %>/model/lego.glb/lego_3.glb"></a-asset-item>
+        <a-asset-item id="lego4" src="<%= _url %>/model/lego.glb/lego_4.glb"></a-asset-item>
+        <a-asset-item id="lego5" src="<%= _url %>/model/lego.glb/lego_5.glb"></a-asset-item>
+        <a-asset-item id="lego6" src="<%= _url %>/model/lego.glb/lego_6.glb"></a-asset-item>
+        <a-asset-item id="lego7" src="<%= _url %>/model/lego.glb/lego_7.glb"></a-asset-item>
+
+        <a-asset-item id="domino0" src="<%= _url %>/model/domino.glb/domino_0.glb"></a-asset-item>
+        <a-asset-item id="domino1" src="<%= _url %>/model/domino.glb/domino_1.glb"></a-asset-item>
+        <a-asset-item id="domino2" src="<%= _url %>/model/domino.glb/domino_2.glb"></a-asset-item>
+        <a-asset-item id="domino3" src="<%= _url %>/model/domino.glb/domino_3.glb"></a-asset-item>
+        <a-asset-item id="domino4" src="<%= _url %>/model/domino.glb/domino_4.glb"></a-asset-item>
+        <a-asset-item id="domino5" src="<%= _url %>/model/domino.glb/domino_5.glb"></a-asset-item>
+        <!-- /lego-domino -->
+
+        </a-assets>
+
+        <a-entity light="color: #ffffff; intensity: 1; type: ambient;"></a-entity>
+        <a-entity light="color: #ffffff; intensity: 1.5" position="5 5 5"></a-entity>
+
+
+        <a-entity gltf-model="#lego0" scale=".2 .2 .2" position="-1.0542 0 -1.43503"></a-entity>
+        <a-entity gltf-model="#lego1" scale=".2 .2 .2" position="-1.63538 0 -1.27362"></a-entity>
+        <a-entity gltf-model="#lego2" scale=".2 .2 .2" position="-1.23302 0 -1.73532"></a-entity>
+        <a-entity gltf-model="#lego3" scale=".2 .2 .2" position="-1.4 0 -1.43408"></a-entity>
+        <a-entity gltf-model="#lego4" scale=".2 .2 .2" position="-1.16896 0 -1.05897"></a-entity>
+        <a-entity gltf-model="#lego5" scale=".2 .2 .2" position="-1.53742 0 -1.91663"></a-entity>
+        <a-entity gltf-model="#lego6" scale=".2 .2 .2" position="-1.41484 0 -1.01536"></a-entity>
+        <a-entity gltf-model="#lego7" scale=".2 .2 .2" position="-1.21771 0 -2"></a-entity>
+
+        <a-entity gltf-model="#domino0" scale=".2 .2 .2" position="1.2 0 -1.8"></a-entity>
+        <a-entity gltf-model="#domino1" scale=".2 .2 .2" position="1.15 0 -1.2"></a-entity>
+        <a-entity gltf-model="#domino2" scale=".2 .2 .2" position="1.15 0 -.7"></a-entity>
+        <a-entity gltf-model="#domino3" scale=".2 .2 .2" position="2 0 -1.7"></a-entity>
+        <a-entity gltf-model="#domino4" scale=".2 .2 .2" position="2 0 -1.2"></a-entity>
+        <a-entity gltf-model="#domino5" scale=".2 .2 .2" position="2 0 -0.7"></a-entity>
+
+        <a-entity position="0 0 0"
+        geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
+        material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
+        <a-sky set-sky="#sky" rotation="0 0 0"></a-sky>
+    </a-scene>
+
+
+    <video id="host" playsinline autoplay muted></video>
+    
+    <script src="<%= _url %>/scripts/rtcconfig.js"></script>
+    <script src="<%= _url %>/scripts/jquery-latest.min.js"></script>
+
+
+    <script>
+        //let skybox = document.querySelector("a-sky");
+        //skybox.setAttribute('set-sky', `#host`);
+    </script>
+</body>
+</html>

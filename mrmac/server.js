@@ -38,9 +38,16 @@ app.get('/tlx', (req, res) => {
     res.render('data/tlx.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
 })
 
-
 app.get('/gd', (req, res) => {
     res.render('argdc.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
+})
+
+app.get('/v2', (req, res) => {
+    res.render('v2.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
+})
+
+app.get('/own', (req, res) => {
+    res.render('ownership.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
 })
 
 
