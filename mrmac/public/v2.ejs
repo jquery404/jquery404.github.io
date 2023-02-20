@@ -14,10 +14,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
     
     <script src="https://unpkg.com/networked-aframe@^0.7.1/dist/networked-aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-extras@14411ea/dist/aframe-extras.controls.min.js"></script>
+
     <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script>
     <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@v4.1.0/dist/aframe-physics-system.js"></script>
     <script src="https://unpkg.com/aframe-physics-extras/dist/aframe-physics-extras.min.js"></script>
+
+    <script src="https://unpkg.com/aframe-environment-component@1.3.2/dist/aframe-environment-component.min.js"></script>
 
     <script>
         AFRAME.registerComponent('faisal-room', {
@@ -26,75 +30,48 @@
             },
 
             init: function () {
-                var namelist = ["Smith","Johnson","Williams","Brown","Jones","Miller","Davis","Garcia","Rodriguez","Wilson","Martinez","Anderson","Taylor","Thomas","Hernandez","Moore","Martin","Jackson","Thompson","White","Lopez","Lee","Gonzalez","Harris","Clark","Lewis","Robinson","Walker","Perez","Hall","Young","Allen","Sanchez"];
-                var pickaname = namelist[Math.floor(Math.random()*namelist.length -1)];
-                var person = prompt("Please enter your name", pickaname);
-
-                if (person != null) {
-                    var el = this.el;
-                
-                    // Set local user's name
-                    var myNametag = document.querySelector('.nametag');
-                    myNametag.setAttribute('text', 'value', person);
-                    
-                    // Setup networked-scene
-                    var networkedComp = {
-                        room: 'basic',
-                        debug: true,
-                    };
-                    el.setAttribute('networked-scene', networkedComp);
-                }
-            
-            }
-        });
-
-        AFRAME.registerComponent('rigid-body', {
-            schema: { 
-                name: {type: 'string', default: 'Hello 👋'} 
-            },
-
-            init: function () {
-                var el = this.el;
-                el.setAttribute('hoverable', '');
-                el.setAttribute('grabbable', '');
-                el.setAttribute('stretchable', '');
-                el.setAttribute('draggable', '');
-                el.setAttribute('dynamic-body ', '');
-                el.setAttribute('event-set__hoveron', '_event: hover-start; material.opacity: 0.7; transparent: true');
-                el.setAttribute('event-set__hoveroff', '_event: hover-end; material.opacity: 1; transparent: false');
+              var el = this.el;
+          
+              // Setup networked-scene
+              var networkedComp = {
+                  room: 'nametag',
+                  debug: true,
+              };
+              el.setAttribute('networked-scene', networkedComp);
             }
         });
 
         // Spawn in circle
         AFRAME.registerComponent('spawn-in-circle', {
             schema: {
-            radius: {type: 'number', default: 1}
+                radius: {type: 'number', default: 1}
             },
-        
+
             init: function() {
-            var el = this.el;
-            var center = el.getAttribute('position');
-        
-            var angleRad = this.getRandomAngleInRadians();
-            var circlePoint = this.randomPointOnCircle(this.data.radius, angleRad);
-            var worldPoint = {x: circlePoint.x + center.x, y: center.y+.2, z: circlePoint.y + center.z};
-            el.setAttribute('position', worldPoint);
-        
-            // we dont want the avatar to rotate
-            //   var angleDeg = angleRad * 180 / Math.PI;
-            //   var angleToCenter = -1 * angleDeg + 90;
-            //   var angleRad = THREE.Math.degToRad(angleToCenter);
-            //   el.object3D.rotation.set(0, angleRad, 0);
+                var el = this.el;
+                var center = el.getAttribute('position');
+
+                var angleRad = this.getRandomAngleInRadians();
+                var circlePoint = this.randomPointOnCircle(this.data.radius, angleRad);
+                var worldPoint = {x: circlePoint.x + center.x, y: center.y, z: circlePoint.y + center.z};
+                el.setAttribute('position', worldPoint);
+                // console.log('world point', worldPoint);
+
+                var angleDeg = angleRad * 180 / Math.PI;
+                var angleToCenter = -1 * angleDeg + 90;
+                angleRad = THREE.MathUtils.degToRad(angleToCenter);
+                el.object3D.rotation.set(0, angleRad, 0);
+                // console.log('angle deg', angleDeg);
             },
-        
+
             getRandomAngleInRadians: function() {
-            return Math.random()*Math.PI*2;
+                return Math.random()*Math.PI*2;
             },
-        
+
             randomPointOnCircle: function (radius, angleRad) {
-            var x = Math.cos(angleRad)*radius;
-            var y = Math.sin(angleRad)*radius;
-            return {x: x, y: y};
+                var x = Math.cos(angleRad)*radius;
+                var y = Math.sin(angleRad)*radius;
+                return {x: x, y: y};
             }
         });
 
@@ -108,25 +85,188 @@
                 this.sky.setAttribute('src', this.data);
             }
         });
+    
+        AFRAME.registerComponent('spawner', {
+          schema: {
+            template: { default: '' },
+            keyCode: { default: 32 }
+          },
+
+          init: function() {
+            this.onKeyUp = this.onKeyUp.bind(this);
+            document.addEventListener("keyup", this.onKeyUp);
+          },
+
+          onKeyUp: function(e) {
+            if (this.data.keyCode === e.keyCode) {
+              var el = document.createElement('a-entity');
+              el.setAttribute('networked', 'template:' + this.data.template);
+              el.setAttribute('position', this.el.getAttribute('position'));
+              var scene = this.el.sceneEl;
+              scene.appendChild(el);
+            }
+          }
+        });
+    
+    </script>
+
+    <script>
+    NAF.schemas.getComponentsOriginal = NAF.schemas.getComponents;
+    NAF.schemas.getComponents = (template) => {
+        if (!NAF.schemas.hasTemplate('#head-template')) {
+            NAF.schemas.add({
+                template: '#head-template',
+                components: [
+                    'position',
+                    'rotation',
+                    'player-info'
+                ]
+            });
+        }
+
+        if (!NAF.schemas.hasTemplate('#cube-template')) {
+            NAF.schemas.add({
+                template: '#cube-template',
+                components: [
+                'position',
+                {
+                    selector: '.cube',
+                    component: 'position'
+                },
+                {
+                    selector: '.cube',
+                    component: 'rotation'
+                },
+                ]
+            });
+        }
+
+        const components = NAF.schemas.getComponentsOriginal(template);
+        return components;
+    };
+    </script>
+
+    <script>
+    window.ntExample = {
+        randomColor: () => {
+            return '#' + new THREE.Color(Math.random(), Math.random(), Math.random()).getHexString();
+        }
+    };
+
+    AFRAME.registerComponent('player-info', {
+        schema: {
+            name: { type: 'string', default: 'user-' + Math.round(Math.random() * 10000) },
+            color: {
+                type: 'color',
+                default: window.ntExample.randomColor()
+            }
+        },
+
+        init: function () {
+            this.head = this.el.querySelector('.head');
+            this.nametag = this.el.querySelector('.nametag');
+
+            this.ownedByLocalUser = this.el.id === 'player';
+            if (this.ownedByLocalUser) {
+                // populate the html overlay with the correct name on init
+                this.nametagInput = document.getElementById('username-overlay');
+                this.nametagInput.value = this.data.name;
+
+                // add the initial color to the html overlay color picker button
+                document.querySelector('button').style.backgroundColor = this.data.color;
+                document.querySelector('button').style.color = this.data.color;
+            }
+        },
+
+        listUsers: function () {
+            console.log(
+            'userlist',
+            [...document.querySelectorAll('[player-info]')].map((el) => el.components['player-info'].data.name)
+            );
+        },
+
+        newRandomColor: function () {
+            this.el.setAttribute('player-info', 'color', window.ntExample.randomColor());
+            this.listUsers();
+        },
+
+        update: function () {
+            if (this.head) this.head.setAttribute('material', 'color', this.data.color);
+            if (this.nametag) this.nametag.setAttribute('value', this.data.name);
+        }
+    });
     </script>
 
 </head>
 <body>
 
-    <a-scene physics faisal-room>
+    <button id="color-changer" style="z-index: 100; bottom: 24px; left: 24px; position: fixed"
+      onclick="let newColor = window.ntExample.randomColor();
+             document.getElementById('player').setAttribute('player-info', 'color', newColor); 
+             document.querySelector('button').style.backgroundColor = newColor;
+             document.querySelector('button').style.color = newColor;
+    "
+    > ■ </button>
+    <input id="username-overlay" style="z-index: 100; bottom: 24px; left: 48px; position: fixed"
+      oninput="document.getElementById('player').setAttribute('player-info', 'name', this.value)"
+    />
+
+
+    <a-scene touch-to-click-converter faisal-room>
         <a-assets>
         <img id="grid" src="<%= _url %>/img/grid.png" />
         <img id="sky" src="<%= _url %>/img/sky.jpg" />
-
-        <a-mixin id="blocks" geometry="primitive: box; width: 1; height: 1; depth: .33" material="opacity:0.5"
-                 hoverable grabbable stretchable draggable
-                 dynamic-body shadow></a-mixin>
         
+        <!-- mixins -->
         <a-mixin id="table" static-body geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"></a-mixin>
+        <a-mixin id="pointer" raycaster="showLine: true; objects: .cube, a-link"
+                  super-hands="colliderEvent: raycaster-intersection;
+                               colliderEventProperty: els;
+                               colliderEndEvent:raycaster-intersection-cleared;
+                               colliderEndEventProperty: clearedEls;">
+        </a-mixin>
+        <a-mixin id="controller-right" mixin="pointer"
+                 vive-controls="hand: right" oculus-touch-controls="hand: right"
+                 windows-motion-controls="hand: right"
+                 gearvr-controls daydream-controls oculus-go-controls>
+        </a-mixin>
+        <a-mixin id="controller-left" mixin="pointer"
+                 vive-controls="hand: left" oculus-touch-controls="hand: left"
+                 windows-motion-controls="hand: left">
+        </a-mixin>
+        <a-mixin id="touch"
+                 physics-collider phase-shift
+                 collision-filter="collisionForces: false"
+                 static-body="shape: sphere; sphereRadius: 0.02"
+                 super-hands="colliderEvent: collisions;
+                              colliderEventProperty: els;
+                              colliderEndEvent: collisions;
+                              colliderEndEventProperty: clearedEls;">
+        </a-mixin>
+
+        
+        <a-mixin id="cube" geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+                hoverable grabbable stretchable draggable droppable
+                event-set__hoveron="_event: hover-start; material.opacity: 0.1; transparent: true"
+                event-set__hoveroff="_event: hover-end; material.opacity: .1; transparent: false"
+                event-set__dragon="_event: dragover-start; material.wireframe: true"
+                event-set__dragoff="_event: dragover-end; material.wireframe: false">
+        </a-mixin>
+
+
+        <template id="cube-template">
+            <a-entity>
+              <a-box class="cuba" toggle-ownership color="#F00"></a-box>
+            </a-entity>
+        </template>
+
+        <!-- /mixins  -->
 
         <!-- player avatar -->
-        <a-asset-item id="my-head-glb" src="<%= _url %>/model/_avatars/av_irina_head.glb"></a-asset-item>
-        <a-asset-item id="my-body-glb" src="<%= _url %>/model/_avatars/av_irina_body.glb"></a-asset-item>
+        <a-asset-item id="my-head-glb" src="<%= _url %>/model/_avatars/curious_boy_green_head.glb"></a-asset-item>
+        <a-asset-item id="my-body-glb" src="<%= _url %>/model/_avatars/curious_boy_default_body.glb"></a-asset-item>
+        <!-- <a-asset-item id="my-head-glb" src="<%= _url %>/model/_avatars/av_irina_head.glb"></a-asset-item>
+        <a-asset-item id="my-body-glb" src="<%= _url %>/model/_avatars/av_irina_body.glb"></a-asset-item> -->
         <a-asset-item id="my-hand-l-glb" src="<%= _url %>/model/_avatars/hand.l.glb"></a-asset-item>
         <a-asset-item id="my-hand-r-glb" src="<%= _url %>/model/_avatars/hand.r.a.glb"></a-asset-item>
 
@@ -135,10 +275,11 @@
         </template>
 
         <template id="avatar-template">
-            <a-entity class="avatar">
-                <a-entity class="nametag" text="value: Hello; align:center;" position="0 0.6 0" rotation="0 180 0" scale="4 4 4"></a-entity>
-                <a-entity class="head" gltf-model="#my-head-glb" scale="1 1 1" rotation="0 180 0"></a-entity>
-                <a-entity class="body" gltf-model="#my-body-glb" scale="1 1 1" rotation="0 180 0"></a-entity>
+            <a-entity class="avatar" player-info>
+                <!-- <a-entity class="nametag" text="value: Hello; align:center;" position="0 0.6 0" rotation="0 180 0" scale="4 4 4"></a-entity> -->
+                <a-text class="nametag" value="hello" align="center" rotation="0 180 0" position="0 0.6 0" side="double" scale=".5 .5 .5"></a-text>
+                <a-entity class="head" gltf-model="#my-head-glb" scale="1 1 1" rotation="0 0 0"></a-entity>
+                <a-entity class="body" gltf-model="#my-body-glb" scale="1 1 1" rotation="0 0 0"></a-entity>
             </a-entity>
         </template>
 
@@ -173,18 +314,41 @@
         <a-asset-item id="domino5" src="<%= _url %>/model/domino.glb/domino_5.glb"></a-asset-item>
         <!-- /lego-domino -->
 
-        <a-mixin id="touch"
-                 physics-collider phase-shift
-                 collision-filter="collisionForces: false"
-                 static-body="shape: sphere; sphereRadius: 0.02"
-                 super-hands="colliderEvent: collisions;
-                              colliderEventProperty: els;
-                              colliderEndEvent: collisions;
-                              colliderEndEventProperty: clearedEls;">
+
+        <template id="sharedCube">
+            <a-entity class="cube" mixin="cube" position="0 1.6 -1.5" material="color: red; opacity:0.1">
+                <a-entity gltf-model="#lego0" position="0 6 -1"></a-entity>
+            </a-entity>    
+            <a-entity class="cube" mixin="cube" position="0 1.6 -1.5" material="color: red; opacity:0.1">
+                <a-entity gltf-model="#lego1" position="0 6 -1"></a-entity>
+            </a-entity>    
+            <a-entity class="cube" mixin="cube" position="0 1.6 -1.5" material="color: red; opacity:0.1">
+                <a-entity gltf-model="#lego2" position="0 6 -1"></a-entity>
+            </a-entity>    
+            <a-entity class="cube" mixin="cube" position="0 1.6 -1.5" material="color: red; opacity:0.1">
+                <a-entity gltf-model="#lego3" position="0 6 -1"></a-entity>
+            </a-entity>    
+            <a-entity class="cube" mixin="cube" position="0 1.6 -1.5" material="color: red; opacity:0.1">
+                <a-entity gltf-model="#lego4" position="0 6 -1"></a-entity>
+            </a-entity>    
+            <a-entity class="cube" mixin="cube" position="0 1.6 -1.5" material="color: red; opacity:0.1">
+                <a-entity gltf-model="#lego5" position="0 6 -1"></a-entity>
+            </a-entity>    
+            <a-entity class="cube" mixin="cube" position="0 1.6 -1.5" material="color: red; opacity:0.1">
+                <a-entity gltf-model="#lego6" position="0 6 -1"></a-entity>
+            </a-entity>    
+            <a-entity class="cube" mixin="cube" position="0 1.6 -1.5" material="color: red; opacity:0.1">
+                <a-entity gltf-model="#lego7"></a-entity>
+            </a-entity>
+        </template>
+
+        
         </a-assets>
 
-        <a-entity id="rhand" mixin="touch" hand-controls="hand: right"></a-entity>
-        <a-entity id="lhand" mixin="touch" hand-controls="hand: left"></a-entity>
+        <!-- <a-entity id="rhand" mixin="touch" hand-controls="hand: right"></a-entity> -->
+        <!-- <a-entity id="lhand" mixin="touch" hand-controls="hand: left"></a-entity> -->
+        <a-entity id="rhand" mixin="controller-right"></a-entity>
+        <a-entity id="lhand" mixin="controller-left"></a-entity>
 
         <a-entity id="player" spawn-in-circle="radius:3" networked="template:#player-template;attachTemplateToLocal:false;">
             <a-entity id="playerHead"
@@ -193,65 +357,56 @@
                 look-controls>
                 <a-entity class="nametag" visible="false"></a-entity>
             </a-entity>
-            <!-- <a-entity id="lhand" 
-                laser-controls="hand: left"
-                mixin="hud-interactable"
-                raycaster="objects: [gui-interactable], .hud; lineColor: #7B98F7; far: 1000"                
-                networked="template:#hand-l-template;attachTemplateToLocal:true;">
-            </a-entity>
-
-            <a-entity id="rhand" 
-                laser-controls="hand: right" 
-                mixin="hud-interactable"
-                raycaster="objects: [gui-interactable], .clickable, .hud; lineColor: #7B98F7; far: 1000" 
-                networked="template:#hand-r-template;attachTemplateToLocal:true;">                
-            </a-entity> -->
         </a-entity>
 
-        <a-entity light="color: #ffffff; intensity: 1; type: ambient;"></a-entity>
-        <a-entity light="color: #ffffff; intensity: 1.5" position="5 5 5"></a-entity>
+
+        <!-- <a-entity gltf-model="#lego0" rigid-body="collider: 1 .35 .5;offset: 0 -.3 0" position="0 6 -1"></a-entity>
+        <a-entity gltf-model="#lego1" rigid-body="collider: .5 .18 2;offset: 0 -.2 0" position="0 6 -1"></a-entity>
+        <a-entity gltf-model="#lego2" rigid-body="collider: .5 .35 .5;offset: 0 -.3 0" position="0 6 -1"></a-entity>
+        <a-entity gltf-model="#lego3" rigid-body="collider: .5 .35 1;offset: 0 -.3 0" position="0 6 -1"></a-entity>
+        <a-entity gltf-model="#lego4" rigid-body="collider: .5 .35 1;offset: 0 -.3 0" position="0 6 -1"></a-entity>
+        <a-entity gltf-model="#lego5" rigid-body="collider: 1 .18 1;offset: 0 -.2 0" position="0 6 -1"></a-entity>
+        <a-entity gltf-model="#lego6" rigid-body="collider: .5 .35 1;offset: 0 -.3 0" position="0 6 -1"></a-entity>
+        <a-entity gltf-model="#lego7" rigid-body="collider: .5 .35 .5;offset: 0 -.3 0" position="0 6 -1"></a-entity>
 
 
-        <a-entity gltf-model="#lego0" scale=".1 .1 .1" position="-1.0542 0 -1.43503"></a-entity>
-        <a-entity gltf-model="#lego1" scale=".1 .1 .1" position="-1.63538 0 -1.27362"></a-entity>
-        <a-entity gltf-model="#lego2" scale=".1 .1 .1" position="-1.23302 0 -1.73532"></a-entity>
-        <a-entity gltf-model="#lego3" scale=".1 .1 .1" position="-1.4 0 -1.43408"></a-entity>
-        <a-entity gltf-model="#lego4" scale=".1 .1 .1" position="-1.16896 0 -1.05897"></a-entity>
-        <a-entity gltf-model="#lego5" scale=".1 .1 .1" position="-1.53742 0 -1.91663"></a-entity>
-        <a-entity gltf-model="#lego6" scale=".1 .1 .1" position="-1.41484 0 -1.01536"></a-entity>
-        <a-entity gltf-model="#lego7" scale=".1 .1 .1" position="-1.21771 0 -2"></a-entity>
+        <a-entity gltf-model="#domino0" rigid-body position="0 6 -1"></a-entity>
+        <a-entity gltf-model="#domino1" rigid-body position="0 6 -1"></a-entity>
+        <a-entity gltf-model="#domino2" rigid-body position="0 6 -1"></a-entity>
+        <a-entity gltf-model="#domino3" rigid-body position="0 6 -1"></a-entity>
+        <a-entity gltf-model="#domino4" rigid-body position="0 6 -1"></a-entity>
+        <a-entity gltf-model="#domino5" rigid-body position="0 6 -1"></a-entity> -->
 
+        
+        <!-- <a-entity gltf-model="#domino0" scale="0.1 1 0.1"></a-entity> -->
+        <a-entity id="c" networked="template:#sharedCube;"></a-entity>
 
-        <a-entity class="dom0" mixin="blocks" position="0.35174 0.84128 -0.34864">
-            <a-entity gltf-model="#domino0" position="0 0 0"></a-entity>
-        </a-entity>
-        <a-entity class="dom0" mixin="blocks" position="0.50338 0.68086 -1.2909">
-            <a-entity gltf-model="#domino1" position="0 0 0"></a-entity>
-        </a-entity>
-        <a-entity class="dom0" mixin="blocks" position="0.49208 0.79446 -0.99465">
-            <a-entity gltf-model="#domino2" position="0 0 0"></a-entity>
-        </a-entity>
-        <a-entity class="dom0" mixin="blocks" position="0.50121 0.61227 -1.61173">
-            <a-entity gltf-model="#domino3" position="0 0 0"></a-entity>
-        </a-entity>
-        <a-entity class="dom0" mixin="blocks" position="0.47586 0.90757 -0.61842">
-            <a-entity gltf-model="#domino4" position="0 0 0"></a-entity>
-        </a-entity>
-        <a-entity class="dom0" mixin="blocks" position="0.11972 0.58744 -1.26953">
-            <a-entity gltf-model="#domino5" position="0 0 0"></a-entity>
-        </a-entity>
+        <!-- <a-entity networked="template:#cube-template;"></a-entity> -->
 
-        <a-entity class="table" mixin="table" scale="4 1 4" position = "0 .25 -1" material="color: brown" shadow></a-entity>
+        
+        
+        
 
+        <!-- <a-entity class="table" mixin="table" scale="4 1 4" position = "0 .25 -1" material="color: brown;" shadow></a-entity> -->
+
+        <a-entity light="type:ambient;intensity:0.5"></a-entity>
         <a-entity position="0 0 0"
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
         material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
-        <a-sky set-sky="#sky" rotation="0 0 0"></a-sky>
+        <a-entity environment="preset:forest;groundColor:#000000;"></a-entity>
         <a-box static-body width="100" height="0.01" depth="100" visible="false"></a-box>
     </a-scene>
 
 
     <video id="host" playsinline autoplay muted></video>
+    <audio id="bgAudio" autoplay loop>
+        <source src="sfx/background_music2.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        document.getElementById("bgAudio").volume = 0.05;
+    });
+    </script>
     
     <script src="<%= _url %>/scripts/rtcconfig.js"></script>
     <script src="<%= _url %>/scripts/jquery-latest.min.js"></script>
@@ -270,6 +425,7 @@
         }]});
         NAF.schemas.add({template: '#hand-l-template', components: ['position', 'rotation']});
         NAF.schemas.add({template: '#hand-r-template', components: ['position', 'rotation']});
+        NAF.schemas.add({template: '#sharedCube', components: ['position', 'rotation']});
         
     </script>
 </body>

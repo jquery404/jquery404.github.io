@@ -1,0 +1,341 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>shared</title>
+    <meta name="description" content="shared" />
+
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+    
+    <script src="https://unpkg.com/networked-aframe@^0.7.1/dist/networked-aframe.min.js"></script>
+
+    <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-extras@14411ea/dist/aframe-extras.controls.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.3.2/dist/aframe-environment-component.min.js"></script>
+    <script>
+        AFRAME.registerComponent('shared-room', {
+            schema: { 
+                name: {type: 'string', default: 'Hello 👋'} 
+            },
+
+            init: function () {
+              var el = this.el;
+          
+              // Setup networked-scene
+              var networkedComp = {
+                  room: 'nametag',
+                  debug: true,
+              };
+              el.setAttribute('networked-scene', networkedComp);
+            }
+        });
+        
+        // Spawn in circle
+        AFRAME.registerComponent('spawn-in-circle', {
+            schema: {
+                radius: {type: 'number', default: 1}
+            },
+
+            init: function() {
+                var el = this.el;
+                var center = el.getAttribute('position');
+
+                var angleRad = this.getRandomAngleInRadians();
+                var circlePoint = this.randomPointOnCircle(this.data.radius, angleRad);
+                var worldPoint = {x: circlePoint.x + center.x, y: center.y, z: circlePoint.y + center.z};
+                el.setAttribute('position', worldPoint);
+                // console.log('world point', worldPoint);
+
+                var angleDeg = angleRad * 180 / Math.PI;
+                var angleToCenter = -1 * angleDeg + 90;
+                angleRad = THREE.MathUtils.degToRad(angleToCenter);
+                el.object3D.rotation.set(0, angleRad, 0);
+                // console.log('angle deg', angleDeg);
+            },
+
+            getRandomAngleInRadians: function() {
+                return Math.random()*Math.PI*2;
+            },
+
+            randomPointOnCircle: function (radius, angleRad) {
+                var x = Math.cos(angleRad)*radius;
+                var y = Math.sin(angleRad)*radius;
+                return {x: x, y: y};
+            }
+        });
+
+        AFRAME.registerComponent('toggleownership', {
+          schema: {
+            speed: { default: 0.01 },
+            direction: { default: 1 },
+            canDraw:{default: false},
+          },
+
+          init() {
+            var that = this;
+            this.onKeyUp = this.onKeyUp.bind(this);
+            document.addEventListener('keyup', this.onKeyUp);
+
+            
+
+            NAF.utils.getNetworkedEntity(this.el).then((el) => {
+              // if (!NAF.utils.isMine(el)) {
+              //   that.updateOpacity(0.5);
+              // }
+
+              // Opacity is not a networked attribute, but change it based on ownership events
+              let timeout;
+
+              el.addEventListener('ownership-gained', e => {
+                that.updateOpacity(1);
+              });
+
+              el.addEventListener('ownership-lost', e => {
+                that.updateOpacity(0.5);
+              });
+
+              el.addEventListener('ownership-changed', e => {
+                clearTimeout(timeout);
+                console.log(e.detail)
+                if (e.detail.newOwner == NAF.clientId) {
+                  //same as listening to 'ownership-gained'
+                } else if (e.detail.oldOwner == NAF.clientId) {
+                  //same as listening to 'ownership-lost'
+                } else {
+                  that.updateOpacity(0.8);
+                  timeout = setTimeout(() => {
+                    that.updateOpacity(0.5);
+                  }, 200)
+                }
+              });
+            });
+          },
+
+          onKeyUp(e) {
+            if (e.keyCode !== 13 /* enter */) {
+              return;
+            }
+
+            if(NAF.utils.takeOwnership(this.el)) {
+              this.el.setAttribute('toggleownership', { direction: this.data.direction * -1 });
+            }else{
+              this.updateOpacity(1);
+            }
+          },
+
+          updateOpacity(opacity) {
+            this.el.setAttribute('material', 'opacity', opacity);
+          },
+
+          tick() {
+            // Only update the component if you are the owner.
+            if (!NAF.utils.isMine(this.el)) {
+              return;
+            }
+            // console.log(this.data.canDraw);
+
+            this.el.object3D.rotateY(this.data.speed * this.data.direction);
+
+            const rotation = this.el.object3D.rotation;
+            this.el.setAttribute('rotation', {
+              x: THREE.Math.radToDeg(rotation.x),
+              y: THREE.Math.radToDeg(rotation.y),
+              z: THREE.Math.radToDeg(rotation.z),
+            });
+          }
+        });
+          
+        AFRAME.registerComponent('spawner', {
+          schema: {
+            template: { default: '' },
+            keyCode: { default: 32 }
+          },
+
+          init: function() {
+            this.onKeyUp = this.onKeyUp.bind(this);
+            document.addEventListener("keyup", this.onKeyUp);
+          },
+
+          onKeyUp: function(e) {
+            if (this.data.keyCode === e.keyCode) {
+              var el = document.createElement('a-entity');
+              el.setAttribute('networked', 'template:' + this.data.template);
+              el.setAttribute('position', this.el.getAttribute('position'));
+              var scene = this.el.sceneEl;
+              scene.appendChild(el);
+            }
+          }
+        });
+    
+        
+    </script>
+
+    <script>
+      // Temporary workaround for template declaration; see issue 167
+      NAF.schemas.getComponentsOriginal = NAF.schemas.getComponents;
+      NAF.schemas.getComponents = (template) => {
+        if (!NAF.schemas.hasTemplate('#head-template')) {
+          NAF.schemas.add({
+            template: '#head-template',
+            components: [
+              'position',
+              'rotation',
+              'player-info'
+            ]
+          });
+        }
+
+        if (!NAF.schemas.hasTemplate('#cube-template')) {
+          NAF.schemas.add({
+            template: '#cube-template',
+            components: [
+              'position',
+              {
+                selector: '.cube',
+                component: 'position'
+              },
+              {
+                selector: '.cube',
+                component: 'rotation'
+              },
+            ]
+          });
+        }
+
+        const components = NAF.schemas.getComponentsOriginal(template);
+        return components;
+      };
+    </script>
+
+    <script>
+      window.ntExample = {
+        randomColor: () => {
+          return '#' + new THREE.Color(Math.random(), Math.random(), Math.random()).getHexString();
+        }
+      };
+
+      AFRAME.registerComponent('player-info', {
+        schema: {
+          name: { type: 'string', default: 'user-' + Math.round(Math.random() * 10000) },
+          color: {
+            type: 'color',
+            default: window.ntExample.randomColor()
+          }
+        },
+
+        init: function () {
+          this.head = this.el.querySelector('.head');
+          this.nametag = this.el.querySelector('.nametag');
+
+          this.ownedByLocalUser = this.el.id === 'player';
+          if (this.ownedByLocalUser) {
+            // populate the html overlay with the correct name on init
+            this.nametagInput = document.getElementById('username-overlay');
+            this.nametagInput.value = this.data.name;
+
+            // add the initial color to the html overlay color picker button
+            document.querySelector('button').style.backgroundColor = this.data.color;
+            document.querySelector('button').style.color = this.data.color;
+          }
+        },
+
+        // here as an example, not used in current demo. Could build a user list, expanding on this.
+        listUsers: function () {
+          console.log(
+            'userlist',
+            [...document.querySelectorAll('[player-info]')].map((el) => el.components['player-info'].data.name)
+          );
+        },
+
+        newRandomColor: function () {
+          this.el.setAttribute('player-info', 'color', window.ntExample.randomColor());
+          this.listUsers();
+        },
+
+        update: function () {
+          if (this.head) this.head.setAttribute('material', 'color', this.data.color);
+          if (this.nametag) this.nametag.setAttribute('value', this.data.name);
+        }
+      });
+    </script>
+  </head>
+
+  <body>
+    <button
+      id="color-changer"
+      style="z-index: 100; bottom: 24px; left: 24px; position: fixed"
+      onclick="let newColor = window.ntExample.randomColor();
+             document.getElementById('player').setAttribute('player-info', 'color', newColor); 
+             document.querySelector('button').style.backgroundColor = newColor;
+             document.querySelector('button').style.color = newColor;
+    "
+    >
+      ■
+    </button>
+    <input
+      id="username-overlay"
+      style="z-index: 100; bottom: 24px; left: 48px; position: fixed"
+      oninput="document.getElementById('player').setAttribute('player-info', 'name', this.value)"
+    />
+
+    <a-scene shared-room>
+      <a-assets>
+        <a-asset-item id="my-head-glb" src="<%= _url %>/model/_avatars/curious_boy_green_head.glb"></a-asset-item>
+        <a-mixin id="cube" geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+                 hoverable grabbable stretchable draggable droppable
+                 event-set__hoveron="_event: click; material.color: blue; toggleownership.canDraw: true;">
+        </a-mixin>
+        <template id="cube-template">
+          <a-entity>
+            <a-entity class="cube" toggleownership mixin="cube" position="0 1 -1.25" material="color: red"></a-entity>
+          </a-entity>
+        </template>
+        
+        <template id="rig-template">
+          <a-entity></a-entity>
+        </template>
+
+        <template id="head-template">
+          <a-entity class="avatar" player-info>
+            <a-entity class="head" gltf-model="#my-head-glb" scale="1 1 1"></a-entity>
+
+            <!-- here we add a text component for a nametag; the value will be updated by the player-info component -->
+            <a-text
+              class="nametag"
+              value="?"
+              rotation="0 180 0"
+              position=".25 -.35 0"
+              side="double"
+              scale=".5 .5 .5"
+            ></a-text>
+          </a-entity>
+        </template>
+      </a-assets>
+
+      <a-entity spawner="template:#cube-template" position="-0.9 1 -0.9"></a-entity>
+      
+
+      <a-entity environment="preset:forest;groundColor:#000000;"></a-entity>
+      <a-entity light="type:ambient;intensity:0.5"></a-entity>
+
+      <a-entity id="rig" movement-controls="fly:true;" spawn-in-circle="radius:3" networked="template:#rig-template;">
+        <a-entity
+          id="player"
+          camera
+          capture-mouse
+          raycaster="objects: .cube" cursor="rayOrigin:mouse"
+          static-body="shape: sphere; sphereRadius: 0.001"
+          super-hands="colliderEvent: raycaster-intersection;
+                        colliderEventProperty: els;
+                        colliderEndEvent:raycaster-intersection-cleared;
+                        colliderEndEventProperty: clearedEls;"
+          position="0 1.6 0"
+          networked="template:#head-template;"
+          visible="false"
+        ></a-entity>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>

@@ -50,6 +50,13 @@ app.get('/own', (req, res) => {
     res.render('ownership.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
 })
 
+app.get('/nametag', (req, res) => {
+    res.render('nametag.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
+})
+
+app.get('/shared', (req, res) => {
+    res.render('sharedobj.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
+})
 
 const peers = {};
 const rooms = {};
