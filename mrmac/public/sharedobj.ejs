@@ -130,6 +130,18 @@
           },
 
           tick() {
+
+            if(this.data.canDraw){
+              console.log("hi");
+              if(NAF.utils.takeOwnership(this.el)) {
+                console.log("taking ownership");
+                this.el.setAttribute('toggleownership', { direction: this.data.direction * -1 });
+              }
+              else{
+                console.log("already owner or failed");
+              }
+              this.data.canDraw = false;
+            }
             // Only update the component if you are the owner.
             if (!NAF.utils.isMine(this.el)) {
               return;
@@ -283,6 +295,21 @@
     <a-scene shared-room>
       <a-assets>
         <a-asset-item id="my-head-glb" src="<%= _url %>/model/_avatars/curious_boy_green_head.glb"></a-asset-item>
+        <a-mixin id="pointer" raycaster="showLine: true; objects: .cube, a-link"
+                  super-hands="colliderEvent: raycaster-intersection;
+                               colliderEventProperty: els;
+                               colliderEndEvent:raycaster-intersection-cleared;
+                               colliderEndEventProperty: clearedEls;">
+        </a-mixin>
+        <a-mixin id="controller-right" mixin="pointer"
+                 vive-controls="hand: right" oculus-touch-controls="hand: right"
+                 windows-motion-controls="hand: right"
+                 gearvr-controls daydream-controls oculus-go-controls>
+        </a-mixin>
+        <a-mixin id="controller-left" mixin="pointer"
+                 vive-controls="hand: left" oculus-touch-controls="hand: left"
+                 windows-motion-controls="hand: left">
+        </a-mixin>
         <a-mixin id="cube" geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
                  hoverable grabbable stretchable draggable droppable
                  event-set__hoveron="_event: click; material.color: blue; toggleownership.canDraw: true;">
@@ -320,6 +347,8 @@
       <a-entity environment="preset:forest;groundColor:#000000;"></a-entity>
       <a-entity light="type:ambient;intensity:0.5"></a-entity>
 
+
+      <!-- on desktop -->
       <a-entity id="rig" movement-controls="fly:true;" spawn-in-circle="radius:3" networked="template:#rig-template;">
         <a-entity
           id="player"
@@ -336,6 +365,29 @@
           visible="false"
         ></a-entity>
       </a-entity>
+
+
+      <!-- on vr hmd -->
+      <!-- <a-entity id="rhand" mixin="controller-right"></a-entity>
+      <a-entity id="lhand" mixin="controller-left"></a-entity>
+      <a-entity id="rig" networked="template:#rig-template;">
+        <a-entity
+          id="player"
+          camera
+          look-controls
+          raycaster="objects: .cube"
+          static-body="shape: sphere; sphereRadius: 0.001"
+          super-hands="colliderEvent: raycaster-intersection;
+                        colliderEventProperty: els;
+                        colliderEndEvent:raycaster-intersection-cleared;
+                        colliderEndEventProperty: clearedEls;"
+          position="0 1.6 0"
+          networked="template:#head-template;"
+          visible="false"
+        ></a-entity>
+      </a-entity> -->
+      
+      
     </a-scene>
   </body>
 </html>

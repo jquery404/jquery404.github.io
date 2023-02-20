@@ -113,16 +113,7 @@
     <script>
     NAF.schemas.getComponentsOriginal = NAF.schemas.getComponents;
     NAF.schemas.getComponents = (template) => {
-        if (!NAF.schemas.hasTemplate('#head-template')) {
-            NAF.schemas.add({
-                template: '#head-template',
-                components: [
-                    'position',
-                    'rotation',
-                    'player-info'
-                ]
-            });
-        }
+        
 
         if (!NAF.schemas.hasTemplate('#cube-template')) {
             NAF.schemas.add({
@@ -319,27 +310,6 @@
             <a-entity class="cube" mixin="cube" position="0 1.6 -1.5" material="color: red; opacity:0.1">
                 <a-entity gltf-model="#lego0" position="0 6 -1"></a-entity>
             </a-entity>    
-            <a-entity class="cube" mixin="cube" position="0 1.6 -1.5" material="color: red; opacity:0.1">
-                <a-entity gltf-model="#lego1" position="0 6 -1"></a-entity>
-            </a-entity>    
-            <a-entity class="cube" mixin="cube" position="0 1.6 -1.5" material="color: red; opacity:0.1">
-                <a-entity gltf-model="#lego2" position="0 6 -1"></a-entity>
-            </a-entity>    
-            <a-entity class="cube" mixin="cube" position="0 1.6 -1.5" material="color: red; opacity:0.1">
-                <a-entity gltf-model="#lego3" position="0 6 -1"></a-entity>
-            </a-entity>    
-            <a-entity class="cube" mixin="cube" position="0 1.6 -1.5" material="color: red; opacity:0.1">
-                <a-entity gltf-model="#lego4" position="0 6 -1"></a-entity>
-            </a-entity>    
-            <a-entity class="cube" mixin="cube" position="0 1.6 -1.5" material="color: red; opacity:0.1">
-                <a-entity gltf-model="#lego5" position="0 6 -1"></a-entity>
-            </a-entity>    
-            <a-entity class="cube" mixin="cube" position="0 1.6 -1.5" material="color: red; opacity:0.1">
-                <a-entity gltf-model="#lego6" position="0 6 -1"></a-entity>
-            </a-entity>    
-            <a-entity class="cube" mixin="cube" position="0 1.6 -1.5" material="color: red; opacity:0.1">
-                <a-entity gltf-model="#lego7"></a-entity>
-            </a-entity>
         </template>
 
         
