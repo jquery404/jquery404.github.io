@@ -15,6 +15,24 @@
     <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-extras@14411ea/dist/aframe-extras.controls.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.3.2/dist/aframe-environment-component.min.js"></script>
     <script>
+      var blockobjs = [
+        "#domino0",
+        "#domino1",
+        "#domino2",
+        "#domino3",
+        "#domino4",
+        "#domino5",
+        "#lego0",
+        "#lego1",
+        "#lego2",
+        "#lego3",
+        "#lego4",
+        "#lego5",
+        "#lego6",
+        "#lego7",
+      ];
+      var idx = 0;
+
         AFRAME.registerComponent('shared-room', {
             schema: { 
                 name: {type: 'string', default: 'Hello 👋'} 
@@ -70,7 +88,7 @@
           schema: {
             speed: { default: 0.01 },
             direction: { default: 1 },
-            canDraw:{default: false},
+            canDrag:{default: false},
           },
 
           init() {
@@ -131,7 +149,7 @@
 
           tick() {
 
-            if(this.data.canDraw){
+            if(this.data.canDrag){
               console.log("hi");
               if(NAF.utils.takeOwnership(this.el)) {
                 console.log("taking ownership");
@@ -140,29 +158,29 @@
               else{
                 console.log("already owner or failed");
               }
-              this.data.canDraw = false;
+              this.data.canDrag = false;
             }
             // Only update the component if you are the owner.
             if (!NAF.utils.isMine(this.el)) {
               return;
             }
-            // console.log(this.data.canDraw);
 
-            this.el.object3D.rotateY(this.data.speed * this.data.direction);
+            // this.el.object3D.rotateY(this.data.speed * this.data.direction);
 
-            const rotation = this.el.object3D.rotation;
-            this.el.setAttribute('rotation', {
-              x: THREE.Math.radToDeg(rotation.x),
-              y: THREE.Math.radToDeg(rotation.y),
-              z: THREE.Math.radToDeg(rotation.z),
-            });
+            // const rotation = this.el.object3D.rotation;
+            // this.el.setAttribute('rotation', {
+            //   x: THREE.Math.radToDeg(rotation.x),
+            //   y: THREE.Math.radToDeg(rotation.y),
+            //   z: THREE.Math.radToDeg(rotation.z),
+            // });
           }
         });
           
         AFRAME.registerComponent('spawner', {
           schema: {
             template: { default: '' },
-            keyCode: { default: 32 }
+            keyCode: { default: 32 },
+            start: { default: false } 
           },
 
           init: function() {
@@ -178,10 +196,59 @@
               var scene = this.el.sceneEl;
               scene.appendChild(el);
             }
+          },
+
+          removeObject: function() {
+            var el = this.el;
+            el.parentNode.removeChild(el);
+          },
+
+          tick: function () {
+
+            this.el.object3D.rotateY(0.01 * 1);
+
+            const rotation = this.el.object3D.rotation;
+            this.el.setAttribute('rotation', {
+              x: THREE.Math.radToDeg(rotation.x),
+              y: THREE.Math.radToDeg(rotation.y),
+              z: THREE.Math.radToDeg(rotation.z),
+            });
+
+            if(this.data.start){
+              for (let i = 0; i < blockobjs.length; i++) {
+                var el = document.createElement('a-entity');
+                el.setAttribute('networked', 'template:' + this.data.template);
+                el.setAttribute('position', this.el.getAttribute('position'));
+                var scene = this.el.sceneEl;
+                scene.appendChild(el);
+              }
+              this.data.start = false;
+              this.removeObject();
+            }
+          
+            if(document.querySelectorAll(".cube").length){
+              this.removeObject();
+            }
           }
         });
-    
-        
+
+        AFRAME.registerComponent('rigidbody', {
+          schema: {
+            model: {default: ''}
+          },
+
+          init: function () {
+            this.el.setAttribute('gltf-model', blockobjs[idx]);
+            this.el.setAttribute('scale', '.1 .1 .1');
+            this.el.setAttribute('hoverable', '');
+            this.el.setAttribute('grabbable', '');
+            this.el.setAttribute('stretchable', '');
+            this.el.setAttribute('draggable', '');
+            this.el.setAttribute('droppable', '');
+            idx++;
+          }
+
+        });
     </script>
 
     <script>
@@ -294,8 +361,20 @@
 
     <a-scene shared-room>
       <a-assets>
-        <a-asset-item id="my-head-glb" src="<%= _url %>/model/_avatars/curious_boy_green_head.glb"></a-asset-item>
-        <a-mixin id="pointer" raycaster="showLine: true; objects: .cube, a-link"
+        <a-asset-item id="head1-glb" src="<%= _url %>/model/_avatars/av_faisal_head.glb"></a-asset-item>
+        <a-asset-item id="body1-glb" src="<%= _url %>/model/_avatars/male_body.glb"></a-asset-item>
+        <a-asset-item id="head2-glb" src="<%= _url %>/model/_avatars/curious_boy_black_head.glb"></a-asset-item>
+        <a-asset-item id="body2-glb" src="<%= _url %>/model/_avatars/curious_boy_default_body.glb"></a-asset-item>
+        <%- include('_ass_lego_domino'); %>
+
+        <a-mixin id="startBtn" geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+                 hoverable 
+                 event-set__click="_event: click; spawner.start: true;"
+                 event-set__hoveron="_event: hover-start; material.opacity: 0.7; transparent: true"
+                 event-set__hoveroff="_event: hover-end; material.opacity: 1; transparent: false">
+        </a-mixin>
+
+        <a-mixin id="pointer" raycaster="showLine: true; objects: .cube, .btn, a-link"
                   super-hands="colliderEvent: raycaster-intersection;
                                colliderEventProperty: els;
                                colliderEndEvent:raycaster-intersection-cleared;
@@ -310,9 +389,7 @@
                  vive-controls="hand: left" oculus-touch-controls="hand: left"
                  windows-motion-controls="hand: left">
         </a-mixin>
-        <a-mixin id="cube" geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
-                 hoverable grabbable stretchable draggable droppable
-                 event-set__hoveron="_event: click; material.color: blue; toggleownership.canDraw: true;">
+        <a-mixin id="cube" rigidbody event-set__hoveron="_event: click; toggleownership.canDrag: true;">
         </a-mixin>
         <template id="cube-template">
           <a-entity>
@@ -326,7 +403,8 @@
 
         <template id="head-template">
           <a-entity class="avatar" player-info>
-            <a-entity class="head" gltf-model="#my-head-glb" scale="1 1 1"></a-entity>
+            <a-entity class="head" gltf-model="#head1-glb" scale="1 1 1"></a-entity>
+            <a-entity class="body" gltf-model="#body1-glb" scale="1 1 1"></a-entity>
 
             <!-- here we add a text component for a nametag; the value will be updated by the player-info component -->
             <a-text
@@ -341,10 +419,11 @@
         </template>
       </a-assets>
 
-      <a-entity spawner="template:#cube-template" position="-0.9 1 -0.9"></a-entity>
-      
+      <a-entity class="btn" spawner="template:#cube-template" mixin="startBtn" position="0 1 0" material="color: red">
+        <a-text value="START" color="#000" align="center" rotation="0 180 0" position="0 .3 0" side="double" scale=".5 .5 .5"></a-text>
+      </a-entity>
 
-      <a-entity environment="preset:forest;groundColor:#000000;"></a-entity>
+      <a-entity environment="preset:forest;groundColor:#A99F47;"></a-entity>
       <a-entity light="type:ambient;intensity:0.5"></a-entity>
 
 
@@ -354,7 +433,7 @@
           id="player"
           camera
           capture-mouse
-          raycaster="objects: .cube" cursor="rayOrigin:mouse"
+          raycaster="objects: .cube, .btn" cursor="rayOrigin:mouse"
           static-body="shape: sphere; sphereRadius: 0.001"
           super-hands="colliderEvent: raycaster-intersection;
                         colliderEventProperty: els;
