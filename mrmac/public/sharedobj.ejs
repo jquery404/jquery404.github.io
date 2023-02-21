@@ -363,8 +363,10 @@
       <a-assets>
         <a-asset-item id="head1-glb" src="<%= _url %>/model/_avatars/av_faisal_head.glb"></a-asset-item>
         <a-asset-item id="body1-glb" src="<%= _url %>/model/_avatars/male_body.glb"></a-asset-item>
-        <a-asset-item id="head2-glb" src="<%= _url %>/model/_avatars/curious_boy_black_head.glb"></a-asset-item>
-        <a-asset-item id="body2-glb" src="<%= _url %>/model/_avatars/curious_boy_default_body.glb"></a-asset-item>
+        <a-asset-item id="head2-glb" src="<%= _url %>/model/_avatars/av_irina_head.glb"></a-asset-item>
+        <a-asset-item id="body2-glb" src="<%= _url %>/model/_avatars/female_body.glb"></a-asset-item>
+        <a-asset-item id="head3-glb" src="<%= _url %>/model/_avatars/curious_boy_black_head.glb"></a-asset-item>
+        <a-asset-item id="body3-glb" src="<%= _url %>/model/_avatars/curious_boy_default_body.glb"></a-asset-item>
         <%- include('_ass_lego_domino'); %>
 
         <a-mixin id="startBtn" geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
@@ -410,6 +412,7 @@
             <a-text
               class="nametag"
               value="?"
+              color="#000"
               rotation="0 180 0"
               position=".25 -.35 0"
               side="double"
@@ -419,7 +422,7 @@
         </template>
       </a-assets>
 
-      <a-entity class="btn" spawner="template:#cube-template" mixin="startBtn" position="0 1 0" material="color: red">
+      <a-entity class="btn" spawner="template:#cube-template" mixin="startBtn" position="2 1 -2" material="color: red">
         <a-text value="START" color="#000" align="center" rotation="0 180 0" position="0 .3 0" side="double" scale=".5 .5 .5"></a-text>
       </a-entity>
 
@@ -428,7 +431,7 @@
 
 
       <!-- on desktop -->
-      <a-entity id="rig" movement-controls="fly:true;" spawn-in-circle="radius:3" networked="template:#rig-template;">
+      <!-- <a-entity id="rig" movement-controls="fly:true;" spawn-in-circle="radius:3" networked="template:#rig-template;">
         <a-entity
           id="player"
           camera
@@ -443,18 +446,17 @@
           networked="template:#head-template;"
           visible="false"
         ></a-entity>
-      </a-entity>
+      </a-entity> -->
 
 
       <!-- on vr hmd -->
-      <!-- <a-entity id="rhand" mixin="controller-right"></a-entity>
-      <a-entity id="lhand" mixin="controller-left"></a-entity>
-      <a-entity id="rig" networked="template:#rig-template;">
+      
+      <a-entity id="rig" spawn-in-circle="radius:2" networked="template:#rig-template;">
         <a-entity
           id="player"
           camera
           look-controls
-          raycaster="objects: .cube"
+          raycaster="objects: .cube, .btn"
           static-body="shape: sphere; sphereRadius: 0.001"
           super-hands="colliderEvent: raycaster-intersection;
                         colliderEventProperty: els;
@@ -464,7 +466,9 @@
           networked="template:#head-template;"
           visible="false"
         ></a-entity>
-      </a-entity> -->
+        <a-entity id="rhand" mixin="controller-right"></a-entity>
+        <a-entity id="lhand" mixin="controller-left"></a-entity>
+      </a-entity>
       
       
     </a-scene>
