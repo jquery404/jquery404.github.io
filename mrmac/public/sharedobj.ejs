@@ -50,6 +50,48 @@
             }
         });
         
+        AFRAME.registerComponent('random-head', {
+          schema: {
+          },
+
+          update: function () {
+            if(Math.floor(Math.random()*2)%2)
+              this.el.setAttribute('gltf-model', "#head1-glb")
+            else
+              this.el.setAttribute('gltf-model', "#head2-glb")
+          }
+
+        });
+    
+        AFRAME.registerComponent('rotation-control', {
+          init: function() {
+            this.el.addEventListener('intersected', this.onIntersect.bind(this));
+          },
+
+          onIntersect: function(evt) {
+            var hand1 = document.querySelector('[super-hands]').components['super-hands'].selected;
+            var hand2 = document.querySelector('[super-hands]').components['super-hands'].secondSelected;
+
+            if (hand1 && hand2) {
+              // Get the intersection points
+              var point1 = hand1.getAttribute('position');
+              var point2 = hand2.getAttribute('position');
+
+              // Get the intersected object and its current rotation
+              var object = evt.detail.el;
+              var rotation = object.getAttribute('rotation');
+
+
+              // Calculate the rotation angle based on the intersection points
+              var diff = new THREE.Vector3().subVectors(point1, point2);
+              var angle = Math.atan2(diff.x, diff.z);
+
+              // Set the object's rotation
+              object.setAttribute('rotation', { y: THREE.Math.radToDeg(angle) });
+            }
+          }
+        });
+
         // Spawn in circle
         AFRAME.registerComponent('spawn-in-circle', {
             schema: {
@@ -249,6 +291,7 @@
           }
 
         });
+    
     </script>
 
     <script>
@@ -261,7 +304,11 @@
             components: [
               'position',
               'rotation',
-              'player-info'
+              'player-info',
+              {
+                selector: '.head',
+                component: 'gltf-model',
+              }
             ]
           });
         }
@@ -405,14 +452,14 @@
 
         <template id="head-template">
           <a-entity class="avatar" player-info>
-            <a-entity class="head" gltf-model="#head1-glb" scale="1 1 1"></a-entity>
-            <a-entity class="body" gltf-model="#body1-glb" scale="1 1 1"></a-entity>
+            <a-entity class="head" gltf-model="#head2-glb"></a-entity>
+            <a-entity class="body" gltf-model="#body2-glb"></a-entity>
 
             <!-- here we add a text component for a nametag; the value will be updated by the player-info component -->
             <a-text
               class="nametag"
               value="?"
-              color="#000"
+              color="#fff"
               rotation="0 180 0"
               position=".25 -.35 0"
               side="double"
@@ -450,7 +497,6 @@
 
 
       <!-- on vr hmd -->
-      
       <a-entity id="rig" spawn-in-circle="radius:2" networked="template:#rig-template;">
         <a-entity
           id="player"
