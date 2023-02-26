@@ -58,6 +58,10 @@ app.get('/shared', (req, res) => {
     res.render('sharedobj.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
 })
 
+app.get('/avatar', (req, res) => {
+    res.render('avatars-selection.ejs', { text: 'Hey', _url: req.protocol+"://"+req.headers.host })
+})
+
 const peers = {};
 const rooms = {};
 

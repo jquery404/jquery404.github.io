@@ -1,0 +1,184 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>avatars-selection</title>
+  <meta name="description" content="shared" />
+
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+  <script src="https://unpkg.com/networked-aframe@^0.7.1/dist/networked-aframe.min.js"></script>
+
+  <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script>
+  <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+
+  <script src="https://unpkg.com/aframe-environment-component@1.3.2/dist/aframe-environment-component.min.js"></script>
+  <script>
+
+    AFRAME.registerComponent('shared-room', {
+      schema: {
+        name: { type: 'string', default: 'Hello 👋' }
+      },
+
+      init: function () {
+        var el = this.el;
+
+        // Setup networked-scene
+        var networkedComp = {
+          app: 'my-app',
+          room: 'nametag',
+          debug: true,
+        };
+        el.setAttribute('networked-scene', networkedComp);
+      }
+    });
+
+    AFRAME.registerComponent('highlight', {
+      init: function () {
+        var buttonEls = this.buttonEls = this.el.querySelectorAll('.menu-button');
+        this.onClick = this.onClick.bind(this);
+        this.onMouseEnter = this.onMouseEnter.bind(this);
+        this.onMouseLeave = this.onMouseLeave.bind(this);
+
+
+        for (var i = 0; i < buttonEls.length; ++i) {
+          buttonEls[i].addEventListener('mouseenter', this.onMouseEnter);
+          buttonEls[i].addEventListener('mouseleave', this.onMouseLeave);
+          buttonEls[i].addEventListener('click', this.onClick);
+        }
+      },
+
+      onClick: function (evt) {
+        let gltf = evt.target.getAttribute('gltf-model');
+        document.getElementById('player').setAttribute('player-info', 'gltf', gltf);
+        document.getElementById('player').setAttribute('player-info', 'body', gltf);
+      },
+
+      onMouseEnter: function (evt) {
+        // evt.target.setAttribute('gltf-opacity', .5);
+		    evt.target.object3D.scale.set(1.2, 1.2, 1.2);
+      },
+
+      onMouseLeave: function (evt) {
+        // evt.target.setAttribute('gltf-opacity', 1);
+		    evt.target.object3D.scale.set(1.0, 1.0, 1.0);
+      },
+    });
+
+    AFRAME.registerComponent('gltf-opacity', {
+      schema: { default: 1.0 },
+
+      init: function () {
+        this.el.addEventListener('model-loaded', this.update.bind(this));
+      },
+
+      update: function () {
+        var mesh = this.el.getObject3D('mesh');
+        var data = this.data;
+        if (!mesh) { return; }
+        mesh.traverse(function (node) {
+          if (node.isMesh) {
+            node.material.opacity = data;
+            node.material.transparent = data < 1.0;
+            node.material.needsUpdate = true;
+          }
+        });
+      }
+    });
+
+    AFRAME.registerComponent('player-info', {
+        schema: {
+          gltf: { default: '#lion-model' }
+        },
+
+        init: function () {
+          this.head = this.el.querySelector('.head');
+
+          this.ownedByLocalUser = this.el.id === 'player';
+          if (this.ownedByLocalUser) {
+            //this.head.setAttribute('material', 'color', this.data.color)
+          }
+        },
+
+        update: function () {
+          if(this.el.querySelector('.head'))
+            this.el.querySelector('.head').setAttribute('gltf-model', this.data.gltf);
+          }
+      });
+    
+    NAF.schemas.getComponentsOriginal = NAF.schemas.getComponents;
+    NAF.schemas.getComponents = (template) => {
+      if (!NAF.schemas.hasTemplate('#player-template')) {
+        NAF.schemas.add({
+          template: '#player-template',
+          components: [
+            'position',
+            'rotation',
+            'player-info',
+            {
+              selector: '.head',
+              component: 'gltf-model',
+            },
+            {
+              selector: '.body',
+              component: 'gltf-model',
+            }
+          ]
+        });
+      }
+
+      const components = NAF.schemas.getComponentsOriginal(template);
+      return components;
+    };
+  </script>
+
+</head>
+
+<body>
+
+  <a-scene cursor="rayOrigin: mouse; fuse: false" raycaster="objects: .raycastable" shared-room>
+    <a-assets>
+      <a-asset-item id="irina-model" src="model/_avatars/av_irina_head.glb"></a-asset-item>
+      <a-asset-item id="faisal-model" src="model/_avatars/av_faisal_head.glb"></a-asset-item>
+      <a-asset-item id="ifahad-model" src="model/_avatars/av_ifahad_head.glb"></a-asset-item>
+      <a-asset-item id="georgina-model" src="model/_avatars/av_georgina_head.glb"></a-asset-item>
+      <a-asset-item id="zach-model" src="model/_avatars/av_zach_head.glb"></a-asset-item>
+
+      <a-asset-item id="body1-glb" src="model/_avatars/male_body.glb"></a-asset-item>
+      <a-asset-item id="body2-glb" src="model/_avatars/female_body.glb"></a-asset-item>
+
+      <template id="rig-template">
+        <a-entity></a-entity>
+      </template>
+
+      <template id="player-template">
+        <a-entity class="avatar" player-info>
+          <a-entity class="head"></a-entity>
+          <a-entity class="body"></a-entity>
+        </a-entity>
+      </template>
+    </a-assets>
+
+
+    <a-entity networked="template:#rig-template;">
+      <a-entity id="player" networked="template:#player-template;attachTemplateToLocal:false;" camera wasd-controls look-controls position="0 1.6 0"></a-entity>
+    </a-entity>
+
+    <a-entity id="menu" highlight>
+      <a-entity id="ifahad" class="avatar-option raycastable menu-button" gltf-model="#ifahad-model" body="male" position="-2 2 2"></a-entity>
+      <a-entity id="irina" class="avatar-option raycastable menu-button" gltf-model="#irina-model" body="female" position="-1 2 2"></a-entity>
+      <a-entity id="faisal" class="avatar-option raycastable menu-button" gltf-model="#faisal-model" body="male" position="0 2 2"></a-entity>
+      <a-entity id="georgina" class="avatar-option raycastable menu-button" gltf-model="#georgina-model" body="female" position="1 2 2"></a-entity>
+      <a-entity id="zach" class="avatar-option raycastable menu-button" gltf-model="#zach-model" body="male" position="2 2 2"></a-entity>
+    </a-entity>
+
+    <!-- light -->
+    <a-entity light="type: directional; color: #fff; intensity: 1" position="1 1 1"></a-entity>
+    <a-light type="ambient" color="#fff" intensity="1"></a-light>
+
+    <a-entity environment="preset:forest;"></a-entity>
+
+  </a-scene>
+</body>
+
+</html>
