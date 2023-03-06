@@ -1,0 +1,41 @@
+Group,Participant,Params,VRAR,Task,Score
+1,1,spatial presence,VR,1,6
+1,1,involvement,VR,1,6
+1,2,spatial presence,AR,1,7
+1,2,involvement,AR,1,6
+1,3,spatial presence,VR,1,5
+1,3,involvement,VR,1,4
+1,4,spatial presence,AR,1,6
+1,4,involvement,AR,1,3
+1,1,spatial presence,VR,2,6
+1,1,involvement,VR,2,6
+1,2,spatial presence,AR,2,7
+1,2,involvement,AR,2,6
+1,3,spatial presence,VR,2,5
+1,3,involvement,VR,2,3
+1,4,spatial presence,AR,2,4
+1,4,involvement,AR,2,3
+1,1,spatial presence,VR,3,6
+1,1,involvement,VR,3,4
+1,2,spatial presence,AR,3,6
+1,2,involvement,AR,3,3
+1,3,spatial presence,VR,3,5
+1,3,involvement,VR,3,4
+1,4,spatial presence,AR,3,4
+1,4,involvement,AR,3,3
+2,1,spatial presence,VR,1,6
+2,1,involvement,VR,1,2
+2,2,spatial presence,AR,1,6
+2,2,involvement,AR,1,3
+2,3,spatial presence,VR,1,3
+2,3,involvement,VR,1,5
+2,4,spatial presence,AR,1,6
+2,4,involvement,AR,1,4
+2,1,spatial presence,VR,2,5
+2,1,involvement,VR,2,6
+2,2,spatial presence,AR,2,7
+2,2,involvement,AR,2,6
+2,3,spatial presence,VR,2,5
+2,3,involvement,VR,2,5
+2,4,spatial presence,AR,2,3
+2,4,involvement,AR,2,6
