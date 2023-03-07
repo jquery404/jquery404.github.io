@@ -1,0 +1,60 @@
+# library
+library(ggplot2)
+library(ggpubr)
+library(dplyr)
+library(likert) 
+coloring = c("#E76469", "#F8D85E","#EDA645","#D1B0B3","#8C99A6","#ADD299","#4FA490","#3B7F9F")
+fontsize = 14
+
+##############################
+###### Spatial Presence #######
+##############################
+
+# create a data frame
+spatial_data =read.csv('csv/spatial.csv', sep=",")
+attach(spatial_data)
+
+# analysis of variance
+anova = aov(score ~params, data=spatial_data)
+summary(anova)
+
+# pairwise comp
+tukey = TukeyHSD(anova)
+print(tukey)
+
+# grouped box plot
+spatial_plt <- ggplot(data = spatial_data, mapping = aes(x = params, y = score, fill = vrar)) +
+  stat_boxplot(geom = "errorbar", width=.2, position=position_dodge(.75)) +
+  geom_boxplot(aes(color=vrar), coef = 0, outlier.alpha = 0, show.legend = F) +
+  # geom_point(position=position_jitterdodge(dodge.width=0.9)) +
+  stat_compare_means(method="t.test") + 
+  geom_segment(data=spatial_data, aes(x=params, xend=params, y=3.5, yend=3.5), colour="red", size=2, inherit.aes = F)  + 
+  stat_summary(fun="mean", geom="point", shape=1, size=3, position=position_dodge(width=0.75), color="black") + 
+  stat_summary(geom = "crossbar", width=0.65, fatten=0, color="black", fun.data = function(x){c(y=median(x), ymin=median(x), ymax=median(x))}, position=position_dodge(width=0.75)) +
+  scale_fill_manual(name= "vrar", values = c("#E76469", "#F8D85E")) +
+  scale_color_manual(name = "vrar", values = c("#E76469", "#F8D85E")) + 
+  scale_y_continuous(minor_breaks = seq(0, 7, 1), breaks = seq(1, 7.1, by=1), limits=c(1,7.1)) + 
+  theme_bw() + 
+  theme(axis.line = element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.x = element_text(color="black", size=fontsize),
+        axis.text.y = element_text(color="black", size=fontsize),
+        text = element_text(size=fontsize),
+        strip.background = element_blank(),
+        plot.background = element_blank(),
+        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        panel.border = element_blank(),
+        panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        #panel.grid.major = element_blank(),
+        legend.position = c(.95, 0.2),
+        legend.justification = c("right", "top"),
+        legend.title=element_blank(),
+        legend.text=element_text(size=fontsize),
+        legend.box.just = "right",
+        legend.box.background = element_rect(fill = "white", color = "black", size = 1))
+
+spatial_plt
+
+# saving the final figure
+ggsave("out/spatial_presence.png", width = 6, height = 6, dpi = 1000)
