@@ -1,115 +1,100 @@
-# #######
-# sus.csv
+# library
+library(ggplot2)
+library(ggpubr)
 library(dplyr)
-my_data <- read.csv("csv/v2/sus.csv")
-
-# Load SUS data into a data frame
-sus_data <- data.frame(
-  Group = my_data[,1],
-  Participant_ID = my_data[,2],
-  Task = my_data[,3],
-  SUS_Score = my_data[,4]
-)
-
-# Calculate mean and standard deviation for each group-task combination
-sus_summary <- aggregate(SUS_Score ~ Group + Task, data = sus_data, FUN = function(x) c(mean = mean(x), sd = sd(x)))
-
-# Print summary table
-sus_summary
-
-# calculate mean and standard deviation of SUS score for each task
-mean_sus <- aggregate(SUS_Score ~ Task, sus_data, mean)
-sd_sus <- aggregate(SUS_Score ~ Task, sus_data, sd)
-
-# print the results
-cat("Mean SUS scores by task:\n")
-print(mean_sus)
-cat("\nStandard deviation of SUS scores by task:\n")
-print(sd_sus)
-
-
-grouped <- sus_data %>%
-  group_by(Group, Task) %>%
-  summarise(mean = mean(SUS_Score), sd = sd(SUS_Score))
-
-print(grouped)
-
-print ("Therefore, the mean SUS score for Task 1 is 84.375 with a standard deviation of 11.63618, for Task 2 is 68.125 with a standard deviation of 13.17590, and for Task 3 is 70.000 with a standard deviation of 17.29201.")
-
-
-# Load the necessary packages
-library(dplyr)
-library(tidyr)
+library(likert) 
 library(agricolae)
 
-# Perform the two-way ANOVA
-anova_result <- aov(SUS_Score ~ Group + Task, data = sus_data)
+coloring = c("#E76469", "#F8D85E","#EDA645","#D1B0B3","#8C99A6","#ADD299","#4FA490","#3B7F9F")
+fontsize = 14
 
-# Display the ANOVA table
-summary(anova_result)
-
-# Conduct post-hoc tests
-posthoc_result <- HSD.test(anova_result, "Group", group = TRUE)
-posthoc_result
-
-posthoc_result <- HSD.test(anova_result, "Task", group = TRUE)
-posthoc_result
-
-# Perform the two-way ANOVA
-anova_result <- aov(SUS_Score ~ Group + Task, data = sus_data)
-
-# Conduct pairwise comparisons for the Task factor
-posthoc_result <- HSD.test(anova_result, "Task", group = TRUE)
-
-# Display the Tukey HSD intervals for pairwise comparisons of Task
-posthoc_result
-
-# Create a data frame with the means and standard errors for each task
-means <- sus_data %>% 
-  group_by(Task) %>% 
-  summarize(mean_score = mean(SUS_Score), 
-            sd_score = sd(SUS_Score), 
-            se_score = sd_score / sqrt(n()))
-
-# load the ggplot2 package for plotting
-library(ggplot2)
-
-# Create a boxplot with error bars and labels for the significant differences
-ggplot(sus_data, aes(x = factor(Task), y = SUS_Score)) +
-  geom_boxplot() +
-  geom_errorbar(data = means, aes(x = factor(Task), ymin = mean_score - se_score, ymax = mean_score + se_score), width = 0.2, size = 1.5, inherit.aes = FALSE) +
-  xlab("Task") +
-  ylab("Sus Score") +
-  ggtitle("Sus Score by Task") +
+data=read.csv('csv/sus.csv', sep=",")
+data <- as.data.frame(data) 
+data[5:8] <- lapply(data[5:8], factor, levels=1:5, labels=c("Strongly Disagree", "Disagree", "Neutral","Agree","Strongly Agree"))
+likt <- likert(data[,c(5:8)], grouping = data$task)
+plot(likt, colors = c("#E76469", "#F8D85E","#EDA645","#4FA490","#3B7F9F")) + 
   theme_bw() +
-  geom_text(data = posthoc_result$groups, aes(x = Task1, y = mean(Task1) + 10, label = paste0("p = ", round(posthoc_result$groups$pvalue[1], 3))), size = 4) +
-  geom_text(data = posthoc_result$groups, aes(x = Task2, y = mean(Task2) + 10, label = paste0("p = ", round(posthoc_result$groups$pvalue[1], 3))), size = 4) +
-  geom_text(data = posthoc_result$groups, aes(x = Task3, y = mean(Task3) - 20, label = paste0("p = ", round(posthoc_result$groups$pvalue[1], 3))), size = 4)
+  theme(axis.line = element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.x = element_text(color="black", size=fontsize),
+        axis.text.y = element_text(color="black", size=fontsize),
+        strip.text = element_text(color="black", size = fontsize),
+        strip.background = element_blank(),
+        text = element_text(size=fontsize),
+        panel.border = element_blank(),
+        plot.background = element_blank(),
+        plot.margin = unit(c(0.005, .025, 1, 0), "null"),
+        legend.title=element_blank(),
+        legend.direction="horizontal",
+        legend.position = c(.5, -.1),
+        legend.justification = c("center", "top"))
+
+ggsave("out/usability.pdf", width = 6.5, height = 4, dpi = 1000)
 
 
 
 
-# load the car package for ANOVA
-library(car)
 
-# conduct a two-way ANOVA with Group and Task as factors
-anova_result <- Anova(lm(SUS_Score ~ Group*Task, data=sus_data), type=3)
+# Calculate the descriptive statistics
+my_summary <- data %>%
+  group_by(task) %>%
+  summarize(
+    Mean = mean(sus_score),
+    Median = median(sus_score),
+    SD = sd(sus_score),
+    Min = min(sus_score),
+    Max = max(sus_score)
+  )
 
-# print the ANOVA table
-print(anova_result)
-summary(anova_result)
+# Print the table
+my_summary
+
+# Run ANOVA and Tukey's post-hoc test
+my_anova <- aov(sus_score ~ task, data = data)
+my_tukey <- TukeyHSD(my_anova)
 
 
-# load the ggplot2 package for plotting
-library(ggplot2)
+anova_table <- anova(my_anova)
+F_val <- anova_table$F[1]
+df1 <- anova_table$Df[1]
+df2 <- anova_table$Df[2]
+
+# print the results
+summary(my_anova)
+cat("F(", df1, ", ", df2, ") = ", F_val, "\n")
+
+# Print the Tukey post-hoc test results
+my_tukey
+
+# Extract the mean differences, confidence intervals, and p-values
+diffs <- my_tukey$`task`[, "diff"]
+ci <- my_tukey$`task`[, c("lwr", "upr")]
+pvals <- my_tukey$`task`[, "p adj"]
+
+# Create a matrix to store the pairwise comparisons
+results <- matrix("", nrow = 3, ncol = 3)
+
+# Compare setosa to versicolor and virginica
+results[1, 2] <- ifelse(diffs[1] < 0 & pvals[1] < 0.05, " < ", " = ")
+results[1, 3] <- ifelse(diffs[2] < 0 & pvals[2] < 0.05, " < ", " = ")
+
+# Compare virginica to setosa and versicolor
+results[3, 1] <- ifelse(diffs[2] > 0 & pvals[2] < 0.05, " > ", " = ")
+results[3, 2] <- ifelse(diffs[1] > 0 & pvals[1] < 0.05, " > ", " = ")
+
+# Set versicolor equal to virginica
+results[2, 1:3] <- " = "
+
+# Add row and column names
+rownames(results) <- c("task1", "task2", "task3")
+colnames(results) <- c("task1", "task2", "task3")
+
+# Print the results
+results
 
 
-# create box plots of SUS score by group and task
-ggplot(sus_data, aes(x=as.factor(Group), y=SUS_Score)) +
-  geom_boxplot(aes(fill=as.factor(Task))) +
-  xlab("Group") +
-  ylab("SUS score") +
-  ggtitle("SUS score by group and task")
+
 
 
 
@@ -141,4 +126,12 @@ ggplot(sus_data, aes(x=as.factor(Group), y=SUS_Score)) +
 # }
 
 # console.log(susScores);
+
+
+
+
+# Print the mean Sepal.Length of each species
+# aggregate(Sepal.Length ~ Species, data = iris, FUN = mean)
+
+
 

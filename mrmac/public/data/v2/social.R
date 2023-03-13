@@ -1,60 +1,85 @@
-# library
 library(ggplot2)
 library(ggpubr)
-library(dplyr)
-library(likert) 
-coloring = c("#E76469", "#F8D85E","#EDA645","#D1B0B3","#8C99A6","#ADD299","#4FA490","#3B7F9F")
-fontsize = 14
 
-##############################
-###### Social Presence #######
-##############################
+df=read.csv('csv/social.csv', sep=",")
 
-# create a data frame
-social_data =read.csv('csv/social.csv', sep=",")
-attach(social_data)
+# create the boxplot
+p <- ggplot(df, aes(x = params, y = score, fill = task)) +
+  geom_boxplot() +
+  labs(x = "Params", y = "Score", fill = "Task") +
+  theme_bw()
 
-# analysis of variance
-anova = aov(score ~params, data=social_data)
-summary(anova)
+# Make plot with custom x and y position of the bracket
+p +
+  geom_signif(
+    annotation = "*",
+    y_position = 7.2, xmin = 0.75, xmax = 1,
+    tip_length = c(0.02, 0.02)
+  )
 
-# pairwise comp
-tukey = TukeyHSD(anova)
-print(tukey)
 
-# grouped box plot
-social_plt <- ggplot(data = social_data, mapping = aes(x = params, y = score, fill = vrar)) +
-  stat_boxplot(geom = "errorbar", width=.2, position=position_dodge(.75)) +
-  geom_boxplot(aes(color=vrar), coef = 0, outlier.alpha = 0, show.legend = F) +
-  # geom_point(position=position_jitterdodge(dodge.width=0.9)) +
-  stat_compare_means(method="t.test") + 
-  geom_segment(data=social_data, aes(x=params, xend=params, y=3.5, yend=3.5), colour="red", size=2, inherit.aes = F)  + 
-  stat_summary(fun="mean", geom="point", shape=1, size=3, position=position_dodge(width=0.75), color="black") + 
-  stat_summary(geom = "crossbar", width=0.65, fatten=0, color="black", fun.data = function(x){c(y=median(x), ymin=median(x), ymax=median(x))}, position=position_dodge(width=0.75)) +
-  scale_fill_manual(name= "vrar", values = c("#E76469", "#F8D85E")) +
-  scale_color_manual(name = "vrar", values = c("#E76469", "#F8D85E")) + 
-  scale_y_continuous(minor_breaks = seq(0, 7, 1), breaks = seq(1, 7.1, by=1), limits=c(1,7.1)) + 
-  theme_bw() + 
-  theme(axis.line = element_blank(),
-        axis.title.x=element_blank(),
-        axis.title.y=element_blank(),
-        axis.text.x = element_text(color="black", size=fontsize),
-        axis.text.y = element_text(color="black", size=fontsize),
-        text = element_text(size=fontsize),
-        strip.background = element_blank(),
-        plot.background = element_blank(),
-        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
-        panel.border = element_blank(),
-        panel.spacing = unit(c(0, 0, 0, 0), "null"),
-        #panel.grid.major = element_blank(),
-        legend.position = c(.95, 0.2),
-        legend.justification = c("right", "top"),
-        legend.title=element_blank(),
-        legend.text=element_text(size=fontsize),
-        legend.box.just = "right",
-        legend.box.background = element_rect(fill = "white", color = "black", size = 1))
 
-social_plt
+# create the boxplot and add statistical tests
+p <- ggplot(df, aes(x = params, y = score, fill = task)) +
+  geom_boxplot() +
+  labs(x = "Params", y = "Score", fill = "Task") +
+  theme_bw() +
+  stat_compare_means(method = "anova", label = "p.signif", hide.ns = TRUE)
+
+
+# modify the significance labels
+p + scale_y_continuous(labels = function(x) format(x, scientific = FALSE)) +
+  geom_signif(
+    pairwise = c("task 1", "task 2", "task 3"),
+    test = "t.test", comparisons = list(c(1, 2), c(1, 3), c(2, 3)),
+    textsize = 3, tip_length = 0.01, vjust = -0.5, step_increase = 0.05
+  ) 
+
+p + geom_signif(stat = "identity",
+                data = data.frame(x = c(0.7, 1.7, 2.7),
+                                  xend = c(1.3, 2.3, 3.3),
+                                  y = c(1.5, 2.5, 4.5),
+                                  annotation = c("NS.", "***", "*")))
+
+# create the boxplot and add statistical tests
+p <- ggplot(df, aes(x = task, y = score, fill = task)) +
+  geom_boxplot() +
+  labs(x = "Task", y = "Score", fill = "") +
+  theme_bw() +
+  facet_wrap(~ params, scales = "free_x") +
+  stat_compare_means(method = "t.test", label = "p.signif", hide.ns = TRUE)
+
+# modify the significance labels
+p + scale_y_continuous(labels = function(x) format(x, scientific = FALSE)) +
+  geom_signif(
+    test = "t.test", comparisons = list(c(1, 2), c(1, 3), c(2, 3)),
+    textsize = 3, tip_length = 0.01, vjust = -0.5, step_increase = 0.05
+  ) +
+  theme(legend.position = "none")
+
+
 
 # saving the final figure
 ggsave("out/social_presence.png", width = 6, height = 6, dpi = 1000)
+
+
+
+
+data("iris")
+anno <- t.test(
+  iris[iris$Petal.Width > 1 & iris$Species == "versicolor", "Sepal.Width"],
+  iris[iris$Species == "virginica", "Sepal.Width"]
+)$p.value
+
+# Make plot with custom x and y position of the bracket
+ggplot(iris, aes(x = Species, y = Sepal.Width, fill = Petal.Width > 1)) +
+  geom_boxplot(position = "dodge") +
+  geom_signif(
+    annotation = "*",
+    y_position = 4, xmin = 2.2, xmax = 3,
+    tip_length = c(0.2, 0.04)
+  )
+
+
+
+
