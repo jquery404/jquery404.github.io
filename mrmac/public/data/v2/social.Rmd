@@ -1,0 +1,55 @@
+---
+title: "Social Presence"
+author: "jQuery404"
+output: html_notebook
+---
+Social presence boxplot with significance and hide none significance
+
+```{r}
+library(ggplot2)
+library(ggpubr)
+library(rstatix)
+
+# Add automatically x and y positions
+df=read.csv('csv/social.csv', sep=",")
+
+test_results <- df %>% 
+  group_by(params) %>% 
+  wilcox_test(score ~ conditions, p.adjust.method = 'BH')
+
+summary(test_results)
+```
+
+box plot >
+
+```{r}
+bxp <- ggplot(df, aes(x = params, y = score)) +
+  geom_boxplot(aes(fill = conditions))
+stat.test <- df %>% 
+  group_by(params) %>% 
+  wilcox_test(score~conditions, p.adjust.method = 'BH') %>%
+  add_significance("p") %>%
+  add_xy_position(x = "params")
+bxp + stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02)
+
+# saving the final figure
+ggsave("out/social.pdf", width = 6.5, height = 4, dpi = 1000)
+```
+
+Example of how to manually adjust (x,y) position of the bracket as well as the `tip_length`
+```{r}
+data("iris")
+anno <- t.test(
+  iris[iris$Petal.Width > 1 & iris$Species == "versicolor", "Sepal.Width"],
+  iris[iris$Species == "virginica", "Sepal.Width"]
+)$p.value
+
+# Make plot with custom x and y position of the bracket
+ggplot(iris, aes(x = Species, y = Sepal.Width, fill = Petal.Width > 1)) +
+  geom_boxplot(position = "dodge") +
+  geom_signif(
+    annotation = "*",
+    y_position = 4, xmin = 2.2, xmax = 3,
+    tip_length = c(0.2, 0.04)
+  )
+```

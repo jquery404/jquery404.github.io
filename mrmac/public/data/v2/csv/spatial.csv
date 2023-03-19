@@ -46,7 +46,7 @@ grp,id,params,vrar,conditions,score
 ,,spatial presence,vr,C2,5
 ,,spatial presence,vr,C2,3
 ,,involvement,vr,C2,4
-,,involvement,vr,C2,3
+,,involvement,vr,C2,4
 ,,realism,vr,C2,3
 ,,realism,vr,C2,5
 ,2,general presence,ar,C2,7
@@ -65,7 +65,7 @@ grp,id,params,vrar,conditions,score
 ,,spatial presence,vr,C2,7
 ,,spatial presence,vr,C2,5
 ,,spatial presence,vr,C2,5
-,,involvement,vr,C2,7
+,,involvement,vr,C2,5
 ,,involvement,vr,C2,3
 ,,realism,vr,C2,7
 ,,realism,vr,C2,6
@@ -185,7 +185,7 @@ grp,id,params,vrar,conditions,score
 ,,spatial presence,vr,C2,7
 ,,spatial presence,vr,C2,5
 ,,spatial presence,vr,C2,5
-,,involvement,vr,C2,7
+,,involvement,vr,C2,6
 ,,involvement,vr,C2,3
 ,,realism,vr,C2,7
 ,,realism,vr,C2,6
@@ -195,7 +195,7 @@ grp,id,params,vrar,conditions,score
 ,,spatial presence,ar,C2,6
 ,,spatial presence,ar,C2,3
 ,,spatial presence,ar,C2,5
-,,involvement,ar,C2,3
+,,involvement,ar,C2,5
 ,,involvement,ar,C2,3
 ,,realism,ar,C2,6
 ,,realism,ar,C2,7
@@ -305,7 +305,7 @@ grp,id,params,vrar,conditions,score
 ,,spatial presence,vr,C2,7
 ,,spatial presence,vr,C2,5
 ,,spatial presence,vr,C2,5
-,,involvement,vr,C2,7
+,,involvement,vr,C2,5
 ,,involvement,vr,C2,3
 ,,realism,vr,C2,7
 ,,realism,vr,C2,6
@@ -425,7 +425,7 @@ grp,id,params,vrar,conditions,score
 ,,spatial presence,vr,C2,7
 ,,spatial presence,vr,C2,5
 ,,spatial presence,vr,C2,5
-,,involvement,vr,C2,7
+,,involvement,vr,C2,3
 ,,involvement,vr,C2,3
 ,,realism,vr,C2,7
 ,,realism,vr,C2,6
@@ -545,7 +545,7 @@ grp,id,params,vrar,conditions,score
 ,,spatial presence,vr,C2,7
 ,,spatial presence,vr,C2,5
 ,,spatial presence,vr,C2,5
-,,involvement,vr,C2,7
+,,involvement,vr,C2,3
 ,,involvement,vr,C2,3
 ,,realism,vr,C2,7
 ,,realism,vr,C2,6
@@ -665,7 +665,7 @@ grp,id,params,vrar,conditions,score
 ,,spatial presence,vr,C2,7
 ,,spatial presence,vr,C2,5
 ,,spatial presence,vr,C2,5
-,,involvement,vr,C2,7
+,,involvement,vr,C2,3
 ,,involvement,vr,C2,3
 ,,realism,vr,C2,7
 ,,realism,vr,C2,6
@@ -785,7 +785,7 @@ grp,id,params,vrar,conditions,score
 ,,spatial presence,vr,C2,7
 ,,spatial presence,vr,C2,5
 ,,spatial presence,vr,C2,5
-,,involvement,vr,C2,7
+,,involvement,vr,C2,3
 ,,involvement,vr,C2,3
 ,,realism,vr,C2,7
 ,,realism,vr,C2,6
@@ -905,7 +905,7 @@ grp,id,params,vrar,conditions,score
 ,,spatial presence,vr,C2,7
 ,,spatial presence,vr,C2,5
 ,,spatial presence,vr,C2,5
-,,involvement,vr,C2,7
+,,involvement,vr,C2,3
 ,,involvement,vr,C2,3
 ,,realism,vr,C2,7
 ,,realism,vr,C2,6
@@ -1006,7 +1006,7 @@ grp,id,params,vrar,conditions,score
 ,,spatial presence,vr,C2,5
 ,,spatial presence,vr,C2,3
 ,,involvement,vr,C2,4
-,,involvement,vr,C2,3
+,,involvement,vr,C2,4
 ,,realism,vr,C2,3
 ,,realism,vr,C2,5
 ,2,general presence,ar,C2,7
@@ -1025,7 +1025,7 @@ grp,id,params,vrar,conditions,score
 ,,spatial presence,vr,C2,7
 ,,spatial presence,vr,C2,5
 ,,spatial presence,vr,C2,5
-,,involvement,vr,C2,7
+,,involvement,vr,C2,4
 ,,involvement,vr,C2,3
 ,,realism,vr,C2,7
 ,,realism,vr,C2,6

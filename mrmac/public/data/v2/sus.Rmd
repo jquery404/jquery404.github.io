@@ -1,3 +1,27 @@
+---
+title: "SUS"
+author: "jquery404"
+output: html_notebook
+---
+
+1. Original SUS / repharsed 
+    + Would use system frequently?
+    + System unnecessarily complex?
+    + **System easy to use?**
+    + Need technical support?
+    + Functions well integrated?
+    + System inconsistent?
+    + Quick to learn system?
+    + System cumbersome to use?
+    + Confident using system?
+    + Steep learning curve?
+2. Subscale
+    + Q1. The system made it easier to complete my collaborative task.
+    + Q2. I found the system's features were straightforward to understand.
+    + Q3. I found the system has steep learning curve.	
+    + Q4. I found the most of the features confusing.
+
+```{r}
 # library
 library(ggplot2)
 library(ggpubr)
@@ -30,13 +54,12 @@ plot(likt, colors = c("#E76469", "#F8D85E","#EDA645","#4FA490","#3B7F9F")) +
         legend.position = c(.5, -.1),
         legend.justification = c("center", "top"))
 
-ggsave("out/usability.pdf", width = 6.5, height = 4, dpi = 1000)
+ggsave("out/usability2.pdf", width = 6.5, height = 4, dpi = 1000)
+```
 
+## Lets calculate the descriptive statistics
 
-
-
-
-# Calculate the descriptive statistics
+```{r}
 my_summary <- data %>%
   group_by(task) %>%
   summarize(
@@ -49,8 +72,11 @@ my_summary <- data %>%
 
 # Print the table
 my_summary
+```
 
-# Run ANOVA and Tukey's post-hoc test
+## Run ANOVA then Tukey's post-hoc test
+
+```{r}
 my_anova <- aov(sus_score ~ task, data = data)
 my_tukey <- TukeyHSD(my_anova)
 
@@ -66,7 +92,22 @@ cat("F(", df1, ", ", df2, ") = ", F_val, "\n")
 
 # Print the Tukey post-hoc test results
 my_tukey
+```
 
+The Tukey post-hoc test compares the means of all pairwise combinations of groups and determines which groups are significantly different from each other. The output of the Tukey test provides the differences between each pair of means, along with a confidence interval and a p-value.
+
+- Using the notation a < b < c, we can show the results of the Tukey test as follows:
+    + The mean Sepal.Length of setosa (a) is significantly less than the mean of both versicolor (b) and virginica (c): a < b, a < c
+    + The mean Sepal.Length of virginica (c) is significantly greater than the mean of both setosa (a) and versicolor (b): c > a, c > b
+    + There is no significant difference between the mean Sepal.Length of versicolor (b) and virginica (c): b = c
+
+Therefore, we can summarize the results of the Tukey test using the notation:
+
+    setosa < versicolor
+    setosa < virginica
+    versicolor = virginica
+
+```{r}
 # Extract the mean differences, confidence intervals, and p-values
 diffs <- my_tukey$`task`[, "diff"]
 ci <- my_tukey$`task`[, c("lwr", "upr")]
@@ -92,57 +133,4 @@ colnames(results) <- c("task1", "task2", "task3")
 
 # Print the results
 results
-
-
-
-
-
-
-
-
-# Would use system frequently?
-# System unnecessarily complex?
-# 1. System easy to use?
-# Need technical support?
-# Functions well integrated?
-# System inconsistent?
-# Quick to learn system?
-# System cumbersome to use?
-# Confident using system?
-# Steep learning curve?
-
-# Q1. The system made it easier to complete my collaborative task.
-# Q2. I found the system's features were straightforward to understand.	
-# Q3. I found the system has steep learning curve.	
-# Q4. I found the most of the features confusing.
-
-# let susScores = [];
-
-# for (let i = 0; i < 10; i++) {
-#   let score = Math.floor(Math.random() * (100 - 82 + 1) + 82);
-#   let score = Math.floor(Math.random() * (69 - 50 + 1) + 50);
-#   let score = Math.floor(Math.random() * 31);
-#   susScores.push(score);
-# }
-
-# console.log(susScores);
-
-
-
-
-# Print the mean Sepal.Length of each species
-# aggregate(Sepal.Length ~ Species, data = iris, FUN = mean)
-
-# The Tukey post-hoc test compares the means of all pairwise combinations of groups and determines which groups are significantly different from each other. The output of the Tukey test provides the differences between each pair of means, along with a confidence interval and a p-value.
-# 
-# Using the notation a < b < c, we can show the results of the Tukey test as follows:
-#   
-#   The mean Sepal.Length of setosa (a) is significantly less than the mean of both versicolor (b) and virginica (c): a < b, a < c
-# The mean Sepal.Length of virginica (c) is significantly greater than the mean of both setosa (a) and versicolor (b): c > a, c > b
-# There is no significant difference between the mean Sepal.Length of versicolor (b) and virginica (c): b = c
-# Therefore, we can summarize the results of the Tukey test using the notation:
-#   
-#   setosa < versicolor
-# setosa < virginica
-# versicolor = virginica
-
+```

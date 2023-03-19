@@ -1,0 +1,85 @@
+---
+title: "Spatial Presence"
+author: "jQuery404"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+# Required packages
+library(ggpubr)  # https://github.com/kassambara/ggpubr
+library(rstatix)  # https://github.com/kassambara/rstatix
+
+
+# Add automatically x and y positions
+df=read.csv('csv/spatial.csv', sep=",")
+bxp <- ggplot(df, aes(x = params, y = score)) +
+  geom_boxplot(aes(fill = conditions))
+stat.test <- df %>% 
+  group_by(params) %>% 
+  wilcox_test(score~conditions, p.adjust.method = 'BH') %>%
+  add_significance("p") %>%
+  add_xy_position(x = "params")
+bxp + stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02)
+
+# saving the final figure
+ggsave("out/spatial.pdf", width = 6.5, height = 4, dpi = 1000)
+```
+
+## pretty looking plot 
+
+```{r}
+# create a data frame
+spatial_data =read.csv('csv/spatial.csv', sep=",")
+attach(spatial_data)
+
+# analysis of variance
+anova = aov(score ~params, data=spatial_data)
+summary(anova)
+
+# pairwise comp
+tukey = TukeyHSD(anova)
+print(tukey)
+```
+
+plotting it 
+
+```{r}
+# grouped box plot
+spatial_plt <- ggplot(data = spatial_data, mapping = aes(x = params, y = score, fill = vrar)) +
+  stat_boxplot(geom = "errorbar", width=.2, position=position_dodge(.75)) +
+  geom_boxplot(aes(color=vrar), coef = 0, outlier.alpha = 0, show.legend = F) +
+  # geom_point(position=position_jitterdodge(dodge.width=0.9)) +
+  stat_compare_means(method="t.test") + 
+  geom_segment(data=spatial_data, aes(x=params, xend=params, y=3.5, yend=3.5), colour="red", size=2, inherit.aes = F)  + 
+  stat_summary(fun="mean", geom="point", shape=1, size=3, position=position_dodge(width=0.75), color="black") + 
+  stat_summary(geom = "crossbar", width=0.65, fatten=0, color="black", fun.data = function(x){c(y=median(x), ymin=median(x), ymax=median(x))}, position=position_dodge(width=0.75)) +
+  scale_fill_manual(name= "vrar", values = c("#E76469", "#F8D85E")) +
+  scale_color_manual(name = "vrar", values = c("#E76469", "#F8D85E")) + 
+  scale_y_continuous(minor_breaks = seq(0, 7, 1), breaks = seq(1, 7.1, by=1), limits=c(1,7.1)) + 
+  theme_bw() + 
+  theme(axis.line = element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.x = element_text(color="black", size=fontsize),
+        axis.text.y = element_text(color="black", size=fontsize),
+        text = element_text(size=fontsize),
+        strip.background = element_blank(),
+        plot.background = element_blank(),
+        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        panel.border = element_blank(),
+        panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        #panel.grid.major = element_blank(),
+        legend.position = c(.95, 0.2),
+        legend.justification = c("right", "top"),
+        legend.title=element_blank(),
+        legend.text=element_text(size=fontsize),
+        legend.box.just = "right",
+        legend.box.background = element_rect(fill = "white", color = "black", size = 1))
+
+spatial_plt
+```
+
