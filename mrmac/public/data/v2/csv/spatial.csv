@@ -1,1081 +1,1081 @@
-grp,id,params,vrar,task,score
-1,1,general presence,vr,1,6
-,,spatial presence,vr,1,2
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,5
-,,involvement,vr,1,6
-,,involvement,vr,1,4
-,,realism,vr,1,5
-,,realism,vr,1,6
-,2,general presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,3
-,,spatial presence,ar,1,6
-,,involvement,ar,1,6
-,,involvement,ar,1,6
-,,realism,ar,1,7
-,,realism,ar,1,4
-,3,general presence,vr,1,5
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,7
-,,spatial presence,vr,1,5
-,,involvement,vr,1,4
-,,involvement,vr,1,7
-,,realism,vr,1,6
-,,realism,vr,1,7
-,4,general presence,ar,1,6
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,spatial presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,involvement,ar,1,3
-,,involvement,ar,1,2
-,,realism,ar,1,3
-,,realism,ar,1,6
-,1,general presence,vr,2,6
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,3
-,,involvement,vr,2,4
-,,involvement,vr,2,3
-,,realism,vr,2,3
-,,realism,vr,2,5
-,2,general presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,involvement,ar,2,4
-,,involvement,ar,2,3
-,,realism,ar,2,3
-,,realism,ar,2,4
-,3,general presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,5
-,,involvement,vr,2,7
-,,involvement,vr,2,3
-,,realism,vr,2,7
-,,realism,vr,2,6
-,4,general presence,ar,2,5
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,3
-,,spatial presence,ar,2,5
-,,involvement,ar,2,3
-,,involvement,ar,2,3
-,,realism,ar,2,6
-,,realism,ar,2,7
-,1,general presence,vr,3,6
-,,spatial presence,vr,3,4
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,3
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,4
-,,involvement,vr,3,4
-,,involvement,vr,3,3
-,,realism,vr,3,3
-,,realism,vr,3,4
-,2,general presence,ar,3,5
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,3
-,,involvement,ar,3,3
-,,involvement,ar,3,5
-,,realism,ar,3,3
-,,realism,ar,3,4
-,3,general presence,vr,3,7
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,5
-,,involvement,vr,3,5
-,,involvement,vr,3,4
-,,realism,vr,3,7
-,,realism,vr,3,6
-,4,general presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,4
-,,involvement,ar,3,6
-,,involvement,ar,3,2
-,,realism,ar,3,6
-,,realism,ar,3,4
-2,1,general presence,vr,1,6
-,,spatial presence,vr,1,2
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,5
-,,involvement,vr,1,6
-,,involvement,vr,1,4
-,,realism,vr,1,5
-,,realism,vr,1,6
-,2,general presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,3
-,,spatial presence,ar,1,6
-,,involvement,ar,1,6
-,,involvement,ar,1,6
-,,realism,ar,1,7
-,,realism,ar,1,4
-,3,general presence,vr,1,5
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,7
-,,spatial presence,vr,1,5
-,,involvement,vr,1,4
-,,involvement,vr,1,7
-,,realism,vr,1,6
-,,realism,vr,1,7
-,4,general presence,ar,1,6
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,spatial presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,involvement,ar,1,3
-,,involvement,ar,1,2
-,,realism,ar,1,3
-,,realism,ar,1,6
-,1,general presence,vr,2,6
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,3
-,,involvement,vr,2,4
-,,involvement,vr,2,3
-,,realism,vr,2,3
-,,realism,vr,2,5
-,2,general presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,involvement,ar,2,4
-,,involvement,ar,2,3
-,,realism,ar,2,3
-,,realism,ar,2,4
-,3,general presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,5
-,,involvement,vr,2,7
-,,involvement,vr,2,3
-,,realism,vr,2,7
-,,realism,vr,2,6
-,4,general presence,ar,2,5
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,3
-,,spatial presence,ar,2,5
-,,involvement,ar,2,3
-,,involvement,ar,2,3
-,,realism,ar,2,6
-,,realism,ar,2,7
-,1,general presence,vr,3,6
-,,spatial presence,vr,3,4
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,3
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,4
-,,involvement,vr,3,4
-,,involvement,vr,3,3
-,,realism,vr,3,3
-,,realism,vr,3,4
-,2,general presence,ar,3,5
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,3
-,,involvement,ar,3,3
-,,involvement,ar,3,5
-,,realism,ar,3,3
-,,realism,ar,3,4
-,3,general presence,vr,3,7
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,5
-,,involvement,vr,3,5
-,,involvement,vr,3,4
-,,realism,vr,3,7
-,,realism,vr,3,6
-,4,general presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,4
-,,involvement,ar,3,6
-,,involvement,ar,3,2
-,,realism,ar,3,6
-,,realism,ar,3,4
-3,1,general presence,vr,1,6
-,,spatial presence,vr,1,2
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,5
-,,involvement,vr,1,6
-,,involvement,vr,1,4
-,,realism,vr,1,5
-,,realism,vr,1,6
-,2,general presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,3
-,,spatial presence,ar,1,6
-,,involvement,ar,1,6
-,,involvement,ar,1,6
-,,realism,ar,1,7
-,,realism,ar,1,4
-,3,general presence,vr,1,5
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,7
-,,spatial presence,vr,1,5
-,,involvement,vr,1,4
-,,involvement,vr,1,7
-,,realism,vr,1,6
-,,realism,vr,1,7
-,4,general presence,ar,1,6
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,spatial presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,involvement,ar,1,3
-,,involvement,ar,1,2
-,,realism,ar,1,3
-,,realism,ar,1,6
-,1,general presence,vr,2,6
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,3
-,,involvement,vr,2,4
-,,involvement,vr,2,3
-,,realism,vr,2,3
-,,realism,vr,2,5
-,2,general presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,involvement,ar,2,4
-,,involvement,ar,2,3
-,,realism,ar,2,3
-,,realism,ar,2,4
-,3,general presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,5
-,,involvement,vr,2,7
-,,involvement,vr,2,3
-,,realism,vr,2,7
-,,realism,vr,2,6
-,4,general presence,ar,2,5
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,3
-,,spatial presence,ar,2,5
-,,involvement,ar,2,3
-,,involvement,ar,2,3
-,,realism,ar,2,6
-,,realism,ar,2,7
-,1,general presence,vr,3,6
-,,spatial presence,vr,3,4
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,3
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,4
-,,involvement,vr,3,4
-,,involvement,vr,3,3
-,,realism,vr,3,3
-,,realism,vr,3,4
-,2,general presence,ar,3,5
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,3
-,,involvement,ar,3,3
-,,involvement,ar,3,5
-,,realism,ar,3,3
-,,realism,ar,3,4
-,3,general presence,vr,3,7
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,5
-,,involvement,vr,3,5
-,,involvement,vr,3,4
-,,realism,vr,3,7
-,,realism,vr,3,6
-,4,general presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,4
-,,involvement,ar,3,6
-,,involvement,ar,3,2
-,,realism,ar,3,6
-,,realism,ar,3,4
-4,1,general presence,vr,1,6
-,,spatial presence,vr,1,2
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,5
-,,involvement,vr,1,6
-,,involvement,vr,1,4
-,,realism,vr,1,5
-,,realism,vr,1,6
-,2,general presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,3
-,,spatial presence,ar,1,6
-,,involvement,ar,1,6
-,,involvement,ar,1,6
-,,realism,ar,1,7
-,,realism,ar,1,4
-,3,general presence,vr,1,5
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,7
-,,spatial presence,vr,1,5
-,,involvement,vr,1,4
-,,involvement,vr,1,7
-,,realism,vr,1,6
-,,realism,vr,1,7
-,4,general presence,ar,1,6
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,spatial presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,involvement,ar,1,3
-,,involvement,ar,1,2
-,,realism,ar,1,3
-,,realism,ar,1,6
-,1,general presence,vr,2,6
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,3
-,,involvement,vr,2,4
-,,involvement,vr,2,3
-,,realism,vr,2,3
-,,realism,vr,2,5
-,2,general presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,involvement,ar,2,4
-,,involvement,ar,2,3
-,,realism,ar,2,3
-,,realism,ar,2,4
-,3,general presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,5
-,,involvement,vr,2,7
-,,involvement,vr,2,3
-,,realism,vr,2,7
-,,realism,vr,2,6
-,4,general presence,ar,2,5
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,3
-,,spatial presence,ar,2,5
-,,involvement,ar,2,3
-,,involvement,ar,2,3
-,,realism,ar,2,6
-,,realism,ar,2,7
-,1,general presence,vr,3,6
-,,spatial presence,vr,3,4
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,3
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,4
-,,involvement,vr,3,4
-,,involvement,vr,3,3
-,,realism,vr,3,3
-,,realism,vr,3,4
-,2,general presence,ar,3,5
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,3
-,,involvement,ar,3,3
-,,involvement,ar,3,5
-,,realism,ar,3,3
-,,realism,ar,3,4
-,3,general presence,vr,3,7
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,5
-,,involvement,vr,3,5
-,,involvement,vr,3,4
-,,realism,vr,3,7
-,,realism,vr,3,6
-,4,general presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,4
-,,involvement,ar,3,6
-,,involvement,ar,3,2
-,,realism,ar,3,6
-,,realism,ar,3,4
-5,1,general presence,vr,1,6
-,,spatial presence,vr,1,2
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,5
-,,involvement,vr,1,6
-,,involvement,vr,1,4
-,,realism,vr,1,5
-,,realism,vr,1,6
-,2,general presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,3
-,,spatial presence,ar,1,6
-,,involvement,ar,1,6
-,,involvement,ar,1,6
-,,realism,ar,1,7
-,,realism,ar,1,4
-,3,general presence,vr,1,5
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,7
-,,spatial presence,vr,1,5
-,,involvement,vr,1,4
-,,involvement,vr,1,7
-,,realism,vr,1,6
-,,realism,vr,1,7
-,4,general presence,ar,1,6
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,spatial presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,involvement,ar,1,3
-,,involvement,ar,1,2
-,,realism,ar,1,3
-,,realism,ar,1,6
-,1,general presence,vr,2,6
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,3
-,,involvement,vr,2,4
-,,involvement,vr,2,3
-,,realism,vr,2,3
-,,realism,vr,2,5
-,2,general presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,involvement,ar,2,4
-,,involvement,ar,2,3
-,,realism,ar,2,3
-,,realism,ar,2,4
-,3,general presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,5
-,,involvement,vr,2,7
-,,involvement,vr,2,3
-,,realism,vr,2,7
-,,realism,vr,2,6
-,4,general presence,ar,2,5
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,3
-,,spatial presence,ar,2,5
-,,involvement,ar,2,3
-,,involvement,ar,2,3
-,,realism,ar,2,6
-,,realism,ar,2,7
-,1,general presence,vr,3,6
-,,spatial presence,vr,3,4
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,3
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,4
-,,involvement,vr,3,4
-,,involvement,vr,3,3
-,,realism,vr,3,3
-,,realism,vr,3,4
-,2,general presence,ar,3,5
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,3
-,,involvement,ar,3,3
-,,involvement,ar,3,5
-,,realism,ar,3,3
-,,realism,ar,3,4
-,3,general presence,vr,3,7
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,5
-,,involvement,vr,3,5
-,,involvement,vr,3,4
-,,realism,vr,3,7
-,,realism,vr,3,6
-,4,general presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,4
-,,involvement,ar,3,6
-,,involvement,ar,3,2
-,,realism,ar,3,6
-,,realism,ar,3,4
-6,1,general presence,vr,1,6
-,,spatial presence,vr,1,2
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,5
-,,involvement,vr,1,6
-,,involvement,vr,1,4
-,,realism,vr,1,5
-,,realism,vr,1,6
-,2,general presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,3
-,,spatial presence,ar,1,6
-,,involvement,ar,1,6
-,,involvement,ar,1,6
-,,realism,ar,1,7
-,,realism,ar,1,4
-,3,general presence,vr,1,5
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,7
-,,spatial presence,vr,1,5
-,,involvement,vr,1,4
-,,involvement,vr,1,7
-,,realism,vr,1,6
-,,realism,vr,1,7
-,4,general presence,ar,1,6
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,spatial presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,involvement,ar,1,3
-,,involvement,ar,1,2
-,,realism,ar,1,3
-,,realism,ar,1,6
-,1,general presence,vr,2,6
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,3
-,,involvement,vr,2,4
-,,involvement,vr,2,3
-,,realism,vr,2,3
-,,realism,vr,2,5
-,2,general presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,involvement,ar,2,4
-,,involvement,ar,2,3
-,,realism,ar,2,3
-,,realism,ar,2,4
-,3,general presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,5
-,,involvement,vr,2,7
-,,involvement,vr,2,3
-,,realism,vr,2,7
-,,realism,vr,2,6
-,4,general presence,ar,2,5
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,3
-,,spatial presence,ar,2,5
-,,involvement,ar,2,3
-,,involvement,ar,2,3
-,,realism,ar,2,6
-,,realism,ar,2,7
-,1,general presence,vr,3,6
-,,spatial presence,vr,3,4
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,3
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,4
-,,involvement,vr,3,4
-,,involvement,vr,3,3
-,,realism,vr,3,3
-,,realism,vr,3,4
-,2,general presence,ar,3,5
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,3
-,,involvement,ar,3,3
-,,involvement,ar,3,5
-,,realism,ar,3,3
-,,realism,ar,3,4
-,3,general presence,vr,3,7
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,5
-,,involvement,vr,3,5
-,,involvement,vr,3,4
-,,realism,vr,3,7
-,,realism,vr,3,6
-,4,general presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,4
-,,involvement,ar,3,6
-,,involvement,ar,3,2
-,,realism,ar,3,6
-,,realism,ar,3,4
-7,1,general presence,vr,1,6
-,,spatial presence,vr,1,2
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,5
-,,involvement,vr,1,6
-,,involvement,vr,1,4
-,,realism,vr,1,5
-,,realism,vr,1,6
-,2,general presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,3
-,,spatial presence,ar,1,6
-,,involvement,ar,1,6
-,,involvement,ar,1,6
-,,realism,ar,1,7
-,,realism,ar,1,4
-,3,general presence,vr,1,5
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,7
-,,spatial presence,vr,1,5
-,,involvement,vr,1,4
-,,involvement,vr,1,7
-,,realism,vr,1,6
-,,realism,vr,1,7
-,4,general presence,ar,1,6
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,spatial presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,involvement,ar,1,3
-,,involvement,ar,1,2
-,,realism,ar,1,3
-,,realism,ar,1,6
-,1,general presence,vr,2,6
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,3
-,,involvement,vr,2,4
-,,involvement,vr,2,3
-,,realism,vr,2,3
-,,realism,vr,2,5
-,2,general presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,involvement,ar,2,4
-,,involvement,ar,2,3
-,,realism,ar,2,3
-,,realism,ar,2,4
-,3,general presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,5
-,,involvement,vr,2,7
-,,involvement,vr,2,3
-,,realism,vr,2,7
-,,realism,vr,2,6
-,4,general presence,ar,2,5
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,3
-,,spatial presence,ar,2,5
-,,involvement,ar,2,3
-,,involvement,ar,2,3
-,,realism,ar,2,6
-,,realism,ar,2,7
-,1,general presence,vr,3,6
-,,spatial presence,vr,3,4
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,3
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,4
-,,involvement,vr,3,4
-,,involvement,vr,3,3
-,,realism,vr,3,3
-,,realism,vr,3,4
-,2,general presence,ar,3,5
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,3
-,,involvement,ar,3,3
-,,involvement,ar,3,5
-,,realism,ar,3,3
-,,realism,ar,3,4
-,3,general presence,vr,3,7
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,5
-,,involvement,vr,3,5
-,,involvement,vr,3,4
-,,realism,vr,3,7
-,,realism,vr,3,6
-,4,general presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,4
-,,involvement,ar,3,6
-,,involvement,ar,3,2
-,,realism,ar,3,6
-,,realism,ar,3,4
-8,1,general presence,vr,1,6
-,,spatial presence,vr,1,2
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,5
-,,involvement,vr,1,6
-,,involvement,vr,1,4
-,,realism,vr,1,5
-,,realism,vr,1,6
-,2,general presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,3
-,,spatial presence,ar,1,6
-,,involvement,ar,1,6
-,,involvement,ar,1,6
-,,realism,ar,1,7
-,,realism,ar,1,4
-,3,general presence,vr,1,5
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,7
-,,spatial presence,vr,1,5
-,,involvement,vr,1,4
-,,involvement,vr,1,7
-,,realism,vr,1,6
-,,realism,vr,1,7
-,4,general presence,ar,1,6
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,spatial presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,involvement,ar,1,3
-,,involvement,ar,1,2
-,,realism,ar,1,3
-,,realism,ar,1,6
-,1,general presence,vr,2,6
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,3
-,,involvement,vr,2,4
-,,involvement,vr,2,3
-,,realism,vr,2,3
-,,realism,vr,2,5
-,2,general presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,involvement,ar,2,4
-,,involvement,ar,2,3
-,,realism,ar,2,3
-,,realism,ar,2,4
-,3,general presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,5
-,,involvement,vr,2,7
-,,involvement,vr,2,3
-,,realism,vr,2,7
-,,realism,vr,2,6
-,4,general presence,ar,2,5
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,3
-,,spatial presence,ar,2,5
-,,involvement,ar,2,3
-,,involvement,ar,2,3
-,,realism,ar,2,6
-,,realism,ar,2,7
-,1,general presence,vr,3,6
-,,spatial presence,vr,3,4
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,3
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,4
-,,involvement,vr,3,4
-,,involvement,vr,3,3
-,,realism,vr,3,3
-,,realism,vr,3,4
-,2,general presence,ar,3,5
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,3
-,,involvement,ar,3,3
-,,involvement,ar,3,5
-,,realism,ar,3,3
-,,realism,ar,3,4
-,3,general presence,vr,3,7
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,5
-,,involvement,vr,3,5
-,,involvement,vr,3,4
-,,realism,vr,3,7
-,,realism,vr,3,6
-,4,general presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,4
-,,involvement,ar,3,6
-,,involvement,ar,3,2
-,,realism,ar,3,6
-,,realism,ar,3,4
-9,1,general presence,vr,1,6
-,,spatial presence,vr,1,2
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,3
-,,spatial presence,vr,1,5
-,,involvement,vr,1,6
-,,involvement,vr,1,4
-,,realism,vr,1,5
-,,realism,vr,1,6
-,2,general presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,5
-,,spatial presence,ar,1,3
-,,spatial presence,ar,1,6
-,,involvement,ar,1,6
-,,involvement,ar,1,6
-,,realism,ar,1,7
-,,realism,ar,1,4
-,3,general presence,vr,1,5
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,6
-,,spatial presence,vr,1,5
-,,spatial presence,vr,1,7
-,,spatial presence,vr,1,5
-,,involvement,vr,1,4
-,,involvement,vr,1,7
-,,realism,vr,1,6
-,,realism,vr,1,7
-,4,general presence,ar,1,6
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,spatial presence,ar,1,7
-,,spatial presence,ar,1,6
-,,spatial presence,ar,1,4
-,,involvement,ar,1,3
-,,involvement,ar,1,2
-,,realism,ar,1,3
-,,realism,ar,1,6
-,1,general presence,vr,2,6
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,6
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,3
-,,involvement,vr,2,4
-,,involvement,vr,2,3
-,,realism,vr,2,3
-,,realism,vr,2,5
-,2,general presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,involvement,ar,2,4
-,,involvement,ar,2,3
-,,realism,ar,2,3
-,,realism,ar,2,4
-,3,general presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,7
-,,spatial presence,vr,2,5
-,,spatial presence,vr,2,5
-,,involvement,vr,2,7
-,,involvement,vr,2,3
-,,realism,vr,2,7
-,,realism,vr,2,6
-,4,general presence,ar,2,5
-,,spatial presence,ar,2,7
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,6
-,,spatial presence,ar,2,3
-,,spatial presence,ar,2,5
-,,involvement,ar,2,3
-,,involvement,ar,2,3
-,,realism,ar,2,6
-,,realism,ar,2,7
-,1,general presence,vr,3,6
-,,spatial presence,vr,3,4
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,3
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,4
-,,involvement,vr,3,4
-,,involvement,vr,3,3
-,,realism,vr,3,3
-,,realism,vr,3,4
-,2,general presence,ar,3,5
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,5
-,,spatial presence,ar,3,3
-,,involvement,ar,3,3
-,,involvement,ar,3,5
-,,realism,ar,3,3
-,,realism,ar,3,4
-,3,general presence,vr,3,7
-,,spatial presence,vr,3,6
-,,spatial presence,vr,3,5
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,7
-,,spatial presence,vr,3,5
-,,involvement,vr,3,5
-,,involvement,vr,3,4
-,,realism,vr,3,7
-,,realism,vr,3,6
-,4,general presence,ar,3,5
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,7
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,6
-,,spatial presence,ar,3,4
-,,involvement,ar,3,6
-,,involvement,ar,3,2
-,,realism,ar,3,6
-,,realism,ar,3,4
+grp,id,params,vrar,conditions,score
+1,1,general presence,vr,C1,6
+,,spatial presence,vr,C1,2
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,6
+,,involvement,vr,C1,4
+,,realism,vr,C1,5
+,,realism,vr,C1,6
+,2,general presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,3
+,,spatial presence,ar,C1,6
+,,involvement,ar,C1,6
+,,involvement,ar,C1,6
+,,realism,ar,C1,7
+,,realism,ar,C1,4
+,3,general presence,vr,C1,5
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,7
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,4
+,,involvement,vr,C1,7
+,,realism,vr,C1,6
+,,realism,vr,C1,7
+,4,general presence,ar,C1,6
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,spatial presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,involvement,ar,C1,3
+,,involvement,ar,C1,2
+,,realism,ar,C1,3
+,,realism,ar,C1,6
+,1,general presence,vr,C2,6
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,3
+,,involvement,vr,C2,4
+,,involvement,vr,C2,3
+,,realism,vr,C2,3
+,,realism,vr,C2,5
+,2,general presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,involvement,ar,C2,4
+,,involvement,ar,C2,3
+,,realism,ar,C2,3
+,,realism,ar,C2,4
+,3,general presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,5
+,,involvement,vr,C2,7
+,,involvement,vr,C2,3
+,,realism,vr,C2,7
+,,realism,vr,C2,6
+,4,general presence,ar,C2,5
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,3
+,,spatial presence,ar,C2,5
+,,involvement,ar,C2,3
+,,involvement,ar,C2,3
+,,realism,ar,C2,6
+,,realism,ar,C2,7
+,1,general presence,vr,C3,6
+,,spatial presence,vr,C3,4
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,3
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,4
+,,involvement,vr,C3,4
+,,involvement,vr,C3,3
+,,realism,vr,C3,3
+,,realism,vr,C3,4
+,2,general presence,ar,C3,5
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,3
+,,involvement,ar,C3,3
+,,involvement,ar,C3,5
+,,realism,ar,C3,3
+,,realism,ar,C3,4
+,3,general presence,vr,C3,7
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,5
+,,involvement,vr,C3,5
+,,involvement,vr,C3,4
+,,realism,vr,C3,7
+,,realism,vr,C3,6
+,4,general presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,4
+,,involvement,ar,C3,6
+,,involvement,ar,C3,2
+,,realism,ar,C3,6
+,,realism,ar,C3,4
+2,1,general presence,vr,C1,6
+,,spatial presence,vr,C1,2
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,6
+,,involvement,vr,C1,4
+,,realism,vr,C1,5
+,,realism,vr,C1,6
+,2,general presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,3
+,,spatial presence,ar,C1,6
+,,involvement,ar,C1,6
+,,involvement,ar,C1,6
+,,realism,ar,C1,7
+,,realism,ar,C1,4
+,3,general presence,vr,C1,5
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,7
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,4
+,,involvement,vr,C1,7
+,,realism,vr,C1,6
+,,realism,vr,C1,7
+,4,general presence,ar,C1,6
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,spatial presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,involvement,ar,C1,3
+,,involvement,ar,C1,2
+,,realism,ar,C1,3
+,,realism,ar,C1,6
+,1,general presence,vr,C2,6
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,3
+,,involvement,vr,C2,4
+,,involvement,vr,C2,3
+,,realism,vr,C2,3
+,,realism,vr,C2,5
+,2,general presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,involvement,ar,C2,4
+,,involvement,ar,C2,3
+,,realism,ar,C2,3
+,,realism,ar,C2,4
+,3,general presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,5
+,,involvement,vr,C2,7
+,,involvement,vr,C2,3
+,,realism,vr,C2,7
+,,realism,vr,C2,6
+,4,general presence,ar,C2,5
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,3
+,,spatial presence,ar,C2,5
+,,involvement,ar,C2,3
+,,involvement,ar,C2,3
+,,realism,ar,C2,6
+,,realism,ar,C2,7
+,1,general presence,vr,C3,6
+,,spatial presence,vr,C3,4
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,3
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,4
+,,involvement,vr,C3,4
+,,involvement,vr,C3,3
+,,realism,vr,C3,3
+,,realism,vr,C3,4
+,2,general presence,ar,C3,5
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,3
+,,involvement,ar,C3,3
+,,involvement,ar,C3,5
+,,realism,ar,C3,3
+,,realism,ar,C3,4
+,3,general presence,vr,C3,7
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,5
+,,involvement,vr,C3,5
+,,involvement,vr,C3,4
+,,realism,vr,C3,7
+,,realism,vr,C3,6
+,4,general presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,4
+,,involvement,ar,C3,6
+,,involvement,ar,C3,2
+,,realism,ar,C3,6
+,,realism,ar,C3,4
+3,1,general presence,vr,C1,6
+,,spatial presence,vr,C1,2
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,6
+,,involvement,vr,C1,4
+,,realism,vr,C1,5
+,,realism,vr,C1,6
+,2,general presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,3
+,,spatial presence,ar,C1,6
+,,involvement,ar,C1,6
+,,involvement,ar,C1,6
+,,realism,ar,C1,7
+,,realism,ar,C1,4
+,3,general presence,vr,C1,5
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,7
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,4
+,,involvement,vr,C1,7
+,,realism,vr,C1,6
+,,realism,vr,C1,7
+,4,general presence,ar,C1,6
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,spatial presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,involvement,ar,C1,3
+,,involvement,ar,C1,2
+,,realism,ar,C1,3
+,,realism,ar,C1,6
+,1,general presence,vr,C2,6
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,3
+,,involvement,vr,C2,4
+,,involvement,vr,C2,3
+,,realism,vr,C2,3
+,,realism,vr,C2,5
+,2,general presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,involvement,ar,C2,4
+,,involvement,ar,C2,3
+,,realism,ar,C2,3
+,,realism,ar,C2,4
+,3,general presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,5
+,,involvement,vr,C2,7
+,,involvement,vr,C2,3
+,,realism,vr,C2,7
+,,realism,vr,C2,6
+,4,general presence,ar,C2,5
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,3
+,,spatial presence,ar,C2,5
+,,involvement,ar,C2,3
+,,involvement,ar,C2,3
+,,realism,ar,C2,6
+,,realism,ar,C2,7
+,1,general presence,vr,C3,6
+,,spatial presence,vr,C3,4
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,3
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,4
+,,involvement,vr,C3,4
+,,involvement,vr,C3,3
+,,realism,vr,C3,3
+,,realism,vr,C3,4
+,2,general presence,ar,C3,5
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,3
+,,involvement,ar,C3,3
+,,involvement,ar,C3,5
+,,realism,ar,C3,3
+,,realism,ar,C3,4
+,3,general presence,vr,C3,7
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,5
+,,involvement,vr,C3,5
+,,involvement,vr,C3,4
+,,realism,vr,C3,7
+,,realism,vr,C3,6
+,4,general presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,4
+,,involvement,ar,C3,6
+,,involvement,ar,C3,2
+,,realism,ar,C3,6
+,,realism,ar,C3,4
+4,1,general presence,vr,C1,6
+,,spatial presence,vr,C1,2
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,6
+,,involvement,vr,C1,4
+,,realism,vr,C1,5
+,,realism,vr,C1,6
+,2,general presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,3
+,,spatial presence,ar,C1,6
+,,involvement,ar,C1,6
+,,involvement,ar,C1,6
+,,realism,ar,C1,7
+,,realism,ar,C1,4
+,3,general presence,vr,C1,5
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,7
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,4
+,,involvement,vr,C1,7
+,,realism,vr,C1,6
+,,realism,vr,C1,7
+,4,general presence,ar,C1,6
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,spatial presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,involvement,ar,C1,3
+,,involvement,ar,C1,2
+,,realism,ar,C1,3
+,,realism,ar,C1,6
+,1,general presence,vr,C2,6
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,3
+,,involvement,vr,C2,4
+,,involvement,vr,C2,3
+,,realism,vr,C2,3
+,,realism,vr,C2,5
+,2,general presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,involvement,ar,C2,4
+,,involvement,ar,C2,3
+,,realism,ar,C2,3
+,,realism,ar,C2,4
+,3,general presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,5
+,,involvement,vr,C2,7
+,,involvement,vr,C2,3
+,,realism,vr,C2,7
+,,realism,vr,C2,6
+,4,general presence,ar,C2,5
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,3
+,,spatial presence,ar,C2,5
+,,involvement,ar,C2,3
+,,involvement,ar,C2,3
+,,realism,ar,C2,6
+,,realism,ar,C2,7
+,1,general presence,vr,C3,6
+,,spatial presence,vr,C3,4
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,3
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,4
+,,involvement,vr,C3,4
+,,involvement,vr,C3,3
+,,realism,vr,C3,3
+,,realism,vr,C3,4
+,2,general presence,ar,C3,5
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,3
+,,involvement,ar,C3,3
+,,involvement,ar,C3,5
+,,realism,ar,C3,3
+,,realism,ar,C3,4
+,3,general presence,vr,C3,7
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,5
+,,involvement,vr,C3,5
+,,involvement,vr,C3,4
+,,realism,vr,C3,7
+,,realism,vr,C3,6
+,4,general presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,4
+,,involvement,ar,C3,6
+,,involvement,ar,C3,2
+,,realism,ar,C3,6
+,,realism,ar,C3,4
+5,1,general presence,vr,C1,6
+,,spatial presence,vr,C1,2
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,6
+,,involvement,vr,C1,4
+,,realism,vr,C1,5
+,,realism,vr,C1,6
+,2,general presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,3
+,,spatial presence,ar,C1,6
+,,involvement,ar,C1,6
+,,involvement,ar,C1,6
+,,realism,ar,C1,7
+,,realism,ar,C1,4
+,3,general presence,vr,C1,5
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,7
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,4
+,,involvement,vr,C1,7
+,,realism,vr,C1,6
+,,realism,vr,C1,7
+,4,general presence,ar,C1,6
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,spatial presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,involvement,ar,C1,3
+,,involvement,ar,C1,2
+,,realism,ar,C1,3
+,,realism,ar,C1,6
+,1,general presence,vr,C2,6
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,3
+,,involvement,vr,C2,4
+,,involvement,vr,C2,3
+,,realism,vr,C2,3
+,,realism,vr,C2,5
+,2,general presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,involvement,ar,C2,4
+,,involvement,ar,C2,3
+,,realism,ar,C2,3
+,,realism,ar,C2,4
+,3,general presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,5
+,,involvement,vr,C2,7
+,,involvement,vr,C2,3
+,,realism,vr,C2,7
+,,realism,vr,C2,6
+,4,general presence,ar,C2,5
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,3
+,,spatial presence,ar,C2,5
+,,involvement,ar,C2,3
+,,involvement,ar,C2,3
+,,realism,ar,C2,6
+,,realism,ar,C2,7
+,1,general presence,vr,C3,6
+,,spatial presence,vr,C3,4
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,3
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,4
+,,involvement,vr,C3,4
+,,involvement,vr,C3,3
+,,realism,vr,C3,3
+,,realism,vr,C3,4
+,2,general presence,ar,C3,5
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,3
+,,involvement,ar,C3,3
+,,involvement,ar,C3,5
+,,realism,ar,C3,3
+,,realism,ar,C3,4
+,3,general presence,vr,C3,7
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,5
+,,involvement,vr,C3,5
+,,involvement,vr,C3,4
+,,realism,vr,C3,7
+,,realism,vr,C3,6
+,4,general presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,4
+,,involvement,ar,C3,6
+,,involvement,ar,C3,2
+,,realism,ar,C3,6
+,,realism,ar,C3,4
+6,1,general presence,vr,C1,6
+,,spatial presence,vr,C1,2
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,6
+,,involvement,vr,C1,4
+,,realism,vr,C1,5
+,,realism,vr,C1,6
+,2,general presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,3
+,,spatial presence,ar,C1,6
+,,involvement,ar,C1,6
+,,involvement,ar,C1,6
+,,realism,ar,C1,7
+,,realism,ar,C1,4
+,3,general presence,vr,C1,5
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,7
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,4
+,,involvement,vr,C1,7
+,,realism,vr,C1,6
+,,realism,vr,C1,7
+,4,general presence,ar,C1,6
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,spatial presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,involvement,ar,C1,3
+,,involvement,ar,C1,2
+,,realism,ar,C1,3
+,,realism,ar,C1,6
+,1,general presence,vr,C2,6
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,3
+,,involvement,vr,C2,4
+,,involvement,vr,C2,3
+,,realism,vr,C2,3
+,,realism,vr,C2,5
+,2,general presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,involvement,ar,C2,4
+,,involvement,ar,C2,3
+,,realism,ar,C2,3
+,,realism,ar,C2,4
+,3,general presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,5
+,,involvement,vr,C2,7
+,,involvement,vr,C2,3
+,,realism,vr,C2,7
+,,realism,vr,C2,6
+,4,general presence,ar,C2,5
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,3
+,,spatial presence,ar,C2,5
+,,involvement,ar,C2,3
+,,involvement,ar,C2,3
+,,realism,ar,C2,6
+,,realism,ar,C2,7
+,1,general presence,vr,C3,6
+,,spatial presence,vr,C3,4
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,3
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,4
+,,involvement,vr,C3,4
+,,involvement,vr,C3,3
+,,realism,vr,C3,3
+,,realism,vr,C3,4
+,2,general presence,ar,C3,5
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,3
+,,involvement,ar,C3,3
+,,involvement,ar,C3,5
+,,realism,ar,C3,3
+,,realism,ar,C3,4
+,3,general presence,vr,C3,7
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,5
+,,involvement,vr,C3,5
+,,involvement,vr,C3,4
+,,realism,vr,C3,7
+,,realism,vr,C3,6
+,4,general presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,4
+,,involvement,ar,C3,6
+,,involvement,ar,C3,2
+,,realism,ar,C3,6
+,,realism,ar,C3,4
+7,1,general presence,vr,C1,6
+,,spatial presence,vr,C1,2
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,6
+,,involvement,vr,C1,4
+,,realism,vr,C1,5
+,,realism,vr,C1,6
+,2,general presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,3
+,,spatial presence,ar,C1,6
+,,involvement,ar,C1,6
+,,involvement,ar,C1,6
+,,realism,ar,C1,7
+,,realism,ar,C1,4
+,3,general presence,vr,C1,5
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,7
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,4
+,,involvement,vr,C1,7
+,,realism,vr,C1,6
+,,realism,vr,C1,7
+,4,general presence,ar,C1,6
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,spatial presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,involvement,ar,C1,3
+,,involvement,ar,C1,2
+,,realism,ar,C1,3
+,,realism,ar,C1,6
+,1,general presence,vr,C2,6
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,3
+,,involvement,vr,C2,4
+,,involvement,vr,C2,3
+,,realism,vr,C2,3
+,,realism,vr,C2,5
+,2,general presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,involvement,ar,C2,4
+,,involvement,ar,C2,3
+,,realism,ar,C2,3
+,,realism,ar,C2,4
+,3,general presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,5
+,,involvement,vr,C2,7
+,,involvement,vr,C2,3
+,,realism,vr,C2,7
+,,realism,vr,C2,6
+,4,general presence,ar,C2,5
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,3
+,,spatial presence,ar,C2,5
+,,involvement,ar,C2,3
+,,involvement,ar,C2,3
+,,realism,ar,C2,6
+,,realism,ar,C2,7
+,1,general presence,vr,C3,6
+,,spatial presence,vr,C3,4
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,3
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,4
+,,involvement,vr,C3,4
+,,involvement,vr,C3,3
+,,realism,vr,C3,3
+,,realism,vr,C3,4
+,2,general presence,ar,C3,5
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,3
+,,involvement,ar,C3,3
+,,involvement,ar,C3,5
+,,realism,ar,C3,3
+,,realism,ar,C3,4
+,3,general presence,vr,C3,7
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,5
+,,involvement,vr,C3,5
+,,involvement,vr,C3,4
+,,realism,vr,C3,7
+,,realism,vr,C3,6
+,4,general presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,4
+,,involvement,ar,C3,6
+,,involvement,ar,C3,2
+,,realism,ar,C3,6
+,,realism,ar,C3,4
+8,1,general presence,vr,C1,6
+,,spatial presence,vr,C1,2
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,6
+,,involvement,vr,C1,4
+,,realism,vr,C1,5
+,,realism,vr,C1,6
+,2,general presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,3
+,,spatial presence,ar,C1,6
+,,involvement,ar,C1,6
+,,involvement,ar,C1,6
+,,realism,ar,C1,7
+,,realism,ar,C1,4
+,3,general presence,vr,C1,5
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,7
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,4
+,,involvement,vr,C1,7
+,,realism,vr,C1,6
+,,realism,vr,C1,7
+,4,general presence,ar,C1,6
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,spatial presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,involvement,ar,C1,3
+,,involvement,ar,C1,2
+,,realism,ar,C1,3
+,,realism,ar,C1,6
+,1,general presence,vr,C2,6
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,3
+,,involvement,vr,C2,4
+,,involvement,vr,C2,3
+,,realism,vr,C2,3
+,,realism,vr,C2,5
+,2,general presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,involvement,ar,C2,4
+,,involvement,ar,C2,3
+,,realism,ar,C2,3
+,,realism,ar,C2,4
+,3,general presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,5
+,,involvement,vr,C2,7
+,,involvement,vr,C2,3
+,,realism,vr,C2,7
+,,realism,vr,C2,6
+,4,general presence,ar,C2,5
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,3
+,,spatial presence,ar,C2,5
+,,involvement,ar,C2,3
+,,involvement,ar,C2,3
+,,realism,ar,C2,6
+,,realism,ar,C2,7
+,1,general presence,vr,C3,6
+,,spatial presence,vr,C3,4
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,3
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,4
+,,involvement,vr,C3,4
+,,involvement,vr,C3,3
+,,realism,vr,C3,3
+,,realism,vr,C3,4
+,2,general presence,ar,C3,5
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,3
+,,involvement,ar,C3,3
+,,involvement,ar,C3,5
+,,realism,ar,C3,3
+,,realism,ar,C3,4
+,3,general presence,vr,C3,7
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,5
+,,involvement,vr,C3,5
+,,involvement,vr,C3,4
+,,realism,vr,C3,7
+,,realism,vr,C3,6
+,4,general presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,4
+,,involvement,ar,C3,6
+,,involvement,ar,C3,2
+,,realism,ar,C3,6
+,,realism,ar,C3,4
+9,1,general presence,vr,C1,6
+,,spatial presence,vr,C1,2
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,3
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,6
+,,involvement,vr,C1,4
+,,realism,vr,C1,5
+,,realism,vr,C1,6
+,2,general presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,5
+,,spatial presence,ar,C1,3
+,,spatial presence,ar,C1,6
+,,involvement,ar,C1,6
+,,involvement,ar,C1,6
+,,realism,ar,C1,7
+,,realism,ar,C1,4
+,3,general presence,vr,C1,5
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,6
+,,spatial presence,vr,C1,5
+,,spatial presence,vr,C1,7
+,,spatial presence,vr,C1,5
+,,involvement,vr,C1,4
+,,involvement,vr,C1,7
+,,realism,vr,C1,6
+,,realism,vr,C1,7
+,4,general presence,ar,C1,6
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,spatial presence,ar,C1,7
+,,spatial presence,ar,C1,6
+,,spatial presence,ar,C1,4
+,,involvement,ar,C1,3
+,,involvement,ar,C1,2
+,,realism,ar,C1,3
+,,realism,ar,C1,6
+,1,general presence,vr,C2,6
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,6
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,3
+,,involvement,vr,C2,4
+,,involvement,vr,C2,3
+,,realism,vr,C2,3
+,,realism,vr,C2,5
+,2,general presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,involvement,ar,C2,4
+,,involvement,ar,C2,3
+,,realism,ar,C2,3
+,,realism,ar,C2,4
+,3,general presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,7
+,,spatial presence,vr,C2,5
+,,spatial presence,vr,C2,5
+,,involvement,vr,C2,7
+,,involvement,vr,C2,3
+,,realism,vr,C2,7
+,,realism,vr,C2,6
+,4,general presence,ar,C2,5
+,,spatial presence,ar,C2,7
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,6
+,,spatial presence,ar,C2,3
+,,spatial presence,ar,C2,5
+,,involvement,ar,C2,3
+,,involvement,ar,C2,3
+,,realism,ar,C2,6
+,,realism,ar,C2,7
+,1,general presence,vr,C3,6
+,,spatial presence,vr,C3,4
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,3
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,4
+,,involvement,vr,C3,4
+,,involvement,vr,C3,3
+,,realism,vr,C3,3
+,,realism,vr,C3,4
+,2,general presence,ar,C3,5
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,5
+,,spatial presence,ar,C3,3
+,,involvement,ar,C3,3
+,,involvement,ar,C3,5
+,,realism,ar,C3,3
+,,realism,ar,C3,4
+,3,general presence,vr,C3,7
+,,spatial presence,vr,C3,6
+,,spatial presence,vr,C3,5
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,7
+,,spatial presence,vr,C3,5
+,,involvement,vr,C3,5
+,,involvement,vr,C3,4
+,,realism,vr,C3,7
+,,realism,vr,C3,6
+,4,general presence,ar,C3,5
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,7
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,6
+,,spatial presence,ar,C3,4
+,,involvement,ar,C3,6
+,,involvement,ar,C3,2
+,,realism,ar,C3,6
+,,realism,ar,C3,4

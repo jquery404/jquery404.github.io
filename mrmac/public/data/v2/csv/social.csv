@@ -1,1189 +1,1189 @@
-grp,id,params,vrar,task,score
-1,1,copresence,vr,task 1,6
-,,copresence,vr,task 1,2
-,,copresence,vr,task 1,6
-,,copresence,vr,task 1,6
-,,mutual attention,vr,task 1,3
-,,mutual attention,vr,task 1,4
-,,mutual attention,vr,task 1,5
-,,mutual understanding,vr,task 1,5
-,,mutual understanding,vr,task 1,4
-,,behaviroal engagement,vr,task 1,6
-,,behaviroal engagement,vr,task 1,7
-,2,copresence,ar,task 1,5
-,,copresence,ar,task 1,4
-,,copresence,ar,task 1,6
-,,copresence,ar,task 1,5
-,,mutual attention,ar,task 1,3
-,,mutual attention,ar,task 1,3
-,,mutual attention,ar,task 1,2
-,,mutual understanding,ar,task 1,7
-,,mutual understanding,ar,task 1,5
-,,behaviroal engagement,ar,task 1,4
-,,behaviroal engagement,ar,task 1,4
-,3,copresence,vr,task 1,4
-,,copresence,vr,task 1,2
-,,copresence,vr,task 1,5
-,,copresence,vr,task 1,7
-,,mutual attention,vr,task 1,2
-,,mutual attention,vr,task 1,3
-,,mutual attention,vr,task 1,3
-,,mutual understanding,vr,task 1,2
-,,mutual understanding,vr,task 1,5
-,,behaviroal engagement,vr,task 1,4
-,,behaviroal engagement,vr,task 1,6
-,4,copresence,ar,task 1,4
-,,copresence,ar,task 1,7
-,,copresence,ar,task 1,2
-,,copresence,ar,task 1,4
-,,mutual attention,ar,task 1,4
-,,mutual attention,ar,task 1,2
-,,mutual attention,ar,task 1,6
-,,mutual understanding,ar,task 1,4
-,,mutual understanding,ar,task 1,5
-,,behaviroal engagement,ar,task 1,5
-,,behaviroal engagement,ar,task 1,5
-,1,copresence,vr,task 2,3
-,,copresence,vr,task 2,6
-,,copresence,vr,task 2,5
-,,copresence,vr,task 2,5
-,,mutual attention,vr,task 2,7
-,,mutual attention,vr,task 2,6
-,,mutual attention,vr,task 2,7
-,,mutual understanding,vr,task 2,6
-,,mutual understanding,vr,task 2,7
-,,behaviroal engagement,vr,task 2,2
-,,behaviroal engagement,vr,task 2,3
-,2,copresence,ar,task 2,3
-,,copresence,ar,task 2,2
-,,copresence,ar,task 2,6
-,,copresence,ar,task 2,2
-,,mutual attention,ar,task 2,2
-,,mutual attention,ar,task 2,6
-,,mutual attention,ar,task 2,7
-,,mutual understanding,ar,task 2,3
-,,mutual understanding,ar,task 2,6
-,,behaviroal engagement,ar,task 2,2
-,,behaviroal engagement,ar,task 2,7
-,3,copresence,vr,task 2,4
-,,copresence,vr,task 2,4
-,,copresence,vr,task 2,4
-,,copresence,vr,task 2,3
-,,mutual attention,vr,task 2,7
-,,mutual attention,vr,task 2,4
-,,mutual attention,vr,task 2,5
-,,mutual understanding,vr,task 2,6
-,,mutual understanding,vr,task 2,3
-,,behaviroal engagement,vr,task 2,5
-,,behaviroal engagement,vr,task 2,7
-,4,copresence,ar,task 2,3
-,,copresence,ar,task 2,5
-,,copresence,ar,task 2,3
-,,copresence,ar,task 2,3
-,,mutual attention,ar,task 2,5
-,,mutual attention,ar,task 2,4
-,,mutual attention,ar,task 2,5
-,,mutual understanding,ar,task 2,5
-,,mutual understanding,ar,task 2,5
-,,behaviroal engagement,ar,task 2,6
-,,behaviroal engagement,ar,task 2,5
-,1,copresence,vr,task 3,5
-,,copresence,vr,task 3,6
-,,copresence,vr,task 3,2
-,,copresence,vr,task 3,7
-,,mutual attention,vr,task 3,5
-,,mutual attention,vr,task 3,3
-,,mutual attention,vr,task 3,4
-,,mutual understanding,vr,task 3,5
-,,mutual understanding,vr,task 3,3
-,,behaviroal engagement,vr,task 3,2
-,,behaviroal engagement,vr,task 3,3
-,2,copresence,ar,task 3,3
-,,copresence,ar,task 3,5
-,,copresence,ar,task 3,3
-,,copresence,ar,task 3,3
-,,mutual attention,ar,task 3,5
-,,mutual attention,ar,task 3,3
-,,mutual attention,ar,task 3,6
-,,mutual understanding,ar,task 3,6
-,,mutual understanding,ar,task 3,6
-,,behaviroal engagement,ar,task 3,6
-,,behaviroal engagement,ar,task 3,6
-,3,copresence,vr,task 3,5
-,,copresence,vr,task 3,4
-,,copresence,vr,task 3,7
-,,copresence,vr,task 3,3
-,,mutual attention,vr,task 3,6
-,,mutual attention,vr,task 3,6
-,,mutual attention,vr,task 3,4
-,,mutual understanding,vr,task 3,2
-,,mutual understanding,vr,task 3,2
-,,behaviroal engagement,vr,task 3,3
-,,behaviroal engagement,vr,task 3,7
-,4,copresence,ar,task 3,4
-,,copresence,ar,task 3,5
-,,copresence,ar,task 3,5
-,,copresence,ar,task 3,4
-,,mutual attention,ar,task 3,6
-,,mutual attention,ar,task 3,4
-,,mutual attention,ar,task 3,2
-,,mutual understanding,ar,task 3,4
-,,mutual understanding,ar,task 3,4
-,,behaviroal engagement,ar,task 3,4
-,,behaviroal engagement,ar,task 3,6
-2,1,copresence,vr,task 1,6
-,,copresence,vr,task 1,2
-,,copresence,vr,task 1,3
-,,copresence,vr,task 1,3
-,,mutual attention,vr,task 1,5
-,,mutual attention,vr,task 1,2
-,,mutual attention,vr,task 1,4
-,,mutual understanding,vr,task 1,5
-,,mutual understanding,vr,task 1,5
-,,behaviroal engagement,vr,task 1,4
-,,behaviroal engagement,vr,task 1,4
-,2,copresence,ar,task 1,2
-,,copresence,ar,task 1,4
-,,copresence,ar,task 1,2
-,,copresence,ar,task 1,3
-,,mutual attention,ar,task 1,4
-,,mutual attention,ar,task 1,3
-,,mutual attention,ar,task 1,5
-,,mutual understanding,ar,task 1,3
-,,mutual understanding,ar,task 1,5
-,,behaviroal engagement,ar,task 1,7
-,,behaviroal engagement,ar,task 1,3
-,3,copresence,vr,task 1,6
-,,copresence,vr,task 1,7
-,,copresence,vr,task 1,2
-,,copresence,vr,task 1,5
-,,mutual attention,vr,task 1,6
-,,mutual attention,vr,task 1,2
-,,mutual attention,vr,task 1,2
-,,mutual understanding,vr,task 1,3
-,,mutual understanding,vr,task 1,6
-,,behaviroal engagement,vr,task 1,7
-,,behaviroal engagement,vr,task 1,4
-,4,copresence,ar,task 1,4
-,,copresence,ar,task 1,2
-,,copresence,ar,task 1,3
-,,copresence,ar,task 1,2
-,,mutual attention,ar,task 1,2
-,,mutual attention,ar,task 1,5
-,,mutual attention,ar,task 1,3
-,,mutual understanding,ar,task 1,5
-,,mutual understanding,ar,task 1,2
-,,behaviroal engagement,ar,task 1,7
-,,behaviroal engagement,ar,task 1,3
-,1,copresence,vr,task 2,2
-,,copresence,vr,task 2,2
-,,copresence,vr,task 2,2
-,,copresence,vr,task 2,5
-,,mutual attention,vr,task 2,5
-,,mutual attention,vr,task 2,7
-,,mutual attention,vr,task 2,3
-,,mutual understanding,vr,task 2,2
-,,mutual understanding,vr,task 2,4
-,,behaviroal engagement,vr,task 2,5
-,,behaviroal engagement,vr,task 2,5
-,2,copresence,ar,task 2,4
-,,copresence,ar,task 2,6
-,,copresence,ar,task 2,2
-,,copresence,ar,task 2,4
-,,mutual attention,ar,task 2,5
-,,mutual attention,ar,task 2,3
-,,mutual attention,ar,task 2,5
-,,mutual understanding,ar,task 2,5
-,,mutual understanding,ar,task 2,3
-,,behaviroal engagement,ar,task 2,4
-,,behaviroal engagement,ar,task 2,4
-,3,copresence,vr,task 2,5
-,,copresence,vr,task 2,7
-,,copresence,vr,task 2,3
-,,copresence,vr,task 2,7
-,,mutual attention,vr,task 2,3
-,,mutual attention,vr,task 2,4
-,,mutual attention,vr,task 2,3
-,,mutual understanding,vr,task 2,2
-,,mutual understanding,vr,task 2,5
-,,behaviroal engagement,vr,task 2,6
-,,behaviroal engagement,vr,task 2,7
-,4,copresence,ar,task 2,3
-,,copresence,ar,task 2,5
-,,copresence,ar,task 2,4
-,,copresence,ar,task 2,5
-,,mutual attention,ar,task 2,3
-,,mutual attention,ar,task 2,7
-,,mutual attention,ar,task 2,6
-,,mutual understanding,ar,task 2,5
-,,mutual understanding,ar,task 2,2
-,,behaviroal engagement,ar,task 2,7
-,,behaviroal engagement,ar,task 2,7
-,1,copresence,vr,task 3,3
-,,copresence,vr,task 3,5
-,,copresence,vr,task 3,2
-,,copresence,vr,task 3,6
-,,mutual attention,vr,task 3,2
-,,mutual attention,vr,task 3,5
-,,mutual attention,vr,task 3,5
-,,mutual understanding,vr,task 3,6
-,,mutual understanding,vr,task 3,4
-,,behaviroal engagement,vr,task 3,2
-,,behaviroal engagement,vr,task 3,6
-,2,copresence,ar,task 3,2
-,,copresence,ar,task 3,5
-,,copresence,ar,task 3,3
-,,copresence,ar,task 3,3
-,,mutual attention,ar,task 3,7
-,,mutual attention,ar,task 3,3
-,,mutual attention,ar,task 3,6
-,,mutual understanding,ar,task 3,4
-,,mutual understanding,ar,task 3,6
-,,behaviroal engagement,ar,task 3,5
-,,behaviroal engagement,ar,task 3,4
-,3,copresence,vr,task 3,3
-,,copresence,vr,task 3,6
-,,copresence,vr,task 3,2
-,,copresence,vr,task 3,3
-,,mutual attention,vr,task 3,5
-,,mutual attention,vr,task 3,4
-,,mutual attention,vr,task 3,5
-,,mutual understanding,vr,task 3,5
-,,mutual understanding,vr,task 3,6
-,,behaviroal engagement,vr,task 3,4
-,,behaviroal engagement,vr,task 3,4
-,4,copresence,ar,task 3,4
-,,copresence,ar,task 3,4
-,,copresence,ar,task 3,4
-,,copresence,ar,task 3,3
-,,mutual attention,ar,task 3,2
-,,mutual attention,ar,task 3,2
-,,mutual attention,ar,task 3,6
-,,mutual understanding,ar,task 3,7
-,,mutual understanding,ar,task 3,2
-,,behaviroal engagement,ar,task 3,2
-,,behaviroal engagement,ar,task 3,4
-3,1,copresence,vr,task 1,5
-,,copresence,vr,task 1,2
-,,copresence,vr,task 1,5
-,,copresence,vr,task 1,6
-,,mutual attention,vr,task 1,2
-,,mutual attention,vr,task 1,3
-,,mutual attention,vr,task 1,6
-,,mutual understanding,vr,task 1,4
-,,mutual understanding,vr,task 1,3
-,,behaviroal engagement,vr,task 1,6
-,,behaviroal engagement,vr,task 1,5
-,2,copresence,ar,task 1,5
-,,copresence,ar,task 1,5
-,,copresence,ar,task 1,5
-,,copresence,ar,task 1,6
-,,mutual attention,ar,task 1,5
-,,mutual attention,ar,task 1,3
-,,mutual attention,ar,task 1,2
-,,mutual understanding,ar,task 1,7
-,,mutual understanding,ar,task 1,3
-,,behaviroal engagement,ar,task 1,4
-,,behaviroal engagement,ar,task 1,7
-,3,copresence,vr,task 1,7
-,,copresence,vr,task 1,6
-,,copresence,vr,task 1,3
-,,copresence,vr,task 1,2
-,,mutual attention,vr,task 1,3
-,,mutual attention,vr,task 1,2
-,,mutual attention,vr,task 1,2
-,,mutual understanding,vr,task 1,4
-,,mutual understanding,vr,task 1,7
-,,behaviroal engagement,vr,task 1,7
-,,behaviroal engagement,vr,task 1,7
-,4,copresence,ar,task 1,2
-,,copresence,ar,task 1,6
-,,copresence,ar,task 1,7
-,,copresence,ar,task 1,6
-,,mutual attention,ar,task 1,2
-,,mutual attention,ar,task 1,6
-,,mutual attention,ar,task 1,5
-,,mutual understanding,ar,task 1,2
-,,mutual understanding,ar,task 1,3
-,,behaviroal engagement,ar,task 1,2
-,,behaviroal engagement,ar,task 1,2
-,1,copresence,vr,task 2,6
-,,copresence,vr,task 2,5
-,,copresence,vr,task 2,5
-,,copresence,vr,task 2,6
-,,mutual attention,vr,task 2,6
-,,mutual attention,vr,task 2,4
-,,mutual attention,vr,task 2,7
-,,mutual understanding,vr,task 2,3
-,,mutual understanding,vr,task 2,4
-,,behaviroal engagement,vr,task 2,4
-,,behaviroal engagement,vr,task 2,5
-,2,copresence,ar,task 2,6
-,,copresence,ar,task 2,3
-,,copresence,ar,task 2,3
-,,copresence,ar,task 2,3
-,,mutual attention,ar,task 2,5
-,,mutual attention,ar,task 2,6
-,,mutual attention,ar,task 2,6
-,,mutual understanding,ar,task 2,2
-,,mutual understanding,ar,task 2,5
-,,behaviroal engagement,ar,task 2,4
-,,behaviroal engagement,ar,task 2,7
-,3,copresence,vr,task 2,7
-,,copresence,vr,task 2,5
-,,copresence,vr,task 2,5
-,,copresence,vr,task 2,4
-,,mutual attention,vr,task 2,6
-,,mutual attention,vr,task 2,6
-,,mutual attention,vr,task 2,3
-,,mutual understanding,vr,task 2,5
-,,mutual understanding,vr,task 2,2
-,,behaviroal engagement,vr,task 2,6
-,,behaviroal engagement,vr,task 2,3
-,4,copresence,ar,task 2,5
-,,copresence,ar,task 2,7
-,,copresence,ar,task 2,5
-,,copresence,ar,task 2,7
-,,mutual attention,ar,task 2,5
-,,mutual attention,ar,task 2,3
-,,mutual attention,ar,task 2,4
-,,mutual understanding,ar,task 2,4
-,,mutual understanding,ar,task 2,5
-,,behaviroal engagement,ar,task 2,3
-,,behaviroal engagement,ar,task 2,5
-,1,copresence,vr,task 3,4
-,,copresence,vr,task 3,3
-,,copresence,vr,task 3,2
-,,copresence,vr,task 3,6
-,,mutual attention,vr,task 3,5
-,,mutual attention,vr,task 3,2
-,,mutual attention,vr,task 3,2
-,,mutual understanding,vr,task 3,6
-,,mutual understanding,vr,task 3,3
-,,behaviroal engagement,vr,task 3,3
-,,behaviroal engagement,vr,task 3,7
-,2,copresence,ar,task 3,6
-,,copresence,ar,task 3,6
-,,copresence,ar,task 3,2
-,,copresence,ar,task 3,6
-,,mutual attention,ar,task 3,4
-,,mutual attention,ar,task 3,2
-,,mutual attention,ar,task 3,2
-,,mutual understanding,ar,task 3,3
-,,mutual understanding,ar,task 3,4
-,,behaviroal engagement,ar,task 3,7
-,,behaviroal engagement,ar,task 3,5
-,3,copresence,vr,task 3,5
-,,copresence,vr,task 3,2
-,,copresence,vr,task 3,4
-,,copresence,vr,task 3,5
-,,mutual attention,vr,task 3,4
-,,mutual attention,vr,task 3,2
-,,mutual attention,vr,task 3,3
-,,mutual understanding,vr,task 3,4
-,,mutual understanding,vr,task 3,3
-,,behaviroal engagement,vr,task 3,5
-,,behaviroal engagement,vr,task 3,2
-,4,copresence,ar,task 3,6
-,,copresence,ar,task 3,5
-,,copresence,ar,task 3,6
-,,copresence,ar,task 3,3
-,,mutual attention,ar,task 3,6
-,,mutual attention,ar,task 3,4
-,,mutual attention,ar,task 3,3
-,,mutual understanding,ar,task 3,4
-,,mutual understanding,ar,task 3,7
-,,behaviroal engagement,ar,task 3,2
-,,behaviroal engagement,ar,task 3,4
-4,1,copresence,vr,task 1,3
-,,copresence,vr,task 1,2
-,,copresence,vr,task 1,3
-,,copresence,vr,task 1,6
-,,mutual attention,vr,task 1,5
-,,mutual attention,vr,task 1,4
-,,mutual attention,vr,task 1,6
-,,mutual understanding,vr,task 1,2
-,,mutual understanding,vr,task 1,7
-,,behaviroal engagement,vr,task 1,5
-,,behaviroal engagement,vr,task 1,2
-,2,copresence,ar,task 1,6
-,,copresence,ar,task 1,7
-,,copresence,ar,task 1,2
-,,copresence,ar,task 1,3
-,,mutual attention,ar,task 1,3
-,,mutual attention,ar,task 1,6
-,,mutual attention,ar,task 1,2
-,,mutual understanding,ar,task 1,4
-,,mutual understanding,ar,task 1,2
-,,behaviroal engagement,ar,task 1,3
-,,behaviroal engagement,ar,task 1,4
-,3,copresence,vr,task 1,5
-,,copresence,vr,task 1,6
-,,copresence,vr,task 1,2
-,,copresence,vr,task 1,6
-,,mutual attention,vr,task 1,3
-,,mutual attention,vr,task 1,5
-,,mutual attention,vr,task 1,3
-,,mutual understanding,vr,task 1,2
-,,mutual understanding,vr,task 1,2
-,,behaviroal engagement,vr,task 1,5
-,,behaviroal engagement,vr,task 1,6
-,4,copresence,ar,task 1,7
-,,copresence,ar,task 1,5
-,,copresence,ar,task 1,4
-,,copresence,ar,task 1,2
-,,mutual attention,ar,task 1,4
-,,mutual attention,ar,task 1,7
-,,mutual attention,ar,task 1,7
-,,mutual understanding,ar,task 1,2
-,,mutual understanding,ar,task 1,5
-,,behaviroal engagement,ar,task 1,6
-,,behaviroal engagement,ar,task 1,4
-,1,copresence,vr,task 2,5
-,,copresence,vr,task 2,6
-,,copresence,vr,task 2,7
-,,copresence,vr,task 2,3
-,,mutual attention,vr,task 2,7
-,,mutual attention,vr,task 2,7
-,,mutual attention,vr,task 2,6
-,,mutual understanding,vr,task 2,4
-,,mutual understanding,vr,task 2,6
-,,behaviroal engagement,vr,task 2,4
-,,behaviroal engagement,vr,task 2,6
-,2,copresence,ar,task 2,2
-,,copresence,ar,task 2,6
-,,copresence,ar,task 2,4
-,,copresence,ar,task 2,5
-,,mutual attention,ar,task 2,7
-,,mutual attention,ar,task 2,5
-,,mutual attention,ar,task 2,3
-,,mutual understanding,ar,task 2,5
-,,mutual understanding,ar,task 2,5
-,,behaviroal engagement,ar,task 2,4
-,,behaviroal engagement,ar,task 2,7
-,3,copresence,vr,task 2,2
-,,copresence,vr,task 2,6
-,,copresence,vr,task 2,5
-,,copresence,vr,task 2,4
-,,mutual attention,vr,task 2,3
-,,mutual attention,vr,task 2,5
-,,mutual attention,vr,task 2,3
-,,mutual understanding,vr,task 2,7
-,,mutual understanding,vr,task 2,4
-,,behaviroal engagement,vr,task 2,4
-,,behaviroal engagement,vr,task 2,7
-,4,copresence,ar,task 2,7
-,,copresence,ar,task 2,5
-,,copresence,ar,task 2,5
-,,copresence,ar,task 2,2
-,,mutual attention,ar,task 2,3
-,,mutual attention,ar,task 2,2
-,,mutual attention,ar,task 2,4
-,,mutual understanding,ar,task 2,3
-,,mutual understanding,ar,task 2,2
-,,behaviroal engagement,ar,task 2,2
-,,behaviroal engagement,ar,task 2,3
-,1,copresence,vr,task 3,2
-,,copresence,vr,task 3,6
-,,copresence,vr,task 3,2
-,,copresence,vr,task 3,7
-,,mutual attention,vr,task 3,4
-,,mutual attention,vr,task 3,7
-,,mutual attention,vr,task 3,7
-,,mutual understanding,vr,task 3,2
-,,mutual understanding,vr,task 3,7
-,,behaviroal engagement,vr,task 3,4
-,,behaviroal engagement,vr,task 3,3
-,2,copresence,ar,task 3,6
-,,copresence,ar,task 3,3
-,,copresence,ar,task 3,4
-,,copresence,ar,task 3,2
-,,mutual attention,ar,task 3,2
-,,mutual attention,ar,task 3,3
-,,mutual attention,ar,task 3,2
-,,mutual understanding,ar,task 3,6
-,,mutual understanding,ar,task 3,7
-,,behaviroal engagement,ar,task 3,7
-,,behaviroal engagement,ar,task 3,2
-,3,copresence,vr,task 3,2
-,,copresence,vr,task 3,4
-,,copresence,vr,task 3,7
-,,copresence,vr,task 3,7
-,,mutual attention,vr,task 3,2
-,,mutual attention,vr,task 3,6
-,,mutual attention,vr,task 3,6
-,,mutual understanding,vr,task 3,7
-,,mutual understanding,vr,task 3,6
-,,behaviroal engagement,vr,task 3,6
-,,behaviroal engagement,vr,task 3,6
-,4,copresence,ar,task 3,6
-,,copresence,ar,task 3,5
-,,copresence,ar,task 3,4
-,,copresence,ar,task 3,5
-,,mutual attention,ar,task 3,3
-,,mutual attention,ar,task 3,2
-,,mutual attention,ar,task 3,2
-,,mutual understanding,ar,task 3,3
-,,mutual understanding,ar,task 3,3
-,,behaviroal engagement,ar,task 3,5
-,,behaviroal engagement,ar,task 3,5
-5,1,copresence,vr,task 1,4
-,,copresence,vr,task 1,7
-,,copresence,vr,task 1,3
-,,copresence,vr,task 1,3
-,,mutual attention,vr,task 1,2
-,,mutual attention,vr,task 1,6
-,,mutual attention,vr,task 1,3
-,,mutual understanding,vr,task 1,6
-,,mutual understanding,vr,task 1,7
-,,behaviroal engagement,vr,task 1,6
-,,behaviroal engagement,vr,task 1,5
-,2,copresence,ar,task 1,6
-,,copresence,ar,task 1,4
-,,copresence,ar,task 1,6
-,,copresence,ar,task 1,2
-,,mutual attention,ar,task 1,4
-,,mutual attention,ar,task 1,2
-,,mutual attention,ar,task 1,4
-,,mutual understanding,ar,task 1,4
-,,mutual understanding,ar,task 1,5
-,,behaviroal engagement,ar,task 1,3
-,,behaviroal engagement,ar,task 1,6
-,3,copresence,vr,task 1,7
-,,copresence,vr,task 1,5
-,,copresence,vr,task 1,7
-,,copresence,vr,task 1,3
-,,mutual attention,vr,task 1,4
-,,mutual attention,vr,task 1,6
-,,mutual attention,vr,task 1,7
-,,mutual understanding,vr,task 1,7
-,,mutual understanding,vr,task 1,6
-,,behaviroal engagement,vr,task 1,7
-,,behaviroal engagement,vr,task 1,3
-,4,copresence,ar,task 1,6
-,,copresence,ar,task 1,4
-,,copresence,ar,task 1,6
-,,copresence,ar,task 1,6
-,,mutual attention,ar,task 1,2
-,,mutual attention,ar,task 1,4
-,,mutual attention,ar,task 1,4
-,,mutual understanding,ar,task 1,3
-,,mutual understanding,ar,task 1,2
-,,behaviroal engagement,ar,task 1,4
-,,behaviroal engagement,ar,task 1,6
-,1,copresence,vr,task 2,2
-,,copresence,vr,task 2,4
-,,copresence,vr,task 2,6
-,,copresence,vr,task 2,4
-,,mutual attention,vr,task 2,3
-,,mutual attention,vr,task 2,3
-,,mutual attention,vr,task 2,4
-,,mutual understanding,vr,task 2,2
-,,mutual understanding,vr,task 2,6
-,,behaviroal engagement,vr,task 2,4
-,,behaviroal engagement,vr,task 2,5
-,2,copresence,ar,task 2,2
-,,copresence,ar,task 2,3
-,,copresence,ar,task 2,2
-,,copresence,ar,task 2,3
-,,mutual attention,ar,task 2,5
-,,mutual attention,ar,task 2,7
-,,mutual attention,ar,task 2,7
-,,mutual understanding,ar,task 2,4
-,,mutual understanding,ar,task 2,7
-,,behaviroal engagement,ar,task 2,4
-,,behaviroal engagement,ar,task 2,6
-,3,copresence,vr,task 2,5
-,,copresence,vr,task 2,5
-,,copresence,vr,task 2,4
-,,copresence,vr,task 2,6
-,,mutual attention,vr,task 2,6
-,,mutual attention,vr,task 2,2
-,,mutual attention,vr,task 2,7
-,,mutual understanding,vr,task 2,4
-,,mutual understanding,vr,task 2,2
-,,behaviroal engagement,vr,task 2,3
-,,behaviroal engagement,vr,task 2,3
-,4,copresence,ar,task 2,5
-,,copresence,ar,task 2,6
-,,copresence,ar,task 2,4
-,,copresence,ar,task 2,7
-,,mutual attention,ar,task 2,6
-,,mutual attention,ar,task 2,3
-,,mutual attention,ar,task 2,3
-,,mutual understanding,ar,task 2,5
-,,mutual understanding,ar,task 2,6
-,,behaviroal engagement,ar,task 2,7
-,,behaviroal engagement,ar,task 2,5
-,1,copresence,vr,task 3,6
-,,copresence,vr,task 3,6
-,,copresence,vr,task 3,4
-,,copresence,vr,task 3,5
-,,mutual attention,vr,task 3,2
-,,mutual attention,vr,task 3,4
-,,mutual attention,vr,task 3,4
-,,mutual understanding,vr,task 3,7
-,,mutual understanding,vr,task 3,7
-,,behaviroal engagement,vr,task 3,3
-,,behaviroal engagement,vr,task 3,2
-,2,copresence,ar,task 3,4
-,,copresence,ar,task 3,4
-,,copresence,ar,task 3,2
-,,copresence,ar,task 3,6
-,,mutual attention,ar,task 3,7
-,,mutual attention,ar,task 3,7
-,,mutual attention,ar,task 3,2
-,,mutual understanding,ar,task 3,3
-,,mutual understanding,ar,task 3,5
-,,behaviroal engagement,ar,task 3,5
-,,behaviroal engagement,ar,task 3,6
-,3,copresence,vr,task 3,7
-,,copresence,vr,task 3,6
-,,copresence,vr,task 3,2
-,,copresence,vr,task 3,7
-,,mutual attention,vr,task 3,7
-,,mutual attention,vr,task 3,3
-,,mutual attention,vr,task 3,6
-,,mutual understanding,vr,task 3,7
-,,mutual understanding,vr,task 3,5
-,,behaviroal engagement,vr,task 3,6
-,,behaviroal engagement,vr,task 3,7
-,4,copresence,ar,task 3,5
-,,copresence,ar,task 3,4
-,,copresence,ar,task 3,2
-,,copresence,ar,task 3,5
-,,mutual attention,ar,task 3,5
-,,mutual attention,ar,task 3,6
-,,mutual attention,ar,task 3,6
-,,mutual understanding,ar,task 3,5
-,,mutual understanding,ar,task 3,5
-,,behaviroal engagement,ar,task 3,6
-,,behaviroal engagement,ar,task 3,3
-6,1,copresence,vr,task 1,7
-,,copresence,vr,task 1,6
-,,copresence,vr,task 1,7
-,,copresence,vr,task 1,3
-,,mutual attention,vr,task 1,2
-,,mutual attention,vr,task 1,5
-,,mutual attention,vr,task 1,2
-,,mutual understanding,vr,task 1,2
-,,mutual understanding,vr,task 1,3
-,,behaviroal engagement,vr,task 1,6
-,,behaviroal engagement,vr,task 1,6
-,2,copresence,ar,task 1,4
-,,copresence,ar,task 1,3
-,,copresence,ar,task 1,3
-,,copresence,ar,task 1,7
-,,mutual attention,ar,task 1,3
-,,mutual attention,ar,task 1,2
-,,mutual attention,ar,task 1,6
-,,mutual understanding,ar,task 1,5
-,,mutual understanding,ar,task 1,7
-,,behaviroal engagement,ar,task 1,2
-,,behaviroal engagement,ar,task 1,6
-,3,copresence,vr,task 1,2
-,,copresence,vr,task 1,6
-,,copresence,vr,task 1,6
-,,copresence,vr,task 1,5
-,,mutual attention,vr,task 1,4
-,,mutual attention,vr,task 1,2
-,,mutual attention,vr,task 1,6
-,,mutual understanding,vr,task 1,5
-,,mutual understanding,vr,task 1,7
-,,behaviroal engagement,vr,task 1,3
-,,behaviroal engagement,vr,task 1,7
-,4,copresence,ar,task 1,5
-,,copresence,ar,task 1,7
-,,copresence,ar,task 1,5
-,,copresence,ar,task 1,6
-,,mutual attention,ar,task 1,5
-,,mutual attention,ar,task 1,3
-,,mutual attention,ar,task 1,3
-,,mutual understanding,ar,task 1,5
-,,mutual understanding,ar,task 1,7
-,,behaviroal engagement,ar,task 1,5
-,,behaviroal engagement,ar,task 1,3
-,1,copresence,vr,task 2,4
-,,copresence,vr,task 2,4
-,,copresence,vr,task 2,7
-,,copresence,vr,task 2,3
-,,mutual attention,vr,task 2,5
-,,mutual attention,vr,task 2,2
-,,mutual attention,vr,task 2,3
-,,mutual understanding,vr,task 2,7
-,,mutual understanding,vr,task 2,5
-,,behaviroal engagement,vr,task 2,2
-,,behaviroal engagement,vr,task 2,2
-,2,copresence,ar,task 2,7
-,,copresence,ar,task 2,7
-,,copresence,ar,task 2,6
-,,copresence,ar,task 2,7
-,,mutual attention,ar,task 2,4
-,,mutual attention,ar,task 2,5
-,,mutual attention,ar,task 2,4
-,,mutual understanding,ar,task 2,5
-,,mutual understanding,ar,task 2,2
-,,behaviroal engagement,ar,task 2,2
-,,behaviroal engagement,ar,task 2,6
-,3,copresence,vr,task 2,5
-,,copresence,vr,task 2,2
-,,copresence,vr,task 2,6
-,,copresence,vr,task 2,7
-,,mutual attention,vr,task 2,4
-,,mutual attention,vr,task 2,6
-,,mutual attention,vr,task 2,6
-,,mutual understanding,vr,task 2,6
-,,mutual understanding,vr,task 2,7
-,,behaviroal engagement,vr,task 2,7
-,,behaviroal engagement,vr,task 2,3
-,4,copresence,ar,task 2,4
-,,copresence,ar,task 2,3
-,,copresence,ar,task 2,2
-,,copresence,ar,task 2,2
-,,mutual attention,ar,task 2,2
-,,mutual attention,ar,task 2,4
-,,mutual attention,ar,task 2,6
-,,mutual understanding,ar,task 2,5
-,,mutual understanding,ar,task 2,5
-,,behaviroal engagement,ar,task 2,4
-,,behaviroal engagement,ar,task 2,2
-,1,copresence,vr,task 3,4
-,,copresence,vr,task 3,3
-,,copresence,vr,task 3,3
-,,copresence,vr,task 3,2
-,,mutual attention,vr,task 3,5
-,,mutual attention,vr,task 3,3
-,,mutual attention,vr,task 3,7
-,,mutual understanding,vr,task 3,6
-,,mutual understanding,vr,task 3,7
-,,behaviroal engagement,vr,task 3,7
-,,behaviroal engagement,vr,task 3,7
-,2,copresence,ar,task 3,3
-,,copresence,ar,task 3,5
-,,copresence,ar,task 3,2
-,,copresence,ar,task 3,3
-,,mutual attention,ar,task 3,5
-,,mutual attention,ar,task 3,2
-,,mutual attention,ar,task 3,7
-,,mutual understanding,ar,task 3,3
-,,mutual understanding,ar,task 3,7
-,,behaviroal engagement,ar,task 3,4
-,,behaviroal engagement,ar,task 3,7
-,3,copresence,vr,task 3,4
-,,copresence,vr,task 3,3
-,,copresence,vr,task 3,6
-,,copresence,vr,task 3,3
-,,mutual attention,vr,task 3,7
-,,mutual attention,vr,task 3,7
-,,mutual attention,vr,task 3,4
-,,mutual understanding,vr,task 3,5
-,,mutual understanding,vr,task 3,5
-,,behaviroal engagement,vr,task 3,7
-,,behaviroal engagement,vr,task 3,2
-,4,copresence,ar,task 3,5
-,,copresence,ar,task 3,7
-,,copresence,ar,task 3,3
-,,copresence,ar,task 3,2
-,,mutual attention,ar,task 3,7
-,,mutual attention,ar,task 3,5
-,,mutual attention,ar,task 3,6
-,,mutual understanding,ar,task 3,6
-,,mutual understanding,ar,task 3,4
-,,behaviroal engagement,ar,task 3,5
-,,behaviroal engagement,ar,task 3,5
-7,1,copresence,vr,task 1,5
-,,copresence,vr,task 1,6
-,,copresence,vr,task 1,6
-,,copresence,vr,task 1,5
-,,mutual attention,vr,task 1,2
-,,mutual attention,vr,task 1,4
-,,mutual attention,vr,task 1,4
-,,mutual understanding,vr,task 1,6
-,,mutual understanding,vr,task 1,5
-,,behaviroal engagement,vr,task 1,3
-,,behaviroal engagement,vr,task 1,6
-,2,copresence,ar,task 1,4
-,,copresence,ar,task 1,3
-,,copresence,ar,task 1,7
-,,copresence,ar,task 1,2
-,,mutual attention,ar,task 1,4
-,,mutual attention,ar,task 1,7
-,,mutual attention,ar,task 1,2
-,,mutual understanding,ar,task 1,7
-,,mutual understanding,ar,task 1,4
-,,behaviroal engagement,ar,task 1,3
-,,behaviroal engagement,ar,task 1,4
-,3,copresence,vr,task 1,2
-,,copresence,vr,task 1,7
-,,copresence,vr,task 1,5
-,,copresence,vr,task 1,3
-,,mutual attention,vr,task 1,6
-,,mutual attention,vr,task 1,3
-,,mutual attention,vr,task 1,7
-,,mutual understanding,vr,task 1,4
-,,mutual understanding,vr,task 1,5
-,,behaviroal engagement,vr,task 1,2
-,,behaviroal engagement,vr,task 1,2
-,4,copresence,ar,task 1,7
-,,copresence,ar,task 1,7
-,,copresence,ar,task 1,5
-,,copresence,ar,task 1,5
-,,mutual attention,ar,task 1,2
-,,mutual attention,ar,task 1,6
-,,mutual attention,ar,task 1,7
-,,mutual understanding,ar,task 1,6
-,,mutual understanding,ar,task 1,4
-,,behaviroal engagement,ar,task 1,3
-,,behaviroal engagement,ar,task 1,5
-,1,copresence,vr,task 2,7
-,,copresence,vr,task 2,4
-,,copresence,vr,task 2,2
-,,copresence,vr,task 2,4
-,,mutual attention,vr,task 2,2
-,,mutual attention,vr,task 2,6
-,,mutual attention,vr,task 2,4
-,,mutual understanding,vr,task 2,6
-,,mutual understanding,vr,task 2,5
-,,behaviroal engagement,vr,task 2,3
-,,behaviroal engagement,vr,task 2,2
-,2,copresence,ar,task 2,2
-,,copresence,ar,task 2,5
-,,copresence,ar,task 2,7
-,,copresence,ar,task 2,3
-,,mutual attention,ar,task 2,2
-,,mutual attention,ar,task 2,2
-,,mutual attention,ar,task 2,4
-,,mutual understanding,ar,task 2,5
-,,mutual understanding,ar,task 2,6
-,,behaviroal engagement,ar,task 2,2
-,,behaviroal engagement,ar,task 2,5
-,3,copresence,vr,task 2,2
-,,copresence,vr,task 2,7
-,,copresence,vr,task 2,2
-,,copresence,vr,task 2,6
-,,mutual attention,vr,task 2,6
-,,mutual attention,vr,task 2,6
-,,mutual attention,vr,task 2,4
-,,mutual understanding,vr,task 2,7
-,,mutual understanding,vr,task 2,5
-,,behaviroal engagement,vr,task 2,7
-,,behaviroal engagement,vr,task 2,3
-,4,copresence,ar,task 2,3
-,,copresence,ar,task 2,3
-,,copresence,ar,task 2,7
-,,copresence,ar,task 2,7
-,,mutual attention,ar,task 2,4
-,,mutual attention,ar,task 2,5
-,,mutual attention,ar,task 2,7
-,,mutual understanding,ar,task 2,5
-,,mutual understanding,ar,task 2,6
-,,behaviroal engagement,ar,task 2,2
-,,behaviroal engagement,ar,task 2,4
-,1,copresence,vr,task 3,3
-,,copresence,vr,task 3,4
-,,copresence,vr,task 3,4
-,,copresence,vr,task 3,2
-,,mutual attention,vr,task 3,6
-,,mutual attention,vr,task 3,7
-,,mutual attention,vr,task 3,3
-,,mutual understanding,vr,task 3,5
-,,mutual understanding,vr,task 3,2
-,,behaviroal engagement,vr,task 3,2
-,,behaviroal engagement,vr,task 3,3
-,2,copresence,ar,task 3,7
-,,copresence,ar,task 3,3
-,,copresence,ar,task 3,6
-,,copresence,ar,task 3,3
-,,mutual attention,ar,task 3,4
-,,mutual attention,ar,task 3,3
-,,mutual attention,ar,task 3,5
-,,mutual understanding,ar,task 3,2
-,,mutual understanding,ar,task 3,5
-,,behaviroal engagement,ar,task 3,3
-,,behaviroal engagement,ar,task 3,5
-,3,copresence,vr,task 3,4
-,,copresence,vr,task 3,6
-,,copresence,vr,task 3,6
-,,copresence,vr,task 3,2
-,,mutual attention,vr,task 3,4
-,,mutual attention,vr,task 3,3
-,,mutual attention,vr,task 3,7
-,,mutual understanding,vr,task 3,6
-,,mutual understanding,vr,task 3,5
-,,behaviroal engagement,vr,task 3,6
-,,behaviroal engagement,vr,task 3,6
-,4,copresence,ar,task 3,6
-,,copresence,ar,task 3,2
-,,copresence,ar,task 3,4
-,,copresence,ar,task 3,4
-,,mutual attention,ar,task 3,5
-,,mutual attention,ar,task 3,2
-,,mutual attention,ar,task 3,4
-,,mutual understanding,ar,task 3,6
-,,mutual understanding,ar,task 3,5
-,,behaviroal engagement,ar,task 3,5
-,,behaviroal engagement,ar,task 3,6
-8,1,copresence,vr,task 1,6
-,,copresence,vr,task 1,5
-,,copresence,vr,task 1,3
-,,copresence,vr,task 1,2
-,,mutual attention,vr,task 1,3
-,,mutual attention,vr,task 1,7
-,,mutual attention,vr,task 1,4
-,,mutual understanding,vr,task 1,4
-,,mutual understanding,vr,task 1,5
-,,behaviroal engagement,vr,task 1,2
-,,behaviroal engagement,vr,task 1,7
-,2,copresence,ar,task 1,5
-,,copresence,ar,task 1,3
-,,copresence,ar,task 1,3
-,,copresence,ar,task 1,7
-,,mutual attention,ar,task 1,3
-,,mutual attention,ar,task 1,5
-,,mutual attention,ar,task 1,6
-,,mutual understanding,ar,task 1,7
-,,mutual understanding,ar,task 1,5
-,,behaviroal engagement,ar,task 1,7
-,,behaviroal engagement,ar,task 1,4
-,3,copresence,vr,task 1,3
-,,copresence,vr,task 1,2
-,,copresence,vr,task 1,6
-,,copresence,vr,task 1,2
-,,mutual attention,vr,task 1,2
-,,mutual attention,vr,task 1,3
-,,mutual attention,vr,task 1,6
-,,mutual understanding,vr,task 1,2
-,,mutual understanding,vr,task 1,3
-,,behaviroal engagement,vr,task 1,5
-,,behaviroal engagement,vr,task 1,4
-,4,copresence,ar,task 1,7
-,,copresence,ar,task 1,4
-,,copresence,ar,task 1,4
-,,copresence,ar,task 1,7
-,,mutual attention,ar,task 1,6
-,,mutual attention,ar,task 1,6
-,,mutual attention,ar,task 1,6
-,,mutual understanding,ar,task 1,3
-,,mutual understanding,ar,task 1,6
-,,behaviroal engagement,ar,task 1,7
-,,behaviroal engagement,ar,task 1,3
-,1,copresence,vr,task 2,5
-,,copresence,vr,task 2,6
-,,copresence,vr,task 2,7
-,,copresence,vr,task 2,6
-,,mutual attention,vr,task 2,5
-,,mutual attention,vr,task 2,4
-,,mutual attention,vr,task 2,5
-,,mutual understanding,vr,task 2,6
-,,mutual understanding,vr,task 2,4
-,,behaviroal engagement,vr,task 2,6
-,,behaviroal engagement,vr,task 2,7
-,2,copresence,ar,task 2,3
-,,copresence,ar,task 2,3
-,,copresence,ar,task 2,6
-,,copresence,ar,task 2,3
-,,mutual attention,ar,task 2,4
-,,mutual attention,ar,task 2,5
-,,mutual attention,ar,task 2,4
-,,mutual understanding,ar,task 2,2
-,,mutual understanding,ar,task 2,3
-,,behaviroal engagement,ar,task 2,5
-,,behaviroal engagement,ar,task 2,3
-,3,copresence,vr,task 2,3
-,,copresence,vr,task 2,3
-,,copresence,vr,task 2,4
-,,copresence,vr,task 2,7
-,,mutual attention,vr,task 2,5
-,,mutual attention,vr,task 2,5
-,,mutual attention,vr,task 2,6
-,,mutual understanding,vr,task 2,3
-,,mutual understanding,vr,task 2,6
-,,behaviroal engagement,vr,task 2,4
-,,behaviroal engagement,vr,task 2,3
-,4,copresence,ar,task 2,5
-,,copresence,ar,task 2,5
-,,copresence,ar,task 2,2
-,,copresence,ar,task 2,4
-,,mutual attention,ar,task 2,6
-,,mutual attention,ar,task 2,6
-,,mutual attention,ar,task 2,4
-,,mutual understanding,ar,task 2,3
-,,mutual understanding,ar,task 2,4
-,,behaviroal engagement,ar,task 2,3
-,,behaviroal engagement,ar,task 2,3
-,1,copresence,vr,task 3,4
-,,copresence,vr,task 3,4
-,,copresence,vr,task 3,7
-,,copresence,vr,task 3,3
-,,mutual attention,vr,task 3,4
-,,mutual attention,vr,task 3,4
-,,mutual attention,vr,task 3,6
-,,mutual understanding,vr,task 3,4
-,,mutual understanding,vr,task 3,6
-,,behaviroal engagement,vr,task 3,2
-,,behaviroal engagement,vr,task 3,5
-,2,copresence,ar,task 3,2
-,,copresence,ar,task 3,3
-,,copresence,ar,task 3,5
-,,copresence,ar,task 3,7
-,,mutual attention,ar,task 3,3
-,,mutual attention,ar,task 3,2
-,,mutual attention,ar,task 3,5
-,,mutual understanding,ar,task 3,2
-,,mutual understanding,ar,task 3,7
-,,behaviroal engagement,ar,task 3,5
-,,behaviroal engagement,ar,task 3,7
-,3,copresence,vr,task 3,6
-,,copresence,vr,task 3,6
-,,copresence,vr,task 3,5
-,,copresence,vr,task 3,5
-,,mutual attention,vr,task 3,4
-,,mutual attention,vr,task 3,6
-,,mutual attention,vr,task 3,7
-,,mutual understanding,vr,task 3,4
-,,mutual understanding,vr,task 3,5
-,,behaviroal engagement,vr,task 3,3
-,,behaviroal engagement,vr,task 3,2
-,4,copresence,ar,task 3,2
-,,copresence,ar,task 3,4
-,,copresence,ar,task 3,3
-,,copresence,ar,task 3,2
-,,mutual attention,ar,task 3,7
-,,mutual attention,ar,task 3,5
-,,mutual attention,ar,task 3,3
-,,mutual understanding,ar,task 3,4
-,,mutual understanding,ar,task 3,5
-,,behaviroal engagement,ar,task 3,7
-,,behaviroal engagement,ar,task 3,2
-9,1,copresence,vr,task 1,5
-,,copresence,vr,task 1,3
-,,copresence,vr,task 1,2
-,,copresence,vr,task 1,2
-,,mutual attention,vr,task 1,4
-,,mutual attention,vr,task 1,5
-,,mutual attention,vr,task 1,3
-,,mutual understanding,vr,task 1,6
-,,mutual understanding,vr,task 1,2
-,,behaviroal engagement,vr,task 1,4
-,,behaviroal engagement,vr,task 1,5
-,2,copresence,ar,task 1,5
-,,copresence,ar,task 1,7
-,,copresence,ar,task 1,3
-,,copresence,ar,task 1,7
-,,mutual attention,ar,task 1,4
-,,mutual attention,ar,task 1,3
-,,mutual attention,ar,task 1,6
-,,mutual understanding,ar,task 1,7
-,,mutual understanding,ar,task 1,5
-,,behaviroal engagement,ar,task 1,3
-,,behaviroal engagement,ar,task 1,2
-,3,copresence,vr,task 1,2
-,,copresence,vr,task 1,2
-,,copresence,vr,task 1,2
-,,copresence,vr,task 1,5
-,,mutual attention,vr,task 1,7
-,,mutual attention,vr,task 1,5
-,,mutual attention,vr,task 1,6
-,,mutual understanding,vr,task 1,6
-,,mutual understanding,vr,task 1,2
-,,behaviroal engagement,vr,task 1,2
-,,behaviroal engagement,vr,task 1,6
-,4,copresence,ar,task 1,3
-,,copresence,ar,task 1,7
-,,copresence,ar,task 1,4
-,,copresence,ar,task 1,6
-,,mutual attention,ar,task 1,2
-,,mutual attention,ar,task 1,7
-,,mutual attention,ar,task 1,6
-,,mutual understanding,ar,task 1,3
-,,mutual understanding,ar,task 1,7
-,,behaviroal engagement,ar,task 1,6
-,,behaviroal engagement,ar,task 1,7
-,1,copresence,vr,task 2,3
-,,copresence,vr,task 2,6
-,,copresence,vr,task 2,3
-,,copresence,vr,task 2,7
-,,mutual attention,vr,task 2,5
-,,mutual attention,vr,task 2,3
-,,mutual attention,vr,task 2,5
-,,mutual understanding,vr,task 2,2
-,,mutual understanding,vr,task 2,7
-,,behaviroal engagement,vr,task 2,5
-,,behaviroal engagement,vr,task 2,5
-,2,copresence,ar,task 2,7
-,,copresence,ar,task 2,6
-,,copresence,ar,task 2,6
-,,copresence,ar,task 2,6
-,,mutual attention,ar,task 2,4
-,,mutual attention,ar,task 2,7
-,,mutual attention,ar,task 2,3
-,,mutual understanding,ar,task 2,5
-,,mutual understanding,ar,task 2,3
-,,behaviroal engagement,ar,task 2,5
-,,behaviroal engagement,ar,task 2,5
-,3,copresence,vr,task 2,4
-,,copresence,vr,task 2,4
-,,copresence,vr,task 2,2
-,,copresence,vr,task 2,3
-,,mutual attention,vr,task 2,7
-,,mutual attention,vr,task 2,2
-,,mutual attention,vr,task 2,7
-,,mutual understanding,vr,task 2,3
-,,mutual understanding,vr,task 2,5
-,,behaviroal engagement,vr,task 2,7
-,,behaviroal engagement,vr,task 2,3
-,4,copresence,ar,task 2,5
-,,copresence,ar,task 2,7
-,,copresence,ar,task 2,2
-,,copresence,ar,task 2,2
-,,mutual attention,ar,task 2,6
-,,mutual attention,ar,task 2,5
-,,mutual attention,ar,task 2,2
-,,mutual understanding,ar,task 2,6
-,,mutual understanding,ar,task 2,5
-,,behaviroal engagement,ar,task 2,5
-,,behaviroal engagement,ar,task 2,4
-,1,copresence,vr,task 3,6
-,,copresence,vr,task 3,7
-,,copresence,vr,task 3,6
-,,copresence,vr,task 3,3
-,,mutual attention,vr,task 3,4
-,,mutual attention,vr,task 3,7
-,,mutual attention,vr,task 3,5
-,,mutual understanding,vr,task 3,3
-,,mutual understanding,vr,task 3,2
-,,behaviroal engagement,vr,task 3,3
-,,behaviroal engagement,vr,task 3,3
-,2,copresence,ar,task 3,3
-,,copresence,ar,task 3,4
-,,copresence,ar,task 3,4
-,,copresence,ar,task 3,6
-,,mutual attention,ar,task 3,4
-,,mutual attention,ar,task 3,5
-,,mutual attention,ar,task 3,6
-,,mutual understanding,ar,task 3,3
-,,mutual understanding,ar,task 3,6
-,,behaviroal engagement,ar,task 3,3
-,,behaviroal engagement,ar,task 3,5
-,3,copresence,vr,task 3,3
-,,copresence,vr,task 3,4
-,,copresence,vr,task 3,7
-,,copresence,vr,task 3,6
-,,mutual attention,vr,task 3,7
-,,mutual attention,vr,task 3,4
-,,mutual attention,vr,task 3,7
-,,mutual understanding,vr,task 3,3
-,,mutual understanding,vr,task 3,2
-,,behaviroal engagement,vr,task 3,2
-,,behaviroal engagement,vr,task 3,3
-,4,copresence,ar,task 3,4
-,,copresence,ar,task 3,3
-,,copresence,ar,task 3,5
-,,copresence,ar,task 3,4
-,,mutual attention,ar,task 3,6
-,,mutual attention,ar,task 3,5
-,,mutual attention,ar,task 3,4
-,,mutual understanding,ar,task 3,3
-,,mutual understanding,ar,task 3,5
-,,behaviroal engagement,ar,task 3,5
-,,behaviroal engagement,ar,task 3,6
+grp,id,params,vrar,conditions,score
+1,1,copresence,vr,C1,3
+,,copresence,vr,C1,3
+,,copresence,vr,C1,5
+,,copresence,vr,C1,3
+,,mutual attention,vr,C1,4
+,,mutual attention,vr,C1,1
+,,mutual attention,vr,C1,5
+,,mutual understanding,vr,C1,3
+,,mutual understanding,vr,C1,1
+,,behaviroal engagement,vr,C1,1
+,,behaviroal engagement,vr,C1,3
+,2,copresence,ar,C1,2
+,,copresence,ar,C1,3
+,,copresence,ar,C1,3
+,,copresence,ar,C1,1
+,,mutual attention,ar,C1,4
+,,mutual attention,ar,C1,4
+,,mutual attention,ar,C1,4
+,,mutual understanding,ar,C1,5
+,,mutual understanding,ar,C1,3
+,,behaviroal engagement,ar,C1,5
+,,behaviroal engagement,ar,C1,3
+,3,copresence,vr,C1,1
+,,copresence,vr,C1,5
+,,copresence,vr,C1,3
+,,copresence,vr,C1,1
+,,mutual attention,vr,C1,3
+,,mutual attention,vr,C1,3
+,,mutual attention,vr,C1,1
+,,mutual understanding,vr,C1,5
+,,mutual understanding,vr,C1,3
+,,behaviroal engagement,vr,C1,3
+,,behaviroal engagement,vr,C1,3
+,4,copresence,ar,C1,4
+,,copresence,ar,C1,5
+,,copresence,ar,C1,1
+,,copresence,ar,C1,5
+,,mutual attention,ar,C1,2
+,,mutual attention,ar,C1,2
+,,mutual attention,ar,C1,4
+,,mutual understanding,ar,C1,2
+,,mutual understanding,ar,C1,5
+,,behaviroal engagement,ar,C1,2
+,,behaviroal engagement,ar,C1,2
+,1,copresence,vr,C2,5
+,,copresence,vr,C2,2
+,,copresence,vr,C2,4
+,,copresence,vr,C2,3
+,,mutual attention,vr,C2,5
+,,mutual attention,vr,C2,3
+,,mutual attention,vr,C2,6
+,,mutual understanding,vr,C2,2
+,,mutual understanding,vr,C2,4
+,,behaviroal engagement,vr,C2,3
+,,behaviroal engagement,vr,C2,4
+,2,copresence,ar,C2,5
+,,copresence,ar,C2,7
+,,copresence,ar,C2,5
+,,copresence,ar,C2,2
+,,mutual attention,ar,C2,2
+,,mutual attention,ar,C2,7
+,,mutual attention,ar,C2,4
+,,mutual understanding,ar,C2,5
+,,mutual understanding,ar,C2,3
+,,behaviroal engagement,ar,C2,5
+,,behaviroal engagement,ar,C2,6
+,3,copresence,vr,C2,3
+,,copresence,vr,C2,2
+,,copresence,vr,C2,3
+,,copresence,vr,C2,2
+,,mutual attention,vr,C2,5
+,,mutual attention,vr,C2,4
+,,mutual attention,vr,C2,2
+,,mutual understanding,vr,C2,7
+,,mutual understanding,vr,C2,3
+,,behaviroal engagement,vr,C2,7
+,,behaviroal engagement,vr,C2,6
+,4,copresence,ar,C2,3
+,,copresence,ar,C2,7
+,,copresence,ar,C2,7
+,,copresence,ar,C2,5
+,,mutual attention,ar,C2,3
+,,mutual attention,ar,C2,6
+,,mutual attention,ar,C2,4
+,,mutual understanding,ar,C2,6
+,,mutual understanding,ar,C2,7
+,,behaviroal engagement,ar,C2,4
+,,behaviroal engagement,ar,C2,3
+,1,copresence,vr,C3,7
+,,copresence,vr,C3,7
+,,copresence,vr,C3,5
+,,copresence,vr,C3,4
+,,mutual attention,vr,C3,2
+,,mutual attention,vr,C3,4
+,,mutual attention,vr,C3,4
+,,mutual understanding,vr,C3,6
+,,mutual understanding,vr,C3,3
+,,behaviroal engagement,vr,C3,3
+,,behaviroal engagement,vr,C3,2
+,2,copresence,ar,C3,7
+,,copresence,ar,C3,3
+,,copresence,ar,C3,4
+,,copresence,ar,C3,6
+,,mutual attention,ar,C3,5
+,,mutual attention,ar,C3,7
+,,mutual attention,ar,C3,6
+,,mutual understanding,ar,C3,2
+,,mutual understanding,ar,C3,4
+,,behaviroal engagement,ar,C3,7
+,,behaviroal engagement,ar,C3,5
+,3,copresence,vr,C3,4
+,,copresence,vr,C3,6
+,,copresence,vr,C3,2
+,,copresence,vr,C3,7
+,,mutual attention,vr,C3,3
+,,mutual attention,vr,C3,4
+,,mutual attention,vr,C3,6
+,,mutual understanding,vr,C3,6
+,,mutual understanding,vr,C3,2
+,,behaviroal engagement,vr,C3,2
+,,behaviroal engagement,vr,C3,7
+,4,copresence,ar,C3,3
+,,copresence,ar,C3,7
+,,copresence,ar,C3,7
+,,copresence,ar,C3,4
+,,mutual attention,ar,C3,4
+,,mutual attention,ar,C3,7
+,,mutual attention,ar,C3,5
+,,mutual understanding,ar,C3,7
+,,mutual understanding,ar,C3,4
+,,behaviroal engagement,ar,C3,2
+,,behaviroal engagement,ar,C3,3
+2,1,copresence,vr,C1,1
+,,copresence,vr,C1,2
+,,copresence,vr,C1,4
+,,copresence,vr,C1,2
+,,mutual attention,vr,C1,1
+,,mutual attention,vr,C1,5
+,,mutual attention,vr,C1,4
+,,mutual understanding,vr,C1,2
+,,mutual understanding,vr,C1,4
+,,behaviroal engagement,vr,C1,3
+,,behaviroal engagement,vr,C1,2
+,2,copresence,ar,C1,3
+,,copresence,ar,C1,3
+,,copresence,ar,C1,2
+,,copresence,ar,C1,4
+,,mutual attention,ar,C1,4
+,,mutual attention,ar,C1,4
+,,mutual attention,ar,C1,1
+,,mutual understanding,ar,C1,3
+,,mutual understanding,ar,C1,4
+,,behaviroal engagement,ar,C1,5
+,,behaviroal engagement,ar,C1,5
+,3,copresence,vr,C1,2
+,,copresence,vr,C1,5
+,,copresence,vr,C1,2
+,,copresence,vr,C1,2
+,,mutual attention,vr,C1,5
+,,mutual attention,vr,C1,2
+,,mutual attention,vr,C1,2
+,,mutual understanding,vr,C1,5
+,,mutual understanding,vr,C1,2
+,,behaviroal engagement,vr,C1,2
+,,behaviroal engagement,vr,C1,3
+,4,copresence,ar,C1,1
+,,copresence,ar,C1,2
+,,copresence,ar,C1,5
+,,copresence,ar,C1,1
+,,mutual attention,ar,C1,4
+,,mutual attention,ar,C1,4
+,,mutual attention,ar,C1,4
+,,mutual understanding,ar,C1,2
+,,mutual understanding,ar,C1,1
+,,behaviroal engagement,ar,C1,2
+,,behaviroal engagement,ar,C1,3
+,1,copresence,vr,C2,6
+,,copresence,vr,C2,3
+,,copresence,vr,C2,2
+,,copresence,vr,C2,4
+,,mutual attention,vr,C2,6
+,,mutual attention,vr,C2,7
+,,mutual attention,vr,C2,2
+,,mutual understanding,vr,C2,4
+,,mutual understanding,vr,C2,2
+,,behaviroal engagement,vr,C2,4
+,,behaviroal engagement,vr,C2,4
+,2,copresence,ar,C2,7
+,,copresence,ar,C2,6
+,,copresence,ar,C2,3
+,,copresence,ar,C2,4
+,,mutual attention,ar,C2,3
+,,mutual attention,ar,C2,3
+,,mutual attention,ar,C2,2
+,,mutual understanding,ar,C2,5
+,,mutual understanding,ar,C2,5
+,,behaviroal engagement,ar,C2,4
+,,behaviroal engagement,ar,C2,2
+,3,copresence,vr,C2,6
+,,copresence,vr,C2,4
+,,copresence,vr,C2,7
+,,copresence,vr,C2,6
+,,mutual attention,vr,C2,6
+,,mutual attention,vr,C2,2
+,,mutual attention,vr,C2,3
+,,mutual understanding,vr,C2,4
+,,mutual understanding,vr,C2,2
+,,behaviroal engagement,vr,C2,3
+,,behaviroal engagement,vr,C2,7
+,4,copresence,ar,C2,4
+,,copresence,ar,C2,7
+,,copresence,ar,C2,7
+,,copresence,ar,C2,5
+,,mutual attention,ar,C2,3
+,,mutual attention,ar,C2,5
+,,mutual attention,ar,C2,3
+,,mutual understanding,ar,C2,6
+,,mutual understanding,ar,C2,7
+,,behaviroal engagement,ar,C2,2
+,,behaviroal engagement,ar,C2,5
+,1,copresence,vr,C3,7
+,,copresence,vr,C3,2
+,,copresence,vr,C3,3
+,,copresence,vr,C3,5
+,,mutual attention,vr,C3,3
+,,mutual attention,vr,C3,3
+,,mutual attention,vr,C3,5
+,,mutual understanding,vr,C3,4
+,,mutual understanding,vr,C3,4
+,,behaviroal engagement,vr,C3,4
+,,behaviroal engagement,vr,C3,7
+,2,copresence,ar,C3,6
+,,copresence,ar,C3,7
+,,copresence,ar,C3,3
+,,copresence,ar,C3,5
+,,mutual attention,ar,C3,4
+,,mutual attention,ar,C3,6
+,,mutual attention,ar,C3,2
+,,mutual understanding,ar,C3,6
+,,mutual understanding,ar,C3,4
+,,behaviroal engagement,ar,C3,6
+,,behaviroal engagement,ar,C3,2
+,3,copresence,vr,C3,4
+,,copresence,vr,C3,3
+,,copresence,vr,C3,7
+,,copresence,vr,C3,6
+,,mutual attention,vr,C3,3
+,,mutual attention,vr,C3,7
+,,mutual attention,vr,C3,5
+,,mutual understanding,vr,C3,4
+,,mutual understanding,vr,C3,5
+,,behaviroal engagement,vr,C3,7
+,,behaviroal engagement,vr,C3,3
+,4,copresence,ar,C3,5
+,,copresence,ar,C3,4
+,,copresence,ar,C3,3
+,,copresence,ar,C3,5
+,,mutual attention,ar,C3,3
+,,mutual attention,ar,C3,7
+,,mutual attention,ar,C3,6
+,,mutual understanding,ar,C3,3
+,,mutual understanding,ar,C3,3
+,,behaviroal engagement,ar,C3,4
+,,behaviroal engagement,ar,C3,6
+3,1,copresence,vr,C1,5
+,,copresence,vr,C1,3
+,,copresence,vr,C1,5
+,,copresence,vr,C1,4
+,,mutual attention,vr,C1,2
+,,mutual attention,vr,C1,3
+,,mutual attention,vr,C1,3
+,,mutual understanding,vr,C1,2
+,,mutual understanding,vr,C1,2
+,,behaviroal engagement,vr,C1,5
+,,behaviroal engagement,vr,C1,3
+,2,copresence,ar,C1,3
+,,copresence,ar,C1,5
+,,copresence,ar,C1,4
+,,copresence,ar,C1,2
+,,mutual attention,ar,C1,5
+,,mutual attention,ar,C1,2
+,,mutual attention,ar,C1,2
+,,mutual understanding,ar,C1,5
+,,mutual understanding,ar,C1,4
+,,behaviroal engagement,ar,C1,5
+,,behaviroal engagement,ar,C1,4
+,3,copresence,vr,C1,4
+,,copresence,vr,C1,4
+,,copresence,vr,C1,4
+,,copresence,vr,C1,4
+,,mutual attention,vr,C1,2
+,,mutual attention,vr,C1,4
+,,mutual attention,vr,C1,1
+,,mutual understanding,vr,C1,5
+,,mutual understanding,vr,C1,5
+,,behaviroal engagement,vr,C1,4
+,,behaviroal engagement,vr,C1,5
+,4,copresence,ar,C1,5
+,,copresence,ar,C1,5
+,,copresence,ar,C1,4
+,,copresence,ar,C1,4
+,,mutual attention,ar,C1,2
+,,mutual attention,ar,C1,5
+,,mutual attention,ar,C1,3
+,,mutual understanding,ar,C1,2
+,,mutual understanding,ar,C1,1
+,,behaviroal engagement,ar,C1,1
+,,behaviroal engagement,ar,C1,4
+,1,copresence,vr,C2,5
+,,copresence,vr,C2,3
+,,copresence,vr,C2,5
+,,copresence,vr,C2,6
+,,mutual attention,vr,C2,5
+,,mutual attention,vr,C2,6
+,,mutual attention,vr,C2,4
+,,mutual understanding,vr,C2,6
+,,mutual understanding,vr,C2,7
+,,behaviroal engagement,vr,C2,7
+,,behaviroal engagement,vr,C2,5
+,2,copresence,ar,C2,5
+,,copresence,ar,C2,7
+,,copresence,ar,C2,3
+,,copresence,ar,C2,3
+,,mutual attention,ar,C2,3
+,,mutual attention,ar,C2,5
+,,mutual attention,ar,C2,2
+,,mutual understanding,ar,C2,5
+,,mutual understanding,ar,C2,4
+,,behaviroal engagement,ar,C2,4
+,,behaviroal engagement,ar,C2,5
+,3,copresence,vr,C2,4
+,,copresence,vr,C2,4
+,,copresence,vr,C2,2
+,,copresence,vr,C2,7
+,,mutual attention,vr,C2,3
+,,mutual attention,vr,C2,2
+,,mutual attention,vr,C2,2
+,,mutual understanding,vr,C2,6
+,,mutual understanding,vr,C2,2
+,,behaviroal engagement,vr,C2,2
+,,behaviroal engagement,vr,C2,4
+,4,copresence,ar,C2,5
+,,copresence,ar,C2,7
+,,copresence,ar,C2,2
+,,copresence,ar,C2,6
+,,mutual attention,ar,C2,2
+,,mutual attention,ar,C2,5
+,,mutual attention,ar,C2,4
+,,mutual understanding,ar,C2,7
+,,mutual understanding,ar,C2,6
+,,behaviroal engagement,ar,C2,5
+,,behaviroal engagement,ar,C2,5
+,1,copresence,vr,C3,2
+,,copresence,vr,C3,7
+,,copresence,vr,C3,6
+,,copresence,vr,C3,4
+,,mutual attention,vr,C3,7
+,,mutual attention,vr,C3,7
+,,mutual attention,vr,C3,2
+,,mutual understanding,vr,C3,3
+,,mutual understanding,vr,C3,5
+,,behaviroal engagement,vr,C3,4
+,,behaviroal engagement,vr,C3,4
+,2,copresence,ar,C3,2
+,,copresence,ar,C3,2
+,,copresence,ar,C3,3
+,,copresence,ar,C3,3
+,,mutual attention,ar,C3,3
+,,mutual attention,ar,C3,3
+,,mutual attention,ar,C3,2
+,,mutual understanding,ar,C3,2
+,,mutual understanding,ar,C3,2
+,,behaviroal engagement,ar,C3,5
+,,behaviroal engagement,ar,C3,7
+,3,copresence,vr,C3,5
+,,copresence,vr,C3,2
+,,copresence,vr,C3,2
+,,copresence,vr,C3,6
+,,mutual attention,vr,C3,4
+,,mutual attention,vr,C3,7
+,,mutual attention,vr,C3,6
+,,mutual understanding,vr,C3,3
+,,mutual understanding,vr,C3,5
+,,behaviroal engagement,vr,C3,6
+,,behaviroal engagement,vr,C3,2
+,4,copresence,ar,C3,2
+,,copresence,ar,C3,6
+,,copresence,ar,C3,7
+,,copresence,ar,C3,2
+,,mutual attention,ar,C3,2
+,,mutual attention,ar,C3,4
+,,mutual attention,ar,C3,2
+,,mutual understanding,ar,C3,5
+,,mutual understanding,ar,C3,7
+,,behaviroal engagement,ar,C3,2
+,,behaviroal engagement,ar,C3,4
+4,1,copresence,vr,C1,4
+,,copresence,vr,C1,2
+,,copresence,vr,C1,5
+,,copresence,vr,C1,1
+,,mutual attention,vr,C1,4
+,,mutual attention,vr,C1,1
+,,mutual attention,vr,C1,4
+,,mutual understanding,vr,C1,5
+,,mutual understanding,vr,C1,2
+,,behaviroal engagement,vr,C1,4
+,,behaviroal engagement,vr,C1,1
+,2,copresence,ar,C1,1
+,,copresence,ar,C1,1
+,,copresence,ar,C1,5
+,,copresence,ar,C1,3
+,,mutual attention,ar,C1,2
+,,mutual attention,ar,C1,4
+,,mutual attention,ar,C1,3
+,,mutual understanding,ar,C1,1
+,,mutual understanding,ar,C1,3
+,,behaviroal engagement,ar,C1,5
+,,behaviroal engagement,ar,C1,4
+,3,copresence,vr,C1,1
+,,copresence,vr,C1,1
+,,copresence,vr,C1,1
+,,copresence,vr,C1,3
+,,mutual attention,vr,C1,5
+,,mutual attention,vr,C1,3
+,,mutual attention,vr,C1,1
+,,mutual understanding,vr,C1,2
+,,mutual understanding,vr,C1,2
+,,behaviroal engagement,vr,C1,2
+,,behaviroal engagement,vr,C1,2
+,4,copresence,ar,C1,2
+,,copresence,ar,C1,2
+,,copresence,ar,C1,4
+,,copresence,ar,C1,3
+,,mutual attention,ar,C1,1
+,,mutual attention,ar,C1,2
+,,mutual attention,ar,C1,3
+,,mutual understanding,ar,C1,2
+,,mutual understanding,ar,C1,5
+,,behaviroal engagement,ar,C1,5
+,,behaviroal engagement,ar,C1,5
+,1,copresence,vr,C2,4
+,,copresence,vr,C2,2
+,,copresence,vr,C2,6
+,,copresence,vr,C2,2
+,,mutual attention,vr,C2,6
+,,mutual attention,vr,C2,2
+,,mutual attention,vr,C2,7
+,,mutual understanding,vr,C2,3
+,,mutual understanding,vr,C2,4
+,,behaviroal engagement,vr,C2,7
+,,behaviroal engagement,vr,C2,7
+,2,copresence,ar,C2,3
+,,copresence,ar,C2,3
+,,copresence,ar,C2,4
+,,copresence,ar,C2,4
+,,mutual attention,ar,C2,6
+,,mutual attention,ar,C2,7
+,,mutual attention,ar,C2,2
+,,mutual understanding,ar,C2,6
+,,mutual understanding,ar,C2,7
+,,behaviroal engagement,ar,C2,6
+,,behaviroal engagement,ar,C2,5
+,3,copresence,vr,C2,4
+,,copresence,vr,C2,5
+,,copresence,vr,C2,4
+,,copresence,vr,C2,7
+,,mutual attention,vr,C2,2
+,,mutual attention,vr,C2,4
+,,mutual attention,vr,C2,3
+,,mutual understanding,vr,C2,3
+,,mutual understanding,vr,C2,2
+,,behaviroal engagement,vr,C2,2
+,,behaviroal engagement,vr,C2,5
+,4,copresence,ar,C2,2
+,,copresence,ar,C2,3
+,,copresence,ar,C2,3
+,,copresence,ar,C2,2
+,,mutual attention,ar,C2,3
+,,mutual attention,ar,C2,6
+,,mutual attention,ar,C2,4
+,,mutual understanding,ar,C2,2
+,,mutual understanding,ar,C2,6
+,,behaviroal engagement,ar,C2,6
+,,behaviroal engagement,ar,C2,6
+,1,copresence,vr,C3,7
+,,copresence,vr,C3,4
+,,copresence,vr,C3,3
+,,copresence,vr,C3,5
+,,mutual attention,vr,C3,7
+,,mutual attention,vr,C3,3
+,,mutual attention,vr,C3,5
+,,mutual understanding,vr,C3,6
+,,mutual understanding,vr,C3,5
+,,behaviroal engagement,vr,C3,5
+,,behaviroal engagement,vr,C3,2
+,2,copresence,ar,C3,6
+,,copresence,ar,C3,2
+,,copresence,ar,C3,5
+,,copresence,ar,C3,4
+,,mutual attention,ar,C3,6
+,,mutual attention,ar,C3,7
+,,mutual attention,ar,C3,5
+,,mutual understanding,ar,C3,3
+,,mutual understanding,ar,C3,4
+,,behaviroal engagement,ar,C3,5
+,,behaviroal engagement,ar,C3,4
+,3,copresence,vr,C3,5
+,,copresence,vr,C3,5
+,,copresence,vr,C3,6
+,,copresence,vr,C3,7
+,,mutual attention,vr,C3,2
+,,mutual attention,vr,C3,7
+,,mutual attention,vr,C3,4
+,,mutual understanding,vr,C3,3
+,,mutual understanding,vr,C3,4
+,,behaviroal engagement,vr,C3,5
+,,behaviroal engagement,vr,C3,7
+,4,copresence,ar,C3,2
+,,copresence,ar,C3,3
+,,copresence,ar,C3,4
+,,copresence,ar,C3,2
+,,mutual attention,ar,C3,6
+,,mutual attention,ar,C3,6
+,,mutual attention,ar,C3,4
+,,mutual understanding,ar,C3,5
+,,mutual understanding,ar,C3,5
+,,behaviroal engagement,ar,C3,6
+,,behaviroal engagement,ar,C3,2
+5,1,copresence,vr,C1,2
+,,copresence,vr,C1,3
+,,copresence,vr,C1,4
+,,copresence,vr,C1,3
+,,mutual attention,vr,C1,1
+,,mutual attention,vr,C1,3
+,,mutual attention,vr,C1,3
+,,mutual understanding,vr,C1,2
+,,mutual understanding,vr,C1,5
+,,behaviroal engagement,vr,C1,5
+,,behaviroal engagement,vr,C1,2
+,2,copresence,ar,C1,2
+,,copresence,ar,C1,4
+,,copresence,ar,C1,5
+,,copresence,ar,C1,5
+,,mutual attention,ar,C1,3
+,,mutual attention,ar,C1,4
+,,mutual attention,ar,C1,3
+,,mutual understanding,ar,C1,4
+,,mutual understanding,ar,C1,3
+,,behaviroal engagement,ar,C1,4
+,,behaviroal engagement,ar,C1,4
+,3,copresence,vr,C1,2
+,,copresence,vr,C1,1
+,,copresence,vr,C1,5
+,,copresence,vr,C1,3
+,,mutual attention,vr,C1,5
+,,mutual attention,vr,C1,5
+,,mutual attention,vr,C1,5
+,,mutual understanding,vr,C1,2
+,,mutual understanding,vr,C1,3
+,,behaviroal engagement,vr,C1,5
+,,behaviroal engagement,vr,C1,4
+,4,copresence,ar,C1,3
+,,copresence,ar,C1,4
+,,copresence,ar,C1,5
+,,copresence,ar,C1,2
+,,mutual attention,ar,C1,2
+,,mutual attention,ar,C1,1
+,,mutual attention,ar,C1,1
+,,mutual understanding,ar,C1,1
+,,mutual understanding,ar,C1,2
+,,behaviroal engagement,ar,C1,1
+,,behaviroal engagement,ar,C1,2
+,1,copresence,vr,C2,5
+,,copresence,vr,C2,3
+,,copresence,vr,C2,5
+,,copresence,vr,C2,6
+,,mutual attention,vr,C2,6
+,,mutual attention,vr,C2,7
+,,mutual attention,vr,C2,3
+,,mutual understanding,vr,C2,4
+,,mutual understanding,vr,C2,2
+,,behaviroal engagement,vr,C2,5
+,,behaviroal engagement,vr,C2,3
+,2,copresence,ar,C2,5
+,,copresence,ar,C2,3
+,,copresence,ar,C2,3
+,,copresence,ar,C2,2
+,,mutual attention,ar,C2,2
+,,mutual attention,ar,C2,6
+,,mutual attention,ar,C2,7
+,,mutual understanding,ar,C2,4
+,,mutual understanding,ar,C2,5
+,,behaviroal engagement,ar,C2,4
+,,behaviroal engagement,ar,C2,7
+,3,copresence,vr,C2,5
+,,copresence,vr,C2,2
+,,copresence,vr,C2,4
+,,copresence,vr,C2,4
+,,mutual attention,vr,C2,4
+,,mutual attention,vr,C2,6
+,,mutual attention,vr,C2,3
+,,mutual understanding,vr,C2,6
+,,mutual understanding,vr,C2,3
+,,behaviroal engagement,vr,C2,7
+,,behaviroal engagement,vr,C2,2
+,4,copresence,ar,C2,5
+,,copresence,ar,C2,7
+,,copresence,ar,C2,3
+,,copresence,ar,C2,5
+,,mutual attention,ar,C2,5
+,,mutual attention,ar,C2,2
+,,mutual attention,ar,C2,2
+,,mutual understanding,ar,C2,6
+,,mutual understanding,ar,C2,5
+,,behaviroal engagement,ar,C2,6
+,,behaviroal engagement,ar,C2,5
+,1,copresence,vr,C3,5
+,,copresence,vr,C3,3
+,,copresence,vr,C3,7
+,,copresence,vr,C3,4
+,,mutual attention,vr,C3,5
+,,mutual attention,vr,C3,7
+,,mutual attention,vr,C3,3
+,,mutual understanding,vr,C3,3
+,,mutual understanding,vr,C3,3
+,,behaviroal engagement,vr,C3,6
+,,behaviroal engagement,vr,C3,2
+,2,copresence,ar,C3,2
+,,copresence,ar,C3,4
+,,copresence,ar,C3,3
+,,copresence,ar,C3,6
+,,mutual attention,ar,C3,4
+,,mutual attention,ar,C3,2
+,,mutual attention,ar,C3,2
+,,mutual understanding,ar,C3,2
+,,mutual understanding,ar,C3,7
+,,behaviroal engagement,ar,C3,5
+,,behaviroal engagement,ar,C3,4
+,3,copresence,vr,C3,3
+,,copresence,vr,C3,7
+,,copresence,vr,C3,6
+,,copresence,vr,C3,7
+,,mutual attention,vr,C3,6
+,,mutual attention,vr,C3,7
+,,mutual attention,vr,C3,5
+,,mutual understanding,vr,C3,7
+,,mutual understanding,vr,C3,6
+,,behaviroal engagement,vr,C3,5
+,,behaviroal engagement,vr,C3,5
+,4,copresence,ar,C3,4
+,,copresence,ar,C3,3
+,,copresence,ar,C3,3
+,,copresence,ar,C3,4
+,,mutual attention,ar,C3,7
+,,mutual attention,ar,C3,2
+,,mutual attention,ar,C3,7
+,,mutual understanding,ar,C3,6
+,,mutual understanding,ar,C3,5
+,,behaviroal engagement,ar,C3,7
+,,behaviroal engagement,ar,C3,7
+6,1,copresence,vr,C1,2
+,,copresence,vr,C1,3
+,,copresence,vr,C1,5
+,,copresence,vr,C1,1
+,,mutual attention,vr,C1,2
+,,mutual attention,vr,C1,1
+,,mutual attention,vr,C1,3
+,,mutual understanding,vr,C1,3
+,,mutual understanding,vr,C1,2
+,,behaviroal engagement,vr,C1,5
+,,behaviroal engagement,vr,C1,3
+,2,copresence,ar,C1,1
+,,copresence,ar,C1,3
+,,copresence,ar,C1,4
+,,copresence,ar,C1,3
+,,mutual attention,ar,C1,1
+,,mutual attention,ar,C1,4
+,,mutual attention,ar,C1,5
+,,mutual understanding,ar,C1,3
+,,mutual understanding,ar,C1,5
+,,behaviroal engagement,ar,C1,3
+,,behaviroal engagement,ar,C1,1
+,3,copresence,vr,C1,2
+,,copresence,vr,C1,1
+,,copresence,vr,C1,1
+,,copresence,vr,C1,4
+,,mutual attention,vr,C1,2
+,,mutual attention,vr,C1,1
+,,mutual attention,vr,C1,1
+,,mutual understanding,vr,C1,2
+,,mutual understanding,vr,C1,2
+,,behaviroal engagement,vr,C1,4
+,,behaviroal engagement,vr,C1,3
+,4,copresence,ar,C1,3
+,,copresence,ar,C1,5
+,,copresence,ar,C1,1
+,,copresence,ar,C1,5
+,,mutual attention,ar,C1,5
+,,mutual attention,ar,C1,5
+,,mutual attention,ar,C1,4
+,,mutual understanding,ar,C1,4
+,,mutual understanding,ar,C1,1
+,,behaviroal engagement,ar,C1,4
+,,behaviroal engagement,ar,C1,1
+,1,copresence,vr,C2,7
+,,copresence,vr,C2,4
+,,copresence,vr,C2,6
+,,copresence,vr,C2,6
+,,mutual attention,vr,C2,4
+,,mutual attention,vr,C2,7
+,,mutual attention,vr,C2,6
+,,mutual understanding,vr,C2,3
+,,mutual understanding,vr,C2,7
+,,behaviroal engagement,vr,C2,3
+,,behaviroal engagement,vr,C2,6
+,2,copresence,ar,C2,3
+,,copresence,ar,C2,7
+,,copresence,ar,C2,5
+,,copresence,ar,C2,5
+,,mutual attention,ar,C2,2
+,,mutual attention,ar,C2,5
+,,mutual attention,ar,C2,3
+,,mutual understanding,ar,C2,6
+,,mutual understanding,ar,C2,7
+,,behaviroal engagement,ar,C2,4
+,,behaviroal engagement,ar,C2,5
+,3,copresence,vr,C2,7
+,,copresence,vr,C2,2
+,,copresence,vr,C2,6
+,,copresence,vr,C2,3
+,,mutual attention,vr,C2,5
+,,mutual attention,vr,C2,4
+,,mutual attention,vr,C2,4
+,,mutual understanding,vr,C2,5
+,,mutual understanding,vr,C2,4
+,,behaviroal engagement,vr,C2,3
+,,behaviroal engagement,vr,C2,4
+,4,copresence,ar,C2,5
+,,copresence,ar,C2,3
+,,copresence,ar,C2,7
+,,copresence,ar,C2,5
+,,mutual attention,ar,C2,4
+,,mutual attention,ar,C2,5
+,,mutual attention,ar,C2,5
+,,mutual understanding,ar,C2,5
+,,mutual understanding,ar,C2,4
+,,behaviroal engagement,ar,C2,6
+,,behaviroal engagement,ar,C2,5
+,1,copresence,vr,C3,4
+,,copresence,vr,C3,3
+,,copresence,vr,C3,6
+,,copresence,vr,C3,4
+,,mutual attention,vr,C3,7
+,,mutual attention,vr,C3,5
+,,mutual attention,vr,C3,4
+,,mutual understanding,vr,C3,6
+,,mutual understanding,vr,C3,7
+,,behaviroal engagement,vr,C3,2
+,,behaviroal engagement,vr,C3,2
+,2,copresence,ar,C3,3
+,,copresence,ar,C3,5
+,,copresence,ar,C3,5
+,,copresence,ar,C3,4
+,,mutual attention,ar,C3,7
+,,mutual attention,ar,C3,2
+,,mutual attention,ar,C3,6
+,,mutual understanding,ar,C3,2
+,,mutual understanding,ar,C3,3
+,,behaviroal engagement,ar,C3,2
+,,behaviroal engagement,ar,C3,2
+,3,copresence,vr,C3,6
+,,copresence,vr,C3,4
+,,copresence,vr,C3,2
+,,copresence,vr,C3,6
+,,mutual attention,vr,C3,6
+,,mutual attention,vr,C3,4
+,,mutual attention,vr,C3,7
+,,mutual understanding,vr,C3,7
+,,mutual understanding,vr,C3,7
+,,behaviroal engagement,vr,C3,3
+,,behaviroal engagement,vr,C3,3
+,4,copresence,ar,C3,4
+,,copresence,ar,C3,6
+,,copresence,ar,C3,4
+,,copresence,ar,C3,2
+,,mutual attention,ar,C3,4
+,,mutual attention,ar,C3,6
+,,mutual attention,ar,C3,4
+,,mutual understanding,ar,C3,5
+,,mutual understanding,ar,C3,7
+,,behaviroal engagement,ar,C3,2
+,,behaviroal engagement,ar,C3,7
+7,1,copresence,vr,C1,5
+,,copresence,vr,C1,5
+,,copresence,vr,C1,2
+,,copresence,vr,C1,3
+,,mutual attention,vr,C1,3
+,,mutual attention,vr,C1,4
+,,mutual attention,vr,C1,2
+,,mutual understanding,vr,C1,1
+,,mutual understanding,vr,C1,2
+,,behaviroal engagement,vr,C1,3
+,,behaviroal engagement,vr,C1,4
+,2,copresence,ar,C1,5
+,,copresence,ar,C1,5
+,,copresence,ar,C1,3
+,,copresence,ar,C1,4
+,,mutual attention,ar,C1,1
+,,mutual attention,ar,C1,2
+,,mutual attention,ar,C1,3
+,,mutual understanding,ar,C1,4
+,,mutual understanding,ar,C1,1
+,,behaviroal engagement,ar,C1,4
+,,behaviroal engagement,ar,C1,3
+,3,copresence,vr,C1,1
+,,copresence,vr,C1,3
+,,copresence,vr,C1,3
+,,copresence,vr,C1,4
+,,mutual attention,vr,C1,2
+,,mutual attention,vr,C1,1
+,,mutual attention,vr,C1,4
+,,mutual understanding,vr,C1,3
+,,mutual understanding,vr,C1,4
+,,behaviroal engagement,vr,C1,1
+,,behaviroal engagement,vr,C1,3
+,4,copresence,ar,C1,1
+,,copresence,ar,C1,4
+,,copresence,ar,C1,3
+,,copresence,ar,C1,5
+,,mutual attention,ar,C1,2
+,,mutual attention,ar,C1,2
+,,mutual attention,ar,C1,3
+,,mutual understanding,ar,C1,5
+,,mutual understanding,ar,C1,3
+,,behaviroal engagement,ar,C1,4
+,,behaviroal engagement,ar,C1,2
+,1,copresence,vr,C2,7
+,,copresence,vr,C2,3
+,,copresence,vr,C2,3
+,,copresence,vr,C2,2
+,,mutual attention,vr,C2,4
+,,mutual attention,vr,C2,7
+,,mutual attention,vr,C2,6
+,,mutual understanding,vr,C2,6
+,,mutual understanding,vr,C2,3
+,,behaviroal engagement,vr,C2,2
+,,behaviroal engagement,vr,C2,2
+,2,copresence,ar,C2,2
+,,copresence,ar,C2,6
+,,copresence,ar,C2,6
+,,copresence,ar,C2,4
+,,mutual attention,ar,C2,6
+,,mutual attention,ar,C2,3
+,,mutual attention,ar,C2,7
+,,mutual understanding,ar,C2,5
+,,mutual understanding,ar,C2,4
+,,behaviroal engagement,ar,C2,2
+,,behaviroal engagement,ar,C2,2
+,3,copresence,vr,C2,3
+,,copresence,vr,C2,6
+,,copresence,vr,C2,2
+,,copresence,vr,C2,6
+,,mutual attention,vr,C2,2
+,,mutual attention,vr,C2,6
+,,mutual attention,vr,C2,3
+,,mutual understanding,vr,C2,7
+,,mutual understanding,vr,C2,4
+,,behaviroal engagement,vr,C2,2
+,,behaviroal engagement,vr,C2,6
+,4,copresence,ar,C2,6
+,,copresence,ar,C2,6
+,,copresence,ar,C2,5
+,,copresence,ar,C2,6
+,,mutual attention,ar,C2,6
+,,mutual attention,ar,C2,7
+,,mutual attention,ar,C2,6
+,,mutual understanding,ar,C2,3
+,,mutual understanding,ar,C2,2
+,,behaviroal engagement,ar,C2,5
+,,behaviroal engagement,ar,C2,3
+,1,copresence,vr,C3,6
+,,copresence,vr,C3,4
+,,copresence,vr,C3,5
+,,copresence,vr,C3,4
+,,mutual attention,vr,C3,3
+,,mutual attention,vr,C3,3
+,,mutual attention,vr,C3,4
+,,mutual understanding,vr,C3,4
+,,mutual understanding,vr,C3,4
+,,behaviroal engagement,vr,C3,7
+,,behaviroal engagement,vr,C3,6
+,2,copresence,ar,C3,2
+,,copresence,ar,C3,2
+,,copresence,ar,C3,2
+,,copresence,ar,C3,6
+,,mutual attention,ar,C3,2
+,,mutual attention,ar,C3,3
+,,mutual attention,ar,C3,2
+,,mutual understanding,ar,C3,2
+,,mutual understanding,ar,C3,7
+,,behaviroal engagement,ar,C3,7
+,,behaviroal engagement,ar,C3,7
+,3,copresence,vr,C3,2
+,,copresence,vr,C3,5
+,,copresence,vr,C3,2
+,,copresence,vr,C3,7
+,,mutual attention,vr,C3,2
+,,mutual attention,vr,C3,6
+,,mutual attention,vr,C3,2
+,,mutual understanding,vr,C3,3
+,,mutual understanding,vr,C3,5
+,,behaviroal engagement,vr,C3,2
+,,behaviroal engagement,vr,C3,2
+,4,copresence,ar,C3,2
+,,copresence,ar,C3,3
+,,copresence,ar,C3,5
+,,copresence,ar,C3,3
+,,mutual attention,ar,C3,2
+,,mutual attention,ar,C3,6
+,,mutual attention,ar,C3,3
+,,mutual understanding,ar,C3,3
+,,mutual understanding,ar,C3,5
+,,behaviroal engagement,ar,C3,6
+,,behaviroal engagement,ar,C3,2
+8,1,copresence,vr,C1,3
+,,copresence,vr,C1,5
+,,copresence,vr,C1,3
+,,copresence,vr,C1,3
+,,mutual attention,vr,C1,1
+,,mutual attention,vr,C1,4
+,,mutual attention,vr,C1,3
+,,mutual understanding,vr,C1,4
+,,mutual understanding,vr,C1,5
+,,behaviroal engagement,vr,C1,5
+,,behaviroal engagement,vr,C1,5
+,2,copresence,ar,C1,5
+,,copresence,ar,C1,2
+,,copresence,ar,C1,2
+,,copresence,ar,C1,3
+,,mutual attention,ar,C1,1
+,,mutual attention,ar,C1,1
+,,mutual attention,ar,C1,4
+,,mutual understanding,ar,C1,2
+,,mutual understanding,ar,C1,2
+,,behaviroal engagement,ar,C1,4
+,,behaviroal engagement,ar,C1,3
+,3,copresence,vr,C1,2
+,,copresence,vr,C1,2
+,,copresence,vr,C1,1
+,,copresence,vr,C1,1
+,,mutual attention,vr,C1,3
+,,mutual attention,vr,C1,2
+,,mutual attention,vr,C1,4
+,,mutual understanding,vr,C1,1
+,,mutual understanding,vr,C1,5
+,,behaviroal engagement,vr,C1,1
+,,behaviroal engagement,vr,C1,3
+,4,copresence,ar,C1,2
+,,copresence,ar,C1,3
+,,copresence,ar,C1,3
+,,copresence,ar,C1,2
+,,mutual attention,ar,C1,5
+,,mutual attention,ar,C1,2
+,,mutual attention,ar,C1,1
+,,mutual understanding,ar,C1,4
+,,mutual understanding,ar,C1,5
+,,behaviroal engagement,ar,C1,5
+,,behaviroal engagement,ar,C1,1
+,1,copresence,vr,C2,6
+,,copresence,vr,C2,7
+,,copresence,vr,C2,7
+,,copresence,vr,C2,4
+,,mutual attention,vr,C2,6
+,,mutual attention,vr,C2,2
+,,mutual attention,vr,C2,7
+,,mutual understanding,vr,C2,3
+,,mutual understanding,vr,C2,3
+,,behaviroal engagement,vr,C2,7
+,,behaviroal engagement,vr,C2,3
+,2,copresence,ar,C2,3
+,,copresence,ar,C2,7
+,,copresence,ar,C2,4
+,,copresence,ar,C2,6
+,,mutual attention,ar,C2,2
+,,mutual attention,ar,C2,6
+,,mutual attention,ar,C2,7
+,,mutual understanding,ar,C2,3
+,,mutual understanding,ar,C2,6
+,,behaviroal engagement,ar,C2,4
+,,behaviroal engagement,ar,C2,6
+,3,copresence,vr,C2,6
+,,copresence,vr,C2,7
+,,copresence,vr,C2,3
+,,copresence,vr,C2,2
+,,mutual attention,vr,C2,4
+,,mutual attention,vr,C2,6
+,,mutual attention,vr,C2,7
+,,mutual understanding,vr,C2,7
+,,mutual understanding,vr,C2,6
+,,behaviroal engagement,vr,C2,3
+,,behaviroal engagement,vr,C2,6
+,4,copresence,ar,C2,2
+,,copresence,ar,C2,2
+,,copresence,ar,C2,5
+,,copresence,ar,C2,3
+,,mutual attention,ar,C2,6
+,,mutual attention,ar,C2,6
+,,mutual attention,ar,C2,7
+,,mutual understanding,ar,C2,4
+,,mutual understanding,ar,C2,5
+,,behaviroal engagement,ar,C2,5
+,,behaviroal engagement,ar,C2,4
+,1,copresence,vr,C3,4
+,,copresence,vr,C3,3
+,,copresence,vr,C3,7
+,,copresence,vr,C3,2
+,,mutual attention,vr,C3,7
+,,mutual attention,vr,C3,2
+,,mutual attention,vr,C3,4
+,,mutual understanding,vr,C3,6
+,,mutual understanding,vr,C3,7
+,,behaviroal engagement,vr,C3,3
+,,behaviroal engagement,vr,C3,5
+,2,copresence,ar,C3,4
+,,copresence,ar,C3,3
+,,copresence,ar,C3,2
+,,copresence,ar,C3,6
+,,mutual attention,ar,C3,6
+,,mutual attention,ar,C3,3
+,,mutual attention,ar,C3,5
+,,mutual understanding,ar,C3,7
+,,mutual understanding,ar,C3,5
+,,behaviroal engagement,ar,C3,5
+,,behaviroal engagement,ar,C3,5
+,3,copresence,vr,C3,7
+,,copresence,vr,C3,7
+,,copresence,vr,C3,4
+,,copresence,vr,C3,4
+,,mutual attention,vr,C3,3
+,,mutual attention,vr,C3,4
+,,mutual attention,vr,C3,2
+,,mutual understanding,vr,C3,4
+,,mutual understanding,vr,C3,5
+,,behaviroal engagement,vr,C3,2
+,,behaviroal engagement,vr,C3,3
+,4,copresence,ar,C3,3
+,,copresence,ar,C3,4
+,,copresence,ar,C3,6
+,,copresence,ar,C3,3
+,,mutual attention,ar,C3,2
+,,mutual attention,ar,C3,4
+,,mutual attention,ar,C3,6
+,,mutual understanding,ar,C3,7
+,,mutual understanding,ar,C3,4
+,,behaviroal engagement,ar,C3,3
+,,behaviroal engagement,ar,C3,2
+9,1,copresence,vr,C1,5
+,,copresence,vr,C1,4
+,,copresence,vr,C1,2
+,,copresence,vr,C1,4
+,,mutual attention,vr,C1,2
+,,mutual attention,vr,C1,4
+,,mutual attention,vr,C1,5
+,,mutual understanding,vr,C1,1
+,,mutual understanding,vr,C1,2
+,,behaviroal engagement,vr,C1,1
+,,behaviroal engagement,vr,C1,5
+,2,copresence,ar,C1,5
+,,copresence,ar,C1,3
+,,copresence,ar,C1,1
+,,copresence,ar,C1,5
+,,mutual attention,ar,C1,3
+,,mutual attention,ar,C1,5
+,,mutual attention,ar,C1,3
+,,mutual understanding,ar,C1,3
+,,mutual understanding,ar,C1,5
+,,behaviroal engagement,ar,C1,4
+,,behaviroal engagement,ar,C1,4
+,3,copresence,vr,C1,5
+,,copresence,vr,C1,3
+,,copresence,vr,C1,2
+,,copresence,vr,C1,5
+,,mutual attention,vr,C1,5
+,,mutual attention,vr,C1,4
+,,mutual attention,vr,C1,4
+,,mutual understanding,vr,C1,5
+,,mutual understanding,vr,C1,5
+,,behaviroal engagement,vr,C1,1
+,,behaviroal engagement,vr,C1,2
+,4,copresence,ar,C1,3
+,,copresence,ar,C1,4
+,,copresence,ar,C1,5
+,,copresence,ar,C1,4
+,,mutual attention,ar,C1,3
+,,mutual attention,ar,C1,3
+,,mutual attention,ar,C1,4
+,,mutual understanding,ar,C1,3
+,,mutual understanding,ar,C1,2
+,,behaviroal engagement,ar,C1,5
+,,behaviroal engagement,ar,C1,2
+,1,copresence,vr,C2,5
+,,copresence,vr,C2,4
+,,copresence,vr,C2,4
+,,copresence,vr,C2,4
+,,mutual attention,vr,C2,3
+,,mutual attention,vr,C2,3
+,,mutual attention,vr,C2,3
+,,mutual understanding,vr,C2,6
+,,mutual understanding,vr,C2,7
+,,behaviroal engagement,vr,C2,4
+,,behaviroal engagement,vr,C2,3
+,2,copresence,ar,C2,7
+,,copresence,ar,C2,4
+,,copresence,ar,C2,5
+,,copresence,ar,C2,4
+,,mutual attention,ar,C2,2
+,,mutual attention,ar,C2,6
+,,mutual attention,ar,C2,3
+,,mutual understanding,ar,C2,3
+,,mutual understanding,ar,C2,3
+,,behaviroal engagement,ar,C2,5
+,,behaviroal engagement,ar,C2,6
+,3,copresence,vr,C2,7
+,,copresence,vr,C2,4
+,,copresence,vr,C2,6
+,,copresence,vr,C2,4
+,,mutual attention,vr,C2,3
+,,mutual attention,vr,C2,5
+,,mutual attention,vr,C2,4
+,,mutual understanding,vr,C2,3
+,,mutual understanding,vr,C2,3
+,,behaviroal engagement,vr,C2,4
+,,behaviroal engagement,vr,C2,4
+,4,copresence,ar,C2,6
+,,copresence,ar,C2,2
+,,copresence,ar,C2,7
+,,copresence,ar,C2,3
+,,mutual attention,ar,C2,7
+,,mutual attention,ar,C2,4
+,,mutual attention,ar,C2,3
+,,mutual understanding,ar,C2,6
+,,mutual understanding,ar,C2,2
+,,behaviroal engagement,ar,C2,5
+,,behaviroal engagement,ar,C2,6
+,1,copresence,vr,C3,4
+,,copresence,vr,C3,5
+,,copresence,vr,C3,5
+,,copresence,vr,C3,5
+,,mutual attention,vr,C3,5
+,,mutual attention,vr,C3,7
+,,mutual attention,vr,C3,7
+,,mutual understanding,vr,C3,3
+,,mutual understanding,vr,C3,5
+,,behaviroal engagement,vr,C3,7
+,,behaviroal engagement,vr,C3,7
+,2,copresence,ar,C3,3
+,,copresence,ar,C3,6
+,,copresence,ar,C3,2
+,,copresence,ar,C3,5
+,,mutual attention,ar,C3,6
+,,mutual attention,ar,C3,7
+,,mutual attention,ar,C3,6
+,,mutual understanding,ar,C3,5
+,,mutual understanding,ar,C3,3
+,,behaviroal engagement,ar,C3,2
+,,behaviroal engagement,ar,C3,5
+,3,copresence,vr,C3,7
+,,copresence,vr,C3,6
+,,copresence,vr,C3,6
+,,copresence,vr,C3,5
+,,mutual attention,vr,C3,6
+,,mutual attention,vr,C3,5
+,,mutual attention,vr,C3,2
+,,mutual understanding,vr,C3,3
+,,mutual understanding,vr,C3,2
+,,behaviroal engagement,vr,C3,4
+,,behaviroal engagement,vr,C3,7
+,4,copresence,ar,C3,2
+,,copresence,ar,C3,6
+,,copresence,ar,C3,6
+,,copresence,ar,C3,3
+,,mutual attention,ar,C3,4
+,,mutual attention,ar,C3,3
+,,mutual attention,ar,C3,5
+,,mutual understanding,ar,C3,2
+,,mutual understanding,ar,C3,3
+,,behaviroal engagement,ar,C3,4
+,,behaviroal engagement,ar,C3,4

@@ -81,5 +81,46 @@ ggplot(iris, aes(x = Species, y = Sepal.Width, fill = Petal.Width > 1)) +
   )
 
 
+# Required packages
+library(ggpubr)  # https://github.com/kassambara/ggpubr
+library(rstatix)  # https://github.com/kassambara/rstatix
 
+# Add automatically x and y positions
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+bxp <- ggplot(ToothGrowth, aes(x = dose, y = len)) +
+  geom_boxplot(aes(fill = supp))
+stat.test <- ToothGrowth %>% 
+  group_by(dose) %>% 
+  wilcox_test(len~supp, p.adjust.method = 'BH') %>%
+  add_significance("p") %>%
+  add_xy_position(x = "dose")
+bxp + stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02)
+write.csv(ToothGrowth, file = "csv/sp.csv", row.names = FALSE)
+
+# Add automatically x and y positions
+df=read.csv('csv/sp.csv', sep=",")
+df$dose <- as.factor(df$dose)
+bxp <- ggplot(df, aes(x = dose, y = len)) +
+  geom_boxplot(aes(fill = supp))
+stat.test <- df %>% 
+  group_by(dose) %>% 
+  wilcox_test(len~supp, p.adjust.method = 'BH') %>%
+  add_significance("p") %>%
+  add_xy_position(x = "dose")
+bxp + stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02)
+
+
+# Add automatically x and y positions
+df=read.csv('csv/social.csv', sep=",")
+bxp <- ggplot(df, aes(x = params, y = score)) +
+  geom_boxplot(aes(fill = conditions))
+stat.test <- df %>% 
+  group_by(params) %>% 
+  wilcox_test(score~conditions, p.adjust.method = 'BH') %>%
+  add_significance("p") %>%
+  add_xy_position(x = "params")
+bxp + stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02)
+
+# saving the final figure
+ggsave("out/social.pdf", width = 6.5, height = 4, dpi = 1000)
 

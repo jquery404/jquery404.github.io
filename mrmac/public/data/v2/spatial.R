@@ -1,3 +1,24 @@
+# Required packages
+library(ggpubr)  # https://github.com/kassambara/ggpubr
+library(rstatix)  # https://github.com/kassambara/rstatix
+
+
+# Add automatically x and y positions
+df=read.csv('csv/spatial.csv', sep=",")
+bxp <- ggplot(df, aes(x = params, y = score)) +
+  geom_boxplot(aes(fill = conditions))
+stat.test <- df %>% 
+  group_by(params) %>% 
+  wilcox_test(score~conditions, p.adjust.method = 'BH') %>%
+  add_significance("p") %>%
+  add_xy_position(x = "params")
+bxp + stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02)
+
+# saving the final figure
+ggsave("out/spatial.pdf", width = 6.5, height = 4, dpi = 1000)
+
+
+
 # library
 library(ggplot2)
 library(ggpubr)
