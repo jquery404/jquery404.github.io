@@ -1,284 +1,219 @@
 library(ggplot2)
 library(dplyr)
 
+coloring = c("#E76469", "#F8D85E","#EDA645","#E76469","#8C99A6","#ADD299","#4FA490","#3B7F9F")
+coloring1 = c("", "","","","")
+fontsize = 14
+data=read.csv('csv/preference.csv', sep=",")
 
-preferences <- data.frame(
-  Condition = c("H1", "H2", "H3", "H4"),
-  R1 = c(2, 4, 1, 3), # Change these values to match the actual rankings in the study
-  R2 = c(4, 3, 2, 1), # Change these values to match the actual rankings in the study
-  R3 = c(3, 2, 4, 1), # Change these values to match the actual rankings in the study
-  R4 = c(1, 2, 3, 4) # Change these values to match the actual rankings in the study
-)
-
-# Load ggplot2 library
-library(ggplot2)
-
-# Create example data
-data <- data.frame(Category = c("H1", "H2", "H3"),
-                   `Rank 1` = c(20, 30, 50),
-                   `Rank 2` = c(30, 50, 20),
-                   `Rank 3` = c(50, 20, 30))
-
-# Convert data from wide to long format
-data_long <- tidyr::gather(data, "Group", "Value", -Category)
-
-# Create stacked bar chart
-ggplot(data_long, aes(x = Category, y = Value, fill = Group)) +
-  geom_bar(stat = "identity", position = "fill") +
-  geom_text(aes(label = Value, group = Group), position = position_fill(vjust = 0.9), hjust = 1) +
-  geom_signif(comparisons = list(c("H2", "H1"),
-                                 c("H2", "H3"),
-                                 c("H3", "H1")),
-              test = "wilcox.test", step_increase = 0.075, y_position= .05) +
+p <- ggplot(data, aes(x = conditions, y = score, fill = factor(rank))) + 
+  geom_bar(stat = 'identity', position = 'stack') + 
   coord_flip() +
-  labs(title = "Horizontal Stacked Bar Chart", x = "Category", y = "Percentage")
+  theme_bw()
 
+# Add labels to bars
+p <- p + geom_text(aes(label = score), position = position_stack(vjust = 0.5), color = "black", size = 4)
 
+# Add facet grid
+p <- p + facet_grid(rows = vars(qus), switch = "y") + 
+  theme(strip.placement = "outside",
+        strip.background = element_rect(fill=coloring[3], color = NA))
 
+# Apply the custom colors to the fill color of each factor level
+p <- p + scale_fill_manual(values = coloring)
 
+# Add theme elements
+p <- p + theme(axis.title.x=element_blank(),
+               axis.title.y = element_blank(), 
+               plot.margin = unit(c(0, 0, .5, 0), "null"),
+               panel.border = element_blank(),
+               legend.title=element_blank(),
+               legend.direction="horizontal",
+               legend.position = c(.5,-.05),
+               legend.justification = c("center", "top"))
 
+# Show the plot
+p
 
+# Add custom text labels to bars for each facet
+label_data <- data.frame(qus = unique(data$qus), label = c("Label 1", "Label 2", "Label 3"))
+p <- p + geom_text(data = label_data, aes(x = Inf, y = Inf, label = label), hjust = 1, vjust = 1, size = 6)
 
+data_text <- data.frame(label = c("*", "", "**", "", ""), 
+                        qus = names(table(data$qus)),
+                        x = c(1.6, 0, 0.6, 0, 0),
+                        y = c(36.6, 0, 36.6, 0, 0),
+                        x1 = c(3, 0, 2, 0,0), 
+                        x2 = c(2, 0, 1,0, 0), 
+                        y1 = c(36, 0, 36, 0, 0), 
+                        y2 = c(36.5, 0, 36.5, 0, 0))
+p +
+  geom_text(data = data_text, aes(x = x, y = y, label = label, fill=coloring1), angle = -90, position = position_nudge(0.9)) +
+  geom_segment(data = data_text, aes(x = x1, xend = x1, y = y1, yend = y2, fill=coloring1), colour = "black") +
+  geom_segment(data = data_text, aes(x = x2, xend = x2, y = y1, yend = y2, fill=coloring1), colour = "black") +
+  geom_segment(data = data_text, aes(x = x1, xend = x2, y = y2, yend = y2, fill=coloring1), colour = "black")
 
-
-#create data frame
-df <- data.frame(team=rep(c('A', 'B', 'C'), each=3),
-                 position=rep(c('Guard', 'Forward', 'Center'), times=3),
-                 points=c(3, 2, 1, 1, 3, 2, 1, 2, 3))
-
-ggplot(df, aes(fill=position, y=points, x=team)) + 
-  geom_bar(position='stack', stat='identity') + 
-  geom_signif(comparisons = list(c("B", "A"),
-                                 c("B", "C"),
-                                 c("C", "A")),
-              test = "wilcox.test", step_increase = 0.15, y_position= 6.1) +
-  
-  ylim(0, 7) +
-  coord_flip()
-
-
-ggplot(df, aes(fill=position, y=points, x=team)) + 
-  geom_bar(position='stack', stat='identity') + 
-  geom_signif(comparisons = list(c("B", "A"),
-                                 c("B", "C"),
-                                 c("C", "A")),
-              test = "t.test", step_increase = 0.075) 
-
-
-
-
-
-library(ggplot2)
-library(dplyr)
-
-# Using the iris dataset
-data(iris)
-
-# Discretize the Petal.Length variable to create bins
-iris$Petal.Length.Bin <- cut(iris$Petal.Length, breaks = seq(1, 7, by = 1), include.lowest = TRUE)
-
-# Calculate the mean Sepal.Length for each combination of Species and Petal.Length.Bin
-mean_sepal_lengths <- iris %>%
-  group_by(Species, Petal.Length.Bin) %>%
-  summarise(Sepal.Length = mean(Sepal.Length), .groups = "drop")
-# Sort by the Species and Petal.Length.Bin columns
-mean_sepal_lengths_sorted <- mean_sepal_lengths %>%
-  arrange(Species, rev(Petal.Length.Bin))
-
-# Get the cumulative sum
-mean_sepal_lengths_sorted <- mean_sepal_lengths_sorted %>%
-  group_by(Species) %>%
-  mutate(label_y = cumsum(Sepal.Length))
-
-# Create the bar plot
-plot <- ggplot(mean_sepal_lengths_sorted, aes(x = Species, y = Sepal.Length, fill = Petal.Length.Bin)) +
-  geom_col() +
-  geom_text(aes(y = label_y, label = round(Sepal.Length, 1)), vjust = 1.5, colour = "white") +
-  labs(title = "Mean Sepal Length by Species and Petal Length Bin",
-       x = "Species",
-       y = "Mean Sepal Length") +
-  theme_minimal()
-
-# Display the plot
-print(plot)
-
-write.csv(mean_sepal_lengths_sorted, file = "out/mean_sepal_lengths_sorted.csv", row.names = FALSE)
-
-
-
-
-library(ggplot2)
-library(dplyr)
-
-data=read.csv('csv/mean_sepal_lengths_sorted.csv', sep=",")
-# Add a sorting variable to the data frame
-data <- data %>%
-  mutate(Sorting = case_when(
-    Qus == "q1" & Species == "versicolor" ~ 1,
-    Qus == "q1" & Species == "setosa" ~ 2,
-    Qus == "q2" & Species == "setosa" ~ 3,
-    Qus == "q2" & Species == "versicolor" ~ 4
-  ))
-
-
-# Create the bar plot
-plot <- ggplot(data, aes(x = Species, y = Sepal.Length, fill = Petal.Length.Bin)) +
-  geom_col() +
-  geom_text(aes(y = label_y, label = round(Sepal.Length, 1)), vjust = 1.5, colour = "white") +
-  labs(title = "Mean Sepal Length by Species and Petal Length Bin",
-       x = "Species",
-       y = "Mean Sepal Length") +
-  theme_minimal()
-
-# Display the plot
-print(plot)
-
-# Sort by the Qus and Species columns
-data_sorted <- data %>%
-  arrange(Qus, rev(Species))
-
-
-
-# Create the bar plot
-plot <- ggplot(data, aes(x = interaction(Qus, Species, sep = " - "), y = Sepal.Length, fill = Petal.Length.Bin)) +
-  geom_col() +
-  geom_text(aes(y = label_y, label = round(Sepal.Length, 1)), vjust = 1.5, colour = "white") +
-  labs(title = "Sepal Length by Qus, Species and Petal Length Bin",
-       x = "Qus and Species",
-       y = "Sepal Length") +
-  theme_minimal()
-
-# Display the plot
-print(plot)
-
-
-
-
-library(reshape2)
-# Create the new data frame
-data <- data.frame(
-  qus = c("q1", "q1", "q1", "q2", "q2", "q2", "q3", "q3", "q3", "q4", "q4", "q4", "q5", "q5", "q5"),
-  conditions = c("C1", "C2", "C3", "C1", "C2", "C3", "C1", "C2", "C3", "C1", "C2", "C3", "C1", "C2", "C3"),
-  rank1 = c(4, 6, 23, 10, 8, 23, 2, 13, 28, 10, 10, 24, 1, 10, 29),
-  rank2 = c(10, 23, 10, 17, 20, 8, 9, 21, 6, 8, 25, 7, 16, 22, 5),
-  rank3 = c(22, 7, 3, 9, 8, 5, 25, 2, 2, 18, 1, 5, 19, 4, 2)
-)
-# Add a sorting variable to the data frame
-data1 <- data %>%
-  mutate(Sorting = interaction(qus, conditions, sep = ""))
-
-data_melted <- melt(data1, id.vars = c("qus", "conditions", "Sorting"), variable.name = "rank", value.name = "value")
-
-# Create the bar plot
-plot <- ggplot(data_melted, aes(x = factor(Sorting, labels = c("q1C1", "q1C2", "q1C3", "q2C1", "q2C2", "q2C3", "q3C1", "q3C2", "q3C3", "q4C1", "q4C2", "q4C3", "q5C1", "q5C2", "q5C3")), y = value, fill = rank)) +
-  geom_col() +
-  facet_wrap(~ qus) +
-  geom_text(aes(label = value), position = position_stack(vjust = 0.5), colour = "white") +  # Center the text
-  coord_flip() +  # Flip the plot
-  scale_fill_manual(values = c("rank1" = "#595959", "rank2" = "#C1C1C1", "rank3" = "#343434")) +  # Custom colors
-  labs(x = "Qus and Conditions",
-       y = "Value") +
-  theme_minimal()
-
-# Display the plot
-print(plot)
-
-
-
-stat.test <- data_melted %>% 
-  group_by(rank) %>% 
-  wilcox_test(value~conditions, p.adjust.method = 'BH') %>%
-  add_significance("p") %>%
-  add_xy_position(x = "rank")
-
-plot +
-stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02)
-
-
-# Create the long format data frame
-long_data <- data1 %>%
-  gather(key = "rank", value = "value", -c(qus, conditions, Sorting))
-# Perform a one-way ANOVA
-anova_results <- aov(value ~ conditions, data = long_data)
-summary(anova_results)
-# Perform Tukey's HSD post-hoc test
-tukey_results <- TukeyHSD(anova_results)
-tukey_results
-
-stat.test <- long_data %>% 
-  group_by(params) %>% 
-  wilcox_test(score~conditions, p.adjust.method = 'BH') %>%
-  add_significance("p") %>%
-  add_xy_position(x = "params")
 
 # saving the final figure
-ggsave("out/preference.pdf", width = 7, height = 3.5, dpi = 1000)
+ggsave("out/preference.pdf", width = 7, height = 4, dpi = 1000)
+write.csv(data_text,'csv/pref-signif.csv')
+
+
+
+
+# Create a sample data frame
+df <- data.frame(x = 1:10, y = rnorm(10), group = rep(letters[1:2], each = 5))
+
+# Create a facet grid chart with two panels
+p <- ggplot(df, aes(x, y)) +
+  geom_point() +
+  facet_grid(. ~ group)
+
+# Add a line to the first panel of the facet grid chart
+p <- p +
+  geom_segment(aes(x = 3, y = -2, xend = 7, yend = -2), 
+               size = 2, color = "red",
+               data = subset(df, group == "a"))
+
+# Display the chart
+p
 
 
 
 
 
-# Create the new data frame
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 library(ggplot2)
-library(reshape2)
-library(dplyr)
 
-data <- data.frame(
-  qus = c("q1", "q1", "q1", "q2", "q2", "q2", "q3", "q3", "q3", "q4", "q4", "q4", "q5", "q5", "q5"),
-  conditions = c("C1", "C2", "C3", "C1", "C2", "C3", "C1", "C2", "C3", "C1", "C2", "C3", "C1", "C2", "C3"),
-  rank1 = c(4, 6, 23, 10, 8, 23, 2, 13, 28, 10, 10, 24, 1, 10, 29),
-  rank2 = c(10, 23, 10, 17, 20, 8, 9, 21, 6, 8, 25, 7, 16, 22, 5),
-  rank3 = c(22, 7, 3, 9, 8, 5, 25, 2, 2, 18, 1, 5, 19, 4, 2)
-)
+data=read.csv('csv/preference.csv', sep=",")
 
-data1 <- data %>%
-  mutate(Sorting = interaction(factor(qus), conditions, sep = ""))
+coloring <- c("red", "green", "blue", "orange", "purple")
+coloring1 <- c("red", "green", "blue", "orange", "purple")
 
-data_melted <- melt(data1, id.vars = c("qus", "conditions", "Sorting"), variable.name = "rank", value.name = "value")
+p <- ggplot(data, aes(x = conditions, y = score, fill = factor(rank))) + 
+  geom_bar(stat = 'identity', position = 'stack') + 
+  coord_flip() +
+  theme_bw()
 
-# Create the bar plot
-plot <- ggplot(data_melted, aes(x = factor(conditions), y = value, fill = rank)) +
-  geom_col() +
-  facet_wrap(~ qus) +
-  # coord_flip() +
-  geom_text(aes(label = value), position = position_stack(vjust = 0.5), colour = "white") +  # Center the text
-  scale_fill_manual(values = c("rank1" = "#595959", "rank2" = "#C1C1C1", "rank3" = "#343434")) +  # Custom colors
-  labs(x = "Qus and Conditions",
-       y = "Value") +
-  theme_minimal()
+# Add labels to bars
+p <- p + geom_text(aes(label = score), position = position_stack(vjust = 0.5), color = "black", size = 4)
 
-# Display the plot
-print(plot)
+# Add facet grid
+p <- p + facet_grid(rows = vars(qus), switch = "y") + 
+  theme(strip.placement = "outside",
+        strip.background = element_rect(fill=coloring[3], color = NA))
 
+# Apply the custom colors to the fill color of each factor level
+p <- p + scale_fill_manual(values = coloring)
 
-# preference breakdown based on Friedman + Kendall + Nemenyi test
+# Add theme elements
+p <- p + theme(axis.title.x=element_blank(),
+               axis.title.y = element_blank(), 
+               plot.margin = unit(c(0, 0, .5, 0), "null"),
+               panel.border = element_blank(),
+               legend.title=element_blank(),
+               legend.direction="horizontal",
+               legend.position = c(.5,-.05),
+               legend.justification = c("center", "top"))
 
-# Load necessary libraries
-library(FSA)        # For the Nemenyi test
-library(PMCMRplus)  # For the Nemenyi test
-
-# Input data
-scenario_A <- matrix(c(2, 1, 3, 4, 5,
-                       1, 3, 5, 2, 4,
-                       4, 5, 2, 1, 3),
-                     nrow = 3, byrow = TRUE)
-
-# Perform the Friedman test
-friedman_result <- friedman.test(scenario_A)
-print(friedman_result)
-
-# Calculate Kendall's W
-num_raters <- nrow(scenario_A)
-num_objects <- ncol(scenario_A)
-kendall_chi <- friedman_result$statistic / (sum(scenario_A)^2 - sum(scenario_A)^3 / (length(scenario_A) + 1))
-print(kendall_chi)
-kendall_w <- (12 * friedman_result$statistic) / (num_raters * num_objects * (num_objects + 1))
-print(kendall_w)
+# Create separate geom_text layers for asterisks for each question
+geom_text_asterisk_q1 <- geom_text(data = subset(data, qus == "q1"), aes(label = "*"), x = "C1", y = max(data$score) + 5, color = "black", size = 6)
+geom_text_asterisk_q1_c2 <- geom_text(data = subset(data, qus == "q1"), aes(label = "*"), x = "C2", y = max(data$score) + 5, color = "black", size = 6)
+geom_text_asterisk_q2 <- geom_text(data = subset(data, qus == "q2"), aes(label = "**"), x = "C1", y = max(data$score) + 5, color = "black", size = 6)
+geom_text_asterisk_q3 <- geom_text(data = subset(data, qus == "q3"), aes(label = "*"), x = "C1", y = max(data$score) + 5, color = "black", size = 6)
+geom_text_asterisk_q4 <- geom_text(data = subset(data, qus == "q4"), aes(label = "***"), x = "C1", y = max(data$score) + 5, color = "black", size = 6)
 
 
-# Convert matrix to long data frame format
-scenario_A_long <- expand.grid(Rater = factor(1:nrow(scenario_A)), Object = factor(1:ncol(scenario_A)))
-scenario_A_long$Rank <- as.vector(t(scenario_A))
-# Perform post-hoc pairwise comparisons using the Nemenyi test
-nemenyi_result <- frdAllPairsNemenyiTest(Rank ~ Object | Rater, data = scenario_A_long)
-print(nemenyi_result)
+# Create separate geom_text layers for asterisks for each question and condition
+create_asterisk_geom <- function(q, c, y_offset) {
+  geom_text(data = subset(data, qus == q), aes(label = "*"), x = c, y = max(data$score[data$conditions == c & data$qus == q]) + y_offset, color = "black", size = 6)
+}
+
+# Create a function to generate geom_segment layers for each question and condition combination
+create_segment_geom <- function(q, c1, c2) {
+  data_subset <- subset(data, qus == q)
+  y1 <- max(data_subset$score[data_subset$conditions == c1])
+  y2 <- max(data_subset$score[data_subset$conditions == c2])
+  
+  geom_segment(aes(x = c1, xend = c2, y = y1, yend = y2), color = "black", linetype = "dashed")
+}
+
+conditions <- unique(data$conditions)
+questions <- unique(data$qus)
+y_offset <- 5
+
+asterisk_geoms <- lapply(questions, function(q) {
+  lapply(conditions, function(c) {
+    create_asterisk_geom(q, c, y_offset)
+  })
+})
+
+
+
+
+# Create the ggplot object without the original geom_text
+p <- ggplot(data, aes(x = conditions, y = score, fill = factor(rank))) + 
+  geom_bar(stat = 'identity', position = 'stack') + 
+  coord_flip() +
+  theme_bw()
+
+# Add the separate geom_text layers for asterisks for each question
+p <- p + geom_text_asterisk_q1 + geom_text_asterisk_q1_c2 + geom_text_asterisk_q2 + geom_text_asterisk_q3 + geom_text_asterisk_q4
+
+# Add the separate geom_text layers for asterisks for each question and condition
+for (q in asterisk_geoms) {
+  for (g in q) {
+    p <- p + g
+  }
+}
+
+# Add the separate geom_segment layers for each question and condition combination
+for (q in questions) {
+  for (i in 1:(length(conditions) - 1)) {
+    for (j in (i + 1):length(conditions)) {
+      p <- p + create_segment_geom(q, conditions[i], conditions[j])
+    }
+  }
+}
+
+# Continue with the rest of your code
+p <- p + facet_grid(rows = vars(qus), switch = "y") + 
+  theme(strip.placement = "outside",
+        strip.background = element_rect(fill=coloring[3], color = NA))
+
+p <- p + scale_fill_manual(values = coloring)
+
+p <- p + theme(axis.title.x=element_blank(),
+               axis.title.y = element_blank(), 
+               plot.margin = unit(c(0, 0, .5, 0), "null"),
+               panel.border = element_blank(),
+               legend.title=element_blank(),
+               legend.direction="horizontal",
+               legend.position = c(.5,-.05),
+               legend.justification = c("center", "top"))
+p

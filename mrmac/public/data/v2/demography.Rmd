@@ -1,0 +1,46 @@
+---
+title: "Demography"
+author: "jQuery404"
+output: html_notebook
+---
+
+## Lets calculate the descriptive statistics
+
+```{r}
+data <- read.csv("csv/demography.csv")
+
+row <- my_data[,1]
+dims <- dim(my_data)
+
+data <- data.frame(
+  Participant = 1:dims[1],
+  Age = my_data[,2],
+  Sex = my_data[,3],
+  Normal_Corrected = my_data[,4],
+  Interact = my_data[,5]
+)
+```
+
+## Calculate descriptive statistics for age
+```{r}
+summary(data$Age)
+```
+
+
+## Calculate the number and proportion of participants in each sex category
+```{r}
+table(data$Sex)
+prop.table(table(data$Sex))
+```
+
+## Calculate the number and proportion of participants in each Normal/Corrected category
+```{r}
+table(data$Normal_Corrected)
+prop.table(table(data$Normal_Corrected))
+```
+
+## Calculate the number and proportion of participants in each Interact category
+```{r}
+table(data$Interact)
+prop.table(table(data$Interact))
+```

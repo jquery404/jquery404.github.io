@@ -10,6 +10,9 @@ library(ggplot2)
 library(ggpubr)
 library(rstatix)
 
+coloring = c("#E76469", "#F8D85E","#EDA645","#D1B0B3","#8C99A6","#ADD299","#4FA490","#3B7F9F")
+fontsize = 14
+
 # Add automatically x and y positions
 df=read.csv('csv/social.csv', sep=",")
 
@@ -23,17 +26,60 @@ summary(test_results)
 box plot >
 
 ```{r}
-bxp <- ggplot(df, aes(x = params, y = score)) +
-  geom_boxplot(aes(fill = conditions))
+# Convert 'conditions' column to a factor
+df$conditions <- as.factor(df$conditions)
+
 stat.test <- df %>% 
   group_by(params) %>% 
   wilcox_test(score~conditions, p.adjust.method = 'BH') %>%
   add_significance("p") %>%
   add_xy_position(x = "params")
-bxp + stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02)
+
+bxp <- ggplot(df, aes(x = params, y = score)) + 
+  stat_boxplot(aes(fill = conditions), 
+               geom = "errorbar", 
+               width = 0.2,
+               position = position_dodge(width = 0.75)) +
+  geom_boxplot(aes(fill = conditions), outlier.shape=NA) +
+  stat_summary(aes(fill = conditions), 
+               fun.y="mean", 
+               geom= "point", 
+               shape = 4, 
+               size = 2,
+               colour= "black", 
+               position = position_dodge(width = 0.75)) +
+  # stat_summary(aes(fill = conditions), 
+  #              fun="median",
+  #              colour= "black", 
+  #              position = position_dodge(width = 0.75)) +
+  theme_bw()
+
+bxp + stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02) + 
+  scale_fill_manual(name= "conditions", values = c("#E76469", "#F8D85E","#EDA645")) +
+  scale_color_manual(name = "conditions", values = c("#E76469", "#F8D85E","#EDA645")) + 
+  scale_y_continuous(minor_breaks = seq(0, 7.9, 1), breaks = seq(1, 7.9, by=1), limits=c(1,7.9)) +
+  theme(axis.line = element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.x = element_text(color="black", size=fontsize),
+        axis.text.y = element_text(color="black", size=fontsize),
+        text = element_text(size=fontsize),
+        strip.background = element_blank(),
+        plot.background = element_blank(),
+        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        panel.border = element_blank(),
+        panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        #panel.grid.major = element_blank(),
+        legend.position="bottom",
+        legend.direction = "horizontal",
+        legend.justification = c("center", "top"),
+        legend.title=element_blank(),
+        legend.text=element_text(size=fontsize),
+        legend.box.just = "right",
+        legend.box.background = element_blank())
 
 # saving the final figure
-ggsave("out/social.pdf", width = 6.5, height = 4, dpi = 1000)
+ggsave("out/social.pdf", width = 8, height = 4, dpi = 1000)
 ```
 
 Example of how to manually adjust (x,y) position of the bracket as well as the `tip_length`

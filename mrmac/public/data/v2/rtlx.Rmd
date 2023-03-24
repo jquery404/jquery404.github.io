@@ -22,16 +22,16 @@ fontsize = 14
 df=read.csv('csv/tlx.csv', sep=",")
 
 summary_data <- df %>% 
-  group_by(params, task) %>% 
+  group_by(params, conditions) %>% 
   summarize(mean_score = mean(score), 
             se_score = qnorm(0.975) * sd(score) / sqrt(n()),
             n = n()) %>%
   ungroup()
 
 # Create horizontal bar chart with error bars
-order <- c('mental',	'physical',	'temporal',	'effort',	'performance', 'frustration', 'overall')
+order <- c('Mental',	'Physical',	'Temporal',	'Effort',	'Performance', 'Frustration', 'Overall')
 
-ggplot(summary_data, aes(x = mean_score, y = factor(params, levels = order), fill = task)) +
+ggplot(summary_data, aes(x = mean_score, y = factor(params, levels = order), fill = conditions)) +
   geom_col(width=.5, position=position_dodge(.6)) +
   geom_errorbar(aes(xmin=mean_score-se_score, xmax=mean_score+se_score), width=.2, position=position_dodge(.6))+
   scale_fill_manual(values = coloring) +
@@ -49,12 +49,13 @@ ggplot(summary_data, aes(x = mean_score, y = factor(params, levels = order), fil
         plot.margin = unit(c(0.005, .025, 0, 0), "null"),
         panel.border = element_blank(),
         panel.spacing = unit(c(0, 0, 0, 0), "null"),
-        legend.position = c(.95, 0.3),
-        legend.justification = c("right", "top"),
+        legend.position="bottom",
+        legend.direction = "horizontal",
+        legend.justification = c("center", "top"),
         legend.title=element_blank(),
         legend.text=element_text(size=fontsize),
         legend.box.just = "right",
-        legend.box.background = element_rect(fill = "white", color = "black", size = 1))
+        legend.box.background = element_blank())
 
 
 ggsave("out/rtlx.pdf", width = 6.5, height = 4.8, dpi = 1000)

@@ -4,8 +4,7 @@ author: "jQuery404"
 output: html_notebook
 ---
 
-
-System performance based on the `Capturing/Processing Time`, `Encoding/Decoding Time`, `Transmission Time`, `Network Latency`, `Rendering FPS`
+Beautify
 
 ```{r}
 library(reshape2)
@@ -13,9 +12,21 @@ library(ggplot2)
 library(dplyr)
 library(lubridate)
 
+coloring = c("#E76469", "#F8D85E","#EDA645","#D1B0B3","#8C99A6","#ADD299","#4FA490","#3B7F9F")
+fontsize = 14
+```
+
+
+System performance based on the `Capturing/Processing Time`, `Encoding/Decoding Time`, `Transmission Time`, `Network Latency`, `Rendering FPS`
+
+```{r}
 # Set up the data
-metrics <- c('Capturing/Processing Time', 'Encoding/Decoding Time', 'Transmission Time', 'Network Latency', 'Rendering FPS')
-values <- list(c(45, 5, 50, 53, 80), c(60, 15, 60, 80, 65), c(75, 22, 71, 120, 59))
+metrics <- c('Capturing/Processing Time', 
+             'Encoding/Decoding Time', 
+             'Transmission Time', 
+             'Network Latency', 
+             'Rendering FPS')
+values <- list(c(45, 5, 50, 53, 80), c(60, 15, 60, 80, 65))
 
 # Set up custom sorting order
 custom_order <- c('Capturing/Processing Time', 
@@ -25,25 +36,40 @@ custom_order <- c('Capturing/Processing Time',
                   'Rendering FPS')
 
 # Create a data frame
-data <- data.frame(metric = factor(rep(metrics, 3), levels = custom_order),
+data <- data.frame(metric = factor(rep(metrics, 2), levels = custom_order),
                    value = unlist(values),
-                   test = rep(c("C1", "C2", "C3"), each = length(metrics)))
+                   test = factor(rep(c("MRMAC", "AVT"), each = length(metrics)), levels = c("AVT", "MRMAC")))
 
 # Create the chart
 ggplot(data, aes(x = value, y = metric, fill = test)) +
   geom_col(position = position_dodge(width = .65), width = .45) +
   scale_y_discrete(expand = c(0, 1)) +
-  scale_fill_manual(values = c("#3c3c3c", "#666666", "#B5B5B5")) +
-  labs(title = "System Performance Chart", x = "Time in ms or FPS", y = "System Performance Metrics") +
-  theme_minimal() +
+  scale_fill_manual(values = c("AVT" = "#F8D85E", "MRMAC" = "#E76469")) +
+  #labs(title = "System Performance Chart", x = "Time in ms or FPS", y = "System Performance Metrics") +
+  theme_bw() + 
   theme(axis.line = element_blank(),
-        panel.grid.major.y = element_blank(),
-        panel.grid.minor.y = element_blank())
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.x = element_text(color="black", size=fontsize),
+        axis.text.y = element_text(color="black", size=fontsize),
+        text = element_text(size=fontsize),
+        strip.background = element_blank(),
+        plot.background = element_blank(),
+        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        panel.border = element_blank(),
+        panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        #panel.grid.major = element_blank(),
+        legend.position = c(.95, 0.4),
+        legend.justification = c("right", "top"),
+        legend.title=element_blank(),
+        legend.text=element_text(size=fontsize),
+        legend.box.just = "right",
+        legend.box.background = element_rect(fill = "white", color = "black", size = 1))
 
 
 
 # Save the chart as a PDF file
-ggsave("out/performance.pdf", width = 10, height = 7, unit = "in", dpi = 300)
+ggsave("out/performance.pdf", width = 10, height = 5, unit = "in", dpi = 300)
 ```
 
 
@@ -101,4 +127,91 @@ ggplot() +
        x = "Time Period",
        y = "Latency (ms)") +
   theme_minimal()
+```
+
+
+
+```{r}
+# Install and load required packages
+if (!require(ggplot2)) {
+  install.packages("ggplot2")
+}
+library(ggplot2)
+
+# Create a data frame with the comparison parameters
+comparison_data <- data.frame(
+  System = c("MRMAC", "MRMAC", "MRMAC", "MRMAC", "MRMAC", "AVT", "AVT", "AVT", "AVT", "AVT"),
+  Parameter = c("Data Size", "Capturing & Processing Time", "Networking Time", "Rendering Time", "Network Latency",
+               "Data Size", "Capturing & Processing Time", "Networking Time", "Rendering Time", "Network Latency"),
+  Score = c(8, 9, 9, 9, 8, 6, 4, 4, 5, 4)
+)
+
+# Create a comparison plot using ggplot2
+comparison_plot <- ggplot(comparison_data, aes(x = Parameter, y = Score, fill = System)) +
+  geom_bar(stat = "identity", position = position_dodge(width = .65), width = .55) +
+  scale_fill_manual(values = c("MRMAC" = "#E76469", "AVT" = "#F8D85E")) +
+  scale_color_manual(values = c("MRMAC" = "#E76469", "AVT" = "#F8D85E")) +
+  labs(title = "MRMAC vs AVT Comparison",
+       x = "Parameters",
+       y = "Score (Higher is Better)") + 
+  coord_flip() +
+  theme_bw() + 
+  theme(axis.line = element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.x = element_text(color="black", size=fontsize),
+        axis.text.y = element_text(color="black", size=fontsize),
+        text = element_text(size=fontsize),
+        strip.background = element_blank(),
+        plot.background = element_blank(),
+        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        panel.border = element_blank(),
+        panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        #panel.grid.major = element_blank(),
+        legend.position = c(.95, 0.2),
+        legend.justification = c("right", "top"),
+        legend.title=element_blank(),
+        legend.text=element_text(size=fontsize),
+        legend.box.just = "right",
+        legend.box.background = element_rect(fill = "white", color = "black", size = 1))
+
+# Display the comparison plot
+print(comparison_plot)
+```
+
+
+## Latency might vary based on the number of users in an SFU WebRTC setup
+
+
+```{r}
+# create data
+data=read.csv('csv/latency.csv', sep=",")
+
+g <- ggplot(data=data, aes(x=A, y=B, group=1)) +
+  geom_area(fill = coloring[1],
+            alpha = 0.2,
+            color = coloring[1],
+            lwd = 0.5, 
+            linetype = 1)+
+  geom_point(color=coloring[1])
+
+g + 
+  theme_bw() + 
+  theme(axis.line = element_blank(),
+        axis.text.x = element_text(color="black", size=fontsize),
+        axis.text.y = element_text(color="black", size=fontsize),
+        strip.text = element_blank(),
+        strip.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.background = element_blank(),
+        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        legend.position = "none") +
+  scale_x_continuous(name="Number of users", breaks = seq(1, 20, by = 1)) +
+  scale_y_continuous(name="Latency (ms)", breaks=seq(0, 1000, by=150))
+
+ggsave("out/latency.pdf", width = 6, height = 2, dpi = 1000)
 ```

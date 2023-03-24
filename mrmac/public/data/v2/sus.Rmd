@@ -35,7 +35,7 @@ fontsize = 14
 data=read.csv('csv/sus.csv', sep=",")
 data <- as.data.frame(data) 
 data[5:8] <- lapply(data[5:8], factor, levels=1:5, labels=c("Strongly Disagree", "Disagree", "Neutral","Agree","Strongly Agree"))
-likt <- likert(data[,c(5:8)], grouping = data$task)
+likt <- likert(data[,c(5:8)], grouping = data$conditions)
 plot(likt, colors = c("#E76469", "#F8D85E","#EDA645","#4FA490","#3B7F9F")) + 
   theme_bw() +
   theme(axis.line = element_blank(),
@@ -54,7 +54,7 @@ plot(likt, colors = c("#E76469", "#F8D85E","#EDA645","#4FA490","#3B7F9F")) +
         legend.position = c(.5, -.1),
         legend.justification = c("center", "top"))
 
-ggsave("out/usability2.pdf", width = 6.5, height = 4, dpi = 1000)
+ggsave("out/usability.pdf", width = 6.5, height = 4, dpi = 1000)
 ```
 
 ## Lets calculate the descriptive statistics
