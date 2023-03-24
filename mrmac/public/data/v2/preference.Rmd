@@ -56,7 +56,7 @@ p <- p + geom_text(aes(label = score), position = position_stack(vjust = 0.5), c
 p <- p + facet_grid(rows = vars(qus), switch = "y") + 
   # geom_signif(annotations = "*", y_position = 36.5, xmin="C1", xmax="C2") +
   theme(strip.placement = "outside",
-        strip.background = element_rect(fill=coloring[3], color = NA))
+        strip.background = element_rect(fill="#364651", color = NA))
 
 # Apply the custom colors to the fill color of each factor level
 p <- p + scale_fill_manual(values = coloring)
@@ -66,7 +66,7 @@ p <- p + theme(axis.title.x=element_blank(),
                axis.title.y = element_blank(), 
                plot.margin = unit(c(0, .05, .5, 0), "null"),
                panel.border = element_blank(),
-               strip.text = element_text(face = "bold"),
+               strip.text = element_text(face = "bold", color = "white"),
                legend.title=element_blank(),
                legend.direction="horizontal",
                legend.position = c(.5,-.05),
@@ -184,4 +184,115 @@ ggplot(df, aes(fill=position, y=points, x=team)) +
 
 ```{r}
 write.csv(data, file = "out/data.csv", row.names = FALSE)
+```
+
+C3
+
+```{r}
+set.seed(123) # Set a random seed for reproducibility
+
+# Generate 10 random numbers between -5 and 5
+x <- runif(10, min = -5, max = 5)
+
+# Subtract the median from each of these numbers to center the distribution around 0
+x <- x - median(x)
+
+# Scale the data to have a mean of 45 and adjust the spread of the data
+x <- x * (45 / mean(x)) * (20 / 10)^0.5
+
+# Shift the median of the data to 55
+x <- x + 55
+
+# Round each observation to the nearest multiple of 5
+x <- round(x/5) * 5
+
+# Remove any observations outside the range of 0 to 100
+x <- x[x >= 0 & x <= 100]
+
+# If necessary, add additional observations to reach a total of 20
+while (length(x) < 20) {
+  x <- c(x, round(runif(1, min = 0, max = 100)/5) * 5)
+}
+
+# Shuffle the vector to make the order of the observations random
+x <- sample(x)
+
+# View the resulting data set
+x
+
+
+
+```
+
+C2
+
+```{r}
+set.seed(123) # Set a random seed for reproducibility
+
+# Generate 10 random numbers between -15 and 15
+x <- runif(10, min = -15, max = 15)
+
+# Subtract the median from each of these numbers to center the distribution around 0
+x <- x - median(x)
+
+# Scale the data to have a mean of 35 and adjust the spread of the data
+x <- x * (35 / mean(x)) * (20 / 10)^0.5
+
+# Shift the median of the data to 50
+x <- x + 50
+
+# Round each observation to the nearest multiple of 5
+x <- round(x/5) * 5
+
+# Remove any observations outside the range of 0 to 100
+x <- x[x >= 0 & x <= 100]
+
+# If necessary, add additional observations to reach a total of 20
+while (length(x) < 20) {
+  x <- c(x, round(runif(1, min = 0, max = 100)/5) * 5)
+}
+
+# Shuffle the vector to make the order of the observations random
+x <- sample(x)
+
+# View the resulting data set
+x
+
+
+```
+
+c3
+
+```{r}
+set.seed(123) # Set a random seed for reproducibility
+
+# Generate 10 random numbers between -18 and 18
+x <- runif(10, min = -18, max = 18)
+
+# Subtract the median from each of these numbers to center the distribution around 0
+x <- x - median(x)
+
+# Scale the data to have a mean of 22 and adjust the spread of the data
+x <- x * (22 / mean(x)) * (20 / 10)^0.5
+
+# Shift the median of the data to 40
+x <- x + 40
+
+# Round each observation to the nearest multiple of 5
+x <- round(x/5) * 5
+
+# Remove any observations outside the range of 0 to 100
+x <- x[x >= 0 & x <= 100]
+
+# If necessary, add additional observations to reach a total of 20
+while (length(x) < 20) {
+  x <- c(x, round(runif(1, min = 0, max = 100)/5) * 5)
+}
+
+# Shuffle the vector to make the order of the observations random
+x <- sample(x)
+
+# View the resulting data set
+x
+
 ```
