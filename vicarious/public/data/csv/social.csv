@@ -1,0 +1,1057 @@
+grp,id,params,vrar,conditions,score
+1,1,Co-presence,VR,NS,3
+,,Co-presence,VR,NS,3
+,,Co-presence,VR,NS,5
+,,Co-presence,VR,NS,3
+,,Mutual Attention,VR,NS,4
+,,Mutual Attention,VR,NS,1
+,,Mutual Attention,VR,NS,5
+,,Mutual Understanding,VR,NS,3
+,,Mutual Understanding,VR,NS,1
+,,Behavioral Engagement,VR,NS,1
+,,Behavioral Engagement,VR,NS,3
+,2,Co-presence,AR,NS,2
+,,Co-presence,AR,NS,3
+,,Co-presence,AR,NS,3
+,,Co-presence,AR,NS,1
+,,Mutual Attention,AR,NS,4
+,,Mutual Attention,AR,NS,4
+,,Mutual Attention,AR,NS,4
+,,Mutual Understanding,AR,NS,5
+,,Mutual Understanding,AR,NS,3
+,,Behavioral Engagement,AR,NS,5
+,,Behavioral Engagement,AR,NS,3
+,3,Co-presence,VR,NS,1
+,,Co-presence,VR,NS,5
+,,Co-presence,VR,NS,3
+,,Co-presence,VR,NS,1
+,,Mutual Attention,VR,NS,3
+,,Mutual Attention,VR,NS,3
+,,Mutual Attention,VR,NS,1
+,,Mutual Understanding,VR,NS,5
+,,Mutual Understanding,VR,NS,3
+,,Behavioral Engagement,VR,NS,3
+,,Behavioral Engagement,VR,NS,3
+,1,Co-presence,VR,MS,4
+,,Co-presence,VR,MS,5
+,,Co-presence,VR,MS,1
+,,Co-presence,VR,MS,5
+,,Mutual Attention,VR,MS,2
+,,Mutual Attention,VR,MS,2
+,,Mutual Attention,VR,MS,4
+,,Mutual Understanding,VR,MS,2
+,,Mutual Understanding,VR,MS,5
+,,Behavioral Engagement,VR,MS,2
+,,Behavioral Engagement,VR,MS,2
+,2,Co-presence,AR,MS,5
+,,Co-presence,AR,MS,2
+,,Co-presence,AR,MS,4
+,,Co-presence,AR,MS,3
+,,Mutual Attention,AR,MS,5
+,,Mutual Attention,AR,MS,3
+,,Mutual Attention,AR,MS,6
+,,Mutual Understanding,AR,MS,2
+,,Mutual Understanding,AR,MS,4
+,,Behavioral Engagement,AR,MS,3
+,,Behavioral Engagement,AR,MS,4
+,3,Co-presence,VR,MS,5
+,,Co-presence,VR,MS,7
+,,Co-presence,VR,MS,5
+,,Co-presence,VR,MS,2
+,,Mutual Attention,VR,MS,2
+,,Mutual Attention,VR,MS,7
+,,Mutual Attention,VR,MS,4
+,,Mutual Understanding,VR,MS,5
+,,Mutual Understanding,VR,MS,3
+,,Behavioral Engagement,VR,MS,5
+,,Behavioral Engagement,VR,MS,6
+,1,Co-presence,VR,GS,3
+,,Co-presence,VR,GS,6
+,,Co-presence,VR,GS,3
+,,Co-presence,VR,GS,2
+,,Mutual Attention,VR,GS,5
+,,Mutual Attention,VR,GS,4
+,,Mutual Attention,VR,GS,2
+,,Mutual Understanding,VR,GS,7
+,,Mutual Understanding,VR,GS,6
+,,Behavioral Engagement,VR,GS,7
+,,Behavioral Engagement,VR,GS,6
+,2,Co-presence,AR,GS,6
+,,Co-presence,AR,GS,7
+,,Co-presence,AR,GS,7
+,,Co-presence,AR,GS,5
+,,Mutual Attention,AR,GS,3
+,,Mutual Attention,AR,GS,6
+,,Mutual Attention,AR,GS,4
+,,Mutual Understanding,AR,GS,6
+,,Mutual Understanding,AR,GS,7
+,,Behavioral Engagement,AR,GS,6
+,,Behavioral Engagement,AR,GS,3
+,3,Co-presence,VR,GS,7
+,,Co-presence,VR,GS,7
+,,Co-presence,VR,GS,5
+,,Co-presence,VR,GS,4
+,,Mutual Attention,VR,GS,2
+,,Mutual Attention,VR,GS,6
+,,Mutual Attention,VR,GS,4
+,,Mutual Understanding,VR,GS,6
+,,Mutual Understanding,VR,GS,6
+,,Behavioral Engagement,VR,GS,3
+,,Behavioral Engagement,VR,GS,6
+,1,Co-presence,VR,AS,2
+,,Co-presence,VR,AS,3
+,,Co-presence,VR,AS,4
+,,Co-presence,VR,AS,6
+,,Mutual Attention,VR,AS,5
+,,Mutual Attention,VR,AS,7
+,,Mutual Attention,VR,AS,6
+,,Mutual Understanding,VR,AS,2
+,,Mutual Understanding,VR,AS,4
+,,Behavioral Engagement,VR,AS,7
+,,Behavioral Engagement,VR,AS,5
+,2,Co-presence,AR,AS,4
+,,Co-presence,AR,AS,6
+,,Co-presence,AR,AS,2
+,,Co-presence,AR,AS,7
+,,Mutual Attention,AR,AS,3
+,,Mutual Attention,AR,AS,4
+,,Mutual Attention,AR,AS,6
+,,Mutual Understanding,AR,AS,6
+,,Mutual Understanding,AR,AS,3
+,,Behavioral Engagement,AR,AS,2
+,,Behavioral Engagement,AR,AS,5
+,3,Co-presence,VR,AS,3
+,,Co-presence,VR,AS,7
+,,Co-presence,VR,AS,7
+,,Co-presence,VR,AS,4
+,,Mutual Attention,VR,AS,4
+,,Mutual Attention,VR,AS,7
+,,Mutual Attention,VR,AS,5
+,,Mutual Understanding,VR,AS,5
+,,Mutual Understanding,VR,AS,4
+,,Behavioral Engagement,VR,AS,2
+,,Behavioral Engagement,VR,AS,3
+2,1,Co-presence,VR,NS,1
+,,Co-presence,VR,NS,2
+,,Co-presence,VR,NS,4
+,,Co-presence,VR,NS,2
+,,Mutual Attention,VR,NS,1
+,,Mutual Attention,VR,NS,5
+,,Mutual Attention,VR,NS,4
+,,Mutual Understanding,VR,NS,2
+,,Mutual Understanding,VR,NS,4
+,,Behavioral Engagement,VR,NS,3
+,,Behavioral Engagement,VR,NS,2
+,2,Co-presence,AR,NS,3
+,,Co-presence,AR,NS,3
+,,Co-presence,AR,NS,2
+,,Co-presence,AR,NS,4
+,,Mutual Attention,AR,NS,4
+,,Mutual Attention,AR,NS,4
+,,Mutual Attention,AR,NS,1
+,,Mutual Understanding,AR,NS,3
+,,Mutual Understanding,AR,NS,4
+,,Behavioral Engagement,AR,NS,5
+,,Behavioral Engagement,AR,NS,5
+,3,Co-presence,VR,NS,2
+,,Co-presence,VR,NS,5
+,,Co-presence,VR,NS,2
+,,Co-presence,VR,NS,2
+,,Mutual Attention,VR,NS,5
+,,Mutual Attention,VR,NS,2
+,,Mutual Attention,VR,NS,2
+,,Mutual Understanding,VR,NS,5
+,,Mutual Understanding,VR,NS,2
+,,Behavioral Engagement,VR,NS,2
+,,Behavioral Engagement,VR,NS,3
+,1,Co-presence,VR,MS,1
+,,Co-presence,VR,MS,2
+,,Co-presence,VR,MS,5
+,,Co-presence,VR,MS,1
+,,Mutual Attention,VR,MS,4
+,,Mutual Attention,VR,MS,4
+,,Mutual Attention,VR,MS,4
+,,Mutual Understanding,VR,MS,2
+,,Mutual Understanding,VR,MS,1
+,,Behavioral Engagement,VR,MS,2
+,,Behavioral Engagement,VR,MS,3
+,2,Co-presence,AR,MS,6
+,,Co-presence,AR,MS,3
+,,Co-presence,AR,MS,2
+,,Co-presence,AR,MS,4
+,,Mutual Attention,AR,MS,6
+,,Mutual Attention,AR,MS,7
+,,Mutual Attention,AR,MS,2
+,,Mutual Understanding,AR,MS,4
+,,Mutual Understanding,AR,MS,2
+,,Behavioral Engagement,AR,MS,4
+,,Behavioral Engagement,AR,MS,4
+,3,Co-presence,VR,MS,7
+,,Co-presence,VR,MS,6
+,,Co-presence,VR,MS,3
+,,Co-presence,VR,MS,4
+,,Mutual Attention,VR,MS,3
+,,Mutual Attention,VR,MS,3
+,,Mutual Attention,VR,MS,2
+,,Mutual Understanding,VR,MS,5
+,,Mutual Understanding,VR,MS,5
+,,Behavioral Engagement,VR,MS,4
+,,Behavioral Engagement,VR,MS,2
+,1,Co-presence,VR,GS,6
+,,Co-presence,VR,GS,4
+,,Co-presence,VR,GS,6
+,,Co-presence,VR,GS,6
+,,Mutual Attention,VR,GS,6
+,,Mutual Attention,VR,GS,2
+,,Mutual Attention,VR,GS,3
+,,Mutual Understanding,VR,GS,6
+,,Mutual Understanding,VR,GS,2
+,,Behavioral Engagement,VR,GS,3
+,,Behavioral Engagement,VR,GS,6
+,2,Co-presence,AR,GS,4
+,,Co-presence,AR,GS,6
+,,Co-presence,AR,GS,7
+,,Co-presence,AR,GS,5
+,,Mutual Attention,AR,GS,6
+,,Mutual Attention,AR,GS,5
+,,Mutual Attention,AR,GS,6
+,,Mutual Understanding,AR,GS,6
+,,Mutual Understanding,AR,GS,7
+,,Behavioral Engagement,AR,GS,2
+,,Behavioral Engagement,AR,GS,5
+,3,Co-presence,VR,GS,6
+,,Co-presence,VR,GS,2
+,,Co-presence,VR,GS,3
+,,Co-presence,VR,GS,5
+,,Mutual Attention,VR,GS,6
+,,Mutual Attention,VR,GS,3
+,,Mutual Attention,VR,GS,5
+,,Mutual Understanding,VR,GS,4
+,,Mutual Understanding,VR,GS,4
+,,Behavioral Engagement,VR,GS,4
+,,Behavioral Engagement,VR,GS,7
+,1,Co-presence,VR,AS,6
+,,Co-presence,VR,AS,7
+,,Co-presence,VR,AS,3
+,,Co-presence,VR,AS,5
+,,Mutual Attention,VR,AS,4
+,,Mutual Attention,VR,AS,6
+,,Mutual Attention,VR,AS,2
+,,Mutual Understanding,VR,AS,6
+,,Mutual Understanding,VR,AS,4
+,,Behavioral Engagement,VR,AS,6
+,,Behavioral Engagement,VR,AS,2
+,2,Co-presence,AR,AS,2
+,,Co-presence,AR,AS,3
+,,Co-presence,AR,AS,7
+,,Co-presence,AR,AS,4
+,,Mutual Attention,AR,AS,3
+,,Mutual Attention,AR,AS,7
+,,Mutual Attention,AR,AS,3
+,,Mutual Understanding,AR,AS,4
+,,Mutual Understanding,AR,AS,5
+,,Behavioral Engagement,AR,AS,7
+,,Behavioral Engagement,AR,AS,3
+,3,Co-presence,VR,AS,5
+,,Co-presence,VR,AS,4
+,,Co-presence,VR,AS,3
+,,Co-presence,VR,AS,5
+,,Mutual Attention,VR,AS,3
+,,Mutual Attention,VR,AS,7
+,,Mutual Attention,VR,AS,6
+,,Mutual Understanding,VR,AS,3
+,,Mutual Understanding,VR,AS,3
+,,Behavioral Engagement,VR,AS,4
+,,Behavioral Engagement,VR,AS,6
+3,1,Co-presence,VR,NS,5
+,,Co-presence,VR,NS,3
+,,Co-presence,VR,NS,5
+,,Co-presence,VR,NS,4
+,,Mutual Attention,VR,NS,2
+,,Mutual Attention,VR,NS,3
+,,Mutual Attention,VR,NS,3
+,,Mutual Understanding,VR,NS,2
+,,Mutual Understanding,VR,NS,2
+,,Behavioral Engagement,VR,NS,5
+,,Behavioral Engagement,VR,NS,3
+,2,Co-presence,AR,NS,3
+,,Co-presence,AR,NS,5
+,,Co-presence,AR,NS,4
+,,Co-presence,AR,NS,2
+,,Mutual Attention,AR,NS,5
+,,Mutual Attention,AR,NS,2
+,,Mutual Attention,AR,NS,2
+,,Mutual Understanding,AR,NS,5
+,,Mutual Understanding,AR,NS,4
+,,Behavioral Engagement,AR,NS,5
+,,Behavioral Engagement,AR,NS,4
+,3,Co-presence,VR,NS,4
+,,Co-presence,VR,NS,4
+,,Co-presence,VR,NS,4
+,,Co-presence,VR,NS,4
+,,Mutual Attention,VR,NS,2
+,,Mutual Attention,VR,NS,4
+,,Mutual Attention,VR,NS,1
+,,Mutual Understanding,VR,NS,5
+,,Mutual Understanding,VR,NS,5
+,,Behavioral Engagement,VR,NS,4
+,,Behavioral Engagement,VR,NS,5
+,1,Co-presence,VR,MS,5
+,,Co-presence,VR,MS,5
+,,Co-presence,VR,MS,4
+,,Co-presence,VR,MS,4
+,,Mutual Attention,VR,MS,2
+,,Mutual Attention,VR,MS,5
+,,Mutual Attention,VR,MS,3
+,,Mutual Understanding,VR,MS,2
+,,Mutual Understanding,VR,MS,1
+,,Behavioral Engagement,VR,MS,1
+,,Behavioral Engagement,VR,MS,4
+,2,Co-presence,AR,MS,5
+,,Co-presence,AR,MS,3
+,,Co-presence,AR,MS,5
+,,Co-presence,AR,MS,6
+,,Mutual Attention,AR,MS,5
+,,Mutual Attention,AR,MS,6
+,,Mutual Attention,AR,MS,4
+,,Mutual Understanding,AR,MS,6
+,,Mutual Understanding,AR,MS,7
+,,Behavioral Engagement,AR,MS,7
+,,Behavioral Engagement,AR,MS,5
+,3,Co-presence,VR,MS,5
+,,Co-presence,VR,MS,7
+,,Co-presence,VR,MS,3
+,,Co-presence,VR,MS,3
+,,Mutual Attention,VR,MS,3
+,,Mutual Attention,VR,MS,5
+,,Mutual Attention,VR,MS,2
+,,Mutual Understanding,VR,MS,5
+,,Mutual Understanding,VR,MS,4
+,,Behavioral Engagement,VR,MS,4
+,,Behavioral Engagement,VR,MS,5
+,1,Co-presence,VR,GS,4
+,,Co-presence,VR,GS,4
+,,Co-presence,VR,GS,2
+,,Co-presence,VR,GS,7
+,,Mutual Attention,VR,GS,5
+,,Mutual Attention,VR,GS,5
+,,Mutual Attention,VR,GS,2
+,,Mutual Understanding,VR,GS,6
+,,Mutual Understanding,VR,GS,2
+,,Behavioral Engagement,VR,GS,2
+,,Behavioral Engagement,VR,GS,4
+,2,Co-presence,AR,GS,5
+,,Co-presence,AR,GS,7
+,,Co-presence,AR,GS,2
+,,Co-presence,AR,GS,6
+,,Mutual Attention,AR,GS,1
+,,Mutual Attention,AR,GS,6
+,,Mutual Attention,AR,GS,4
+,,Mutual Understanding,AR,GS,7
+,,Mutual Understanding,AR,GS,6
+,,Behavioral Engagement,AR,GS,5
+,,Behavioral Engagement,AR,GS,5
+,3,Co-presence,VR,GS,1
+,,Co-presence,VR,GS,7
+,,Co-presence,VR,GS,6
+,,Co-presence,VR,GS,4
+,,Mutual Attention,VR,GS,6
+,,Mutual Attention,VR,GS,7
+,,Mutual Attention,VR,GS,2
+,,Mutual Understanding,VR,GS,3
+,,Mutual Understanding,VR,GS,5
+,,Behavioral Engagement,VR,GS,6
+,,Behavioral Engagement,VR,GS,6
+,1,Co-presence,VR,AS,2
+,,Co-presence,VR,AS,2
+,,Co-presence,VR,AS,3
+,,Co-presence,VR,AS,3
+,,Mutual Attention,VR,AS,2
+,,Mutual Attention,VR,AS,3
+,,Mutual Attention,VR,AS,2
+,,Mutual Understanding,VR,AS,2
+,,Mutual Understanding,VR,AS,2
+,,Behavioral Engagement,VR,AS,5
+,,Behavioral Engagement,VR,AS,7
+,2,Co-presence,AR,AS,5
+,,Co-presence,AR,AS,2
+,,Co-presence,AR,AS,2
+,,Co-presence,AR,AS,6
+,,Mutual Attention,AR,AS,4
+,,Mutual Attention,AR,AS,7
+,,Mutual Attention,AR,AS,6
+,,Mutual Understanding,AR,AS,3
+,,Mutual Understanding,AR,AS,5
+,,Behavioral Engagement,AR,AS,3
+,,Behavioral Engagement,AR,AS,2
+,3,Co-presence,VR,AS,2
+,,Co-presence,VR,AS,6
+,,Co-presence,VR,AS,7
+,,Co-presence,VR,AS,2
+,,Mutual Attention,VR,AS,2
+,,Mutual Attention,VR,AS,4
+,,Mutual Attention,VR,AS,2
+,,Mutual Understanding,VR,AS,5
+,,Mutual Understanding,VR,AS,5
+,,Behavioral Engagement,VR,AS,2
+,,Behavioral Engagement,VR,AS,4
+4,1,Co-presence,VR,NS,4
+,,Co-presence,VR,NS,2
+,,Co-presence,VR,NS,5
+,,Co-presence,VR,NS,1
+,,Mutual Attention,VR,NS,4
+,,Mutual Attention,VR,NS,1
+,,Mutual Attention,VR,NS,4
+,,Mutual Understanding,VR,NS,5
+,,Mutual Understanding,VR,NS,2
+,,Behavioral Engagement,VR,NS,4
+,,Behavioral Engagement,VR,NS,1
+,2,Co-presence,AR,NS,1
+,,Co-presence,AR,NS,1
+,,Co-presence,AR,NS,5
+,,Co-presence,AR,NS,3
+,,Mutual Attention,AR,NS,2
+,,Mutual Attention,AR,NS,4
+,,Mutual Attention,AR,NS,3
+,,Mutual Understanding,AR,NS,1
+,,Mutual Understanding,AR,NS,3
+,,Behavioral Engagement,AR,NS,5
+,,Behavioral Engagement,AR,NS,4
+,3,Co-presence,VR,NS,1
+,,Co-presence,VR,NS,1
+,,Co-presence,VR,NS,1
+,,Co-presence,VR,NS,3
+,,Mutual Attention,VR,NS,5
+,,Mutual Attention,VR,NS,3
+,,Mutual Attention,VR,NS,1
+,,Mutual Understanding,VR,NS,2
+,,Mutual Understanding,VR,NS,2
+,,Behavioral Engagement,VR,NS,2
+,,Behavioral Engagement,VR,NS,2
+,1,Co-presence,VR,MS,2
+,,Co-presence,VR,MS,2
+,,Co-presence,VR,MS,4
+,,Co-presence,VR,MS,3
+,,Mutual Attention,VR,MS,1
+,,Mutual Attention,VR,MS,2
+,,Mutual Attention,VR,MS,3
+,,Mutual Understanding,VR,MS,2
+,,Mutual Understanding,VR,MS,5
+,,Behavioral Engagement,VR,MS,5
+,,Behavioral Engagement,VR,MS,5
+,2,Co-presence,AR,MS,4
+,,Co-presence,AR,MS,2
+,,Co-presence,AR,MS,6
+,,Co-presence,AR,MS,2
+,,Mutual Attention,AR,MS,6
+,,Mutual Attention,AR,MS,2
+,,Mutual Attention,AR,MS,7
+,,Mutual Understanding,AR,MS,3
+,,Mutual Understanding,AR,MS,4
+,,Behavioral Engagement,AR,MS,7
+,,Behavioral Engagement,AR,MS,7
+,3,Co-presence,VR,MS,3
+,,Co-presence,VR,MS,3
+,,Co-presence,VR,MS,4
+,,Co-presence,VR,MS,4
+,,Mutual Attention,VR,MS,6
+,,Mutual Attention,VR,MS,7
+,,Mutual Attention,VR,MS,2
+,,Mutual Understanding,VR,MS,6
+,,Mutual Understanding,VR,MS,7
+,,Behavioral Engagement,VR,MS,6
+,,Behavioral Engagement,VR,MS,5
+,1,Co-presence,VR,GS,4
+,,Co-presence,VR,GS,6
+,,Co-presence,VR,GS,6
+,,Co-presence,VR,GS,7
+,,Mutual Attention,VR,GS,2
+,,Mutual Attention,VR,GS,4
+,,Mutual Attention,VR,GS,6
+,,Mutual Understanding,VR,GS,6
+,,Mutual Understanding,VR,GS,2
+,,Behavioral Engagement,VR,GS,2
+,,Behavioral Engagement,VR,GS,5
+,2,Co-presence,AR,GS,2
+,,Co-presence,AR,GS,3
+,,Co-presence,AR,GS,6
+,,Co-presence,AR,GS,2
+,,Mutual Attention,AR,GS,3
+,,Mutual Attention,AR,GS,6
+,,Mutual Attention,AR,GS,4
+,,Mutual Understanding,AR,GS,2
+,,Mutual Understanding,AR,GS,6
+,,Behavioral Engagement,AR,GS,5
+,,Behavioral Engagement,AR,GS,6
+,3,Co-presence,VR,GS,7
+,,Co-presence,VR,GS,4
+,,Co-presence,VR,GS,3
+,,Co-presence,VR,GS,6
+,,Mutual Attention,VR,GS,7
+,,Mutual Attention,VR,GS,3
+,,Mutual Attention,VR,GS,5
+,,Mutual Understanding,VR,GS,6
+,,Mutual Understanding,VR,GS,5
+,,Behavioral Engagement,VR,GS,5
+,,Behavioral Engagement,VR,GS,6
+,1,Co-presence,VR,AS,6
+,,Co-presence,VR,AS,2
+,,Co-presence,VR,AS,5
+,,Co-presence,VR,AS,4
+,,Mutual Attention,VR,AS,6
+,,Mutual Attention,VR,AS,7
+,,Mutual Attention,VR,AS,5
+,,Mutual Understanding,VR,AS,3
+,,Mutual Understanding,VR,AS,4
+,,Behavioral Engagement,VR,AS,5
+,,Behavioral Engagement,VR,AS,4
+,2,Co-presence,AR,AS,5
+,,Co-presence,AR,AS,5
+,,Co-presence,AR,AS,6
+,,Co-presence,AR,AS,5
+,,Mutual Attention,AR,AS,2
+,,Mutual Attention,AR,AS,7
+,,Mutual Attention,AR,AS,4
+,,Mutual Understanding,AR,AS,3
+,,Mutual Understanding,AR,AS,4
+,,Behavioral Engagement,AR,AS,5
+,,Behavioral Engagement,AR,AS,7
+,3,Co-presence,VR,AS,2
+,,Co-presence,VR,AS,3
+,,Co-presence,VR,AS,4
+,,Co-presence,VR,AS,2
+,,Mutual Attention,VR,AS,5
+,,Mutual Attention,VR,AS,5
+,,Mutual Attention,VR,AS,4
+,,Mutual Understanding,VR,AS,5
+,,Mutual Understanding,VR,AS,5
+,,Behavioral Engagement,VR,AS,6
+,,Behavioral Engagement,VR,AS,2
+5,1,Co-presence,VR,NS,2
+,,Co-presence,VR,NS,3
+,,Co-presence,VR,NS,4
+,,Co-presence,VR,NS,3
+,,Mutual Attention,VR,NS,1
+,,Mutual Attention,VR,NS,3
+,,Mutual Attention,VR,NS,3
+,,Mutual Understanding,VR,NS,2
+,,Mutual Understanding,VR,NS,5
+,,Behavioral Engagement,VR,NS,5
+,,Behavioral Engagement,VR,NS,2
+,2,Co-presence,AR,NS,2
+,,Co-presence,AR,NS,4
+,,Co-presence,AR,NS,5
+,,Co-presence,AR,NS,5
+,,Mutual Attention,AR,NS,3
+,,Mutual Attention,AR,NS,4
+,,Mutual Attention,AR,NS,3
+,,Mutual Understanding,AR,NS,4
+,,Mutual Understanding,AR,NS,3
+,,Behavioral Engagement,AR,NS,4
+,,Behavioral Engagement,AR,NS,4
+,3,Co-presence,VR,NS,2
+,,Co-presence,VR,NS,1
+,,Co-presence,VR,NS,5
+,,Co-presence,VR,NS,3
+,,Mutual Attention,VR,NS,5
+,,Mutual Attention,VR,NS,5
+,,Mutual Attention,VR,NS,5
+,,Mutual Understanding,VR,NS,2
+,,Mutual Understanding,VR,NS,3
+,,Behavioral Engagement,VR,NS,5
+,,Behavioral Engagement,VR,NS,4
+,1,Co-presence,VR,MS,3
+,,Co-presence,VR,MS,4
+,,Co-presence,VR,MS,5
+,,Co-presence,VR,MS,2
+,,Mutual Attention,VR,MS,2
+,,Mutual Attention,VR,MS,1
+,,Mutual Attention,VR,MS,1
+,,Mutual Understanding,VR,MS,1
+,,Mutual Understanding,VR,MS,2
+,,Behavioral Engagement,VR,MS,1
+,,Behavioral Engagement,VR,MS,2
+,2,Co-presence,AR,MS,5
+,,Co-presence,AR,MS,3
+,,Co-presence,AR,MS,5
+,,Co-presence,AR,MS,6
+,,Mutual Attention,AR,MS,6
+,,Mutual Attention,AR,MS,7
+,,Mutual Attention,AR,MS,3
+,,Mutual Understanding,AR,MS,4
+,,Mutual Understanding,AR,MS,2
+,,Behavioral Engagement,AR,MS,5
+,,Behavioral Engagement,AR,MS,3
+,3,Co-presence,VR,MS,5
+,,Co-presence,VR,MS,3
+,,Co-presence,VR,MS,3
+,,Co-presence,VR,MS,2
+,,Mutual Attention,VR,MS,2
+,,Mutual Attention,VR,MS,6
+,,Mutual Attention,VR,MS,7
+,,Mutual Understanding,VR,MS,4
+,,Mutual Understanding,VR,MS,5
+,,Behavioral Engagement,VR,MS,4
+,,Behavioral Engagement,VR,MS,7
+,1,Co-presence,VR,GS,5
+,,Co-presence,VR,GS,6
+,,Co-presence,VR,GS,4
+,,Co-presence,VR,GS,7
+,,Mutual Attention,VR,GS,4
+,,Mutual Attention,VR,GS,6
+,,Mutual Attention,VR,GS,3
+,,Mutual Understanding,VR,GS,6
+,,Mutual Understanding,VR,GS,3
+,,Behavioral Engagement,VR,GS,6
+,,Behavioral Engagement,VR,GS,2
+,2,Co-presence,AR,GS,5
+,,Co-presence,AR,GS,7
+,,Co-presence,AR,GS,3
+,,Co-presence,AR,GS,5
+,,Mutual Attention,AR,GS,5
+,,Mutual Attention,AR,GS,6
+,,Mutual Attention,AR,GS,2
+,,Mutual Understanding,AR,GS,6
+,,Mutual Understanding,AR,GS,5
+,,Behavioral Engagement,AR,GS,6
+,,Behavioral Engagement,AR,GS,6
+,3,Co-presence,VR,GS,5
+,,Co-presence,VR,GS,7
+,,Co-presence,VR,GS,7
+,,Co-presence,VR,GS,4
+,,Mutual Attention,VR,GS,5
+,,Mutual Attention,VR,GS,7
+,,Mutual Attention,VR,GS,3
+,,Mutual Understanding,VR,GS,3
+,,Mutual Understanding,VR,GS,6
+,,Behavioral Engagement,VR,GS,6
+,,Behavioral Engagement,VR,GS,2
+,1,Co-presence,VR,AS,2
+,,Co-presence,VR,AS,4
+,,Co-presence,VR,AS,3
+,,Co-presence,VR,AS,6
+,,Mutual Attention,VR,AS,3
+,,Mutual Attention,VR,AS,2
+,,Mutual Attention,VR,AS,2
+,,Mutual Understanding,VR,AS,2
+,,Mutual Understanding,VR,AS,5
+,,Behavioral Engagement,VR,AS,5
+,,Behavioral Engagement,VR,AS,4
+,2,Co-presence,AR,AS,3
+,,Co-presence,AR,AS,7
+,,Co-presence,AR,AS,6
+,,Co-presence,AR,AS,7
+,,Mutual Attention,AR,AS,6
+,,Mutual Attention,AR,AS,7
+,,Mutual Attention,AR,AS,5
+,,Mutual Understanding,AR,AS,5
+,,Mutual Understanding,AR,AS,5
+,,Behavioral Engagement,AR,AS,5
+,,Behavioral Engagement,AR,AS,5
+,3,Co-presence,VR,AS,4
+,,Co-presence,VR,AS,3
+,,Co-presence,VR,AS,3
+,,Co-presence,VR,AS,4
+,,Mutual Attention,VR,AS,7
+,,Mutual Attention,VR,AS,2
+,,Mutual Attention,VR,AS,7
+,,Mutual Understanding,VR,AS,6
+,,Mutual Understanding,VR,AS,5
+,,Behavioral Engagement,VR,AS,7
+,,Behavioral Engagement,VR,AS,7
+6,1,Co-presence,VR,NS,2
+,,Co-presence,VR,NS,3
+,,Co-presence,VR,NS,5
+,,Co-presence,VR,NS,1
+,,Mutual Attention,VR,NS,2
+,,Mutual Attention,VR,NS,1
+,,Mutual Attention,VR,NS,3
+,,Mutual Understanding,VR,NS,3
+,,Mutual Understanding,VR,NS,2
+,,Behavioral Engagement,VR,NS,5
+,,Behavioral Engagement,VR,NS,3
+,2,Co-presence,AR,NS,1
+,,Co-presence,AR,NS,3
+,,Co-presence,AR,NS,4
+,,Co-presence,AR,NS,3
+,,Mutual Attention,AR,NS,1
+,,Mutual Attention,AR,NS,4
+,,Mutual Attention,AR,NS,5
+,,Mutual Understanding,AR,NS,3
+,,Mutual Understanding,AR,NS,5
+,,Behavioral Engagement,AR,NS,3
+,,Behavioral Engagement,AR,NS,1
+,3,Co-presence,VR,NS,2
+,,Co-presence,VR,NS,1
+,,Co-presence,VR,NS,1
+,,Co-presence,VR,NS,4
+,,Mutual Attention,VR,NS,2
+,,Mutual Attention,VR,NS,1
+,,Mutual Attention,VR,NS,1
+,,Mutual Understanding,VR,NS,2
+,,Mutual Understanding,VR,NS,2
+,,Behavioral Engagement,VR,NS,4
+,,Behavioral Engagement,VR,NS,3
+,1,Co-presence,VR,MS,3
+,,Co-presence,VR,MS,5
+,,Co-presence,VR,MS,1
+,,Co-presence,VR,MS,5
+,,Mutual Attention,VR,MS,5
+,,Mutual Attention,VR,MS,5
+,,Mutual Attention,VR,MS,4
+,,Mutual Understanding,VR,MS,4
+,,Mutual Understanding,VR,MS,1
+,,Behavioral Engagement,VR,MS,4
+,,Behavioral Engagement,VR,MS,1
+,2,Co-presence,AR,MS,7
+,,Co-presence,AR,MS,4
+,,Co-presence,AR,MS,6
+,,Co-presence,AR,MS,6
+,,Mutual Attention,AR,MS,4
+,,Mutual Attention,AR,MS,7
+,,Mutual Attention,AR,MS,6
+,,Mutual Understanding,AR,MS,3
+,,Mutual Understanding,AR,MS,7
+,,Behavioral Engagement,AR,MS,3
+,,Behavioral Engagement,AR,MS,6
+,3,Co-presence,VR,MS,3
+,,Co-presence,VR,MS,7
+,,Co-presence,VR,MS,5
+,,Co-presence,VR,MS,5
+,,Mutual Attention,VR,MS,2
+,,Mutual Attention,VR,MS,5
+,,Mutual Attention,VR,MS,3
+,,Mutual Understanding,VR,MS,6
+,,Mutual Understanding,VR,MS,7
+,,Behavioral Engagement,VR,MS,4
+,,Behavioral Engagement,VR,MS,5
+,1,Co-presence,VR,GS,7
+,,Co-presence,VR,GS,2
+,,Co-presence,VR,GS,6
+,,Co-presence,VR,GS,3
+,,Mutual Attention,VR,GS,5
+,,Mutual Attention,VR,GS,6
+,,Mutual Attention,VR,GS,4
+,,Mutual Understanding,VR,GS,5
+,,Mutual Understanding,VR,GS,4
+,,Behavioral Engagement,VR,GS,3
+,,Behavioral Engagement,VR,GS,4
+,2,Co-presence,AR,GS,5
+,,Co-presence,AR,GS,3
+,,Co-presence,AR,GS,7
+,,Co-presence,AR,GS,5
+,,Mutual Attention,AR,GS,4
+,,Mutual Attention,AR,GS,7
+,,Mutual Attention,AR,GS,6
+,,Mutual Understanding,AR,GS,5
+,,Mutual Understanding,AR,GS,4
+,,Behavioral Engagement,AR,GS,6
+,,Behavioral Engagement,AR,GS,5
+,3,Co-presence,VR,GS,4
+,,Co-presence,VR,GS,3
+,,Co-presence,VR,GS,6
+,,Co-presence,VR,GS,6
+,,Mutual Attention,VR,GS,7
+,,Mutual Attention,VR,GS,5
+,,Mutual Attention,VR,GS,4
+,,Mutual Understanding,VR,GS,6
+,,Mutual Understanding,VR,GS,7
+,,Behavioral Engagement,VR,GS,2
+,,Behavioral Engagement,VR,GS,6
+,1,Co-presence,VR,AS,3
+,,Co-presence,VR,AS,5
+,,Co-presence,VR,AS,5
+,,Co-presence,VR,AS,4
+,,Mutual Attention,VR,AS,7
+,,Mutual Attention,VR,AS,2
+,,Mutual Attention,VR,AS,6
+,,Mutual Understanding,VR,AS,2
+,,Mutual Understanding,VR,AS,3
+,,Behavioral Engagement,VR,AS,2
+,,Behavioral Engagement,VR,AS,2
+,2,Co-presence,AR,AS,6
+,,Co-presence,AR,AS,4
+,,Co-presence,AR,AS,3
+,,Co-presence,AR,AS,6
+,,Mutual Attention,AR,AS,6
+,,Mutual Attention,AR,AS,4
+,,Mutual Attention,AR,AS,7
+,,Mutual Understanding,AR,AS,7
+,,Mutual Understanding,AR,AS,7
+,,Behavioral Engagement,AR,AS,3
+,,Behavioral Engagement,AR,AS,3
+,3,Co-presence,VR,AS,4
+,,Co-presence,VR,AS,6
+,,Co-presence,VR,AS,4
+,,Co-presence,VR,AS,2
+,,Mutual Attention,VR,AS,4
+,,Mutual Attention,VR,AS,6
+,,Mutual Attention,VR,AS,4
+,,Mutual Understanding,VR,AS,5
+,,Mutual Understanding,VR,AS,3
+,,Behavioral Engagement,VR,AS,2
+,,Behavioral Engagement,VR,AS,5
+7,1,Co-presence,VR,NS,5
+,,Co-presence,VR,NS,5
+,,Co-presence,VR,NS,2
+,,Co-presence,VR,NS,3
+,,Mutual Attention,VR,NS,3
+,,Mutual Attention,VR,NS,4
+,,Mutual Attention,VR,NS,2
+,,Mutual Understanding,VR,NS,1
+,,Mutual Understanding,VR,NS,2
+,,Behavioral Engagement,VR,NS,3
+,,Behavioral Engagement,VR,NS,4
+,2,Co-presence,AR,NS,5
+,,Co-presence,AR,NS,5
+,,Co-presence,AR,NS,3
+,,Co-presence,AR,NS,4
+,,Mutual Attention,AR,NS,1
+,,Mutual Attention,AR,NS,2
+,,Mutual Attention,AR,NS,3
+,,Mutual Understanding,AR,NS,4
+,,Mutual Understanding,AR,NS,1
+,,Behavioral Engagement,AR,NS,4
+,,Behavioral Engagement,AR,NS,3
+,3,Co-presence,VR,NS,1
+,,Co-presence,VR,NS,3
+,,Co-presence,VR,NS,3
+,,Co-presence,VR,NS,4
+,,Mutual Attention,VR,NS,2
+,,Mutual Attention,VR,NS,1
+,,Mutual Attention,VR,NS,4
+,,Mutual Understanding,VR,NS,3
+,,Mutual Understanding,VR,NS,4
+,,Behavioral Engagement,VR,NS,1
+,,Behavioral Engagement,VR,NS,3
+,1,Co-presence,VR,MS,1
+,,Co-presence,VR,MS,4
+,,Co-presence,VR,MS,3
+,,Co-presence,VR,MS,5
+,,Mutual Attention,VR,MS,2
+,,Mutual Attention,VR,MS,2
+,,Mutual Attention,VR,MS,3
+,,Mutual Understanding,VR,MS,5
+,,Mutual Understanding,VR,MS,3
+,,Behavioral Engagement,VR,MS,4
+,,Behavioral Engagement,VR,MS,2
+,2,Co-presence,AR,MS,7
+,,Co-presence,AR,MS,3
+,,Co-presence,AR,MS,3
+,,Co-presence,AR,MS,2
+,,Mutual Attention,AR,MS,4
+,,Mutual Attention,AR,MS,7
+,,Mutual Attention,AR,MS,6
+,,Mutual Understanding,AR,MS,6
+,,Mutual Understanding,AR,MS,3
+,,Behavioral Engagement,AR,MS,2
+,,Behavioral Engagement,AR,MS,2
+,3,Co-presence,VR,MS,2
+,,Co-presence,VR,MS,6
+,,Co-presence,VR,MS,6
+,,Co-presence,VR,MS,4
+,,Mutual Attention,VR,MS,6
+,,Mutual Attention,VR,MS,3
+,,Mutual Attention,VR,MS,7
+,,Mutual Understanding,VR,MS,5
+,,Mutual Understanding,VR,MS,4
+,,Behavioral Engagement,VR,MS,2
+,,Behavioral Engagement,VR,MS,2
+,1,Co-presence,VR,GS,3
+,,Co-presence,VR,GS,6
+,,Co-presence,VR,GS,2
+,,Co-presence,VR,GS,6
+,,Mutual Attention,VR,GS,2
+,,Mutual Attention,VR,GS,6
+,,Mutual Attention,VR,GS,3
+,,Mutual Understanding,VR,GS,7
+,,Mutual Understanding,VR,GS,4
+,,Behavioral Engagement,VR,GS,2
+,,Behavioral Engagement,VR,GS,6
+,2,Co-presence,AR,GS,7
+,,Co-presence,AR,GS,6
+,,Co-presence,AR,GS,5
+,,Co-presence,AR,GS,6
+,,Mutual Attention,AR,GS,6
+,,Mutual Attention,AR,GS,7
+,,Mutual Attention,AR,GS,6
+,,Mutual Understanding,AR,GS,3
+,,Mutual Understanding,AR,GS,2
+,,Behavioral Engagement,AR,GS,5
+,,Behavioral Engagement,AR,GS,6
+,3,Co-presence,VR,GS,6
+,,Co-presence,VR,GS,6
+,,Co-presence,VR,GS,5
+,,Co-presence,VR,GS,4
+,,Mutual Attention,VR,GS,3
+,,Mutual Attention,VR,GS,3
+,,Mutual Attention,VR,GS,4
+,,Mutual Understanding,VR,GS,6
+,,Mutual Understanding,VR,GS,4
+,,Behavioral Engagement,VR,GS,7
+,,Behavioral Engagement,VR,GS,6
+,1,Co-presence,VR,AS,2
+,,Co-presence,VR,AS,2
+,,Co-presence,VR,AS,2
+,,Co-presence,VR,AS,6
+,,Mutual Attention,VR,AS,2
+,,Mutual Attention,VR,AS,3
+,,Mutual Attention,VR,AS,2
+,,Mutual Understanding,VR,AS,2
+,,Mutual Understanding,VR,AS,5
+,,Behavioral Engagement,VR,AS,5
+,,Behavioral Engagement,VR,AS,7
+,2,Co-presence,AR,AS,2
+,,Co-presence,AR,AS,5
+,,Co-presence,AR,AS,2
+,,Co-presence,AR,AS,5
+,,Mutual Attention,AR,AS,2
+,,Mutual Attention,AR,AS,6
+,,Mutual Attention,AR,AS,2
+,,Mutual Understanding,AR,AS,3
+,,Mutual Understanding,AR,AS,5
+,,Behavioral Engagement,AR,AS,2
+,,Behavioral Engagement,AR,AS,2
+,3,Co-presence,VR,AS,2
+,,Co-presence,VR,AS,3
+,,Co-presence,VR,AS,5
+,,Co-presence,VR,AS,3
+,,Mutual Attention,VR,AS,2
+,,Mutual Attention,VR,AS,6
+,,Mutual Attention,VR,AS,3
+,,Mutual Understanding,VR,AS,3
+,,Mutual Understanding,VR,AS,4
+,,Behavioral Engagement,VR,AS,6
+,,Behavioral Engagement,VR,AS,2
+8,1,Co-presence,VR,NS,3
+,,Co-presence,VR,NS,5
+,,Co-presence,VR,NS,3
+,,Co-presence,VR,NS,3
+,,Mutual Attention,VR,NS,1
+,,Mutual Attention,VR,NS,4
+,,Mutual Attention,VR,NS,3
+,,Mutual Understanding,VR,NS,4
+,,Mutual Understanding,VR,NS,5
+,,Behavioral Engagement,VR,NS,5
+,,Behavioral Engagement,VR,NS,5
+,2,Co-presence,AR,NS,5
+,,Co-presence,AR,NS,2
+,,Co-presence,AR,NS,2
+,,Co-presence,AR,NS,3
+,,Mutual Attention,AR,NS,1
+,,Mutual Attention,AR,NS,1
+,,Mutual Attention,AR,NS,4
+,,Mutual Understanding,AR,NS,2
+,,Mutual Understanding,AR,NS,2
+,,Behavioral Engagement,AR,NS,4
+,,Behavioral Engagement,AR,NS,3
+,3,Co-presence,VR,NS,2
+,,Co-presence,VR,NS,2
+,,Co-presence,VR,NS,1
+,,Co-presence,VR,NS,1
+,,Mutual Attention,VR,NS,3
+,,Mutual Attention,VR,NS,2
+,,Mutual Attention,VR,NS,4
+,,Mutual Understanding,VR,NS,1
+,,Mutual Understanding,VR,NS,5
+,,Behavioral Engagement,VR,NS,1
+,,Behavioral Engagement,VR,NS,3
+,1,Co-presence,VR,MS,2
+,,Co-presence,VR,MS,3
+,,Co-presence,VR,MS,3
+,,Co-presence,VR,MS,2
+,,Mutual Attention,VR,MS,5
+,,Mutual Attention,VR,MS,2
+,,Mutual Attention,VR,MS,1
+,,Mutual Understanding,VR,MS,4
+,,Mutual Understanding,VR,MS,5
+,,Behavioral Engagement,VR,MS,5
+,,Behavioral Engagement,VR,MS,1
+,2,Co-presence,AR,MS,6
+,,Co-presence,AR,MS,7
+,,Co-presence,AR,MS,7
+,,Co-presence,AR,MS,4
+,,Mutual Attention,AR,MS,6
+,,Mutual Attention,AR,MS,2
+,,Mutual Attention,AR,MS,7
+,,Mutual Understanding,AR,MS,3
+,,Mutual Understanding,AR,MS,3
+,,Behavioral Engagement,AR,MS,7
+,,Behavioral Engagement,AR,MS,3
+,3,Co-presence,VR,MS,3
+,,Co-presence,VR,MS,7
+,,Co-presence,VR,MS,4
+,,Co-presence,VR,MS,6
+,,Mutual Attention,VR,MS,2
+,,Mutual Attention,VR,MS,6
+,,Mutual Attention,VR,MS,7
+,,Mutual Understanding,VR,MS,3
+,,Mutual Understanding,VR,MS,6
+,,Behavioral Engagement,VR,MS,4
+,,Behavioral Engagement,VR,MS,6
+,1,Co-presence,VR,GS,6
+,,Co-presence,VR,GS,7
+,,Co-presence,VR,GS,3
+,,Co-presence,VR,GS,2
+,,Mutual Attention,VR,GS,6
+,,Mutual Attention,VR,GS,6
+,,Mutual Attention,VR,GS,7
+,,Mutual Understanding,VR,GS,7
+,,Mutual Understanding,VR,GS,6
+,,Behavioral Engagement,VR,GS,3
+,,Behavioral Engagement,VR,GS,6
+,2,Co-presence,AR,GS,2
+,,Co-presence,AR,GS,2
+,,Co-presence,AR,GS,5
+,,Co-presence,AR,GS,4
+,,Mutual Attention,AR,GS,6
+,,Mutual Attention,AR,GS,6
+,,Mutual Attention,AR,GS,7
+,,Mutual Understanding,AR,GS,4
+,,Mutual Understanding,AR,GS,5
+,,Behavioral Engagement,AR,GS,5
+,,Behavioral Engagement,AR,GS,4
+,3,Co-presence,VR,GS,4
+,,Co-presence,VR,GS,3
+,,Co-presence,VR,GS,7
+,,Co-presence,VR,GS,2
+,,Mutual Attention,VR,GS,7
+,,Mutual Attention,VR,GS,7
+,,Mutual Attention,VR,GS,6
+,,Mutual Understanding,VR,GS,6
+,,Mutual Understanding,VR,GS,7
+,,Behavioral Engagement,VR,GS,3
+,,Behavioral Engagement,VR,GS,6
+,1,Co-presence,VR,AS,4
+,,Co-presence,VR,AS,3
+,,Co-presence,VR,AS,2
+,,Co-presence,VR,AS,6
+,,Mutual Attention,VR,AS,6
+,,Mutual Attention,VR,AS,3
+,,Mutual Attention,VR,AS,5
+,,Mutual Understanding,VR,AS,4
+,,Mutual Understanding,VR,AS,5
+,,Behavioral Engagement,VR,AS,4
+,,Behavioral Engagement,VR,AS,5
+,2,Co-presence,AR,AS,7
+,,Co-presence,AR,AS,7
+,,Co-presence,AR,AS,4
+,,Co-presence,AR,AS,4
+,,Mutual Attention,AR,AS,3
+,,Mutual Attention,AR,AS,4
+,,Mutual Attention,AR,AS,2
+,,Mutual Understanding,AR,AS,4
+,,Mutual Understanding,AR,AS,5
+,,Behavioral Engagement,AR,AS,2
+,,Behavioral Engagement,AR,AS,3
+,3,Co-presence,VR,AS,3
+,,Co-presence,VR,AS,4
+,,Co-presence,VR,AS,6
+,,Co-presence,VR,AS,3
+,,Mutual Attention,VR,AS,2
+,,Mutual Attention,VR,AS,4
+,,Mutual Attention,VR,AS,6
+,,Mutual Understanding,VR,AS,7
+,,Mutual Understanding,VR,AS,4
+,,Behavioral Engagement,VR,AS,2
+,,Behavioral Engagement,VR,AS,2

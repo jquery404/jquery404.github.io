@@ -1,13 +1,25 @@
-qus,tech,ans
-q1... did you find the easiest to use?,manual,15
-q1... did you find the easiest to use?,suggestive,75
-q1... did you find the easiest to use?,automatic,10
-q2... made you feel more present in the virtual environment?,manual,24
-q2... made you feel more present in the virtual environment?,suggestive,55
-q2... made you feel more present in the virtual environment?,automatic,21
-q3... made you feel more present with the remote users?,manual,27
-q3... made you feel more present with the remote users?,suggestive,47
-q3... made you feel more present with the remote users?,automatic,26
-q4... did you prefer overall?,manual,21
-q4... did you prefer overall?,suggestive,41
-q4... did you prefer overall?,automatic,38
+qus,cond,value
+Q1,NS,8
+Q1,MS,6
+Q1,GS,7
+Q1,AS,3
+Q2,NS,2
+Q2,MS,12
+Q2,GS,7
+Q2,AS,4
+Q3,NS,3
+Q3,MS,7
+Q3,GS,11
+Q3,AS,3
+Q4,NS,2
+Q4,MS,3
+Q4,GS,13
+Q4,AS,6
+Q5,NS,3
+Q5,MS,3
+Q5,GS,12
+Q5,AS,5
+Q6,NS,2
+Q6,MS,4
+Q6,GS,8
+Q6,AS,12

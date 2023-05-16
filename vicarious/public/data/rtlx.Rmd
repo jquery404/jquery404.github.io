@@ -1,0 +1,301 @@
+---
+title: "Raw TLX"
+author: "jQuery404"
+output: html_notebook
+---
+
+RTlx calculation
+
+
+```{r}
+# library
+library(ggplot2)
+library(dplyr)
+library(broom)
+library(tidyr)
+library(stats)
+
+coloring = c("#ffbd67", "#f6dbb8","#94d8e0","#537b7f")
+fontsize = 14
+dodge = .75
+```
+
+#### Normality test
+
+```{r}
+data=read.csv('csv/nasa-tlx.csv', sep=",")
+condition_order <- c("NS", "MS", "GS", "AS")
+df <- data %>%
+  gather(key = "conditions", value = "scores", NS:AS) %>%
+  mutate(conditions = factor(conditions, levels = condition_order))
+result<-shapiro.test(df$scores)
+
+print(paste("Test Statistic (W):", result$statistic, "p=", result$p.value))
+print(if (result$p.value > 0.05) "The data follows a normal distribution." else "The data does not follow a normal distribution.")
+
+qqnorm(df$scores)
+qqline(df$scores)
+```
+
+```{r}
+
+data=read.csv('csv/nasa-tlx.csv', sep=",")
+condition_order <- c("NS", "MS", "GS", "AS")
+df <- data %>%
+  gather(key = "conditions", value = "scores", NS:AS) %>%
+  mutate(conditions = factor(conditions, levels = condition_order))
+
+stat.test <- df %>% 
+  group_by(params) %>% 
+  wilcox_test(scores~conditions, p.adjust.method = 'BH') %>%
+  add_significance("p") %>%
+  add_xy_position(x = "params")
+
+bp <- ggbarplot(df, x = "params", y = "scores",
+                fill = "conditions", palette = coloring,
+                add = "mean_ci", add.params = list(group = "conditions"),
+                position = position_dodge(1.15*dodge)) +
+      theme_bw() +
+      ylim(0, 100)
+
+bp + stat_pvalue_manual(
+  stat.test, x = "params",
+  hide.ns = TRUE,
+  label = "p = {p.adj}",
+) +
+  theme(axis.line = element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.x = element_text(color="black", size=fontsize),
+        axis.text.y = element_text(color="black", size=fontsize),
+        text = element_text(size=fontsize),
+        strip.background = element_blank(),
+        plot.background = element_blank(),
+        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        panel.border = element_blank(),
+        panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        legend.position="bottom",
+        legend.direction = "horizontal",
+        legend.justification = c("center", "top"),
+        legend.title=element_blank(),
+        legend.text=element_text(size=fontsize),
+        legend.box.just = "right",
+        legend.box.background = element_blank())
+
+# saving the final figure
+ggsave("out/rtlx.pdf", width = 12, height = 6, dpi = 1000)
+```
+
+### Lets find out about Task complexity 
+
+
+```{r}
+
+data=read.csv('csv/TaskCompletionTime.csv', sep=",")
+df <- data %>%
+  pivot_longer(
+    cols = starts_with("task"),
+    names_to = "task",
+    values_to = "time"
+  ) %>%
+  arrange(conditions, task)
+
+# Assuming df is your data frame
+summary_df <- df %>%
+  group_by(conditions) %>%
+  summarise(min = min(time),
+            max = max(time),
+            mean = mean(time),
+            median = median(time),
+            sd = sd(time))
+
+# Print the summary
+print(summary_df)
+
+
+condition_order <- c("NS", "MS", "GS", "AS")
+df$conditions <- factor(df$conditions, levels = condition_order)
+boxplot(time ~ conditions, data = df, 
+        main = "Boxplot Example",
+        xlab = "Category",
+        ylab = "Value")
+# Calculate mean for each category
+means <- aggregate(time ~ conditions, data = df, mean)
+
+# Add mean points
+points(x = as.numeric(means$conditions), y = means$time, pch = 4)
+```
+
+```{r}
+model <- aov_4(time ~ conditions + (conditions|group), type= 3, data = df)
+summary(model)
+
+print('# Perform repeated measures ANOVA with nice()')
+modelnice <- nice(model, intercept = TRUE, correction = "GG")
+
+print(modelnice) # ges: generalized eta-squared, measure of effect size indicating the proportion of variance explained by the independent variable.
+
+emmip(model, ~conditions, CIs = TRUE)
+```
+```{r}
+posthoc <- emmeans(model, specs = pairwise ~ conditions, model = "multivariate", adjust = "tukey")
+posthoc$emmeans
+posthoc$contrasts
+```
+
+```{r}
+df=read.csv('csv/social.csv', sep=",")
+condition_order <- c("NS", "MS", "GS", "AS")
+df$conditions <- factor(df$conditions, levels = condition_order)
+
+stat.test <- df %>% 
+  group_by(params) %>% 
+  wilcox_test(score~conditions, p.adjust.method = 'BH') %>%
+  add_significance("p") %>%
+  add_xy_position(x = "params")
+
+bxp <- ggplot(df, aes(x = params, y = score)) + 
+  stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.2, position = position_dodge(dodge)) +
+  geom_boxplot(aes(fill = conditions), width = dodge, coef = 0, outlier.alpha = 0, show.legend = F) +
+  stat_summary(aes(fill = conditions), fun.y = mean, 
+               geom= "point", shape = 4, size = 2, colour= "black", 
+               position = position_dodge(width = dodge)) +
+  stat_summary(aes(fill = conditions), fun = median,
+               geom = "crossbar", fatten = .1, width = .9*dodge, color = "black",
+               position = position_dodge(width = dodge)) +
+  labs(x = NULL, y = NULL) + 
+  theme_bw()
+
+bxp + stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02) + 
+  scale_fill_manual(name= "conditions", values = coloring) +
+  scale_color_manual(name = "conditions", values = coloring) +
+  scale_y_continuous(minor_breaks = seq(0, 8, 1), breaks = seq(1, 8.1, by=1), limits=c(1, 8.1)) + 
+  theme(
+    axis.line = element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),
+    axis.text.x = element_text(color="black", size=fontsize),
+    axis.text.y = element_text(color="black", size=fontsize),
+    text = element_text(size=fontsize),
+    strip.background = element_blank(),
+    plot.background = element_blank(),
+    plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+    panel.border = element_blank(),
+    panel.spacing = unit(c(0, 0, 0, 0), "null"),
+    legend.position="bottom",
+    legend.direction = "horizontal",
+    legend.justification = c("center", "top"),
+    legend.title=element_blank(),
+    legend.text=element_text(size=fontsize),
+    legend.box.just = "right",
+    legend.box.background = element_blank()
+  )
+
+# saving the final figure
+ggsave("out/social.pdf", width = 8, height = 4, dpi = 1000)
+  
+```
+
+
+## ANOVA and Bartlett's test
+
+```{r}
+# One-Way ANOVA
+model <- aov(time ~ task, data = completion_times)
+anova_table <- anova(model)
+F_val <- anova_table$F[1]
+df1 <- anova_table$Df[1]
+df2 <- anova_table$Df[2]
+
+# print the results
+summary(model)
+cat("F(", df1, ", ", df2, ") = ", F_val, "\n")
+```
+
+## Bartlett's test
+
+```{r}
+bartlett_test <- bartlett.test(time ~ task, data = completion_times)
+
+# Create a data frame to store the test results
+test_results <- data.frame(
+  statistic = bartlett_test$statistic,
+  p.value = bartlett_test$p.value,
+  parameter = bartlett_test$parameter
+)
+test_results
+```
+
+## Everything together
+
+```{r}
+# Create a string
+my_string <- paste(
+  "Bartlett's K-squared = ", bartlett_test$statistic, 
+  ", df=", bartlett_test$parameter, 
+  ", p-value =", bartlett_test$p.value, 
+  ", Sigf = ", bartlett_test$p.value < 0.05,
+  ", F-stats: ", capture.output(cat("F(", df1, ", ", df2, ") = ", F_val, "\n")))
+bartlett_stats <- data.frame(my_string)
+bartlett_stats
+
+```
+
+
+## Save the resulting data frame as a CSV file
+
+```{r}
+write.csv(task_stats, file = "out/task_stats.csv", row.names = FALSE)
+write.csv(bartlett_stats, file = "out/task_f_bartlett.csv", row.names = FALSE)
+write.csv(summary_data, file = "out/summary_data.csv", row.names = FALSE)
+```
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(broom)
+library(tidyr)
+library(stats)
+
+coloring = c("#E76469", "#F8D85E","#EDA645","#D1B0B3","#8C99A6","#ADD299","#4FA490","#3B7F9F")
+fontsize = 14
+
+
+df=read.csv('csv/tlx.csv', sep=",")
+
+summary_data =  read.csv('csv/summary_data.csv', sep=",")
+
+# Create horizontal bar chart with error bars
+order <- c('Mental',	'Physical',	'Temporal',	'Effort',	'Performance', 'Frustration', 'Overall')
+
+ggplot(summary_data, aes(x = mean_score, y = factor(params, levels = order), fill = conditions)) +
+  geom_col(width=.5, position=position_dodge(.6)) +
+  geom_errorbar(aes(xmin=mean_score-se_score, xmax=mean_score+se_score), width=.2, position=position_dodge(.6))+
+  scale_fill_manual(values = coloring) +
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 50)) +
+  guides(fill=guide_legend(title="")) +
+  theme_bw() +
+  theme(axis.line = element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.x = element_text(color="black", size=fontsize),
+        axis.text.y = element_text(color="black", size=fontsize),
+        text = element_text(size=fontsize),
+        strip.background = element_blank(),
+        plot.background = element_blank(),
+        plot.margin = unit(c(0.005, .25, 0, 0), "null"),
+        panel.border = element_blank(),
+        panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        legend.position="bottom",
+        legend.direction = "horizontal",
+        legend.justification = c("center", "top"),
+        legend.title=element_blank(),
+        legend.text=element_text(size=fontsize),
+        legend.box.just = "right",
+        legend.box.background = element_blank())
+
+
+ggsave("out/rtlx.pdf", width = 6.5, height = 4.8, dpi = 1000)
+
+```

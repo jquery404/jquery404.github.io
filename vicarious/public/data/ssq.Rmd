@@ -1,0 +1,168 @@
+---
+title: "social presence"
+output: html_notebook
+---
+```{r}
+library(ggplot2)
+library(ggpubr)
+library(rstatix)
+# "#ffbd67","#ffbd67","#537b7f","#537b7f","#f6dbb8","#f6dbb8","#94d8e0","#94d8e0"
+coloring = c("#ffbd67","#ffbd67","#f6dbb8","#f6dbb8","#94d8e0","#94d8e0","#537b7f","#537b7f")
+fontsize = 14
+dodge = .75
+```
+
+#### Normality test
+
+```{r}
+df=read.csv('csv/ssq.csv', sep=",")
+
+result<-shapiro.test(df$value)
+
+print(paste("Test Statistic (W):", result$statistic, "p=", result$p.value))
+print(if (result$p.value > 0.05) "The data follows a normal distribution." else "The data does not follow a normal distribution.")
+
+qqnorm(df$value)
+qqline(df$value)
+```
+
+
+```{r}
+# create the data frame
+df=read.csv('csv/ssq.csv', sep=",")
+
+custom_order <- c("NS-pre", "NS-post", "SS-pre", "SS-post", "MS-pre", "MS-post", "AS-pre", "AS-post")
+
+df_grouped <- df %>%
+  group_by(questions) %>%
+  summarize(
+    Q1 = quantile(value, 0.25),
+    Q3 = quantile(value, 0.75),
+    Median = median(value),
+    ci_lower = t.test(value)$conf.int[1],
+    ci_upper = t.test(value)$conf.int[2]
+  )
+
+df_grouped$questions <- factor(df_grouped$questions, levels = custom_order)
+
+df_ns <- df_grouped %>%
+  filter(questions %in% c("NS-pre", "NS-post"))
+df_ms <- df_grouped %>%
+  filter(questions %in% c("MS-pre", "MS-post"))
+df_gs <- df_grouped %>%
+  filter(questions %in% c("SS-pre", "SS-post"))
+df_as <- df_grouped %>%
+  filter(questions %in% c("AS-pre", "AS-post"))
+
+p <- ggplot(df_grouped, aes(x = questions, y = Median, color = questions)) +
+  # geom_segment(
+  #   aes(x = questions, xend = questions, y = Q1, yend = Q3), color = "#000000", size = 6
+  # ) +
+  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.2, size = 1) +
+  geom_point(size = 3) +
+  geom_segment(
+    data = df_ns, 
+    aes(x = "NS-pre", y = Median[questions == "NS-pre"], xend = "NS-post", yend = Median[questions == "NS-post"]), 
+    color = coloring[1]
+  ) +
+  geom_segment(
+    data = df_ms, 
+    aes(x = "MS-pre", y = Median[questions == "MS-pre"], xend = "MS-post", yend = Median[questions == "MS-post"]), 
+    color = coloring[5]
+  ) +
+  geom_segment(
+    data = df_gs, 
+    aes(x = "SS-pre", y = Median[questions == "SS-pre"], xend = "SS-post", yend = Median[questions == "SS-post"]), 
+    color = coloring[3]
+  ) +
+  geom_segment(
+    data = df_as, 
+    aes(x = "AS-pre", y = Median[questions == "AS-pre"], xend = "AS-post", yend = Median[questions == "AS-post"]), 
+    color = coloring[7]
+  ) +
+  labs(x = NULL, y = NULL) + 
+  theme_bw() + 
+  scale_color_manual(values = coloring) + 
+  scale_x_discrete(limits = custom_order)
+
+# view the plot
+p + theme(
+    axis.line = element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),
+    axis.text.x = element_text(color="black", size=fontsize),
+    axis.text.y = element_text(color="black", size=fontsize),
+    text = element_text(size=fontsize),
+    strip.background = element_blank(),
+    plot.background = element_blank(),
+    plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+    panel.border = element_blank(),
+    panel.spacing = unit(c(0, 0, 0, 0), "null"),
+    legend.position = "none"
+    # legend.position="bottom",
+    # legend.direction = "horizontal",
+    # legend.justification = c("center", "top"),
+    # legend.title=element_blank(),
+    # legend.text=element_text(size=fontsize),
+    # legend.box.just = "right",
+    # legend.box.background = element_blank()
+  )
+
+# saving the final figure
+ggsave("out/ssq.pdf", width = 9, height = 3, dpi = 1000)
+```
+
+
+```{r}
+df=read.csv('csv/ssq.csv', sep=",")
+custom_order <- c("NS-pre", "NS-post", "SS-pre", "SS-post", "MS-pre", "MS-post", "AS-pre", "AS-post")
+df$questions <- factor(df$questions, levels = custom_order)
+
+medians <- aggregate(value ~ questions, data = df, FUN = median)
+ns_pre_median <- medians$value[medians$questions == "NS-pre"]
+ns_post_median <- medians$value[medians$questions == "NS-post"]
+ms_pre_median <- medians$value[medians$questions == "MS-pre"]
+ms_post_median <- medians$value[medians$questions == "MS-post"]
+as_pre_median <- medians$value[medians$questions == "AS-pre"]
+as_post_median <- medians$value[medians$questions == "AS-post"]
+gs_pre_median <- medians$value[medians$questions == "SS-pre"]
+gs_post_median <- medians$value[medians$questions == "SS-post"]
+
+ggplot(data = df, mapping = aes(x = questions, y = value, fill = questions)) +
+  geom_boxplot(aes(color = questions), width = 0.5, outlier.alpha = 0, show.legend = F) +
+  stat_summary(fun = mean, geom = "point", shape = 3, size = 3, color = "black") +
+  stat_summary(fun = median, geom = "point", shape = 4, size = 3, color = "black") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = 0.2, size = 1) + 
+  geom_segment(aes(x = "NS-pre", y = ns_pre_median, xend = "NS-post", yend = ns_post_median), color = "black", size = .25, linetype = "solid") +
+  geom_segment(aes(x = "MS-pre", y = ms_pre_median, xend = "MS-post", yend = ms_post_median), color = "black", size = .25, linetype = "solid") +
+  geom_segment(aes(x = "AS-pre", y = as_pre_median, xend = "AS-post", yend = as_post_median), color = "black", size = .25, linetype = "solid") +
+  geom_segment(aes(x = "SS-pre", y = gs_pre_median, xend = "SS-post", yend = gs_post_median), color = "black", size = .25, linetype = "solid") +
+  stat_compare_means(aes(group = questions, label = paste0("p = ", ..p.signif..)), 
+                       method = "t.test", paired = T, hide.ns = T, method.args = list(p.adjust.method = "bonferroni"),
+                       comparisons = list(c("NS-pre", "NS-post"),
+                                          # c("MS-pre", "MS-post"),
+                                          # c("SS-pre", "SS-post"),
+                                          c("AS-pre", "AS-post"))) +
+  labs(x = NULL, y = NULL) + 
+  theme_bw() + 
+  scale_fill_manual(name= "questions", values = coloring) +
+  scale_color_manual(name = "questions", values = coloring) + 
+  theme(
+    axis.line = element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),
+    axis.text.x = element_text(color="black", size=fontsize),
+    axis.text.y = element_text(color="black", size=fontsize),
+    text = element_text(size=fontsize),
+    strip.background = element_blank(),
+    plot.background = element_blank(),
+    plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+    panel.border = element_blank(),
+    panel.spacing = unit(c(0, 0, 0, 0), "null"),
+    panel.grid.major.x = element_blank(),
+    legend.position = "none"
+  )
+
+# saving the final figure
+ggsave("out/ssq.pdf", width = 8, height = 4, dpi = 1000)
+```

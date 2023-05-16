@@ -1,0 +1,150 @@
+---
+title: "Preference"
+author: "jQuery404"
+output: html_notebook
+---
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(ggpubr)
+library(reshape2)
+
+coloring = c("#537b7f", "#94d8e0", "#f6dbb8", "#ffbd67")
+fontsize = 14
+dodge = .75
+```
+
+
+```{r}
+df_melt=read.csv('csv/preference.csv', sep=",")
+
+custom_order <- c("AS", "GS", "MS", "NS")
+custom_order2 <- c("Q6", "Q5", "Q4", "Q3", "Q2", "Q1")
+
+df_melt$cond <- factor(df_melt$cond, levels = custom_order)
+df_melt$qus <- factor(df_melt$qus, levels = custom_order2)
+
+plt <- ggplot(df_melt, aes(x = qus, y = value, fill = cond)) +
+  geom_bar(position = "fill", stat = "identity", color = "black", size = 0.5) + 
+  geom_text(aes(label = sprintf("%1.0f", value)), 
+            position = position_fill(vjust = 0.5)) +
+  scale_y_continuous(labels = scales::percent_format()) +
+  scale_fill_manual(values = coloring) +
+  labs(x = NULL, y = NULL) +
+  coord_flip() + 
+  theme_bw() +
+  theme(
+    axis.line = element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_text(color="black", size=fontsize),
+    text = element_text(size=fontsize),
+    strip.background = element_blank(),
+    plot.background = element_blank(),
+    plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+    panel.border = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.spacing = unit(c(0, 0, 0, 0), "null"),
+    legend.position="bottom",
+    legend.direction = "horizontal",
+    legend.justification = c("center", "top"),
+    legend.title=element_blank(),
+    legend.text=element_text(size=fontsize),
+    legend.box.just = "right",
+    legend.box.background = element_blank()
+  ) +
+  guides(fill = guide_legend(reverse = TRUE))
+
+# Create a table to show on the plot
+my_table <- data.frame(
+  ID = c("Q1", "Q2", "Q3", "Q4", "Q5", "Q6"),
+  Questions = c(
+    "Which of the three viewpoint selection techniques did you find the easiest to use?", 
+    "Which of the three viewpoint selection techniques you will use frequently?", 
+    "Which of the three viewpoint selection techniques did you find overly complex?",
+    "Which of the three viewpoint selection techniques did you find overly complex?",
+    "Which of the three viewpoint selection techniques did you find overly complex?",
+    "Which of the three viewpoint selection techniques did you prefer most?"
+  )
+)
+
+my_table_grob <- tableGrob(my_table, cols = NULL, rows=NULL)
+
+final_plot <- arrangeGrob(plt, my_table_grob, nrow = 2, heights = c(0.8, 0.5))
+
+# Display the plot
+grid.arrange(final_plot)
+
+# saving the final figure
+ggsave("out/preference.pdf", final_plot, width = 8, height = 5, dpi = 1000)
+
+```
+
+```{r}
+# Load the required packages
+# Load the required packages
+library(ggplot2)
+library(gridExtra)
+
+# Create a data frame for the plot
+my_data <- data.frame(
+  x = rnorm(50),
+  y = rnorm(50)
+)
+
+# Create the scatter plot
+my_plot <- ggplot(my_data, aes(x = x, y = y)) +
+  geom_point()
+
+# Create a table to show on the plot
+my_table <- data.frame(
+  ID = c("Q1", "Q2", "Q3"),
+  Questions = c("Which of the three viewpoint selection techniques did you find the easiest to use?", 
+           "Which of the three viewpoint selection techniques did you find the easiest to use?", 
+           "Which of the three viewpoint selection techniques did you find the easiest to use?")
+)
+
+# Convert the table to a grob
+my_table_grob <- tableGrob(my_table, cols = NULL, rows=NULL)
+
+
+# Add the table to the plot
+final_plot <- arrangeGrob(my_plot, my_table_grob, nrow = 2, heights = c(0.8, 0.3))
+
+# Display the plot
+grid.arrange(final_plot)
+
+
+```
+
+```{r}
+df_melt=read.csv('csv/preference.csv', sep=",")
+
+custom_order <- c("AS", "GS", "MS", "NS")
+custom_order2 <- c("Q6", "Q5", "Q4", "Q3", "Q2", "Q1")
+
+df_melt$cond <- factor(df_melt$cond, levels = custom_order)
+df_melt$qus <- factor(df_melt$qus, levels = custom_order2)
+
+# Match colors to conditions
+colors <- coloring[match(df_melt$cond, unique(df_melt$cond))]
+
+# Create horizontal barplot
+barplot(df_melt$value,
+        horiz = TRUE,
+        names.arg = df_melt$qus,
+        col = colors)
+
+# Add value labels to the barplot
+text(x = df_melt$value + 0.2,  # Adjust the position of the labels
+     y = barplot(df_melt$value, plot = FALSE),
+     labels = df_melt$value,
+     cex = 0.8,
+     pos = 4) 
+  
+
+```

@@ -1,0 +1,172 @@
+---
+title: "social presence"
+output: html_notebook
+---
+```{r}
+library(ggplot2)
+library(ggpubr)
+library(dplyr)
+library(rstatix)
+
+coloring = c("#ffbd67", "#f6dbb8","#94d8e0","#537b7f")
+fontsize = 14
+dodge = .75
+```
+
+#### Normality test
+
+```{r}
+df=read.csv('csv/social.csv', sep=",")
+
+# Assuming df is your data frame
+summary_df <- df %>%
+  group_by(conditions) %>%
+  summarise(min = min(score),
+            lq = quantile(score, 0.25),
+            hq = quantile(score, 0.75),
+            max = max(score),
+            mean = mean(score),
+            median = median(score),
+            sd = sd(score))
+
+# Print the summary
+print(summary_df)
+
+# Subset the data
+vr_as <- subset(df, conditions == "AS" & vrar == "VR")
+vr_gs <- subset(df, conditions == "GS" & vrar == "VR")
+vr_ms <- subset(df, conditions == "MS" & vrar == "VR")
+vr_ns <- subset(df, conditions == "NS" & vrar == "VR")
+ar_as <- subset(df, conditions == "AS" & vrar == "AR")
+ar_gs <- subset(df, conditions == "GS" & vrar == "AR")
+ar_ms <- subset(df, conditions == "MS" & vrar == "AR")
+ar_ns <- subset(df, conditions == "NS" & vrar == "AR")
+
+sh_vr_as <- shapiro.test(vr_as$score)
+sh_vr_gs <- shapiro.test(vr_gs$score)
+sh_vr_ms <- shapiro.test(vr_ms$score)
+sh_vr_ns <- shapiro.test(vr_ns$score)
+sh_ar_as <- shapiro.test(ar_as$score)
+sh_ar_gs <- shapiro.test(ar_gs$score)
+sh_ar_ms <- shapiro.test(ar_ms$score)
+sh_ar_ns <- shapiro.test(ar_ns$score)
+
+# Interpret normality based on p-values
+interpret_normality <- function(p_value) {
+  if (p_value > 0.05) {
+    return("The data follows a normal distribution.")
+  } else {
+    return("The data does not follow a normal distribution.")
+  }
+}
+
+# Print interpretation of normality for each subset
+print(paste("vr_as:", interpret_normality(sh_vr_as$p.value), "W:", sh_vr_as$statistic, "p:", sh_vr_as$p.value))
+print(paste("vr_gs:", interpret_normality(sh_vr_gs$p.value), "W:", sh_vr_gs$statistic, "p:", sh_vr_gs$p.value))
+print(paste("vr_ms:", interpret_normality(sh_vr_ms$p.value), "W:", sh_vr_ms$statistic, "p:", sh_vr_ms$p.value))
+print(paste("vr_ns:", interpret_normality(sh_vr_ns$p.value), "W:", sh_vr_ns$statistic, "p:", sh_vr_ns$p.value))
+print(paste("ar_as:", interpret_normality(sh_ar_as$p.value), "W:", sh_ar_as$statistic, "p:", sh_ar_as$p.value))
+print(paste("ar_gs:", interpret_normality(sh_ar_gs$p.value), "W:", sh_ar_gs$statistic, "p:", sh_ar_gs$p.value))
+print(paste("ar_ms:", interpret_normality(sh_ar_ms$p.value), "W:", sh_ar_ms$statistic, "p:", sh_ar_ms$p.value))
+print(paste("ar_ns:", interpret_normality(sh_ar_ns$p.value), "W:", sh_ar_ns$statistic, "p:", sh_ar_ns$p.value))
+
+
+# balance 
+table(df$vrar, df$conditions)
+
+
+# qq plot, histogram
+# qqnorm(vr_as$score)
+# qqline(vr_as$score)
+# qqnorm(vr_gs$score)
+# qqline(vr_gs$score)
+# qqnorm(vr_ms$score)
+# qqline(vr_ms$score)
+# qqnorm(vr_ns$score)
+# qqline(vr_ns$score)
+# qqnorm(ar_as$score)
+# qqline(ar_as$score)
+# qqnorm(ar_gs$score)
+# qqline(ar_gs$score)
+# qqnorm(ar_ms$score)
+# qqline(ar_ms$score)
+# qqnorm(ar_ns$score)
+# qqline(ar_ns$score)
+
+
+hist(df$score)
+```
+
+
+
+
+Quick box-plot
+
+```{r}
+df=read.csv('csv/social.csv', sep=",")
+condition_order <- c("NS", "MS", "GS", "AS")
+df$conditions <- factor(df$conditions, levels = condition_order)
+boxplot(score ~ conditions, data = df, 
+        main = "Boxplot Example",
+        xlab = "Category",
+        ylab = "Value")
+# Calculate mean for each category
+means <- aggregate(score ~ conditions, data = df, mean)
+
+# Add mean points
+points(x = as.numeric(means$conditions), y = means$score, pch = 4)
+```
+
+
+```{r}
+df=read.csv('csv/social.csv', sep=",")
+condition_order <- c("NS", "MS", "GS", "AS")
+df$conditions <- factor(df$conditions, levels = condition_order)
+
+stat.test <- df %>% 
+  group_by(params) %>% 
+  wilcox_test(score~conditions, p.adjust.method = 'BH') %>%
+  add_significance("p") %>%
+  add_xy_position(x = "params")
+
+bxp <- ggplot(df, aes(x = params, y = score)) + 
+  stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.2, position = position_dodge(dodge)) +
+  geom_boxplot(aes(fill = conditions), width = dodge, coef = 0, outlier.alpha = 0, show.legend = F) +
+  stat_summary(aes(fill = conditions), fun.y = mean, 
+               geom= "point", shape = 4, size = 2, colour= "black", 
+               position = position_dodge(width = dodge)) +
+  stat_summary(aes(fill = conditions), fun = median,
+               geom = "crossbar", fatten = .1, width = .9*dodge, color = "black",
+               position = position_dodge(width = dodge)) +
+  labs(x = NULL, y = NULL) + 
+  theme_bw()
+
+bxp + stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02) + 
+  scale_fill_manual(name= "conditions", values = coloring) +
+  scale_color_manual(name = "conditions", values = coloring) +
+  scale_y_continuous(minor_breaks = seq(0, 8, 1), breaks = seq(1, 8.1, by=1), limits=c(1, 8.1)) + 
+  theme(
+    axis.line = element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),
+    axis.text.x = element_text(color="black", size=fontsize),
+    axis.text.y = element_text(color="black", size=fontsize),
+    text = element_text(size=fontsize),
+    strip.background = element_blank(),
+    plot.background = element_blank(),
+    plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+    panel.border = element_blank(),
+    panel.spacing = unit(c(0, 0, 0, 0), "null"),
+    legend.position="bottom",
+    legend.direction = "horizontal",
+    legend.justification = c("center", "top"),
+    legend.title=element_blank(),
+    legend.text=element_text(size=fontsize),
+    legend.box.just = "right",
+    legend.box.background = element_blank()
+  )
+
+# saving the final figure
+ggsave("out/social.pdf", width = 8, height = 4, dpi = 1000)
+  
+```
