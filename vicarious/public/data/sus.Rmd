@@ -168,6 +168,8 @@ head(new_data, 20)
 
 describe(new_data$.residuals, type=1)
 
+shapiro.test(new_data$.residuals)
+
 resid_auxpanel(residuals=new_data$.residuals, predicted=new_data$.fitted, smoother = TRUE, qqbands=TRUE, 
                plots=c('resid', 'qq', 'index', 'hist'))
 ```
@@ -229,7 +231,7 @@ bxp +
     legend.box.background = element_blank()
   )
 # saving the final figure
-ggsave("out/sus.pdf", width = 6, height = 4, dpi = 1000)
+ggsave("out/sus.pdf", width = 8, height = 6, dpi = 1000)
 
 ```
 

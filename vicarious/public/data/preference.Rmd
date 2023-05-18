@@ -13,6 +13,7 @@ library(reshape2)
 
 coloring = c("#537b7f", "#94d8e0", "#f6dbb8", "#ffbd67")
 fontsize = 14
+textsize = 7
 dodge = .75
 ```
 
@@ -28,7 +29,7 @@ df_melt$qus <- factor(df_melt$qus, levels = custom_order2)
 
 plt <- ggplot(df_melt, aes(x = qus, y = value, fill = cond)) +
   geom_bar(position = "fill", stat = "identity", color = "black", size = 0.5) + 
-  geom_text(aes(label = sprintf("%1.0f", value)), 
+  geom_text(aes(label = sprintf("%1.0f", value)), size = textsize, 
             position = position_fill(vjust = 0.5)) +
   scale_y_continuous(labels = scales::percent_format()) +
   scale_fill_manual(values = coloring) +
@@ -63,12 +64,12 @@ plt <- ggplot(df_melt, aes(x = qus, y = value, fill = cond)) +
 my_table <- data.frame(
   ID = c("Q1", "Q2", "Q3", "Q4", "Q5", "Q6"),
   Questions = c(
-    "Which of the three viewpoint selection techniques did you find the easiest to use?", 
-    "Which of the three viewpoint selection techniques you will use frequently?", 
-    "Which of the three viewpoint selection techniques did you find overly complex?",
-    "Which of the three viewpoint selection techniques did you find overly complex?",
-    "Which of the three viewpoint selection techniques did you find overly complex?",
-    "Which of the three viewpoint selection techniques did you prefer most?"
+    "Which condition did you find easiest to use?",
+    "Which condition did you find most helpful for understanding the task environment?",
+    "Which condition did you find most helpful for understanding your partner's instructions?",
+    "Which condition did you find most effective for communicating with your partner?",
+    "Which condition did you find most helpful for completing the task?",
+    "Which condition did you prefer the most?"
   )
 )
 
@@ -84,42 +85,7 @@ ggsave("out/preference.pdf", final_plot, width = 8, height = 5, dpi = 1000)
 
 ```
 
-```{r}
-# Load the required packages
-# Load the required packages
-library(ggplot2)
-library(gridExtra)
 
-# Create a data frame for the plot
-my_data <- data.frame(
-  x = rnorm(50),
-  y = rnorm(50)
-)
-
-# Create the scatter plot
-my_plot <- ggplot(my_data, aes(x = x, y = y)) +
-  geom_point()
-
-# Create a table to show on the plot
-my_table <- data.frame(
-  ID = c("Q1", "Q2", "Q3"),
-  Questions = c("Which of the three viewpoint selection techniques did you find the easiest to use?", 
-           "Which of the three viewpoint selection techniques did you find the easiest to use?", 
-           "Which of the three viewpoint selection techniques did you find the easiest to use?")
-)
-
-# Convert the table to a grob
-my_table_grob <- tableGrob(my_table, cols = NULL, rows=NULL)
-
-
-# Add the table to the plot
-final_plot <- arrangeGrob(my_plot, my_table_grob, nrow = 2, heights = c(0.8, 0.3))
-
-# Display the plot
-grid.arrange(final_plot)
-
-
-```
 
 ```{r}
 df_melt=read.csv('csv/preference.csv', sep=",")
@@ -147,4 +113,100 @@ text(x = df_melt$value + 0.2,  # Adjust the position of the labels
      pos = 4) 
   
 
+```
+
+### Chi-square stuffs
+#### Chi-Square Goodness-of-Fit Test: determine if these observed frequencies significantly differ from the expectations. This test compares the observed frequencies to the expected frequencies under the assumption that there is no association between preference and the conditions.
+  - H0: The observed distribution of viewpoint conditions matches the expected distribution.
+  - HA: The observed distribution of viewpoint conditions differs from the expected distribution.
+
+
+```{r}
+df=read.csv('csv/pref.chi.csv', sep=",")
+
+print_chi_test <- function(qus_no, test_results) {
+  cat(qus_no, ". Chi-square test statistic:", test_results$test_statistic, "\n")
+  cat("p-value:", test_results$p_value, "\n")
+  cat("residual:", test_results$residual, "\n")
+  cat("Significant categories contributing to the chi-square result:", test_results$significant_cat, "\n")
+  cat("---------------------------------\n")
+}
+
+chi_square_test <- function(observed) {
+  expected <- rep(1 / length(observed), length(observed)) # 0.25 0.25 0.25 0.25 (equal distribution)
+  # Perform chi-square goodness-of-fit test
+  result <- chisq.test(observed, p = expected)
+  residuals <- residuals(result)
+  significant_categories <- which(abs(residuals) > 1.96) 
+  
+  test_statistic <- result$statistic
+  p_value <- result$p.value
+  results <- list(
+    test_statistic = test_statistic,
+    p_value = p_value,
+    residual = abs(residuals),
+    significant_cat = significant_categories
+  )
+  return(results)
+}
+
+
+Q1 <- df[1:2, ] 
+Q1[, c("NS", "MS", "GS", "AS")] <- lapply(Q1[, c("NS", "MS", "GS", "AS")], as.numeric)
+Q1sums <- colSums(Q1[, c("NS", "MS", "GS", "AS")])
+test_results <- chi_square_test(Q1sums)
+print_chi_test("Q1", test_results)
+
+
+Q2 <- df[4:5, ] 
+Q2[, c("NS", "MS", "GS", "AS")] <- lapply(Q2[, c("NS", "MS", "GS", "AS")], as.numeric)
+Q2sums <- colSums(Q2[, c("NS", "MS", "GS", "AS")])
+test_results <- chi_square_test(Q2sums)
+print_chi_test("Q2", test_results)
+
+
+Q3 <- df[7:8, ]
+Q3[, c("NS", "MS", "GS", "AS")] <- lapply(Q3[, c("NS", "MS", "GS", "AS")], as.numeric)
+Q3sums <- colSums(Q3[, c("NS", "MS", "GS", "AS")])
+test_results <- chi_square_test(Q3sums)
+print_chi_test("Q3", test_results)
+
+
+Q4 <- df[10:11, ]
+Q4[, c("NS", "MS", "GS", "AS")] <- lapply(Q4[, c("NS", "MS", "GS", "AS")], as.numeric)
+Q4sums <- colSums(Q4[, c("NS", "MS", "GS", "AS")])
+test_results <- chi_square_test(Q4sums)
+print_chi_test("Q4", test_results)
+
+
+Q5 <- df[13:14, ]
+Q5[, c("NS", "MS", "GS", "AS")] <- lapply(Q5[, c("NS", "MS", "GS", "AS")], as.numeric)
+Q5sums <- colSums(Q5[, c("NS", "MS", "GS", "AS")])
+test_results <- chi_square_test(Q5sums)
+print_chi_test("Q5", test_results)
+
+
+Q6 <- df[16:17, ]
+Q6[, c("NS", "MS", "GS", "AS")] <- lapply(Q6[, c("NS", "MS", "GS", "AS")], as.numeric)
+Q6sums <- colSums(Q6[, c("NS", "MS", "GS", "AS")])
+test_results <- chi_square_test(Q6sums)
+print_chi_test("Q6", test_results)
+
+```
+
+#### Chi-Square Test of Independence: investigate if there is an association between user roles (VR, AR) and viewpoint condition types (NS, MS, GS, AS). We want to determine if there is a significant relationship between user roles and viewpoint types in preference.
+  - H0: user role and viewpoint condition type are independent (no association).
+  - HA: user role and viewpoint condition type are not independent (there is an association).
+
+
+```{r}
+df=read.csv('csv/pref.chi.csv', sep=",")
+
+print_chi_test <- function(qus_no, test_results) {
+  cat(qus_no, ". Chi-square test statistic:", test_results$test_statistic, "\n")
+  cat("p-value:", test_results$p_value, "\n")
+  cat("residual:", test_results$residual, "\n")
+  cat("Significant categories contributing to the chi-square result:", test_results$significant_cat, "\n")
+  cat("---------------------------------\n")
+}
 ```

@@ -14,6 +14,35 @@ dodge = .75
 
 #### Normality test
 
+
+```{r}
+df=read.csv('csv/ssq.csv', sep=",")
+
+summary_df <- df %>%
+  group_by(conditions) %>%
+  summarise(min = min(value),
+            max = max(value),
+            mean = mean(value),
+            median = median(value),
+            sd = sd(value))
+
+# Print the summary
+print(summary_df)
+
+
+condition_order <- c("NS-pre", "NS-post", "SS-pre", "SS-post", "MS-pre", "MS-post", "AS-pre", "AS-post")
+df$conditions <- factor(df$conditions, levels = condition_order)
+boxplot(value ~ conditions, data = df, 
+        main = "Boxplot Example",
+        xlab = "Category",
+        ylab = "Value")
+# Calculate mean for each category
+means <- aggregate(value ~ conditions, data = df, mean)
+
+# Add mean points
+points(x = as.numeric(means$conditions), y = means$value, pch = 4)
+```
+
 ```{r}
 df=read.csv('csv/ssq.csv', sep=",")
 
@@ -34,7 +63,7 @@ df=read.csv('csv/ssq.csv', sep=",")
 custom_order <- c("NS-pre", "NS-post", "SS-pre", "SS-post", "MS-pre", "MS-post", "AS-pre", "AS-post")
 
 df_grouped <- df %>%
-  group_by(questions) %>%
+  group_by(conditions) %>%
   summarize(
     Q1 = quantile(value, 0.25),
     Q3 = quantile(value, 0.75),
@@ -43,18 +72,18 @@ df_grouped <- df %>%
     ci_upper = t.test(value)$conf.int[2]
   )
 
-df_grouped$questions <- factor(df_grouped$questions, levels = custom_order)
+df_grouped$questions <- factor(df_grouped$conditions, levels = custom_order)
 
 df_ns <- df_grouped %>%
-  filter(questions %in% c("NS-pre", "NS-post"))
+  filter(conditions %in% c("NS-pre", "NS-post"))
 df_ms <- df_grouped %>%
-  filter(questions %in% c("MS-pre", "MS-post"))
+  filter(conditions %in% c("MS-pre", "MS-post"))
 df_gs <- df_grouped %>%
-  filter(questions %in% c("SS-pre", "SS-post"))
+  filter(conditions %in% c("SS-pre", "SS-post"))
 df_as <- df_grouped %>%
-  filter(questions %in% c("AS-pre", "AS-post"))
+  filter(conditions %in% c("AS-pre", "AS-post"))
 
-p <- ggplot(df_grouped, aes(x = questions, y = Median, color = questions)) +
+p <- ggplot(df_grouped, aes(x = conditions, y = Median, color = conditions)) +
   # geom_segment(
   #   aes(x = questions, xend = questions, y = Q1, yend = Q3), color = "#000000", size = 6
   # ) +
@@ -116,20 +145,20 @@ ggsave("out/ssq.pdf", width = 9, height = 3, dpi = 1000)
 ```{r}
 df=read.csv('csv/ssq.csv', sep=",")
 custom_order <- c("NS-pre", "NS-post", "SS-pre", "SS-post", "MS-pre", "MS-post", "AS-pre", "AS-post")
-df$questions <- factor(df$questions, levels = custom_order)
+df$conditions <- factor(df$conditions, levels = custom_order)
 
-medians <- aggregate(value ~ questions, data = df, FUN = median)
-ns_pre_median <- medians$value[medians$questions == "NS-pre"]
-ns_post_median <- medians$value[medians$questions == "NS-post"]
-ms_pre_median <- medians$value[medians$questions == "MS-pre"]
-ms_post_median <- medians$value[medians$questions == "MS-post"]
-as_pre_median <- medians$value[medians$questions == "AS-pre"]
-as_post_median <- medians$value[medians$questions == "AS-post"]
-gs_pre_median <- medians$value[medians$questions == "SS-pre"]
-gs_post_median <- medians$value[medians$questions == "SS-post"]
+medians <- aggregate(value ~ conditions, data = df, FUN = median)
+ns_pre_median <- medians$value[medians$conditions == "NS-pre"]
+ns_post_median <- medians$value[medians$conditions == "NS-post"]
+ms_pre_median <- medians$value[medians$conditions == "MS-pre"]
+ms_post_median <- medians$value[medians$conditions == "MS-post"]
+as_pre_median <- medians$value[medians$conditions == "AS-pre"]
+as_post_median <- medians$value[medians$conditions == "AS-post"]
+gs_pre_median <- medians$value[medians$conditions == "SS-pre"]
+gs_post_median <- medians$value[medians$conditions == "SS-post"]
 
-ggplot(data = df, mapping = aes(x = questions, y = value, fill = questions)) +
-  geom_boxplot(aes(color = questions), width = 0.5, outlier.alpha = 0, show.legend = F) +
+ggplot(data = df, mapping = aes(x = conditions, y = value, fill = conditions)) +
+  geom_boxplot(aes(color = conditions), width = 0.5, outlier.alpha = 0, show.legend = F) +
   stat_summary(fun = mean, geom = "point", shape = 3, size = 3, color = "black") +
   stat_summary(fun = median, geom = "point", shape = 4, size = 3, color = "black") +
   stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = 0.2, size = 1) + 
@@ -137,16 +166,16 @@ ggplot(data = df, mapping = aes(x = questions, y = value, fill = questions)) +
   geom_segment(aes(x = "MS-pre", y = ms_pre_median, xend = "MS-post", yend = ms_post_median), color = "black", size = .25, linetype = "solid") +
   geom_segment(aes(x = "AS-pre", y = as_pre_median, xend = "AS-post", yend = as_post_median), color = "black", size = .25, linetype = "solid") +
   geom_segment(aes(x = "SS-pre", y = gs_pre_median, xend = "SS-post", yend = gs_post_median), color = "black", size = .25, linetype = "solid") +
-  stat_compare_means(aes(group = questions, label = paste0("p = ", ..p.signif..)), 
-                       method = "t.test", paired = T, hide.ns = T, method.args = list(p.adjust.method = "bonferroni"),
-                       comparisons = list(c("NS-pre", "NS-post"),
-                                          # c("MS-pre", "MS-post"),
-                                          # c("SS-pre", "SS-post"),
-                                          c("AS-pre", "AS-post"))) +
+  # stat_compare_means(aes(group = conditions, label = paste0("p = ", ..p.signif..)), 
+  #                      method = "t.test", paired = T, hide.ns = T, method.args = list(p.adjust.method = "bonferroni"),
+  #                      comparisons = list(c("NS-pre", "NS-post"),
+  #                                         c("MS-pre", "MS-post"),
+  #                                         c("SS-pre", "SS-post"),
+  #                                         c("AS-pre", "AS-post"))) +
   labs(x = NULL, y = NULL) + 
   theme_bw() + 
-  scale_fill_manual(name= "questions", values = coloring) +
-  scale_color_manual(name = "questions", values = coloring) + 
+  scale_fill_manual(name= "conditions", values = coloring) +
+  scale_color_manual(name = "conditions", values = coloring) + 
   theme(
     axis.line = element_blank(),
     axis.title.x=element_blank(),
