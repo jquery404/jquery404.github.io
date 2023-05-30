@@ -8,6 +8,23 @@ library(ggpubr)
 library(rstatix)
 # "#ffbd67","#ffbd67","#537b7f","#537b7f","#f6dbb8","#f6dbb8","#94d8e0","#94d8e0"
 coloring = c("#ffbd67","#ffbd67","#f6dbb8","#f6dbb8","#94d8e0","#94d8e0","#537b7f","#537b7f")
+coloringit = c("#985F1F","#985F1F","#C3A67A","#C3A67A","#4DA8BA","#4DA8BA","#222F31","#222F31")
+condition_colors <- c("NS-pre" = "#ffbd67",
+                      "NS-post" = "#ffbd67",
+                      "MS-pre" = "#f6dbb8",
+                      "MS-post" = "#f6dbb8",
+                      "GS-pre" = "#94d8e0",
+                      "GS-post" = "#94d8e0",
+                      "AS-pre" = "#537b7f",
+                      "AS-post" = "#537b7f") 
+condition_fills <- c("NS-pre" = "#985F1F",
+                      "NS-post" = "#985F1F",
+                      "MS-pre" = "#C3A67A",
+                      "MS-post" = "#C3A67A",
+                      "GS-pre" = "#4DA8BA",
+                      "GS-post" = "#4DA8BA",
+                      "AS-pre" = "#222F31",
+                      "AS-post" = "#222F31") 
 fontsize = 14
 dodge = .75
 ```
@@ -20,11 +37,11 @@ df=read.csv('csv/ssq.csv', sep=",")
 
 summary_df <- df %>%
   group_by(conditions) %>%
-  summarise(min = min(value),
-            max = max(value),
-            mean = mean(value),
-            median = median(value),
-            sd = sd(value))
+  summarise(min = min(total),
+            max = max(total),
+            mean = mean(total),
+            median = median(total),
+            sd = sd(total))
 
 # Print the summary
 print(summary_df)
@@ -32,15 +49,15 @@ print(summary_df)
 
 condition_order <- c("NS-pre", "NS-post", "SS-pre", "SS-post", "MS-pre", "MS-post", "AS-pre", "AS-post")
 df$conditions <- factor(df$conditions, levels = condition_order)
-boxplot(value ~ conditions, data = df, 
+boxplot(total ~ conditions, data = df, 
         main = "Boxplot Example",
         xlab = "Category",
         ylab = "Value")
 # Calculate mean for each category
-means <- aggregate(value ~ conditions, data = df, mean)
+means <- aggregate(total ~ conditions, data = df, mean)
 
 # Add mean points
-points(x = as.numeric(means$conditions), y = means$value, pch = 4)
+points(x = as.numeric(means$conditions), y = means$total, pch = 4)
 ```
 
 ```{r}
@@ -60,16 +77,17 @@ qqline(df$value)
 # create the data frame
 df=read.csv('csv/ssq.csv', sep=",")
 
-custom_order <- c("NS-pre", "NS-post", "SS-pre", "SS-post", "MS-pre", "MS-post", "AS-pre", "AS-post")
+custom_order <- c("NS-pre", "NS-post", "MS-pre", "MS-post", "GS-pre", "GS-post", "AS-pre", "AS-post")
 
 df_grouped <- df %>%
   group_by(conditions) %>%
   summarize(
-    Q1 = quantile(value, 0.25),
-    Q3 = quantile(value, 0.75),
-    Median = median(value),
-    ci_lower = t.test(value)$conf.int[1],
-    ci_upper = t.test(value)$conf.int[2]
+    Q1 = quantile(total, 0.25),
+    Q3 = quantile(total, 0.75),
+    Median = median(total),
+    Mean = mean(total),
+    ci_lower = t.test(total)$conf.int[1],
+    ci_upper = t.test(total)$conf.int[2]
   )
 
 df_grouped$questions <- factor(df_grouped$conditions, levels = custom_order)
@@ -79,11 +97,11 @@ df_ns <- df_grouped %>%
 df_ms <- df_grouped %>%
   filter(conditions %in% c("MS-pre", "MS-post"))
 df_gs <- df_grouped %>%
-  filter(conditions %in% c("SS-pre", "SS-post"))
+  filter(conditions %in% c("GS-pre", "GS-post"))
 df_as <- df_grouped %>%
   filter(conditions %in% c("AS-pre", "AS-post"))
 
-p <- ggplot(df_grouped, aes(x = conditions, y = Median, color = conditions)) +
+p <- ggplot(df_grouped, aes(x = conditions, y = Mean, color = conditions)) +
   # geom_segment(
   #   aes(x = questions, xend = questions, y = Q1, yend = Q3), color = "#000000", size = 6
   # ) +
@@ -91,22 +109,26 @@ p <- ggplot(df_grouped, aes(x = conditions, y = Median, color = conditions)) +
   geom_point(size = 3) +
   geom_segment(
     data = df_ns, 
-    aes(x = "NS-pre", y = Median[questions == "NS-pre"], xend = "NS-post", yend = Median[questions == "NS-post"]), 
+    aes(x = "NS-pre", y = Mean[questions == "NS-pre"], 
+        xend = "NS-post", yend = Mean[questions == "NS-post"]), 
     color = coloring[1]
   ) +
   geom_segment(
     data = df_ms, 
-    aes(x = "MS-pre", y = Median[questions == "MS-pre"], xend = "MS-post", yend = Median[questions == "MS-post"]), 
-    color = coloring[5]
-  ) +
-  geom_segment(
-    data = df_gs, 
-    aes(x = "SS-pre", y = Median[questions == "SS-pre"], xend = "SS-post", yend = Median[questions == "SS-post"]), 
+    aes(x = "MS-pre", y = Mean[questions == "MS-pre"], 
+        xend = "MS-post", yend = Mean[questions == "MS-post"]), 
     color = coloring[3]
   ) +
   geom_segment(
+    data = df_gs, 
+    aes(x = "GS-pre", xend = "GS-post", 
+        y = Mean[questions == "GS-pre"], yend = Mean[questions == "GS-post"]), 
+    color = coloring[5]
+  ) +
+  geom_segment(
     data = df_as, 
-    aes(x = "AS-pre", y = Median[questions == "AS-pre"], xend = "AS-post", yend = Median[questions == "AS-post"]), 
+    aes(x = "AS-pre", xend = "AS-post", 
+        y = Mean[questions == "AS-pre"], yend = Mean[questions == "AS-post"]), 
     color = coloring[7]
   ) +
   labs(x = NULL, y = NULL) + 
@@ -144,28 +166,35 @@ ggsave("out/ssq.pdf", width = 9, height = 3, dpi = 1000)
 
 ```{r}
 df=read.csv('csv/ssq.csv', sep=",")
-custom_order <- c("NS-pre", "NS-post", "SS-pre", "SS-post", "MS-pre", "MS-post", "AS-pre", "AS-post")
+custom_order <- c("NS-pre", "NS-post", "MS-pre", "MS-post", "GS-pre", "GS-post", "AS-pre", "AS-post")
 df$conditions <- factor(df$conditions, levels = custom_order)
 
-medians <- aggregate(value ~ conditions, data = df, FUN = median)
-ns_pre_median <- medians$value[medians$conditions == "NS-pre"]
-ns_post_median <- medians$value[medians$conditions == "NS-post"]
-ms_pre_median <- medians$value[medians$conditions == "MS-pre"]
-ms_post_median <- medians$value[medians$conditions == "MS-post"]
-as_pre_median <- medians$value[medians$conditions == "AS-pre"]
-as_post_median <- medians$value[medians$conditions == "AS-post"]
-gs_pre_median <- medians$value[medians$conditions == "SS-pre"]
-gs_post_median <- medians$value[medians$conditions == "SS-post"]
+medians <- aggregate(total ~ conditions, data = df, FUN = median)
+means <- aggregate(total ~ conditions, data = df, FUN = mean)
+ns_pre_median <- means$total[means$conditions == "NS-pre"]
+ns_post_median <- means$total[means$conditions == "NS-post"]
+ms_pre_median <- means$total[means$conditions == "MS-pre"]
+ms_post_median <- means$total[means$conditions == "MS-post"]
+as_pre_median <- means$total[means$conditions == "AS-pre"]
+as_post_median <- means$total[means$conditions == "AS-post"]
+gs_pre_median <- means$total[means$conditions == "GS-pre"]
+gs_post_median <- means$total[means$conditions == "GS-post"]
 
-ggplot(data = df, mapping = aes(x = conditions, y = value, fill = conditions)) +
-  geom_boxplot(aes(color = conditions), width = 0.5, outlier.alpha = 0, show.legend = F) +
-  stat_summary(fun = mean, geom = "point", shape = 3, size = 3, color = "black") +
-  stat_summary(fun = median, geom = "point", shape = 4, size = 3, color = "black") +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = 0.2, size = 1) + 
-  geom_segment(aes(x = "NS-pre", y = ns_pre_median, xend = "NS-post", yend = ns_post_median), color = "black", size = .25, linetype = "solid") +
-  geom_segment(aes(x = "MS-pre", y = ms_pre_median, xend = "MS-post", yend = ms_post_median), color = "black", size = .25, linetype = "solid") +
-  geom_segment(aes(x = "AS-pre", y = as_pre_median, xend = "AS-post", yend = as_post_median), color = "black", size = .25, linetype = "solid") +
-  geom_segment(aes(x = "SS-pre", y = gs_pre_median, xend = "SS-post", yend = gs_post_median), color = "black", size = .25, linetype = "solid") +
+ggplot(data = df, mapping = aes(x = conditions, y = total, fill = conditions, color = conditions)) +
+  stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.2, position = position_dodge(dodge)) +
+  geom_boxplot(aes(fill = conditions), width = dodge/2, coef = 0, outlier.alpha = 1, show.legend = F) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", aes(color = conditions), width = 0.2, size = .75) + 
+  # stat_summary(fun = median, geom = "point", shape = 4, size = 3, color = "black") +
+  # geom_boxplot(aes(color = conditions), width = 0.5, outlier.alpha = 0, show.legend = F) +
+  geom_segment(aes(x = "NS-pre", xend = "NS-post", y = ns_pre_median,  yend = ns_post_median), 
+               color = coloringit[1], size = .25, linetype = "solid") +
+  geom_segment(aes(x = "MS-pre", xend = "MS-post", y = ms_pre_median, yend = ms_post_median),
+               color = coloringit[3], size = .25, linetype = "solid") +
+  geom_segment(aes(x = "GS-pre", xend = "GS-post", y = gs_pre_median, yend = gs_post_median),
+               color = coloringit[5], size = .25, linetype = "solid") +
+  geom_segment(aes(x = "AS-pre", xend = "AS-post", y = as_pre_median, yend = as_post_median),
+               color = coloringit[7], size = .25, linetype = "solid") +
+  stat_summary(fun = mean, geom = "point", shape = 16, size = 3, aes(color = conditions)) +
   # stat_compare_means(aes(group = conditions, label = paste0("p = ", ..p.signif..)), 
   #                      method = "t.test", paired = T, hide.ns = T, method.args = list(p.adjust.method = "bonferroni"),
   #                      comparisons = list(c("NS-pre", "NS-post"),
@@ -175,7 +204,7 @@ ggplot(data = df, mapping = aes(x = conditions, y = value, fill = conditions)) +
   labs(x = NULL, y = NULL) + 
   theme_bw() + 
   scale_fill_manual(name= "conditions", values = coloring) +
-  scale_color_manual(name = "conditions", values = coloring) + 
+  scale_color_manual(name = "conditions", values = coloringit) + 
   theme(
     axis.line = element_blank(),
     axis.title.x=element_blank(),
@@ -195,3 +224,250 @@ ggplot(data = df, mapping = aes(x = conditions, y = value, fill = conditions)) +
 # saving the final figure
 ggsave("out/ssq.pdf", width = 8, height = 4, dpi = 1000)
 ```
+VR- AND AR 
+
+```{r}
+df=read.csv('csv/ssq.csv', sep=",")
+custom_order <- c("NS-pre", "NS-post", "MS-pre", "MS-post", "GS-pre", "GS-post", "AS-pre", "AS-post")
+df$conditions <- factor(df$conditions, levels = custom_order)
+
+df_ar <- df[df$role == 'AR', ]
+df_vr <- df[df$role == 'VR', ]
+
+medians_vr <- aggregate(total ~ conditions, data = df_vr, FUN = median)
+means_vr <- aggregate(total ~ conditions, data = df_vr, FUN = mean)
+ns_pre_median <- means_vr$total[means_vr$conditions == "NS-pre"]
+ns_post_median <- means_vr$total[means_vr$conditions == "NS-post"]
+ms_pre_median <- means_vr$total[means_vr$conditions == "MS-pre"]
+ms_post_median <- means_vr$total[means_vr$conditions == "MS-post"]
+as_pre_median <- means_vr$total[means_vr$conditions == "AS-pre"]
+as_post_median <- means_vr$total[means_vr$conditions == "AS-post"]
+gs_pre_median <- means_vr$total[means_vr$conditions == "GS-pre"]
+gs_post_median <- means_vr$total[means_vr$conditions == "GS-post"]
+
+medians_ar <- aggregate(total ~ conditions, data = df_ar, FUN = median)
+means_ar <- aggregate(total ~ conditions, data = df_ar, FUN = mean)
+ns_pre_median_ar <- means_ar$total[means_ar$conditions == "NS-pre"]
+ns_post_median_ar <- means_ar$total[means_ar$conditions == "NS-post"]
+ms_pre_median_ar <- means_ar$total[means_ar$conditions == "MS-pre"]
+ms_post_median_ar <- means_ar$total[means_ar$conditions == "MS-post"]
+as_pre_median_ar <- means_ar$total[means_ar$conditions == "AS-pre"]
+as_post_median_ar <- means_ar$total[means_ar$conditions == "AS-post"]
+gs_pre_median_ar <- means_ar$total[means_ar$conditions == "GS-pre"]
+gs_post_median_ar <- means_ar$total[means_ar$conditions == "GS-post"]
+
+plotvr <- ggplot(data = df_vr, mapping = aes(x = conditions, y = total, fill = conditions, color = conditions)) +
+  # stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.2, position = position_dodge(dodge)) +
+  # geom_boxplot(aes(fill = conditions), width = dodge/2, coef = 0, outlier.alpha = 1, show.legend = F) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", aes(color = conditions), width = 0.2, size = .5) + 
+  # stat_summary(fun = median, geom = "point", shape = 4, size = 3, color = "black") +
+  # geom_boxplot(aes(color = conditions), width = 0.5, outlier.alpha = 0, show.legend = F) +
+  geom_segment(aes(x = "NS-pre", xend = "NS-post", y = ns_pre_median, yend = ns_post_median), 
+               color = coloringit[1], size = .25, linetype = "solid") +
+  geom_segment(aes(x = "MS-pre", xend = "MS-post", y = ms_pre_median, yend = ms_post_median), 
+               color = coloringit[3], size = .25, linetype = "solid") +
+  geom_segment(aes(x = "GS-pre", xend = "GS-post", y = gs_pre_median, yend = gs_post_median), 
+               color = coloringit[5], size = .25, linetype = "solid") +
+  geom_segment(aes(x = "AS-pre", xend = "AS-post", y = as_pre_median, yend = as_post_median), 
+               color = coloringit[7], size = .25, linetype = "solid") +
+  stat_summary(fun.data = mean_cl_normal, geom = "point", shape = 16, size = 3, aes(color = conditions)) +
+  # stat_compare_means(aes(group = conditions, label = paste0("p = ", ..p.signif..)), 
+  #                      method = "t.test", paired = T, hide.ns = T, method.args = list(p.adjust.method = "bonferroni"),
+  #                      comparisons = list(c("NS-pre", "NS-post"),
+  #                                         c("MS-pre", "MS-post"),
+  #                                         c("SS-pre", "SS-post"),
+  #                                         c("AS-pre", "AS-post"))) +
+  labs(x = NULL, y = NULL) + 
+  labs(tag = "remote user") +
+  ylim(0, 15) +
+  theme_bw() + 
+  scale_fill_manual(name= "conditions", values = coloring) +
+  scale_color_manual(name = "conditions", values = coloringit) + 
+  annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+  theme(
+    axis.line = element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),
+    axis.text.x = element_blank(),
+    axis.text.y = element_text(color="black", size=fontsize),
+    text = element_text(size=fontsize),
+    strip.background = element_blank(),
+    plot.background = element_blank(),
+    plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+    plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+    plot.tag.position = c(1, .5),
+    panel.border = element_blank(),
+    panel.spacing = unit(c(0, 0, 0, 0), "null"),
+    # panel.grid.major.x = element_blank(),
+    legend.position = "none"
+  )
+
+
+
+plotar <- ggplot(data = df_ar, mapping = aes(x = conditions, y = total, fill = conditions, color = conditions)) +
+  # stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.2, position = position_dodge(dodge)) +
+  # geom_boxplot(aes(fill = conditions), width = dodge/2, coef = 0, outlier.alpha = 1, show.legend = F) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", aes(color = conditions), width = 0.2, size = .5) + 
+  # stat_summary(fun = median, geom = "point", shape = 4, size = 3, color = "black") +
+  # geom_boxplot(aes(color = conditions), width = 0.5, outlier.alpha = 0, show.legend = F) +
+  geom_segment(aes(x = "NS-pre", xend = "NS-post", y = ns_pre_median_ar, yend = ns_post_median_ar), 
+               color = coloringit[1], size = .25, linetype = "solid") +
+  geom_segment(aes(x = "MS-pre", xend = "MS-post", y = ms_pre_median_ar, yend = ms_post_median_ar), 
+               color = coloringit[3], size = .25, linetype = "solid") +
+  geom_segment(aes(x = "GS-pre", xend = "GS-post", y = gs_pre_median_ar, yend = gs_post_median_ar), 
+               color = coloringit[5], size = .25, linetype = "solid") +
+  geom_segment(aes(x = "AS-pre", xend = "AS-post", y = as_pre_median_ar, yend = as_post_median_ar), 
+               color = coloringit[7], size = .25, linetype = "solid") +
+  stat_summary(fun = mean, geom = "point", shape = 16, size = 3, aes(color = conditions)) +
+  # stat_compare_means(aes(group = conditions, label = paste0("p = ", ..p.signif..)), 
+  #                      method = "t.test", paired = T, hide.ns = T, method.args = list(p.adjust.method = "bonferroni"),
+  #                      comparisons = list(c("NS-pre", "NS-post"),
+  #                                         c("MS-pre", "MS-post"),
+  #                                         c("SS-pre", "SS-post"),
+  #                                         c("AS-pre", "AS-post"))) +
+  labs(x = NULL, y = NULL) + 
+  ylim(0, 15) +
+  labs(tag = "local user") +
+  theme_bw() + 
+  scale_fill_manual(name= "conditions", values = coloring) +
+  scale_color_manual(name = "conditions", values = coloringit) + 
+  annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+  theme(
+    axis.line = element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),
+    axis.text.x = element_text(color="black", size=fontsize),
+    axis.text.y = element_text(color="black", size=fontsize),
+    text = element_text(size=fontsize),
+    strip.background = element_blank(),
+    plot.background = element_blank(),
+    plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+    plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+    plot.tag.position = c(1, .5),
+    panel.border = element_blank(),
+    panel.spacing = unit(c(0, 0, 0, 0), "null"),
+    # panel.grid.major.x = element_blank(),
+    legend.position = "none"
+  )
+
+final_plot <- arrangeGrob(plotvr, plotar, nrow = 2, heights = c(.4, .5))
+grid.arrange(final_plot)
+
+# saving the final figure
+ggsave("out/ssq.pdf", final_plot, width = 8, height = 4, dpi = 1000)
+
+```
+
+
+
+
+```{r}
+
+df=read.csv('csv/ssq.csv', sep=",")
+custom_order <- c("NS-pre", "NS-post", "MS-pre", "MS-post", "GS-pre", "GS-post", "AS-pre", "AS-post")
+df$conditions <- factor(df$conditions, levels = custom_order)
+
+### VR
+df_vr_grp <- df %>%
+  filter(role == 'VR') %>%
+  group_by(conditions) %>%
+  summarize(
+    Q1 = quantile(total, 0.25),
+    Q3 = quantile(total, 0.75),
+    Min = min(total),
+    Max = max(total),
+    Median = median(total),
+    Mean = mean(total),
+    ci_lower = t.test(total)$conf.int[1],
+    ci_upper = t.test(total)$conf.int[2]
+  )
+
+### VR
+df_ar_grp <- df %>%
+  filter(role == 'AR') %>%
+  group_by(conditions) %>%
+  summarize(
+    Q1 = quantile(total, 0.25),
+    Q3 = quantile(total, 0.75),
+    Min = min(total),
+    Max = max(total),
+    Median = median(total),
+    Mean = mean(total),
+    ci_lower = t.test(total)$conf.int[1],
+    ci_upper = t.test(total)$conf.int[2]
+  )
+
+
+plotvr <- ggplot(df_vr_grp, aes(x = conditions)) +
+    # geom_segment(aes(x = conditions, xend = conditions, y = Min, yend = Max), color = "black", size = .5) +
+    # geom_segment(aes(x = conditions, xend = conditions, y = Q1, yend = Q3, color = conditions), size = 8) +
+    geom_point(aes(y = Median, color = "Median"), shape = "-", size = 1) +
+    geom_point(aes(y = Mean, color = conditions), shape = 16, size = 3) +
+    geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper, color = conditions), width = 0.2, size = .5) +
+    
+    geom_segment(aes(x = conditions[1], xend = conditions[2], y = Mean[1], yend = Mean[2]), color = "#98601F", size = 1) +
+    geom_segment(aes(x = conditions[3], xend = conditions[4], y = Mean[3], yend = Mean[4]), color = "#C3A77A", size = 1) +
+    geom_segment(aes(x = conditions[5], xend = conditions[6], y = Mean[5], yend = Mean[6]), color = "#4FA8BA", size = 1) +
+    geom_segment(aes(x = conditions[7], xend = conditions[8], y = Mean[7], yend = Mean[8]), color = "#222E31", size = 1) +
+    scale_color_manual(name = "conditions", values = condition_fills) + 
+    scale_fill_manual(name = "conditions", values = condition_fills) + 
+    theme_bw() + 
+    ylim(0, 8) +
+    labs(tag = "remote user") +
+    theme(
+      axis.line = element_blank(),
+      axis.title.x=element_blank(),
+      axis.title.y=element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(color="black", size=fontsize),
+      text = element_text(size=fontsize),
+      plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+      plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+      plot.tag.position = c(1, .5),
+      panel.spacing = unit(c(0, 0, 0, 0), "null"),
+      legend.position = "none"
+    )
+
+# print(df_vr_grp)
+# print(df_ar_grp)
+
+plotar <- ggplot(df_ar_grp, aes(x = conditions)) +
+  # geom_segment(aes(x = conditions, xend = conditions, y = Min, yend = Max), color = "black", size = .5) +
+  # geom_segment(aes(x = conditions, xend = conditions, y = Q1, yend = Q3, color = conditions), size = 8) +
+  geom_point(aes(y = Median, color = "Median"), shape = "-", size = 1) +
+  geom_point(aes(y = Mean, color = conditions), shape = 16, size = 3) +
+  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper, color = conditions), width = 0.2, size = .5) +
+  
+  geom_segment(aes(x = conditions[1], xend = conditions[2], y = Mean[1], yend = Mean[2]), color = "#98601F", size = 1) +
+  geom_segment(aes(x = conditions[3], xend = conditions[4], y = Mean[3], yend = Mean[4]), color = "#C3A77A", size = 1) +
+  geom_segment(aes(x = conditions[5], xend = conditions[6], y = Mean[5], yend = Mean[6]), color = "#4FA8BA", size = 1) +
+  geom_segment(aes(x = conditions[7], xend = conditions[8], y = Mean[7], yend = Mean[8]), color = "#222E31", size = 1) +
+  scale_color_manual(name = "conditions", values = condition_fills) + 
+  scale_fill_manual(name = "conditions", values = condition_fills) + 
+  theme_bw() + 
+  ylim(0, 8) +
+  labs(tag = "local user") +
+  annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+  theme(
+    axis.line = element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),
+    axis.text.x = element_text(color="black", size=fontsize),
+    axis.text.y = element_text(color="black", size=fontsize),
+    text = element_text(size=fontsize),
+    plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+    plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+    plot.tag.position = c(1, .5),
+    panel.spacing = unit(c(0, 0, 0, 0), "null"),
+    legend.position = "none"
+  )
+
+final_plot <- arrangeGrob(plotvr, plotar, nrow = 2, heights = c(.4, .5))
+grid.arrange(final_plot)
+
+# saving the final figure
+ggsave("out/ssq.pdf", final_plot, width = 8, height = 4, dpi = 1000)
+```
+
+
+

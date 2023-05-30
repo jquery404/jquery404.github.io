@@ -1,4 +1,4 @@
-group,participant,vr_ar,conditions,sus_score,,,,,,,,,,
+group,participant,role,conditions,sus_score,,,,,,,,,,
 1,1,VR,NS,82.5,2,5,2,5,3,4,1,5,3,5
 1,2,AR,NS,70,2,5,3,5,5,5,4,3,1,5
 1,3,VR,NS,60,2,4,4,2,4,3,2,4,2,5

@@ -33,6 +33,7 @@ df <- data %>%
 
 # Assuming df is your data frame
 summary_df <- df %>%
+  filter(params == "Overall") %>%
   group_by(conditions) %>%
   summarise(min = min(scores),
             lq = quantile(scores, 0.25),
@@ -122,19 +123,26 @@ ggsave("out/rtlx.pdf", width = 12, height = 6, dpi = 1000)
 plot 2
 
 ```{r}
+# df <- df %>%
+#   filter(params != "Overall")
+
 stat.test <- df %>% 
   group_by(params) %>% 
   wilcox_test(scores~conditions, p.adjust.method = 'BH') %>%
   add_significance("p") %>%
   add_xy_position(x = "params")
 
-bxp <- ggplot(df, aes(x = params, y = scores)) + 
+bxp <- ggplot(df, aes(x = params, y = scores)) +
+  # geom_hline(yintercept = 44.25926, color = '#ff0000', linetype = 'solid', size = .5) +
+  # geom_hline(yintercept = 43.01852, color = '#00ff00', linetype = 'solid', size = .5) +
+  # geom_hline(yintercept = 33.94444, color = '#78AEB5', linetype = 'solid', size = .5) +
+  # geom_hline(yintercept = 41.61111, color = '#2D4244', linetype = 'solid', size = .5) +
   stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.2, position = position_dodge(dodge)) +
   geom_boxplot(aes(fill = conditions), width = dodge, coef = 0, outlier.alpha = 0, show.legend = F) +
-  stat_summary(aes(fill = conditions), fun.y = mean, 
-               geom= "point", shape = 4, size = 2, colour= "black", 
+  stat_summary(aes(fill = conditions), fun.y = mean,
+               geom= "point", shape = 4, size = 2, colour= "black",
                position = position_dodge(width = dodge)) +
-  stat_summary(aes(fill = conditions), fun = median,
+  stat_summary(aes(fill = conditions), fun.y = median,
                geom = "crossbar", fatten = .1, width = .9*dodge, color = "black",
                position = position_dodge(width = dodge)) +
   labs(x = NULL, y = NULL) + 
@@ -156,6 +164,10 @@ bxp + stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.leng
     plot.margin = unit(c(0.005, .025, 0, 0), "null"),
     panel.border = element_blank(),
     panel.spacing = unit(c(0, 0, 0, 0), "null"),
+    legend.key = element_blank(),
+    legend.key.size = unit(1, "cm"),
+    legend.key.height = unit(1.5, 'cm'), 
+    legend.key.width = unit(1, 'cm'),
     legend.position="bottom",
     legend.direction = "horizontal",
     legend.justification = c("center", "top"),
@@ -163,7 +175,8 @@ bxp + stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.leng
     legend.text=element_text(size=fontsize),
     legend.box.just = "right",
     legend.box.background = element_blank()
-  )
+  ) + 
+  guides(fill = guide_legend(override.aes = list(color = "transparent")))
 
 # saving the final figure
 ggsave("out/rtlx.pdf", width = 10, height = 4, dpi = 1000)
@@ -257,14 +270,14 @@ tukey <- df %>%
   add_xy_position()
 
 bxp <- ggplot(df, aes(x = conditions, y = time)) + 
-  stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.25, position = position_dodge(dodge)) +
-  geom_boxplot(aes(fill = conditions), width = dodge, coef = 0, outlier.alpha = 0, show.legend = F) +
+  stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.25, position = position_dodge(dodge), show.legend = F) +
+  geom_boxplot(aes(fill = conditions), width = dodge/2, coef = 0, outlier.alpha = 0, show.legend = F) +
   stat_summary(aes(fill = conditions), fun.y = mean, 
                geom= "point", shape = 4, size = 5, colour= "black", 
-               position = position_dodge(width = dodge)) +
+               position = position_dodge(width = dodge), show.legend = F) +
   stat_summary(aes(fill = conditions), fun = median,
-               geom = "crossbar", fatten = 0, width = .9*dodge, color = "black",
-               position = position_dodge(width = dodge)) +
+               geom = "crossbar", fatten = 0, width = .4*dodge, color = "black",
+               position = position_dodge(width = dodge), show.legend = T) +
   labs(x = NULL, y = NULL) + 
   theme_bw()
 
@@ -288,14 +301,18 @@ bxp +
     legend.position="bottom",
     legend.direction = "horizontal",
     legend.justification = c("center", "top"),
+    legend.key = element_blank(),
     legend.key.size = unit(1, "cm"),
+    legend.key.height = unit(1.5, 'cm'), 
+    legend.key.width = unit(1, 'cm'), 
     legend.title=element_blank(),
     legend.text=element_text(size=fontsize),
     legend.box.just = "right",
     legend.box.background = element_blank()
-  )
+  ) + 
+  guides(fill = guide_legend(override.aes = list(color = "transparent")))
 # saving the final figure
-ggsave("out/TaskCompletionTime.pdf", width = 8, height = 6, dpi = 1000)
+ggsave("out/TaskCompletionTime.pdf", width = 4, height = 4, dpi = 1000)
 ```
 
 
@@ -347,8 +364,52 @@ bartlett_stats
 ## Save the resulting data frame as a CSV file
 
 ```{r}
-write.csv(task_stats, file = "out/task_stats.csv", row.names = FALSE)
-write.csv(bartlett_stats, file = "out/task_f_bartlett.csv", row.names = FALSE)
-write.csv(summary_data, file = "out/summary_data.csv", row.names = FALSE)
+data <- data.frame(
+  category = c("G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9"),
+  value1 = c(20, 30, 15),
+  value2 = c(10, 25, 20),
+  value3 = c(15, 12, 18),
+  value4 = c(20, 30, 15),
+  value5 = c(10, 25, 20),
+  value6 = c(15, 12, 18),
+  value7 = c(20, 30, 15)
+)
+
+# Convert data from wide to long format
+data_long <- tidyr::pivot_longer(data, cols = starts_with("value"), names_to = "variable", values_to = "value")
+
+p <- ggplot(data_long, aes(x = category, y = value, fill = variable)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(x = "Category", y = "Value") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Dark2") +
+  coord_flip()
+
+# Create a second data frame with additional values
+additional_data <- data.frame(
+  category = c("G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9"),
+  additional_value = c(5, 10, 3)
+)
+
+# Convert the additional data to long format
+additional_data_long <- tidyr::pivot_longer(additional_data, 
+                                            cols = starts_with("additional_value"), 
+                                            names_to = "variable", 
+                                            values_to = "value")
+
+# Add the second bar plot on top of the first one
+p <- p +
+  geom_bar(data = additional_data_long, aes(x = category, y = value, fill = variable),
+           stat = "identity", position = "stack", width = 0.5)  
+
+# Display the plot
+p
+
+ggsave("out/ActivityVis.pdf", width = 8, height = 3, dpi = 1000)
+
 ```
 
+```{r}
+write.csv(df, file = "csv/task_df.csv", row.names = FALSE)
+
+```

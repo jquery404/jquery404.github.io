@@ -84,13 +84,45 @@ bxp + stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.leng
     legend.position="bottom",
     legend.direction = "horizontal",
     legend.justification = c("center", "top"),
+    legend.key = element_blank(),
+    legend.key.size = unit(1, "cm"),
+    legend.key.height = unit(1.5, 'cm'), 
+    legend.key.width = unit(1, 'cm'), 
     legend.title=element_blank(),
     legend.text=element_text(size=fontsize),
     legend.box.just = "right",
     legend.box.background = element_blank()
-  )
+  ) + 
+  guides(fill = guide_legend(override.aes = list(color = "transparent")))
 
 # saving the final figure
 ggsave("out/spatial.pdf", width = 8, height = 4, dpi = 1000)
   
+```
+```{r}
+
+# Example data
+data <- data.frame(
+  group = rep(c("A", "B", "C"), each = 20),
+  value = rnorm(60)
+)
+
+# Create the boxplot
+plot <- ggplot(data, aes(x = group, y = value, fill = group)) +
+  geom_boxplot()
+
+# Remove color from the legend
+plot <- plot + guides(fill = guide_legend(
+  override.aes = list(
+    fill = "transparent",
+    color = "black",
+    size = 1.5,
+    shape = 21,
+    linetype = 0
+  )
+))
+
+# Display the plot
+print(plot)
+
 ```

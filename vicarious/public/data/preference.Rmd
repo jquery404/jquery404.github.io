@@ -87,33 +87,198 @@ ggsave("out/preference.pdf", final_plot, width = 8, height = 5, dpi = 1000)
 
 
 
+### Lets plot 
+bar plot
+
 ```{r}
 df_melt=read.csv('csv/preference.csv', sep=",")
 
 custom_order <- c("AS", "GS", "MS", "NS")
 custom_order2 <- c("Q6", "Q5", "Q4", "Q3", "Q2", "Q1")
+custom_order <- rev(custom_order)
+custom_order2 <- rev(custom_order2)
 
 df_melt$cond <- factor(df_melt$cond, levels = custom_order)
 df_melt$qus <- factor(df_melt$qus, levels = custom_order2)
 
-# Match colors to conditions
-colors <- coloring[match(df_melt$cond, unique(df_melt$cond))]
+bp <- ggplot(df_melt, aes(x = qus, y = value, fill = cond)) +
+      geom_bar(stat = "identity", position = position_dodge(1.15*dodge), width = 1*dodge, color = "black") +
+      geom_text(aes(label = value), position = position_dodge(width = 1.15*dodge), vjust = -0.5, size = 5) +
+      scale_fill_manual(values = coloring) +
+      theme_bw() +
+      ylim(0, 20) +
+      theme(axis.line = element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.x = element_text(color="black", size=fontsize),
+        axis.text.y = element_text(color="black", size=fontsize),
+        text = element_text(size=fontsize),
+        strip.background = element_blank(),
+        plot.background = element_blank(),
+        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        panel.border = element_blank(),
+        panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        legend.position="bottom",
+        legend.direction = "horizontal",
+        legend.justification = c("center", "top"),
+        legend.key.size = unit(1, "cm"),
+        legend.title=element_blank(),
+        legend.text=element_text(size=fontsize),
+        legend.box.just = "right",
+        legend.box.background = element_blank())
 
-# Create horizontal barplot
-barplot(df_melt$value,
-        horiz = TRUE,
-        names.arg = df_melt$qus,
-        col = colors)
+# Create a table to show on the plot
+my_table <- data.frame(
+  ID = c("Q1", "Q2", "Q3", "Q4", "Q5", "Q6"),
+  Questions = c(
+    "Which condition did you find easiest to use?",
+    "Which condition did you find most helpful for understanding the task environment?",
+    "Which condition did you find most helpful for understanding your partner's instructions?",
+    "Which condition did you find most effective for communicating with your partner?",
+    "Which condition did you find most helpful for completing the task?",
+    "Which condition did you prefer the most?"
+  )
+)
 
-# Add value labels to the barplot
-text(x = df_melt$value + 0.2,  # Adjust the position of the labels
-     y = barplot(df_melt$value, plot = FALSE),
-     labels = df_melt$value,
-     cex = 0.8,
-     pos = 4) 
-  
+my_table_grob <- tableGrob(my_table, cols = NULL, rows=NULL)
+final_plot <- arrangeGrob(bp, my_table_grob, nrow = 2, heights = c(0.8, 0.5))
 
+# Display the plot
+grid.arrange(final_plot)
+
+# saving the final figure
+ggsave("out/preference.pdf", final_plot, width = 8, height = 5, dpi = 1000)
 ```
+VR and AR separate
+
+```{r}
+# Load required packages
+library(ggplot2)
+library(gridExtra)
+library(cowplot)
+library(grid)
+
+df_pref_vr=read.csv('csv/preference_vr.csv', sep=",")
+df_pref_ar=read.csv('csv/preference_ar.csv', sep=",")
+
+custom_order <- c("AS", "GS", "MS", "NS")
+custom_order2 <- c("Q6", "Q5", "Q4", "Q3", "Q2", "Q1")
+custom_order <- rev(custom_order)
+custom_order2 <- rev(custom_order2)
+
+df_pref_vr$cond <- factor(df_melt$cond, levels = custom_order)
+df_pref_vr$qus <- factor(df_melt$qus, levels = custom_order2)
+df_pref_ar$cond <- factor(df_melt$cond, levels = custom_order)
+df_pref_ar$qus <- factor(df_melt$qus, levels = custom_order2)
+
+# Create the first plot
+plotvr <- ggplot(df_pref_vr, aes(x = qus, y = value, fill = cond)) +
+      geom_bar(stat = "identity", position = position_dodge(1.15*dodge), width = 1*dodge, color = "black") +
+      geom_text(aes(label = value), position = position_dodge(width = 1.15*dodge), vjust = -0.5, size = 5) +
+      scale_fill_manual(values = coloring) +
+      theme_bw() +
+      ylim(0, 15) +
+      ylab(NULL) +
+      labs(tag = "remote user") +
+      annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+      theme(axis.line = element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_text(face = "bold", size = fontsize),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(color="black", size=fontsize),
+        text = element_text(size=fontsize),
+        strip.background = element_blank(),
+        plot.background = element_blank(),
+        plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+        plot.tag.position = c(1, .5),
+        plot.margin = unit(c(0.005, .025, .05, 0), "null"),
+        panel.border = element_blank(),
+        panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        legend.position="null",
+        legend.direction = "horizontal",
+        legend.justification = c("center", "top"),
+        legend.key.size = unit(1, "cm"),
+        legend.title=element_blank(),
+        legend.text=element_text(size=fontsize),
+        legend.box.just = "right",
+        legend.box.background = element_blank())
+
+# Create the second plot
+plotar <- ggplot(df_pref_ar, aes(x = qus, y = value, fill = cond)) +
+      geom_bar(stat = "identity", position = position_dodge(1.15*dodge), width = 1*dodge, color = "black") +
+      geom_text(aes(label = value), position = position_dodge(width = 1.15*dodge), vjust = -0.5, size = 5) +
+      scale_fill_manual(values = coloring) +
+      theme_bw() +
+      ylim(0, 15) +
+      ylab(NULL) +
+      labs(tag = "local user") +
+      annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+      theme(
+        axis.title.x=element_blank(),
+        axis.title.y=element_text(face = "bold"),
+        axis.text.x = element_text(color="black", size=fontsize),
+        axis.text.y = element_text(color="black", size=fontsize),
+        text = element_text(size=fontsize),
+        strip.background = element_blank(),
+        plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+        plot.tag.position = c(1, .7),
+        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        panel.border = element_blank(),
+        panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        legend.position="bottom",
+        legend.direction = "horizontal",
+        legend.justification = c("center", "top"),
+        legend.key.size = unit(.8, "cm"),
+        legend.title=element_blank(),
+        legend.text=element_text(size=fontsize),
+        legend.box.just = "right",
+        legend.box.background = element_blank())
+
+# Create a table to show on the plot
+my_table <- data.frame(
+  ID = c("Q1", "Q2", "Q3", "Q4", "Q5", "Q6"),
+  Questions = c(
+    "Which condition did you find easiest to use?",
+    "Which condition did you find most helpful for understanding the task environment?",
+    "Which condition did you find most helpful for understanding your partner's instructions?",
+    "Which condition did you find most effective for communicating with your partner?",
+    "Which condition did you find most helpful for completing the task?",
+    "Which condition did you prefer the most?"
+  )
+)
+
+mytheme <- gridExtra::ttheme_default(
+    core = list(fg_params=list(cex = 1.2)),
+    colhead = list(fg_params=list(cex = 1.0)),
+    rowhead = list(fg_params=list(cex = 1.0)))
+
+my_table_grob <- gridExtra::tableGrob(my_table, cols = NULL, rows=NULL, theme = mytheme)
+for (i in 1:6) {
+  my_table_grob$grobs[i][[1]][["gp"]] <- gpar(fontsize=15) #$, fontface="normal"
+}
+grid.draw(my_table_grob)
+
+# my_table_grob <- tableGrob(my_table, cols = NULL, rows=NULL)
+
+final_plot <- arrangeGrob(plotvr, plotar, my_table_grob, nrow = 3, heights = c(.3, .4, .3))
+# plot_grid(plotvr, plotar, my_table_grob, finalalign = "v", nrow = 3, rel_heights = c(1/2, 1/2, 1/6))
+
+# Display the plot
+grid.arrange(final_plot)
+ggsave("out/preference1.pdf", final_plot, width = 8, height = 6, dpi = 1000)
+```
+
+```{r}
+library("MASS")  
+data(crabs)  
+melt_crabs <- melt(crabs,id.var=c("sp","sex","index"))   
+ggplot(melt_crabs, aes(x = variable, y = value)) +   
+  geom_line(aes(group = index), size = 0.05, alpha = 0.7) +   
+  geom_boxplot(aes(fill = sp), alpha = 0.5) + 
+  facet_grid(sex~.)
+```
+
+
 
 ### Chi-square stuffs
 #### Chi-Square Goodness-of-Fit Test: determine if these observed frequencies significantly differ from the expectations. This test compares the observed frequencies to the expected frequencies under the assumption that there is no association between preference and the conditions.
