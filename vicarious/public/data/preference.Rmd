@@ -180,6 +180,7 @@ plotvr <- ggplot(df_pref_vr, aes(x = qus, y = value, fill = cond)) +
       ylim(0, 15) +
       ylab(NULL) +
       labs(tag = "remote user") +
+      geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5,5.5,6.5),color="#F2F2F2")+ 
       annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
       theme(axis.line = element_blank(),
         axis.title.x=element_blank(),
@@ -191,7 +192,9 @@ plotvr <- ggplot(df_pref_vr, aes(x = qus, y = value, fill = cond)) +
         plot.background = element_blank(),
         plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
         plot.tag.position = c(1, .5),
-        plot.margin = unit(c(0.005, .025, .05, 0), "null"),
+        plot.margin = unit(c(0.0, .025, .0, 0), "null"),
+        panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_blank(),
         panel.border = element_blank(),
         panel.spacing = unit(c(0, 0, 0, 0), "null"),
         legend.position="null",
@@ -212,6 +215,7 @@ plotar <- ggplot(df_pref_ar, aes(x = qus, y = value, fill = cond)) +
       ylim(0, 15) +
       ylab(NULL) +
       labs(tag = "local user") +
+      geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5,5.5,6.5),color="#F2F2F2")+ 
       annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
       theme(
         axis.title.x=element_blank(),
@@ -222,8 +226,10 @@ plotar <- ggplot(df_pref_ar, aes(x = qus, y = value, fill = cond)) +
         strip.background = element_blank(),
         plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
         plot.tag.position = c(1, .7),
-        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        plot.margin = unit(c(0.0, .025, 0, 0), "null"),
         panel.border = element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_blank(),
         panel.spacing = unit(c(0, 0, 0, 0), "null"),
         legend.position="bottom",
         legend.direction = "horizontal",
@@ -362,6 +368,10 @@ print_chi_test("Q6", test_results)
 #### Chi-Square Test of Independence: investigate if there is an association between user roles (VR, AR) and viewpoint condition types (NS, MS, GS, AS). We want to determine if there is a significant relationship between user roles and viewpoint types in preference.
   - H0: user role and viewpoint condition type are independent (no association).
   - HA: user role and viewpoint condition type are not independent (there is an association).
+
+```{r}
+# TODO
+```
 
 
 ```{r}
