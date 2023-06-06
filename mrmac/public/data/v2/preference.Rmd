@@ -61,7 +61,7 @@ p <- ggplot(data, aes(x = conditions, y = score, fill = rank)) +
 p <- p + geom_text(aes(label = score), position = position_stack(vjust = 0.5), color = "black", size = 4)
 
 # Add facet grid
-p <- p + facet_grid(vars(qus), vars(cyl),switch = "y") + xlab("Preference questions") + ylab(NULL) + 
+p <- p + facet_grid(vars(qus), switch = "y") + xlab("Preference questions") + ylab(NULL) + 
   theme(strip.placement = "outside",
         strip.background = element_rect(fill="#D9D9D9", color = '#464646'))
 
@@ -98,9 +98,12 @@ p
 # saving the final figure
 ggsave("out/preference.pdf", width = 7, height = 4, dpi = 1000)
 ```
-## Adding different annotation to each facet in ggplot
+## Rank plot for percondition with AR and VR
+
+
 
 ```{r}
+
 data=read.csv('csv/preference.ar.vr.csv', sep=",")
 qus_order <- c("Q1", "Q2", "Q3", "Q4","Q5","Q6")
 rank_order <- c("Rank3", "Rank2", "Rank1")
@@ -108,18 +111,128 @@ coloring <- c("#4FA490", "#F8D85E","#E76469")
 data$qus <- factor(data$qus, levels = qus_order)
 data$rank <- factor(data$rank, levels = rank_order)
 
-cp <- function(df) {
+
+cp <- function(data, title, leg_pos) {
+  p <- ggplot(data, aes(x = role, y = score, fill = rank)) + 
+  geom_bar(stat = 'identity', position = 'stack', width = 0.75) + 
+  ggtitle(title) +
+  coord_flip() +
+  theme_bw()
+
+# Add labels to bars
+p <- p + geom_text(aes(label = score), position = position_stack(vjust = 0.5), color = "black", size = 3)
+
+# Add facet grid
+p <- p + facet_grid(vars(conditions), switch = "y", scales = "free_x", space = "free_x") + ylab(NULL) + 
+  theme(strip.placement = "outside",
+        strip.background = element_rect(fill="#D9D9D9", color = '#464646'))
+
+# Apply the custom colors to the fill color of each factor level
+p <- p + scale_fill_manual(values = coloring, breaks = rev(rank_order)) 
+
+
+# Add theme elements
+p <- p + theme(
+    plot.title = element_text(color = "black", size = 8, hjust = 0.5, margin = margin(b = 1)),
+    plot.margin = margin(0, 0.25, 0.1, 0, unit = "cm"),
+    strip.text.y = element_text(face = "bold"),
+    strip.placement = "outside",
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    axis.text = element_text(size = 8),
+    legend.position = "none",
+    panel.grid.major.y = element_blank())
+
+# Show the plot
+p
+}
+
+
+df_q1 <- data[data$qus == 'Q1', ]
+df_q2 <- data[data$qus == 'Q2', ]
+df_q3 <- data[data$qus == 'Q3', ]
+df_q4 <- data[data$qus == 'Q4', ]
+df_q5 <- data[data$qus == 'Q5', ]
+
+# Create boxplots
+a <- cp(df_q1, "Which system did you feel you were \nmore present in the remote space?", "none")
+b <- cp(df_q2, "Which system gave you the strongest \nsense of remote partners' presence?", "none")
+c <- cp(df_q3, "Which system did you find to be the \nmost fun to use?", "none")
+d <- cp(df_q4, "Which condition best supported your \ncollaboration tasks?", "none")
+e <- cp(df_q5, "Which system did you prefer overall?\n", "none")
+
+# 
+final_plot <- grid.arrange(a, b, c, d, e, nrow = 3, ncol = 2)
+
+# saving the final figure
+# saving the final figure
+ggsave("out/preference.pdf", final_plot, width = 8, height =6, dpi = 1000)
+
+
+```
+
+
+
+
+
+```{r}
+
+# Create the data frame
+df <- data.frame(
+  x = c("a", "b"),
+  y = c(1, 2, 3, 2, 3, 4)
+)
+
+# Create the bar chart
+ggplot(df, aes(x, y)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.2), fill = "steelblue") +
+  labs(x = "Group", y = "Values") +
+  ggtitle("Bar Chart of a and b") +
+  theme_minimal()
+
+
+
+
+```
+
+```{r}
+data=read.csv('csv/preference.ar.vr.csv', sep=",")
+qus_order <- c("Q1", "Q2", "Q3", "Q4","Q5","Q6")
+rank_order <- c("Rank3", "Rank2", "Rank1")
+coloring <- c("#E76469", "#F8D85E","#EDA645","#D1B0B3","#8C99A6","#ADD299","#4FA490","#3B7F9F")
+data$qus <- factor(data$qus, levels = qus_order)
+data$rank <- factor(data$rank, levels = rank_order)
+
+cp <- function(df, title, leg_pos) {
 # Create the ggplot object and specify data and aesthetics mapping
 p <- ggplot(df, aes(x = role, y = score, fill = rank))
 
 # Add the stacked bar chart layer
-p <- p + geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ conditions)
+p <- p + geom_bar(stat = 'identity', position = 'stack') 
+
+# Add text labels on the bars
+p <- p + geom_text(aes(y = score, label = score),
+                   position = position_stack(vjust = .5),
+                   color = "black", size = 3)
+
+p <- p + facet_grid(~ conditions, switch = "y")
+
+# Apply the custom colors to the fill color of each factor level
+p <- p + scale_fill_manual(values = coloring, breaks = rev(rank_order))
 
 # Customize the chart appearance
-p <- p + xlab("Category") + ylab("Value") + ggtitle("Stacked Bar Chart") + theme_bw() + theme(legend.position="null", axis.line = element_blank(),
-      axis.title.y=element_blank(),
-      axis.text.x = element_blank(),
-      axis.text.y = element_blank(),axis.ticks = element_blank())
+p <- p + xlab("Category") + ylab("Value") + ggtitle(title) + theme_bw() + 
+  theme(
+    strip.placement = "outside",
+    strip.background = element_rect(fill="#D9D9D9", color = '#464646'),
+    strip.text.y.left = element_text(angle = 0),
+    legend.position=leg_pos, 
+    plot.title = element_text(size = 10),
+    axis.line = element_blank(),
+    axis.title.y=element_blank(),
+    axis.title.x= element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks = element_blank())
 }
 
 df_q1 <- data[data$qus == 'Q1', ]
@@ -129,17 +242,18 @@ df_q4 <- data[data$qus == 'Q4', ]
 df_q5 <- data[data$qus == 'Q5', ]
 
 # Create boxplots
-a <- cp(df_q1)
-b <- cp(df_q2)
-c <- cp(df_q3)
-d <- cp(df_q4)
-e <- cp(df_q5)
-t <- ggplot() + theme_void()
+a <- cp(df_q1, "Which system did you feel you were \nmore present in the remote space?", "none")
+# b <- cp(df_q2, "Which system gave you the strongest \nsense of remote partners' presence?", "none")
+# c <- cp(df_q3, "Which system did you find to be the \nmost fun to use?", "none")
+# d <- cp(df_q4, "Which condition best supported your \ncollaboration tasks?", "none")
+# e <- cp(df_q5, "Which system did you prefer overall?", "none")
+a
 
-final_plot <- grid.arrange(a, b, c, d, e, t, nrow = 2, ncol = 3)
-grid.arrange(final_plot)
+# 
+# final_plot <- grid.arrange(a, b, c, d, e, t, nrow = 2, ncol = 3)
+# grid.arrange(final_plot)
 # saving the final figure
-ggsave("out/preference.pdf", final_plot, width = 7, height = 4, dpi = 1000)
+ggsave("out/preference.pdf", final_plot, width = 8, height = 6, dpi = 1000)
 ```
 
 
