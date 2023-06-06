@@ -158,6 +158,44 @@ library(gridExtra)
 library(cowplot)
 library(grid)
 
+custom_barplot <- function(df, tag, dodge, fontsize, coloring) {
+  ggplot(df, aes(x = qus, y = value, fill = cond)) +
+  geom_bar(stat = "identity", position = position_dodge(1.15*dodge), width = 1*dodge, color = "black") +
+  geom_text(aes(label = value), position = position_dodge(width = 1.15*dodge), vjust = -0.5, size = 5) +
+  scale_fill_manual(values = coloring) +
+  ylim(0, 15) +
+  ylab(NULL) +
+  labs(tag = tag) +
+  geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5,5.5,6.5),color="#F2F2F2")+ 
+  annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+  theme_bw() +
+  theme(
+    axis.line = element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_text(face = "bold", size = fontsize),
+    axis.text.x = element_blank(),
+    axis.text.y = element_text(color="black", size=fontsize),
+    text = element_text(size=fontsize),
+    strip.background = element_blank(),
+    plot.background = element_blank(),
+    plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+    plot.tag.position = c(1, .5),
+    plot.margin = unit(c(0.0, .025, .0, 0), "null"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    panel.border = element_blank(),
+    panel.spacing = unit(c(0, 0, 0, 0), "null"),
+    legend.position="null",
+    legend.direction = "horizontal",
+    legend.justification = c("center", "top"),
+    legend.key.size = unit(1, "cm"),
+    legend.title=element_blank(),
+    legend.text=element_text(size=fontsize),
+    legend.box.just = "right",
+    legend.box.background = element_blank()
+  )
+}
+
 df_pref_vr=read.csv('csv/preference_vr.csv', sep=",")
 df_pref_ar=read.csv('csv/preference_ar.csv', sep=",")
 
@@ -172,73 +210,16 @@ df_pref_ar$cond <- factor(df_melt$cond, levels = custom_order)
 df_pref_ar$qus <- factor(df_melt$qus, levels = custom_order2)
 
 # Create the first plot
-plotvr <- ggplot(df_pref_vr, aes(x = qus, y = value, fill = cond)) +
-      geom_bar(stat = "identity", position = position_dodge(1.15*dodge), width = 1*dodge, color = "black") +
-      geom_text(aes(label = value), position = position_dodge(width = 1.15*dodge), vjust = -0.5, size = 5) +
-      scale_fill_manual(values = coloring) +
-      theme_bw() +
-      ylim(0, 15) +
-      ylab(NULL) +
-      labs(tag = "remote user") +
-      geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5,5.5,6.5),color="#F2F2F2")+ 
-      annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
-      theme(axis.line = element_blank(),
-        axis.title.x=element_blank(),
-        axis.title.y=element_text(face = "bold", size = fontsize),
-        axis.text.x = element_blank(),
-        axis.text.y = element_text(color="black", size=fontsize),
-        text = element_text(size=fontsize),
-        strip.background = element_blank(),
-        plot.background = element_blank(),
-        plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
-        plot.tag.position = c(1, .5),
-        plot.margin = unit(c(0.0, .025, .0, 0), "null"),
-        panel.grid.major.x = element_blank(),
-        panel.grid.major.y = element_blank(),
-        panel.border = element_blank(),
-        panel.spacing = unit(c(0, 0, 0, 0), "null"),
-        legend.position="null",
-        legend.direction = "horizontal",
-        legend.justification = c("center", "top"),
-        legend.key.size = unit(1, "cm"),
-        legend.title=element_blank(),
-        legend.text=element_text(size=fontsize),
-        legend.box.just = "right",
-        legend.box.background = element_blank())
+plotvr <- custom_barplot(df_pref_vr, "remote user", dodge, fontsize, coloring)
 
 # Create the second plot
-plotar <- ggplot(df_pref_ar, aes(x = qus, y = value, fill = cond)) +
-      geom_bar(stat = "identity", position = position_dodge(1.15*dodge), width = 1*dodge, color = "black") +
-      geom_text(aes(label = value), position = position_dodge(width = 1.15*dodge), vjust = -0.5, size = 5) +
-      scale_fill_manual(values = coloring) +
-      theme_bw() +
-      ylim(0, 15) +
-      ylab(NULL) +
-      labs(tag = "local user") +
-      geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5,5.5,6.5),color="#F2F2F2")+ 
-      annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
-      theme(
-        axis.title.x=element_blank(),
-        axis.title.y=element_text(face = "bold"),
-        axis.text.x = element_text(color="black", size=fontsize),
-        axis.text.y = element_text(color="black", size=fontsize),
-        text = element_text(size=fontsize),
-        strip.background = element_blank(),
-        plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
-        plot.tag.position = c(1, .7),
-        plot.margin = unit(c(0.0, .025, 0, 0), "null"),
-        panel.border = element_blank(),
-        panel.grid.major.x = element_blank(),
-        panel.grid.major.y = element_blank(),
-        panel.spacing = unit(c(0, 0, 0, 0), "null"),
-        legend.position="bottom",
-        legend.direction = "horizontal",
-        legend.justification = c("center", "top"),
-        legend.key.size = unit(.8, "cm"),
-        legend.title=element_blank(),
-        legend.text=element_text(size=fontsize),
-        legend.box.just = "right",
-        legend.box.background = element_blank())
+plotar <- custom_barplot(df_pref_ar, "local user", dodge, fontsize, coloring) +
+          theme(
+            plot.tag.position = c(1, .7),
+            axis.title.x=element_blank(),
+            axis.text.x = element_text(color="black", size=fontsize),
+            legend.position="bottom"
+          )
 
 # Create a table to show on the plot
 my_table <- data.frame(

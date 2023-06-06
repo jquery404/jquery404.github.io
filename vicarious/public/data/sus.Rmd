@@ -65,26 +65,6 @@ print(paste("ar_ns:", interpret_normality(sh_ar_ns$p.value), "W:", sh_ar_ns$stat
 # balance 
 table(df$role, df$conditions)
 
-
-# qq plot, histogram
-# qqnorm(vr_as$sus_score)
-# qqline(vr_as$sus_score)
-# qqnorm(vr_gs$sus_score)
-# qqline(vr_gs$sus_score)
-# qqnorm(vr_ms$sus_score)
-# qqline(vr_ms$sus_score)
-# qqnorm(vr_ns$sus_score)
-# qqline(vr_ns$sus_score)
-# qqnorm(ar_as$sus_score)
-# qqline(ar_as$sus_score)
-# qqnorm(ar_gs$sus_score)
-# qqline(ar_gs$sus_score)
-# qqnorm(ar_ms$sus_score)
-# qqline(ar_ms$sus_score)
-# qqnorm(ar_ns$sus_score)
-# qqline(ar_ns$sus_score)
-
-
 hist(df$sus_score)
 ```
 
@@ -143,23 +123,6 @@ posthoc$contrasts
 emmip(model, vr_ar~conditions, CIs = TRUE)
 ```
 
-```{r}
-model <- aov_4(sus_score ~ conditions*vr_ar + (conditions|participant), type= 3, data = df)
-summary(model)
-
-print('# Perform repeated measures ANOVA with nice()')
-modelnice <- nice(model, intercept = TRUE, correction = "GG")
-print(modelnice)  # ges: generalized eta-squared, measure of effect size indicating the proportion of variance explained by the independent variable.
-
-print('# Posthoc')
-posthoc <- emmeans(model, specs = pairwise ~ conditions*vr_ar, model = "multivariate", adjust = "tukey") # tukey/bonferroni
-posthoc$emmeans
-posthoc$contrasts
-
-
-emmip(model, vr_ar~conditions, CIs = TRUE)
-```
-
 
 Extract residual/predicted values
 ```{r}
@@ -184,19 +147,23 @@ df=read.csv('csv/sus.csv', sep=",")
 condition_order <- c("NS", "MS", "GS", "AS")
 df$conditions <- factor(df$conditions, levels = condition_order)
 
-# stat.test <- df %>% 
-#   t_test(sus_score~conditions, p.adjust.method = 'bonferroni') %>%
-#   add_significance("p") %>%
-#   add_xy_position(x = "conditions")
+x_order <- c("VR", "AR")
+df$role <- factor(df$role, levels = x_order)
+
+stats <- df %>%
+  group_by(role) %>%
+  wilcox_test(sus_score~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>%
+  add_xy_position(x = "params")
 
 tukey <- df %>% 
-  tukey_hsd(sus_score ~ conditions) %>% 
+  tukey_hsd(sus_score ~ role) %>% 
   add_significance() %>% 
   add_xy_position()
 
-bxp <- ggplot(df, aes(x = conditions, y = sus_score)) + 
+bxp <- ggplot(df, aes(x = role, y = sus_score)) + 
   stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.2, position = position_dodge(dodge)) +
-  geom_boxplot(aes(fill = conditions), width = dodge/2, coef = 0, outlier.alpha = 0, show.legend = F) +
+  geom_boxplot(aes(fill = conditions), width = dodge, coef = 0, outlier.alpha = 0, show.legend = F) +
   stat_summary(aes(fill = conditions), fun.y = mean, 
                geom= "point", shape = 4, size = 5, colour= "black", 
                position = position_dodge(width = dodge)) +
@@ -204,14 +171,13 @@ bxp <- ggplot(df, aes(x = conditions, y = sus_score)) +
                geom = "crossbar", fatten = .1, width = .4*dodge, color = "black",
                position = position_dodge(width = dodge)) +
   labs(x = NULL, y = NULL) + 
-  theme_bw()
-
-bxp + 
-  # stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02) + 
-  stat_pvalue_manual(tukey, hide.ns = T) +
   scale_fill_manual(name= "conditions", values = coloring) +
   scale_color_manual(name = "conditions", values = coloring) +
-  scale_y_continuous(minor_breaks = seq(0, 115, 20), breaks = seq(0, 115, by=20), limits=c(0, 115)) +
+  stat_pvalue_manual(stats, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) +
+  scale_y_continuous(minor_breaks = seq(0, 115, 20), breaks = seq(0, 100, by=20), limits=c(0, 100)) +
+  annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+  geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5),color="#F2F2F2")+ 
+  theme_bw() + 
   theme(
     axis.line = element_blank(),
     axis.title.x=element_blank(),
@@ -224,11 +190,12 @@ bxp +
     plot.margin = unit(c(0.005, .025, 0, 0), "null"),
     panel.border = element_blank(),
     panel.spacing = unit(c(0, 0, 0, 0), "null"),
+    panel.grid.major.x = element_blank(),
     legend.key = element_blank(),
     legend.key.size = unit(1, "cm"),
     legend.key.height = unit(1.5, 'cm'), 
     legend.key.width = unit(1, 'cm'), 
-    legend.position="bottom",
+    legend.position="none",
     legend.direction = "horizontal",
     legend.justification = c("center", "top"),
     legend.title=element_blank(),
@@ -237,6 +204,8 @@ bxp +
     legend.box.background = element_blank()
   ) + 
   guides(fill = guide_legend(override.aes = list(color = "transparent")))
+
+bxp
 # saving the final figure
 ggsave("out/sus.pdf", width = 6, height = 4, dpi = 1000)
 
@@ -299,14 +268,14 @@ VR--AR
 ```{r}
 custom_boxplot <- function(df, dodge, fontsize, coloring, tag) {
   ggplot(df, aes(x = conditions, y = sus_score)) + 
-    stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.1, position = position_dodge(dodge/4)) +
-    geom_boxplot(aes(fill = conditions), width = dodge/4, coef = 0, outlier.alpha = 0, show.legend = F) +
+    stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.2, position = position_dodge(dodge)) +
+    geom_boxplot(aes(fill = conditions), width = dodge, coef = 0, outlier.alpha = 0, show.legend = F) +
     stat_summary(aes(fill = conditions), fun.y = mean, 
                  geom= "point", shape = 4, size = 3, colour= "black", 
                  position = position_dodge(width = dodge)) +
     stat_summary(aes(fill = conditions), fun = median,
-                 geom = "crossbar", fatten = .1, width = dodge/4, color = "black",
-                 position = position_dodge(width = dodge/4)) +
+                 geom = "crossbar", fatten = .1, width = dodge, color = "black",
+                 position = position_dodge(width = dodge)) +
     labs(x = NULL, y = NULL) + 
     theme_bw() + 
     stat_pvalue_manual(tukey, hide.ns = T) +
@@ -325,7 +294,7 @@ custom_boxplot <- function(df, dodge, fontsize, coloring, tag) {
       text = element_text(size=fontsize),
       strip.background = element_blank(),
       plot.background = element_blank(),
-      plot.margin = unit(c(0.005, .045, 0, 0), "null"),
+      plot.margin = unit(c(0.005, .05, 0, 0), "null"),
       panel.border = element_blank(),
       plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
       plot.tag.position = c(1, .5),
@@ -334,7 +303,7 @@ custom_boxplot <- function(df, dodge, fontsize, coloring, tag) {
       legend.key.size = unit(.5, "cm"),
       legend.key.height = unit(1, 'cm'), 
       legend.key.width = unit(.75, 'cm'), 
-      legend.position="bottom",
+      legend.position="none",
       legend.direction = "horizontal",
       legend.justification = c("center", "top"),
       legend.title=element_blank(),
@@ -368,20 +337,17 @@ tukey <- df %>%
 bxp_vr <- custom_boxplot(df_vr, dodge, fontsize, coloring, "remote user") + 
   theme(
     axis.text.x = element_blank(),
-    legend.position="none",
-    plot.margin = unit(c(0.005, .045, 0.05, 0), "null"),
+    plot.margin = unit(c(0.005, .05, 0.05, 0), "null"),
     plot.tag.position = c(1, .5),
   ) 
 
 bxp_ar <- custom_boxplot(df_ar, dodge, fontsize, coloring, "local user") + 
-    theme(
-      plot.tag.position = c(1, .7),
-    ) +
+    theme(plot.tag.position = c(1, .6)) +
     guides(fill = guide_legend(override.aes = list(color = "transparent")))
 
 
-final_plot <- arrangeGrob(bxp_vr, bxp_ar, nrow = 2, heights = c(.4, .6))
+final_plot <- arrangeGrob(bxp_vr, bxp_ar, nrow = 2, heights = c(.45, .55))
 grid.arrange(final_plot)
 # saving the final figure
-ggsave("out/sus.pdf", final_plot, width = 6, height = 4, dpi = 1000)
+ggsave("out/sus.pdf", final_plot, width = 3.5, height = 6, dpi = 1000)
 ```

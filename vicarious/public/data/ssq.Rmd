@@ -106,7 +106,7 @@ p <- ggplot(df_grouped, aes(x = conditions, y = Mean, color = conditions)) +
   #   aes(x = questions, xend = questions, y = Q1, yend = Q3), color = "#000000", size = 6
   # ) +
   geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.2, size = 1) +
-  geom_point(size = 3) +
+  geom_point(lin = 3) +
   geom_segment(
     data = df_ns, 
     aes(x = "NS-pre", y = Mean[questions == "NS-pre"], 
@@ -182,7 +182,7 @@ gs_post_median <- means$total[means$conditions == "GS-post"]
 
 ggplot(data = df, mapping = aes(x = conditions, y = total, fill = conditions, color = conditions)) +
   stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.2, position = position_dodge(dodge)) +
-  geom_boxplot(aes(fill = conditions), width = dodge/2, coef = 0, outlier.alpha = 1, show.legend = F) +
+  geom_boxplot(aes(fill = conditions), width = dodge/2, coef = 0, outlier.alpha = 0, show.legend = F) +
   stat_summary(fun.data = mean_cl_normal, geom = "errorbar", aes(color = conditions), width = 0.2, size = .75) + 
   # stat_summary(fun = median, geom = "point", shape = 4, size = 3, color = "black") +
   # geom_boxplot(aes(color = conditions), width = 0.5, outlier.alpha = 0, show.legend = F) +
@@ -367,6 +367,45 @@ df=read.csv('csv/ssq.csv', sep=",")
 custom_order <- c("NS-pre", "NS-post", "MS-pre", "MS-post", "GS-pre", "GS-post", "AS-pre", "AS-post")
 df$conditions <- factor(df$conditions, levels = custom_order)
 
+custom_boxplot <- function(df, dodge, fontsize, coloring, tag) {
+  ggplot(df, aes(x = conditions)) +
+      # geom_segment(aes(x = conditions, xend = conditions, y = Min, yend = Max), color = "black", size = .5) +
+      # geom_segment(aes(x = conditions, xend = conditions, y = Q1, yend = Q3, color = conditions), size = 8) +
+      geom_point(aes(y = Median, color = "Median"), shape = "-", size = 1) +
+      geom_point(aes(y = Mean, color = conditions), shape = 16, size = 3) +
+      geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper, color = conditions), width = 0.2, size = .5) +
+      
+      geom_segment(aes(x = conditions[1], xend = conditions[2], y = Mean[1], yend = Mean[2]), 
+                   color = "#98601F", size = 1) +
+      geom_segment(aes(x = conditions[3], xend = conditions[4], y = Mean[3], yend = Mean[4]), 
+                   color = "#C3A77A", size = 1) +
+      geom_segment(aes(x = conditions[5], xend = conditions[6], y = Mean[5], yend = Mean[6]), 
+                   color = "#4FA8BA", size = 1) +
+      geom_segment(aes(x = conditions[7], xend = conditions[8], y = Mean[7], yend = Mean[8]), 
+                   color = "#222E31", size = 1) +
+      scale_color_manual(name = "conditions", values = condition_fills) + 
+      scale_fill_manual(name = "conditions", values = condition_fills) + 
+      scale_y_continuous(minor_breaks = seq(0, 8, 2), breaks = seq(0, 8, by=2), limits=c(0, 8)) +
+      annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+      labs(tag = tag) +
+      theme_bw() + 
+      theme(
+        axis.line = element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(color="black", size=fontsize),
+        text = element_text(size=fontsize),
+        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+        plot.tag.position = c(1, .5),
+        panel.border = element_blank(),
+        panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        legend.position = "none"
+      )
+}
+
+
 ### VR
 df_vr_grp <- df %>%
   filter(role == 'VR') %>%
@@ -382,7 +421,7 @@ df_vr_grp <- df %>%
     ci_upper = t.test(total)$conf.int[2]
   )
 
-### VR
+### AR
 df_ar_grp <- df %>%
   filter(role == 'AR') %>%
   group_by(conditions) %>%
@@ -398,69 +437,16 @@ df_ar_grp <- df %>%
   )
 
 
-plotvr <- ggplot(df_vr_grp, aes(x = conditions)) +
-    # geom_segment(aes(x = conditions, xend = conditions, y = Min, yend = Max), color = "black", size = .5) +
-    # geom_segment(aes(x = conditions, xend = conditions, y = Q1, yend = Q3, color = conditions), size = 8) +
-    geom_point(aes(y = Median, color = "Median"), shape = "-", size = 1) +
-    geom_point(aes(y = Mean, color = conditions), shape = 16, size = 3) +
-    geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper, color = conditions), width = 0.2, size = .5) +
-    
-    geom_segment(aes(x = conditions[1], xend = conditions[2], y = Mean[1], yend = Mean[2]), color = "#98601F", size = 1) +
-    geom_segment(aes(x = conditions[3], xend = conditions[4], y = Mean[3], yend = Mean[4]), color = "#C3A77A", size = 1) +
-    geom_segment(aes(x = conditions[5], xend = conditions[6], y = Mean[5], yend = Mean[6]), color = "#4FA8BA", size = 1) +
-    geom_segment(aes(x = conditions[7], xend = conditions[8], y = Mean[7], yend = Mean[8]), color = "#222E31", size = 1) +
-    scale_color_manual(name = "conditions", values = condition_fills) + 
-    scale_fill_manual(name = "conditions", values = condition_fills) + 
-    theme_bw() + 
-    ylim(0, 8) +
-    labs(tag = "remote user") +
-    theme(
-      axis.line = element_blank(),
-      axis.title.x=element_blank(),
-      axis.title.y=element_blank(),
-      axis.text.x = element_blank(),
-      axis.text.y = element_text(color="black", size=fontsize),
-      text = element_text(size=fontsize),
-      plot.margin = unit(c(0.005, .025, 0, 0), "null"),
-      plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
-      plot.tag.position = c(1, .5),
-      panel.spacing = unit(c(0, 0, 0, 0), "null"),
-      legend.position = "none"
-    )
+plotvr <- custom_boxplot(df_vr_grp, dodge, fontsize, coloring, "remote user")
 
-# print(df_vr_grp)
-# print(df_ar_grp)
-
-plotar <- ggplot(df_ar_grp, aes(x = conditions)) +
-  # geom_segment(aes(x = conditions, xend = conditions, y = Min, yend = Max), color = "black", size = .5) +
-  # geom_segment(aes(x = conditions, xend = conditions, y = Q1, yend = Q3, color = conditions), size = 8) +
-  geom_point(aes(y = Median, color = "Median"), shape = "-", size = 1) +
-  geom_point(aes(y = Mean, color = conditions), shape = 16, size = 3) +
-  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper, color = conditions), width = 0.2, size = .5) +
-  
-  geom_segment(aes(x = conditions[1], xend = conditions[2], y = Mean[1], yend = Mean[2]), color = "#98601F", size = 1) +
-  geom_segment(aes(x = conditions[3], xend = conditions[4], y = Mean[3], yend = Mean[4]), color = "#C3A77A", size = 1) +
-  geom_segment(aes(x = conditions[5], xend = conditions[6], y = Mean[5], yend = Mean[6]), color = "#4FA8BA", size = 1) +
-  geom_segment(aes(x = conditions[7], xend = conditions[8], y = Mean[7], yend = Mean[8]), color = "#222E31", size = 1) +
-  scale_color_manual(name = "conditions", values = condition_fills) + 
-  scale_fill_manual(name = "conditions", values = condition_fills) + 
-  theme_bw() + 
-  ylim(0, 8) +
-  labs(tag = "local user") +
-  annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+plotar <- custom_boxplot(df_vr_grp, dodge, fontsize, coloring, "local user") +
   theme(
-    axis.line = element_blank(),
+    plot.tag.position = c(1, .6),
     axis.title.x=element_blank(),
-    axis.title.y=element_blank(),
     axis.text.x = element_text(color="black", size=fontsize),
-    axis.text.y = element_text(color="black", size=fontsize),
-    text = element_text(size=fontsize),
-    plot.margin = unit(c(0.005, .025, 0, 0), "null"),
-    plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
-    plot.tag.position = c(1, .5),
-    panel.spacing = unit(c(0, 0, 0, 0), "null"),
-    legend.position = "none"
-  )
+    plot.margin = unit(c(0.0, .025, .01, 0), "null")
+  ) +
+  guides(fill = guide_legend(override.aes = list(color = "transparent")))
 
 final_plot <- arrangeGrob(plotvr, plotar, nrow = 2, heights = c(.4, .5))
 grid.arrange(final_plot)
@@ -469,5 +455,92 @@ grid.arrange(final_plot)
 ggsave("out/ssq.pdf", final_plot, width = 8, height = 4, dpi = 1000)
 ```
 
+```{r}
 
+df=read.csv('csv/ssq.csv', sep=",")
+custom_order <- c("NS-pre", "NS-post", "MS-pre", "MS-post", "GS-pre", "GS-post", "AS-pre", "AS-post")
+df$conditions <- factor(df$conditions, levels = custom_order)
+
+custom_boxplot <- function(df, means, dodge, fontsize, coloring, tag) {
+  ggplot(df, aes(x = conditions, y = total, fill = conditions)) +
+  stat_boxplot(aes(color = conditions), 
+               geom = "errorbar", width = 0.1, position = position_dodge(dodge)) +
+  geom_boxplot(width = .45*dodge, coef = 0, outlier.alpha = 0, show.legend = F) +
+  
+  stat_summary(fun.data = "mean_sdl", fun.args = list(mult = 1), geom = "errorbar", width = 0.2) +
+  
+  geom_segment(aes(x = means$conditions[1], xend = means$conditions[2], 
+                   y = means$mean_value[1], yend = means$mean_value[2]), 
+                   color = "#98601F", size = 1) +
+  geom_segment(aes(x = means$conditions[3], xend = means$conditions[4], 
+                   y = means$mean_value[3], yend = means$mean_value[4]), 
+                   color = "#C3A77A", size = 1) +
+  geom_segment(aes(x = means$conditions[5], xend = means$conditions[6], 
+                   y = means$mean_value[5], yend = means$mean_value[6]), 
+                   color = "#4FA8BA", size = 1) +
+  geom_segment(aes(x = means$conditions[7], xend = means$conditions[8], 
+                   y = means$mean_value[7], yend = means$mean_value[8]), 
+                   color = "#222E31", size = 1) +
+  
+  geom_point(stat = "summary", fun = "mean", color = "black") +
+  labs(tag = tag) +
+  scale_fill_manual(values = coloring) +
+  annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+  theme_bw() + 
+      theme(
+        axis.line = element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(color="black", size=fontsize),
+        text = element_text(size=fontsize),
+        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+        plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+        plot.tag.position = c(1, .5),
+        panel.border = element_blank(),
+        panel.spacing = unit(c(0, 0, 0, 0), "null"),
+        legend.position = "none"
+      )
+  
+}
+
+
+### VR
+df_vr_grp <- df %>%
+  filter(role == 'VR') %>%
+  group_by(conditions)
+
+means_vr <- df_vr_grp %>%
+  summarize(mean_value = mean(total)) %>%
+  arrange(conditions)
+
+plotvr <- custom_boxplot(df_vr_grp, means_vr, dodge, fontsize, coloring, "remote user")
+
+# ### AR
+df_ar_grp <- df %>%
+  filter(role == 'AR') %>%
+  group_by(conditions)
+
+means_ar <- df_ar_grp %>%
+  summarize(mean_value = mean(total)) %>%
+  arrange(conditions)
+
+plotar <- custom_boxplot(df_ar_grp, means_ar, dodge, fontsize, coloring, "local user") +
+  theme(
+    plot.tag.position = c(1, .6),
+    axis.title.x=element_blank(),
+    axis.text.x = element_text(color="black", size=fontsize),
+    plot.margin = unit(c(0.0, .025, .01, 0), "null")
+  ) +
+  guides(fill = guide_legend(override.aes = list(color = "transparent")))
+
+final_plot <- arrangeGrob(plotvr, plotar, nrow = 2, heights = c(.4, .5))
+grid.arrange(final_plot)
+
+# saving the final figure
+ggsave("out/ssq.pdf", final_plot, width = 8, height = 4, dpi = 1000)
+
+
+
+```
 

@@ -1,4 +1,4 @@
-grp,id,params,vrar,conditions,score
+grp,id,params,role,conditions,score
 1,1,General Presence,VR,NS,6
 ,,Spatial Presence,VR,NS,2
 ,,Spatial Presence,VR,NS,6

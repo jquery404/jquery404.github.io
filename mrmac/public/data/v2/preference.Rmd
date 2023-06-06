@@ -43,6 +43,12 @@ p + facet_grid(rows = vars(qus),  switch = "y") + theme(strip.placement = "outsi
 
 ```{r}
 data=read.csv('csv/preference.csv', sep=",")
+qus_order <- c("Q1", "Q2", "Q3", "Q4","Q5","Q6")
+rank_order <- c("Rank3", "Rank2", "Rank1")
+coloring <- c("#4FA490", "#F8D85E","#E76469")
+data$qus <- factor(data$qus, levels = qus_order)
+data$rank <- factor(data$rank, levels = rank_order)
+# "#E76469", "#F8D85E","#EDA645","#4FA490","#3B7F9F"
 
 p <- ggplot(data, aes(x = conditions, y = score, fill = rank)) + 
   geom_bar(stat = 'identity', position = 'stack') + 
@@ -53,20 +59,26 @@ p <- ggplot(data, aes(x = conditions, y = score, fill = rank)) +
 p <- p + geom_text(aes(label = score), position = position_stack(vjust = 0.5), color = "black", size = 4)
 
 # Add facet grid
-p <- p + facet_grid(rows = vars(qus), switch = "y") + 
+p <- p + facet_grid(rows = vars(qus), switch = "y") + xlab("Preference questions") +
   # geom_signif(annotations = "*", y_position = 36.5, xmin="C1", xmax="C2") +
   theme(strip.placement = "outside",
-        strip.background = element_rect(fill="#364651", color = NA))
+        strip.background = element_rect(fill="#D9D9D9", color = '#464646'))
 
 # Apply the custom colors to the fill color of each factor level
-p <- p + scale_fill_manual(values = coloring)
+p <- p + scale_fill_manual(values = coloring, breaks = rev(rank_order))
+
+# Add the significant differences
+p <- p + geom_signif(comparisons = list(c("C1", "C2"), c("C2", "C3")), 
+              annotations = c("*", "**"), 
+              y_position = 36.5, 
+              textsize = 4) 
 
 # Add theme elements
-p <- p + theme(axis.title.x=element_blank(),
-               axis.title.y = element_blank(), 
+p <- p + theme(axis.text.y = element_text(face = "bold", color = "black"),
                plot.margin = unit(c(0, .05, .5, 0), "null"),
                panel.border = element_blank(),
-               strip.text = element_text(face = "bold", color = "white"),
+               strip.text.y = element_text(angle = 180),
+               strip.text = element_text(face = "bold", color = "black"),
                legend.title=element_blank(),
                legend.direction="horizontal",
                legend.position = c(.5,-.05),

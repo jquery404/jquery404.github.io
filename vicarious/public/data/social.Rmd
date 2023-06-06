@@ -6,6 +6,9 @@ output: html_notebook
 library(ggplot2)
 library(ggpubr)
 library(dplyr)
+library(ggplot2)
+library(gridExtra)
+library(grid)
 library(rstatix)
 
 coloring = c("#ffbd67", "#f6dbb8","#94d8e0","#537b7f")
@@ -18,6 +21,78 @@ dodge = .75
 ```{r}
 df=read.csv('csv/social.csv', sep=",")
 
+# Normality assumption
+df %>%
+  group_by(conditions) %>%
+  shapiro_test(score)
+
+ggqqplot(df, "score", facet.by = "conditions")
+
+
+df_ar <- df[df$role == 'AR', ]
+df_vr <- df[df$role == 'VR', ]
+
+# Normality assumption ar
+df_ar %>%
+  group_by(conditions) %>%
+  shapiro_test(score)
+
+ggqqplot(df_ar, "score", facet.by = "conditions")
+
+# Normality assumption vr
+df_vr %>%
+  group_by(conditions) %>%
+  shapiro_test(score)
+
+ggqqplot(df_vr, "score", facet.by = "conditions")
+
+
+with(df, interaction.plot(role, conditions, score)) # interaction plot
+
+boxplot(score~role*conditions, data=df) # boxplot
+
+
+# Create the first boxplot
+plot1 <- ggboxplot(df, x = "conditions", y = "score", add = "jitter") +
+  labs(title = "overall")
+
+# Create the second boxplot
+plot2 <- ggboxplot(df_vr, x = "conditions", y = "score", add = "jitter") +
+  labs(title = "remote")
+
+# Create the third boxplot
+plot3 <- ggboxplot(df_ar, x = "conditions", y = "score", add = "jitter") +
+  labs(title = "local")
+
+# Arrange the plots in a grid
+grid.arrange(plot1, arrangeGrob(plot2,plot3, ncol=2), ncol = 1)
+
+
+# Interpret normality based on p-values
+interpret_normality <- function(p_value) {
+  if (p_value > 0.05) {
+    return("The data follows a normal distribution.")
+  } else {
+    return("The data does not follow a normal distribution.")
+  }
+}
+
+
+```
+
+
+
+
+1. Quick box-plot and avg.
+
+```{r}
+df=read.csv('csv/social.csv', sep=",")
+condition_order <- c("NS", "MS", "GS", "AS")
+df$conditions <- factor(df$conditions, levels = condition_order)
+
+df_ar <- df[df$role == 'AR', ]
+df_vr <- df[df$role == 'VR', ]
+
 # Assuming df is your data frame
 summary_df <- df %>%
   group_by(conditions) %>%
@@ -29,149 +104,478 @@ summary_df <- df %>%
             median = median(score),
             sd = sd(score))
 
-# Print the summary
-print(summary_df)
+boxplot <- ggboxplot(df, x = "conditions", y = "score") +
+  stat_summary(aes(fill = conditions), fun.y = mean, 
+               geom= "point", shape = 4, size = 2, colour= "black", 
+               position = position_dodge(dodge)) +
+  labs(title = "social", x = "conditions", y = "score")
 
-# Subset the data
-vr_as <- subset(df, conditions == "AS" & vrar == "VR")
-vr_gs <- subset(df, conditions == "GS" & vrar == "VR")
-vr_ms <- subset(df, conditions == "MS" & vrar == "VR")
-vr_ns <- subset(df, conditions == "NS" & vrar == "VR")
-ar_as <- subset(df, conditions == "AS" & vrar == "AR")
-ar_gs <- subset(df, conditions == "GS" & vrar == "AR")
-ar_ms <- subset(df, conditions == "MS" & vrar == "AR")
-ar_ns <- subset(df, conditions == "NS" & vrar == "AR")
+table_grob <- tableGrob(summary_df)
+final_plot <- arrangeGrob(boxplot, table_grob, nrow = 2, heights = c(.75, .25))
+grid.arrange(final_plot)
 
-sh_vr_as <- shapiro.test(vr_as$score)
-sh_vr_gs <- shapiro.test(vr_gs$score)
-sh_vr_ms <- shapiro.test(vr_ms$score)
-sh_vr_ns <- shapiro.test(vr_ns$score)
-sh_ar_as <- shapiro.test(ar_as$score)
-sh_ar_gs <- shapiro.test(ar_gs$score)
-sh_ar_ms <- shapiro.test(ar_ms$score)
-sh_ar_ns <- shapiro.test(ar_ns$score)
+# saving the final figure
+ggsave("out/social_arvr.pdf", final_plot, width = 6, height = 5, dpi = 1000)
 
-# Interpret normality based on p-values
-interpret_normality <- function(p_value) {
-  if (p_value > 0.05) {
-    return("The data follows a normal distribution.")
-  } else {
-    return("The data does not follow a normal distribution.")
-  }
+# Assuming df is your data frame
+summary_df <- df_vr %>%
+  group_by(conditions) %>%
+  summarise(min = min(score),
+            lq = quantile(score, 0.25),
+            hq = quantile(score, 0.75),
+            max = max(score),
+            mean = mean(score),
+            median = median(score),
+            sd = sd(score))
+
+boxplot <- ggboxplot(df_vr, x = "conditions", y = "score") +
+  stat_summary(aes(fill = conditions), fun.y = mean, 
+               geom= "point", shape = 4, size = 2, colour= "black", 
+               position = position_dodge(dodge)) +
+  labs(title = "vr", x = "conditions", y = "score")
+
+table_grob <- tableGrob(summary_df)
+final_plot <- arrangeGrob(boxplot, table_grob, nrow = 2, heights = c(.75, .25))
+grid.arrange(final_plot)
+
+# saving the final figure
+ggsave("out/social_vr.pdf", final_plot, width = 6, height = 5, dpi = 1000)
+
+# Assuming df is your data frame
+summary_df <- df_ar %>%
+  group_by(conditions) %>%
+  summarise(min = min(score),
+            lq = quantile(score, 0.25),
+            hq = quantile(score, 0.75),
+            max = max(score),
+            mean = mean(score),
+            median = median(score),
+            sd = sd(score))
+
+boxplot <- ggboxplot(df_ar, x = "conditions", y = "score") +
+  stat_summary(aes(fill = conditions), fun.y = mean, 
+               geom= "point", shape = 4, size = 2, colour= "black", 
+               position = position_dodge(dodge)) +
+  labs(title = "ar", x = "conditions", y = "score")
+
+table_grob <- tableGrob(summary_df)
+final_plot <- arrangeGrob(boxplot, table_grob, nrow = 2, heights = c(.75, .25))
+grid.arrange(final_plot)
+
+# saving the final figure
+ggsave("out/social_ar.pdf", final_plot, width = 6, height = 5, dpi = 1000)
+
+summary_df1 <- df %>%
+  group_by(conditions, params) %>%
+  summarise(min = min(score),
+            lq = quantile(score, 0.25),
+            hq = quantile(score, 0.75),
+            max = max(score),
+            mean = mean(score),
+            median = median(score),
+            sd = sd(score))
+
+summary_df2 <- df_vr %>%
+  group_by(conditions, params) %>%
+  summarise(min = min(score),
+            lq = quantile(score, 0.25),
+            hq = quantile(score, 0.75),
+            max = max(score),
+            mean = mean(score),
+            median = median(score),
+            sd = sd(score))
+
+summary_df3 <- df_ar %>%
+  group_by(conditions, params) %>%
+  summarise(min = min(score),
+            lq = quantile(score, 0.25),
+            hq = quantile(score, 0.75),
+            max = max(score),
+            mean = mean(score),
+            median = median(score),
+            sd = sd(score))
+
+
+ggsave("out/social_sum.pdf", plot = tableGrob(summary_df1), device = "pdf")
+ggsave("out/social_sum_vr.pdf", plot = tableGrob(summary_df2), device = "pdf")
+ggsave("out/social_sum_ar.pdf", plot = tableGrob(summary_df3), device = "pdf")
+```
+
+
+```{r}
+dfs=read.csv('csv/social.csv', sep=",")
+dfss <- as.matrix(dfs)
+# condition_order <- c("NS", "MS", "GS", "AS")
+# dfs$conditions <- factor(dfs$conditions, levels = condition_order)
+# dfs <- dfs %>%
+#   mutate(op = paste(conditions, params, sep = "_"))
+data <- data.frame(
+  Participant = c(1, 1, 1, 1, 2, 2, 2, 2),
+  NS = c(3, 3, 5, 3, 1, 5, 3, 1),
+  MS = c(4, 5, 1, 5, 5, 7, 5, 2),
+  GS = c(3, 6, 3, 2, 7, 7, 5, 4),
+  AS = c(2, 3, 4, 6, 3, 7, 7, 4)
+)
+
+# Load the PMCMRplus package for conducting the Friedman's test
+library(PMCMRplus)
+
+# Perform the Friedman's test
+friedmanTest(data[, -1], groups = data$Participant)
+
+
+# Friedman rank sum test
+#:::::::::::::::::::::::::::::::::::::::::
+df <- data.frame(
+  participant = c(1, 1, 1, 2, 2, 2, 3, 3, 3),
+  conditions = c("Condition1", "Condition2", "Condition3", "Condition1", "Condition2", "Condition3", "Condition1", "Condition2", "Condition3"),
+  score = c(2, 3, 1, 4, 4, 4, 5, 3, 5)
+)
+
+# Perform the Friedman test
+friedman.test(score ~ conditions | participant, data = df)
+
+
+```
+
+
+
+2. one-way ANOVA to compare the means of the scores between the different conditions.
+
+```{r}
+model <- aov_4(score ~ conditions + (conditions|participant), type= 3, data = df)
+summary(model)
+
+print('# Perform repeated measures ANOVA with nice()')
+modelnice <- nice(model, intercept = TRUE, correction = "GG")
+
+print(modelnice) # ges: generalized eta-squared, measure of effect size indicating the proportion of variance explained by the independent variable.
+
+emmip(model, ~conditions, CIs = TRUE)
+
+# Post hoc
+posthoc <- emmeans(model, specs = pairwise ~ conditions, model = "multivariate", adjust = "tukey")
+posthoc$emmeans
+posthoc$contrasts
+```
+
+3. one-way ANOVA to compare the means of the scores between the different conditions and roles.
+
+```{r}
+model <- aov_4(score ~ conditions*role + (conditions|participant), type= 3, data = df)
+summary(model)
+
+print('# Perform repeated measures ANOVA with nice()')
+modelnice <- nice(model, intercept = TRUE, correction = "GG")
+# ges: generalized eta-squared, measure of effect size indicating the proportion of variance explained by the independent variable.
+print(modelnice)
+
+print('# Posthoc')
+posthoc <- emmeans(model, specs = pairwise ~ conditions*role, model = "multivariate", adjust = "tukey") # tukey/bonferroni
+posthoc$emmeans
+posthoc$contrasts
+
+
+emmip(model, role~conditions, CIs = TRUE)
+```
+
+4. Extract residual/predicted values
+
+```{r}
+new_data <- fitted(model, append = TRUE)
+residual_data <- residuals(model, append = TRUE)
+new_data$.residuals <- residual_data$.residuals
+head(new_data, 20)
+
+describe(new_data$.residuals, type=1)
+
+shapiro.test(new_data$.residuals)
+
+resid_auxpanel(residuals=new_data$.residuals, predicted=new_data$.fitted, smoother = TRUE, qqbands=TRUE, 
+               plots=c('resid', 'qq', 'index', 'hist'))
+```
+
+Friedman test and wilcox post hoc function 
+
+```{r}
+
+friedman_calc <- function(df) {
+  dt <- df %>%
+    group_by(conditions) %>%
+    mutate(row_number = row_number()) %>%
+    spread(conditions, score)
+
+  data_matrix <- data.matrix(dt)
+  friedman.test(data_matrix[, 2:5])
 }
 
-# Print interpretation of normality for each subset
-print(paste("vr_as:", interpret_normality(sh_vr_as$p.value), "W:", sh_vr_as$statistic, "p:", sh_vr_as$p.value))
-print(paste("vr_gs:", interpret_normality(sh_vr_gs$p.value), "W:", sh_vr_gs$statistic, "p:", sh_vr_gs$p.value))
-print(paste("vr_ms:", interpret_normality(sh_vr_ms$p.value), "W:", sh_vr_ms$statistic, "p:", sh_vr_ms$p.value))
-print(paste("vr_ns:", interpret_normality(sh_vr_ns$p.value), "W:", sh_vr_ns$statistic, "p:", sh_vr_ns$p.value))
-print(paste("ar_as:", interpret_normality(sh_ar_as$p.value), "W:", sh_ar_as$statistic, "p:", sh_ar_as$p.value))
-print(paste("ar_gs:", interpret_normality(sh_ar_gs$p.value), "W:", sh_ar_gs$statistic, "p:", sh_ar_gs$p.value))
-print(paste("ar_ms:", interpret_normality(sh_ar_ms$p.value), "W:", sh_ar_ms$statistic, "p:", sh_ar_ms$p.value))
-print(paste("ar_ns:", interpret_normality(sh_ar_ns$p.value), "W:", sh_ar_ns$statistic, "p:", sh_ar_ns$p.value))
+wilcox_calc <- function(df) {
+  df %>% wilcox_test (score ~ conditions, paired = TRUE) %>% 
+  adjust_pvalue(method = "holm") %>%
+  add_significance("p.adj")
+}
 
-
-# balance 
-table(df$vrar, df$conditions)
-
-
-# qq plot, histogram
-# qqnorm(vr_as$score)
-# qqline(vr_as$score)
-# qqnorm(vr_gs$score)
-# qqline(vr_gs$score)
-# qqnorm(vr_ms$score)
-# qqline(vr_ms$score)
-# qqnorm(vr_ns$score)
-# qqline(vr_ns$score)
-# qqnorm(ar_as$score)
-# qqline(ar_as$score)
-# qqnorm(ar_gs$score)
-# qqline(ar_gs$score)
-# qqnorm(ar_ms$score)
-# qqline(ar_ms$score)
-# qqnorm(ar_ns$score)
-# qqline(ar_ns$score)
-
-
-hist(df$score)
 ```
 
 
+helper
+
+```{r}
+
+custom_boxplot <- function(df, stats, dodge, fontsize, coloring, tag) {
+    ggplot(df, aes(x = params, y = score)) +
+    stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
+    geom_boxplot(aes(fill = conditions), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
+                 position = position_dodge(1.1*dodge)) +
+    stat_summary(aes(fill = conditions), fun.y = mean,
+                 geom= "point", shape = 4, size = 2, colour= "black",
+                 position = position_dodge(1.1*dodge)) +
+    stat_summary(aes(fill = conditions), fun.y = median, fatten = .1, 
+                 geom = "crossbar", width = 0.8*dodge, color = "black",
+                 position = position_dodge(1.1*dodge)) +
+    stat_pvalue_manual(stats, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) + 
+    scale_fill_manual(name= "conditions", values = coloring) +
+    scale_color_manual(name = "conditions", values = coloring) +
+    geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5),color="#F2F2F2")+ 
+    scale_y_continuous(minor_breaks = seq(1, 9, 1), breaks = seq(1, 7, by=1), limits=c(1, 9)) +
+    annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+    labs(tag = tag) +
+    theme_bw() +
+    theme(
+      axis.line = element_blank(),
+      axis.title.x=element_blank(),
+      axis.title.y=element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(color="black", size=fontsize),
+      text = element_text(size=fontsize),
+      strip.background = element_blank(),
+      plot.background = element_blank(),
+      plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+      plot.tag.position = c(1, .5),
+      plot.margin = unit(c(0.0, .025, .0, 0), "null"),
+      panel.border = element_blank(),
+      panel.spacing = unit(c(0, 0, 0, 0), "null"),
+      panel.grid.major.x = element_blank(),
+      legend.key = element_blank(),
+      legend.key.size = unit(.5, "cm"),
+      legend.key.height = unit(1, 'cm'), 
+      legend.key.width = unit(.75, 'cm'), 
+      legend.position="null",
+      legend.direction = "horizontal",
+      legend.justification = c("center", "top"),
+      legend.title=element_blank(),
+      legend.text=element_text(size=fontsize, margin = margin(r = 5)),
+      legend.margin = margin(0, 0, 0, 0),
+      legend.spacing.x = unit(0.1, "cm"),
+      legend.spacing.y = unit(0, "cm"),
+      legend.box.just = "right",
+      legend.box.background = element_blank()
+    ) 
+}
 
 
-Quick box-plot
+```
+
+Friedman test and wilcox post hoc function 
+
+```{r}
+
+df=read.csv('csv/social.csv', sep=",")
+condition_order <- c("NS", "MS", "GS", "AS")
+df$conditions <- factor(df$conditions, levels = condition_order)
+
+# vr
+vr_be <- df[df$role == 'VR' & df$params == 'Behavioral Engagement', ] # behavioral engagement 
+vr_cp <- df[df$role == 'VR' & df$params == 'Co-presence', ]           # co-presence
+vr_ma <- df[df$role == 'VR' & df$params == 'Mutual Attention', ]      # mutual attention
+vr_mu <- df[df$role == 'VR' & df$params == 'Mutual Understanding', ] # mutual understanding
+
+print("VR----")
+friedman_calc(vr_be[, 5:6])
+friedman_calc(vr_cp[, 5:6])
+friedman_calc(vr_ma[, 5:6])
+friedman_calc(vr_mu[, 5:6])
+
+wilcox_calc(vr_be[, 5:6])
+wilcox_calc(vr_cp[, 5:6])
+wilcox_calc(vr_ma[, 5:6])
+wilcox_calc(vr_mu[, 5:6])
+
+# ar
+ar_be <- df[df$role == 'AR' & df$params == 'Behavioral Engagement', ] # behavioral engagement 
+ar_cp <- df[df$role == 'AR' & df$params == 'Co-presence', ]           # co-presence
+ar_ma <- df[df$role == 'AR' & df$params == 'Mutual Attention', ]      # mutual attention
+ar_mu <- df[df$role == 'AR' & df$params == 'Mutual Understanding', ] # mutual understanding
+
+print("AR----")
+friedman_calc(ar_be[, 5:6])
+friedman_calc(ar_cp[, 5:6])
+friedman_calc(ar_ma[, 5:6])
+friedman_calc(ar_mu[, 5:6])
+
+```
+
 
 ```{r}
 df=read.csv('csv/social.csv', sep=",")
 condition_order <- c("NS", "MS", "GS", "AS")
 df$conditions <- factor(df$conditions, levels = condition_order)
-boxplot(score ~ conditions, data = df, 
-        main = "Boxplot Example",
-        xlab = "Category",
-        ylab = "Value")
-# Calculate mean for each category
-means <- aggregate(score ~ conditions, data = df, mean)
 
-# Add mean points
-points(x = as.numeric(means$conditions), y = means$score, pch = 4)
-```
+df_ar <- df[df$role == 'AR', ]
+df_vr <- df[df$role == 'VR', ]
 
 
-```{r}
-df=read.csv('csv/social.csv', sep=",")
-condition_order <- c("NS", "MS", "GS", "AS")
-df$conditions <- factor(df$conditions, levels = condition_order)
-
-stat.test <- df %>% 
-  group_by(params) %>% 
-  wilcox_test(score~conditions, p.adjust.method = 'BH') %>%
+vr.stat.test <- df_vr %>%
+  group_by(params) %>%
+  wilcox_test(score~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
   add_significance("p") %>%
   add_xy_position(x = "params")
 
-bxp <- ggplot(df, aes(x = params, y = score)) + 
-  stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.2, position = position_dodge(dodge)) +
-  geom_boxplot(aes(fill = conditions), width = dodge, coef = 0, outlier.alpha = 0, show.legend = F) +
-  stat_summary(aes(fill = conditions), fun.y = mean, 
-               geom= "point", shape = 4, size = 2, colour= "black", 
-               position = position_dodge(width = dodge)) +
-  stat_summary(aes(fill = conditions), fun = median,
-               geom = "crossbar", fatten = .1, width = .9*dodge, color = "black",
-               position = position_dodge(width = dodge)) +
-  labs(x = NULL, y = NULL) + 
-  theme_bw()
+ar.stat.test <- df_ar %>%
+  group_by(params) %>%
+  wilcox_test(score~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>%
+  add_xy_position(x = "params")
 
-bxp + stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02) + 
-  scale_fill_manual(name= "conditions", values = coloring) +
-  scale_color_manual(name = "conditions", values = coloring) +
-  scale_y_continuous(minor_breaks = seq(0, 8, 1), breaks = seq(1, 8.1, by=1), limits=c(1, 8.1)) + 
+bxp_vr <- custom_boxplot(df_vr, vr.stat.test, dodge, fontsize, coloring, "remote user")
+
+bxp_ar <- custom_boxplot(df_ar, ar.stat.test, dodge, fontsize, coloring, "local user") +
   theme(
-    axis.line = element_blank(),
+    plot.tag.position = c(1, .6),
     axis.title.x=element_blank(),
-    axis.title.y=element_blank(),
     axis.text.x = element_text(color="black", size=fontsize),
-    axis.text.y = element_text(color="black", size=fontsize),
-    text = element_text(size=fontsize),
-    strip.background = element_blank(),
-    plot.background = element_blank(),
-    plot.margin = unit(c(0.005, .025, 0, 0), "null"),
-    panel.border = element_blank(),
-    panel.spacing = unit(c(0, 0, 0, 0), "null"),
-    legend.position="bottom",
-    legend.direction = "horizontal",
-    legend.justification = c("center", "top"),
-    legend.key = element_blank(),
-    legend.key.size = unit(1, "cm"),
-    legend.key.height = unit(1.5, 'cm'), 
-    legend.key.width = unit(1, 'cm'), 
-    legend.title=element_blank(),
-    legend.text=element_text(size=fontsize),
-    legend.box.just = "right",
-    legend.box.background = element_blank()
-  ) + 
+    plot.margin = unit(c(0.0, .025, .01, 0), "null")
+  ) +
   guides(fill = guide_legend(override.aes = list(color = "transparent")))
 
+
+final_plot <- arrangeGrob(bxp_vr, bxp_ar, nrow = 2, heights = c(.45, .55))
+grid.arrange(final_plot)
+
 # saving the final figure
-ggsave("out/social.pdf", width = 8, height = 4, dpi = 1000)
+ggsave("out/social.pdf", final_plot, width = 8, height = 5, dpi = 1000)
   
+```
+
+```{r}
+df=read.csv('csv/social.csv', sep=",")
+condition_order <- c("NS", "MS", "GS", "AS")
+coloring = c("#ffbd67", "#94d8e0")
+df$conditions <- factor(df$conditions, levels = condition_order)
+df_be <- df[df$params == 'Behavioral Engagement', ]
+df_cp <- df[df$params == 'Co-presence', ]
+df_ma <- df[df$params == 'Mutual Attention', ]
+df_mu <- df[df$params == 'Mutual Understanding', ]
+
+df_be.stat <- df_be %>% group_by(role) %>%
+  wilcox_test(score~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "conditions")
+df_cp.stat <- df_cp %>% group_by(role) %>%
+  wilcox_test(score~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "conditions")
+df_ma.stat <- df_ma %>% group_by(role) %>%
+  wilcox_test(score~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "conditions")
+df_mu.stat <- df_mu %>% group_by(role) %>%
+  wilcox_test(score~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "conditions")
+
+df_be.stat2 <- df_be %>% wilcox_test(score~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "conditions")
+df_cp.stat2 <- df_cp %>% wilcox_test(score~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "conditions")
+df_ma.stat2 <- df_ma %>% wilcox_test(score~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "conditions")
+df_mu.stat2 <- df_mu %>% wilcox_test(score~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "conditions")
+
+
+cp <- function(df, stat, stat2, dodge, lab) {
+    ggplot(df, aes(x = conditions, y = score)) +
+    stat_boxplot(aes(fill = role), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
+    geom_boxplot(aes(fill = role), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
+                 position = position_dodge(1.1*dodge)) +
+    stat_summary(aes(fill = role), fun.y = mean,
+                 geom= "point", shape = 4, size = 2, colour= "black",
+                 position = position_dodge(1.1*dodge)) +
+    geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5),color="#F2F2F2")+ 
+    xlab(lab) +
+    ylab(NULL) +
+    # stat_pvalue_manual(stat, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) +
+    # stat_pvalue_manual(stat2, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) +
+    scale_fill_manual(name= "conditions", values = coloring) +
+    scale_color_manual(name = "conditions", values = coloring) +
+    scale_y_continuous(minor_breaks = seq(1, 9, 1), breaks = seq(1, 7, by=1), limits=c(1, 9)) +
+    annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+    theme_bw() +
+    theme(
+      axis.line = element_blank(),
+      axis.title.y=element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(color="black", size=fontsize),
+      text = element_text(size=fontsize),
+      strip.background = element_blank(),
+      plot.background = element_blank(),
+      plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+      plot.tag.position = c(1, .5),
+      plot.margin = unit(c(0.0, .025, 0, 0), "null"),
+      panel.border = element_blank(),
+      panel.spacing = unit(c(0, 0, 0, 0), "null"),
+      panel.grid.major.x = element_blank(),
+      legend.key = element_blank(),
+      legend.key.size = unit(.5, "cm"),
+      legend.key.height = unit(1, 'cm'), 
+      legend.key.width = unit(.75, 'cm'), 
+      legend.position="null",
+      legend.direction = "horizontal",
+      legend.justification = c("center", "top"),
+      legend.title=element_blank(),
+      legend.text=element_text(size=fontsize, margin = margin(r = 5)),
+      legend.margin = margin(0, 0, 0, 0),
+      legend.spacing.x = unit(0.1, "cm"),
+      legend.spacing.y = unit(0, "cm"),
+      legend.box.just = "right",
+      legend.box.background = element_blank()
+    ) 
+}
+
+a <- cp(df_be, df_be.stat, df_be.stat2, dodge, 'Behavioral Engagement')+ theme(
+    axis.text.x = element_text(color="black", size=fontsize*.7),
+    plot.margin = unit(c(0.0, .025, .05, 0), "null"),
+  ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
+b <- cp(df_cp, df_ma.stat, df_ma.stat2, dodge, 'Co-presence')+ theme(
+    axis.text.x = element_text(color="black", size=fontsize*.7),
+    plot.margin = unit(c(0.0, .025, .05, 0), "null"),
+  ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
+c <- cp(df_ma, df_ma.stat, df_ma.stat2, dodge, 'Mutual Attention') + theme(
+    axis.text.x = element_text(color="black", size=fontsize*.7)
+  ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
+d <- cp(df_mu, df_mu.stat, df_mu.stat2, dodge, 'Mutual Understanding') + theme(
+    axis.text.x = element_text(color="black", size=fontsize*.7),
+  ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
+
+final_plot <- grid.arrange(a, b, c, d, nrow = 2, ncol = 2)
+
+ggsave("out/social.pdf", final_plot, width = 8, height = 5, dpi = 1000)  
+```
+
+
+
+
+
+```{r}
+
+data(Higgins1990Table5, package = "ARTool")
+
+## perform aligned rank transform
+m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+
+a <- anova(m, response="aligned")
+
+## Apply Tukey post-hoc test
+tukey_results <- TukeyHSD(a)
+
+## Print the Tukey post-hoc results
+print(tukey_results)
+
 ```

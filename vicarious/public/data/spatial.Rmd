@@ -5,6 +5,10 @@ output: html_notebook
 ```{r}
 library(ggplot2)
 library(ggpubr)
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+library(grid)
 library(rstatix)
 
 coloring = c("#ffbd67", "#f6dbb8","#94d8e0","#537b7f")
@@ -47,82 +51,212 @@ df=read.csv('csv/spatial.csv', sep=",")
 condition_order <- c("NS", "MS", "GS", "AS")
 df$conditions <- factor(df$conditions, levels = condition_order)
 
-stat.test <- df %>% 
+df_ar <- df[df$role == 'AR', ]
+df_vr <- df[df$role == 'VR', ]
+
+custom_boxplot <- function(df, stats, dodge, fontsize, coloring, tag) {
+    ggplot(df, aes(x = params, y = score)) +
+    stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
+    geom_boxplot(aes(fill = conditions), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
+                 position = position_dodge(1.1*dodge)) +
+    stat_summary(aes(fill = conditions), fun.y = mean,
+                 geom= "point", shape = 4, size = 2, colour= "black",
+                 position = position_dodge(1.1*dodge)) +
+    stat_summary(aes(fill = conditions), fun.y = median, fatten = .1, 
+                 geom = "crossbar", width = 0.8*dodge, color = "black",
+                 position = position_dodge(1.1*dodge)) +
+    stat_pvalue_manual(stats, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02) + 
+    scale_fill_manual(name= "conditions", values = coloring) +
+    scale_color_manual(name = "conditions", values = coloring) +
+    geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5),color="#F2F2F2")+ 
+    scale_y_continuous(minor_breaks = seq(1, 10, 1), breaks = seq(1, 7, by=1), limits=c(1, 10)) +
+    annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+    ylab(NULL) +
+    
+    labs(tag = tag) +
+    theme_bw() +
+    theme(
+      axis.line = element_blank(),
+      axis.title.x=element_blank(),
+      axis.title.y=element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(color="black", size=fontsize),
+      text = element_text(size=fontsize),
+      strip.background = element_blank(),
+      plot.background = element_blank(),
+      plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+      plot.tag.position = c(1, .5),
+      plot.margin = unit(c(0.0, .025, .0, 0), "null"),
+      panel.border = element_blank(),
+      panel.spacing = unit(c(0, 0, 0, 0), "null"),
+      panel.grid.major.x = element_blank(),
+      legend.key = element_blank(),
+      legend.key.size = unit(.5, "cm"),
+      legend.key.height = unit(1, 'cm'), 
+      legend.key.width = unit(.75, 'cm'), 
+      legend.position="null",
+      legend.direction = "horizontal",
+      legend.justification = c("center", "top"),
+      legend.title=element_blank(),
+      legend.text=element_text(size=fontsize, margin = margin(r = 5)),
+      legend.margin = margin(0, 0, 0, 0),
+      legend.spacing.x = unit(0.1, "cm"),
+      legend.spacing.y = unit(0, "cm"),
+      legend.box.just = "right",
+      legend.box.background = element_blank()
+    ) 
+}
+
+vr.stat.test <- df_vr %>% 
   group_by(params) %>% 
   wilcox_test(score~conditions, p.adjust.method = 'BH') %>%
   add_significance("p") %>%
   add_xy_position(x = "params")
 
-bxp <- ggplot(df, aes(x = params, y = score)) + 
-  stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.2, position = position_dodge(dodge)) +
-  geom_boxplot(aes(fill = conditions), width = dodge, coef = 0, outlier.alpha = 0, show.legend = F) +
-  stat_summary(aes(fill = conditions), fun.y = mean, 
-               geom= "point", shape = 4, size = 2, colour= "black", 
-               position = position_dodge(width = dodge)) +
-  stat_summary(aes(fill = conditions), fun = median,
-               geom = "crossbar", fatten = .1, width = .9*dodge, color = "black",
-               position = position_dodge(width = dodge)) +
-  labs(x = NULL, y = NULL) + 
-  theme_bw()
+ar.stat.test <- df_ar %>% 
+  group_by(params) %>% 
+  wilcox_test(score~conditions, p.adjust.method = 'BH') %>%
+  add_significance("p") %>%
+  add_xy_position(x = "params")
 
-bxp + stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02) + 
-  scale_fill_manual(name= "conditions", values = coloring) +
-  scale_color_manual(name = "conditions", values = coloring) +
-  scale_y_continuous(minor_breaks = seq(0, 8, 1), breaks = seq(1, 8.1, by=1), limits=c(1, 8.1)) + 
+
+bxp_vr <- custom_boxplot(df_vr, vr.stat.test, dodge, fontsize, coloring, "remote user")
+
+bxp_ar <- custom_boxplot(df_ar, ar.stat.test, dodge, fontsize, coloring, "local user") + 
   theme(
-    axis.line = element_blank(),
+    plot.tag.position = c(1, .6),
     axis.title.x=element_blank(),
-    axis.title.y=element_blank(),
-    axis.text.x = element_text(color="black", size=fontsize),
-    axis.text.y = element_text(color="black", size=fontsize),
-    text = element_text(size=fontsize),
-    strip.background = element_blank(),
-    plot.background = element_blank(),
-    plot.margin = unit(c(0.005, .025, 0, 0), "null"),
-    panel.border = element_blank(),
-    panel.spacing = unit(c(0, 0, 0, 0), "null"),
-    legend.position="bottom",
-    legend.direction = "horizontal",
-    legend.justification = c("center", "top"),
-    legend.key = element_blank(),
-    legend.key.size = unit(1, "cm"),
-    legend.key.height = unit(1.5, 'cm'), 
-    legend.key.width = unit(1, 'cm'), 
-    legend.title=element_blank(),
-    legend.text=element_text(size=fontsize),
-    legend.box.just = "right",
-    legend.box.background = element_blank()
+    axis.text.x = element_text(color="black", size=fontsize)
   ) + 
   guides(fill = guide_legend(override.aes = list(color = "transparent")))
 
+
+final_plot <- arrangeGrob(bxp_vr, bxp_ar, nrow = 2, heights = c(.45, .55))
+grid.arrange(final_plot)
+
 # saving the final figure
-ggsave("out/spatial.pdf", width = 8, height = 4, dpi = 1000)
+ggsave("out/spatial.pdf", final_plot, width = 8, height = 5, dpi = 1000)
   
 ```
+
+```{r}
+df=read.csv('csv/spatial.csv', sep=",")
+condition_order <- c("NS", "MS", "GS", "AS")
+coloring = c("#ffbd67", "#94d8e0")
+df$conditions <- factor(df$conditions, levels = condition_order)
+df_gp <- df[df$params == 'General Presence', ]
+df_in <- df[df$params == 'Involvement', ]
+df_rl <- df[df$params == 'Realism', ]
+df_sp <- df[df$params == 'Spatial Presence', ]
+
+df_gp.stat <- df_gp %>% group_by(role) %>%
+  wilcox_test(score~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "conditions")
+df_in.stat <- df_in %>% group_by(role) %>%
+  wilcox_test(score~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "conditions")
+df_rl.stat <- df_rl %>% group_by(role) %>%
+  wilcox_test(score~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "conditions")
+df_sp.stat <- df_sp %>% group_by(role) %>%
+  wilcox_test(score~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "conditions")
+
+cp <- function(df, stat, dodge, lab) {
+    ggplot(df, aes(x = conditions, y = score)) +
+    stat_boxplot(aes(fill = role), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
+    geom_boxplot(aes(fill = role), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
+                 position = position_dodge(1.1*dodge)) +
+    stat_summary(aes(fill = role), fun.y = mean,
+                 geom= "point", shape = 4, size = 2, colour= "black",
+                 position = position_dodge(1.1*dodge)) +
+    # geom_signif(
+    #   y_position = c(7.3, 8.3), xmin = c(0.8, 1.8), xmax = c(1.2, 2.2),
+    #   annotation = c("**", "NS"), tip_length = 0.2
+    # ) +
+    # geom_signif(
+    #   y_position = c(7.3, 8.3), xmin = c(1.8, 2.8), xmax = c(2.2, 3.2),
+    #   annotation = c("***", "*"), tip_length = 0.2
+    # ) +
+    geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5),color="#F2F2F2")+ 
+    xlab(lab) +
+    ylab(NULL) +
+    # stat_pvalue_manual(stat, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) +
+    scale_fill_manual(name= "conditions", values = coloring) +
+    scale_color_manual(name = "conditions", values = coloring) +
+    scale_y_continuous(minor_breaks = seq(1, 9, 1), breaks = seq(1, 7, by=1), limits=c(1, 9)) +
+    annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+    theme_bw() +
+    theme(
+      axis.line = element_blank(),
+      axis.title.y=element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(color="black", size=fontsize),
+      text = element_text(size=fontsize),
+      strip.background = element_blank(),
+      plot.background = element_blank(),
+      plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+      plot.tag.position = c(1, .5),
+      plot.margin = unit(c(0.0, .025, 0, 0), "null"),
+      panel.border = element_blank(),
+      panel.spacing = unit(c(0, 0, 0, 0), "null"),
+      panel.grid.major.x = element_blank(),
+      legend.key = element_blank(),
+      legend.key.size = unit(.5, "cm"),
+      legend.key.height = unit(1, 'cm'), 
+      legend.key.width = unit(.75, 'cm'), 
+      legend.position="null",
+      legend.direction = "horizontal",
+      legend.justification = c("center", "top"),
+      legend.title=element_blank(),
+      legend.text=element_text(size=fontsize, margin = margin(r = 5)),
+      legend.margin = margin(0, 0, 0, 0),
+      legend.spacing.x = unit(0.1, "cm"),
+      legend.spacing.y = unit(0, "cm"),
+      legend.box.just = "right",
+      legend.box.background = element_blank()
+    ) 
+}
+
+a <- cp(df_gp, df_gp.stat, dodge, 'General Presence')+ theme(
+    axis.text.x = element_text(color="black", size=fontsize*.7),
+    plot.margin = unit(c(0.0, .025, .05, 0), "null"),
+  ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
+b <- cp(df_in, df_in.stat, dodge, 'Involvement')+ theme(
+    axis.text.x = element_text(color="black", size=fontsize*.7),
+    plot.margin = unit(c(0.0, .025, .05, 0), "null"),
+    axis.text.y = element_blank(),
+  ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
+c <- cp(df_rl, df_rl.stat, dodge, 'Realism') + theme(
+    axis.text.x = element_text(color="black", size=fontsize*.7)
+  ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
+d <- cp(df_sp, df_sp.stat, dodge, 'Spatial Presence') + theme(
+    axis.text.x = element_text(color="black", size=fontsize*.7),
+    axis.text.y = element_blank(),
+  ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
+
+final_plot <- grid.arrange(a, b, c, d, nrow = 2, ncol = 2)
+grid.arrange(final_plot)
+ggsave("out/spatial.pdf", final_plot, width = 8, height = 5, dpi = 1000)  
+```
+
+
+
 ```{r}
 
-# Example data
-data <- data.frame(
-  group = rep(c("A", "B", "C"), each = 20),
-  value = rnorm(60)
-)
+# Create example data
+set.seed(1)
+data <- matrix(rnorm(100), ncol = 2)
 
-# Create the boxplot
-plot <- ggplot(data, aes(x = group, y = value, fill = group)) +
-  geom_boxplot()
+# Define the layout
+layout(matrix(c(1, 2, 3, 4, 5, 6), nrow = 2, ncol = 3))
 
-# Remove color from the legend
-plot <- plot + guides(fill = guide_legend(
-  override.aes = list(
-    fill = "transparent",
-    color = "black",
-    size = 1.5,
-    shape = 21,
-    linetype = 0
-  )
-))
-
-# Display the plot
-print(plot)
+# Create boxplots
+boxplot(data[, 1], main = "Plot 1")
+boxplot(data[, 2], main = "Plot 2")
+boxplot(data[, 1], main = "Plot 3")
+boxplot(data[, 2], main = "Plot 4")
+boxplot(data[, 1], main = "Plot 5")
+boxplot(data[, 2], main = "Plot 6")
 
 ```
