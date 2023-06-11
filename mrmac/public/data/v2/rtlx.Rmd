@@ -17,48 +17,90 @@ library(stats)
 
 coloring = c("#E76469", "#F8D85E","#EDA645","#D1B0B3","#8C99A6","#ADD299","#4FA490","#3B7F9F")
 fontsize = 14
+dodge = .75
+```
 
 
+
+```{r}
 df=read.csv('csv/tlx.csv', sep=",")
-
-summary_data <- df %>% 
-  group_by(params, conditions) %>% 
-  summarize(mean_score = mean(score), 
-            se_score = qnorm(0.975) * sd(score) / sqrt(n()),
-            n = n()) %>%
-  ungroup()
-
-# Create horizontal bar chart with error bars
-order <- c('Mental',	'Physical',	'Temporal',	'Effort',	'Performance', 'Frustration', 'Overall')
-
-ggplot(summary_data, aes(x = mean_score, y = factor(params, levels = order), fill = conditions)) +
-  geom_col(width=.5, position=position_dodge(.6)) +
-  geom_errorbar(aes(xmin=mean_score-se_score, xmax=mean_score+se_score), width=.2, position=position_dodge(.6))+
-  scale_fill_manual(values = coloring) +
-  scale_x_continuous(expand = c(0, 0), limits = c(0, 50)) +
-  guides(fill=guide_legend(title="")) +
-  theme_bw() +
-  theme(axis.line = element_blank(),
-        axis.title.x=element_blank(),
-        axis.title.y=element_blank(),
-        axis.text.x = element_text(color="black", size=fontsize),
-        axis.text.y = element_text(color="black", size=fontsize),
-        text = element_text(size=fontsize),
-        strip.background = element_blank(),
-        plot.background = element_blank(),
-        plot.margin = unit(c(0.005, .025, 0, 0), "null"),
-        panel.border = element_blank(),
-        panel.spacing = unit(c(0, 0, 0, 0), "null"),
-        legend.position="bottom",
-        legend.direction = "horizontal",
-        legend.justification = c("center", "top"),
-        legend.title=element_blank(),
-        legend.text=element_text(size=fontsize),
-        legend.box.just = "right",
-        legend.box.background = element_blank())
+condition_order <- c("C1", "C2", "C3")
+param_order <- c("Mental", "Physical", "Temporal", "Performance", "Effort", "Frustration", "Overall")
 
 
-ggsave("out/rtlx.pdf", width = 6.5, height = 4.8, dpi = 1000)
+cp <- function(df, dodge, lab) {
+    ggplot(df, aes(x = conditions, y = score)) +
+    stat_boxplot(aes(fill = role), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
+    geom_boxplot(aes(fill = role), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
+                 position = position_dodge(1.1*dodge)) +
+    stat_summary(aes(fill = role), fun.y = mean,
+                 geom= "point", shape = 4, size = 2, colour= "black",
+                 position = position_dodge(1.1*dodge)) +
+    geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5),color="#F2F2F2")+ 
+    xlab(NULL) +
+    ylab(NULL) +
+    # stat_pvalue_manual(stat, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) +
+    scale_fill_manual(name= "conditions", values = coloring) +
+    scale_color_manual(name = "conditions", values = coloring) +
+    scale_y_continuous(minor_breaks = seq(0, 100, 20), breaks = seq(0, 100, by=20), limits=c(0, 100)) +
+    annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+    labs(title = lab) +
+    theme_bw()  +
+    theme(
+      axis.line = element_blank(),
+      axis.title.y=element_blank(),
+      axis.text.x = element_text(color="black", size=.65*fontsize),
+      axis.text.y = element_blank(),
+      text = element_text(size=fontsize),
+      strip.background = element_blank(),
+      plot.background = element_blank(),
+      plot.title = element_text(hjust = 0.5, color="black", size=.75*fontsize, face = "bold"),
+      plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+      plot.tag.position = c(1, .5),
+      plot.margin = unit(c(0.0, .025, .1, 0), "null"),
+      panel.border = element_blank(),
+      panel.spacing = unit(c(0, 0, 0, 0), "null"),
+      panel.grid.major.x = element_blank(),
+      legend.key = element_blank(),
+      legend.key.size = unit(.5, "cm"),
+      legend.key.height = unit(1, 'cm'),
+      legend.key.width = unit(.75, 'cm'),
+      legend.position="null",
+      legend.direction = "horizontal",
+      legend.justification = c("center", "top"),
+      legend.title=element_blank(),
+      legend.text=element_text(size=fontsize, margin = margin(r = 5)),
+      legend.margin = margin(0, 0, 0, 0),
+      legend.spacing.x = unit(0.1, "cm"),
+      legend.spacing.y = unit(0, "cm"),
+      legend.box.just = "right",
+      legend.box.background = element_blank()
+    )
+}
+
+df_me <- df[df$params == 'Mental', ]
+df_ph <- df[df$params == 'Physical', ]
+df_tm <- df[df$params == 'Temporal', ]
+df_pf <- df[df$params == 'Performance', ]
+df_ef <- df[df$params == 'Effort', ]
+df_fr <- df[df$params == 'Frustration', ]
+df_ov <- df[df$params == 'Overall' & (df$role == "VR" | df$role == "AR"), ]
+
+# Create boxplots
+a <- cp(df_me, dodge, 'Mental') + theme(axis.text.y = element_text(color="black", size=fontsize))
+b <- cp(df_ph, dodge, 'Physical') + theme(axis.ticks = element_blank())
+c <- cp(df_tm, dodge, 'Temporal') + theme(axis.ticks = element_blank())
+d <- cp(df_ef, dodge, 'Effort') + theme(axis.text.y = element_text(color="black", size=fontsize), 
+                                        plot.margin = unit(c(0.0, .025, 0, 0), "null"))
+e <- cp(df_fr, dodge, 'Frustration') + theme(axis.ticks.y = element_blank())
+f <- cp(df_pf, dodge, 'Performance') + theme(axis.ticks.y = element_blank(), plot.margin = unit(c(0.0, .025, 0, 0), "null"))
+g <- cp(df_ov, dodge, 'Overall') + theme(axis.ticks.y = element_blank(), plot.margin = unit(c(0.0, .025, 0, 0), "null"))
+
+final_plot <- grid.arrange(a, e, d, g, nrow = 2, ncol = 2)
+# grid.arrange(final_plot)
+
+
+ggsave("out/rtlx.pdf", final_plot, width = 6, height = 4, dpi = 1000)
 ```
 
 ### Lets find out about Task complexity 
