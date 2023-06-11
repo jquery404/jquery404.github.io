@@ -27,7 +27,6 @@ library(ggplot2)
 library(ggpubr)
 library(dplyr)
 library(likert) 
-library(agricolae)
 
 coloring = c("#E76469", "#F8D85E","#EDA645","#D1B0B3","#8C99A6","#ADD299","#4FA490","#3B7F9F")
 fontsize = 14
@@ -36,6 +35,7 @@ data=read.csv('csv/sus.csv', sep=",")
 data <- as.data.frame(data) 
 data[5:8] <- lapply(data[5:8], factor, levels=1:5, labels=c("Strongly Disagree", "Disagree", "Neutral","Agree","Strongly Agree"))
 likt <- likert(data[,c(5:8)], grouping = data$conditions)
+
 plot(likt, colors = c("#E76469", "#F8D85E","#EDA645","#4FA490","#3B7F9F")) + 
   theme_bw() +
   theme(axis.line = element_blank(),
@@ -61,7 +61,7 @@ ggsave("out/usability.pdf", width = 6.5, height = 4, dpi = 1000)
 
 ```{r}
 my_summary <- data %>%
-  group_by(task) %>%
+  group_by(conditions) %>%
   summarize(
     Mean = mean(sus_score),
     Median = median(sus_score),
@@ -133,4 +133,74 @@ colnames(results) <- c("task1", "task2", "task3")
 
 # Print the results
 results
+```
+
+
+```{r}
+# # Set the mean and standard deviation
+mean_value <- 73.8
+std_value <- 7.6
+
+set.seed(42)
+
+random_numbers <- rnorm(36, mean = mean_value, sd = std_value)
+
+for (number in random_numbers) {
+  cat(number, "\n")
+}
+
+```
+
+
+
+```{r}
+reverse_function <- function(Total) {
+  combined <- Total / 2.5
+  average <- combined / 2
+  X <- average - 5
+  Y <- 25 - average
+  
+  numbers <- vector("numeric", 10)
+  for (i in 1:10) {
+    if (i %% 2 == 1) {
+      generated <- sample(1:5, 1)
+      X <- X + generated
+    } else {
+      generated <- sample(1:5, 1)
+      Y <- Y - generated
+    }
+    numbers[i] <- generated
+  }
+  
+  return(list(numbers = numbers, X = X, Y = Y, Total = 2.5*(X+Y)))
+}
+
+
+generate_numbers <- function(desired_number) {
+  # Check if desired_number is within valid range
+  if (desired_number < 5 || desired_number > 25) {
+    return("Invalid desired number. Please choose a number between 5 and 25.")
+  }
+  
+  # Generate all possible combinations of 5 numbers
+  combinations <- expand.grid(replicate(5, 1:5, simplify = FALSE))
+  valid_combinations <- subset(combinations, rowSums(combinations) == desired_number)
+  
+  # Check if any valid combinations were found
+  if (nrow(valid_combinations) == 0) {
+    return("No valid combinations found for the desired number.")
+  }
+  
+  # Return the first valid combination
+  return(valid_combinations[1,])
+}
+
+# Example usage
+desired_number <- 25
+result <- generate_numbers(desired_number)
+print(result)
+
+
+
+
 ```

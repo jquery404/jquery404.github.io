@@ -14,6 +14,8 @@ library(dplyr)
 library(broom)
 library(tidyr)
 library(stats)
+library(gridExtra)
+library(grid)
 
 coloring = c("#E76469", "#F8D85E","#EDA645","#D1B0B3","#8C99A6","#ADD299","#4FA490","#3B7F9F")
 fontsize = 14
@@ -97,10 +99,11 @@ f <- cp(df_pf, dodge, 'Performance') + theme(axis.ticks.y = element_blank(), plo
 g <- cp(df_ov, dodge, 'Overall') + theme(axis.ticks.y = element_blank(), plot.margin = unit(c(0.0, .025, 0, 0), "null"))
 
 final_plot <- grid.arrange(a, e, d, g, nrow = 2, ncol = 2)
+# final_plot <- grid.arrange(b, c, f, nrow = 2, ncol = 2)
 # grid.arrange(final_plot)
 
 
-ggsave("out/rtlx.pdf", final_plot, width = 6, height = 4, dpi = 1000)
+ggsave("out/rtlx.pdf", final_plot, width = 6.65, height = 5, dpi = 1000)
 ```
 
 ### Lets find out about Task complexity 
