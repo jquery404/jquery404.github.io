@@ -124,7 +124,7 @@ df_mu.stat2 <- df_mu %>% wilcox_test(score~condition, p.adjust.method = 'holm', 
 cp <- function(df, stat, stat2, dodge, lab) {
     ggplot(df, aes(x = conditions, y = score)) +
     stat_boxplot(aes(fill = role), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
-    geom_boxplot(aes(fill = role), width = 0.8*dodge, coef = 0, outlier.alpha = 1, show.legend = F,
+    geom_boxplot(aes(fill = role), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
                  position = position_dodge(1.1*dodge)) +
     stat_summary(aes(fill = role), fun.y = mean,
                  geom= "point", shape = 4, size = 2, colour= "black",

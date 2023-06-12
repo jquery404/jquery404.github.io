@@ -9,12 +9,17 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
 
 ```{r}
-# Required packages
-library(ggpubr)  # https://github.com/kassambara/ggpubr
-library(rstatix)  # https://github.com/kassambara/rstatix
+library(ggplot2)
+library(ggpubr)
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+library(grid)
+library(rstatix)
 
 coloring = c("#E76469", "#F8D85E","#EDA645","#D1B0B3","#8C99A6","#ADD299","#4FA490","#3B7F9F")
 fontsize = 14
+dodge = .75
 
 # Add automatically x and y positions
 df=read.csv('csv/spatial.csv', sep=",")
@@ -76,6 +81,112 @@ bxp + stat_pvalue_manual(stat.test, label = 'p.signif', hide.ns = TRUE, tip.leng
 # saving the final figure
 ggsave("out/spatial.pdf", width = 8, height = 4, dpi = 1000)
 ```
+
+
+Role Spatial
+
+```{r}
+df=read.csv('csv/spatial.csv', sep=",")
+condition_order <- c("C1", "C2", "C3")
+df$condition <- factor(df$condition, levels = condition_order)
+df_gp <- df[df$params == 'General Presence', ]
+df_in <- df[df$params == 'Involvement', ]
+df_rl <- df[df$params == 'Realism', ]
+df_sp <- df[df$params == 'Spatial Presence', ]
+
+df_gp.stat <- df_gp %>% group_by(role) %>%
+  wilcox_test(score~condition, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "condition")
+df_in.stat <- df_in %>% group_by(role) %>%
+  wilcox_test(score~condition, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "condition")
+df_rl.stat <- df_rl %>% group_by(role) %>%
+  wilcox_test(score~condition, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "condition")
+df_sp.stat <- df_sp %>% group_by(role) %>%
+  wilcox_test(score~condition, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "condition")
+
+df_gp.stat2 <- df_gp %>% wilcox_test(score~condition, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "condition")
+df_in.stat2 <- df_in %>% wilcox_test(score~condition, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "conditions")
+df_rl.stat2 <- df_rl %>% wilcox_test(score~condition, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "condition")
+df_sp.stat2 <- df_sp %>% wilcox_test(score~condition, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>% add_xy_position(x = "condition")
+
+
+cp <- function(df, stat, stat2, dodge, lab) {
+    ggplot(df, aes(x = conditions, y = score)) +
+    stat_boxplot(aes(fill = role), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
+    geom_boxplot(aes(fill = role), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
+                 position = position_dodge(1.1*dodge)) +
+    stat_summary(aes(fill = role), fun.y = mean,
+                 geom= "point", shape = 4, size = 2, colour= "black",
+                 position = position_dodge(1.1*dodge)) +
+    geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5),color="#F2F2F2")+ 
+    xlab(lab) +
+    ylab(NULL) +
+    # stat_pvalue_manual(stat, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) +
+    # stat_pvalue_manual(stat2, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) +
+    scale_fill_manual(name= "conditions", values = coloring) +
+    scale_color_manual(name = "conditions", values = coloring) +
+    scale_y_continuous(minor_breaks = seq(1, 7, 1), breaks = seq(1, 7, by=1), limits=c(1, 7)) +
+    annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+    theme_bw() +
+    theme(
+      axis.line = element_blank(),
+      axis.title.y=element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(color="black", size=fontsize),
+      text = element_text(size=fontsize),
+      strip.background = element_blank(),
+      plot.background = element_blank(),
+      plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+      plot.tag.position = c(1, .5),
+      plot.margin = unit(c(0.0, .025, 0, 0), "null"),
+      panel.border = element_blank(),
+      panel.spacing = unit(c(0, 0, 0, 0), "null"),
+      panel.grid.major.x = element_blank(),
+      legend.key = element_blank(),
+      legend.key.size = unit(.5, "cm"),
+      legend.key.height = unit(1, 'cm'), 
+      legend.key.width = unit(.75, 'cm'), 
+      legend.position="null",
+      legend.direction = "horizontal",
+      legend.justification = c("center", "top"),
+      legend.title=element_blank(),
+      legend.text=element_text(size=fontsize, margin = margin(r = 5)),
+      legend.margin = margin(0, 0, 0, 0),
+      legend.spacing.x = unit(0.1, "cm"),
+      legend.spacing.y = unit(0, "cm"),
+      legend.box.just = "right",
+      legend.box.background = element_blank()
+    ) 
+}
+
+a <- cp(df_be, df_be.stat, df_be.stat2, dodge, 'General Presence')+ theme(
+    axis.text.x = element_text(color="black", size=fontsize*.7),
+    plot.margin = unit(c(0.0, .025, .05, 0), "null"),
+  ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
+b <- cp(df_cp, df_ma.stat, df_ma.stat2, dodge, 'Involvement')+ theme(
+    axis.text.x = element_text(color="black", size=fontsize*.7),
+    plot.margin = unit(c(0.0, .025, .05, 0), "null"),
+  ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
+c <- cp(df_ma, df_ma.stat, df_ma.stat2, dodge, 'Realism') + theme(
+    axis.text.x = element_text(color="black", size=fontsize*.7)
+  ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
+d <- cp(df_mu, df_mu.stat, df_mu.stat2, dodge, 'Spatial Presence') + theme(
+    axis.text.x = element_text(color="black", size=fontsize*.7),
+  ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
+
+final_plot <- grid.arrange(a, b, c, d, nrow = 2, ncol = 2)
+
+ggsave("out/spatial.pdf", final_plot, width = 8, height = 5, dpi = 1000) 
+
+```
+
 
 ## pretty looking plot 
 

@@ -1,5 +1,5 @@
-grp,id,params,vrar,conditions,score
-1,1,General Presence,VR,C1,6
+grp,id,params,role,conditions,score
+1,1,General Presence,VR,C1,1
 ,,Spatial Presence,VR,C1,2
 ,,Spatial Presence,VR,C1,6
 ,,Spatial Presence,VR,C1,3
@@ -9,7 +9,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,4
 ,,Realism,VR,C1,5
 ,,Realism,VR,C1,6
-,2,General Presence,AR,C1,7
+,2,General Presence,AR,C1,5
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,5
 ,,Spatial Presence,AR,C1,5
@@ -19,7 +19,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,AR,C1,6
 ,,Realism,AR,C1,7
 ,,Realism,AR,C1,4
-,3,General Presence,VR,C1,5
+,3,General Presence,VR,C1,1
 ,,Spatial Presence,VR,C1,5
 ,,Spatial Presence,VR,C1,6
 ,,Spatial Presence,VR,C1,5
@@ -29,7 +29,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,7
 ,,Realism,VR,C1,6
 ,,Realism,VR,C1,7
-,4,General Presence,AR,C1,6
+,4,General Presence,AR,C1,2
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,4
 ,,Spatial Presence,AR,C1,7
@@ -119,7 +119,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,AR,C3,2
 ,,Realism,AR,C3,6
 ,,Realism,AR,C3,4
-2,1,General Presence,VR,C1,6
+2,1,General Presence,VR,C1,1
 ,,Spatial Presence,VR,C1,2
 ,,Spatial Presence,VR,C1,6
 ,,Spatial Presence,VR,C1,3
@@ -129,7 +129,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,4
 ,,Realism,VR,C1,5
 ,,Realism,VR,C1,6
-,2,General Presence,AR,C1,7
+,2,General Presence,AR,C1,2
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,5
 ,,Spatial Presence,AR,C1,5
@@ -139,7 +139,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,AR,C1,6
 ,,Realism,AR,C1,7
 ,,Realism,AR,C1,4
-,3,General Presence,VR,C1,5
+,3,General Presence,VR,C1,3
 ,,Spatial Presence,VR,C1,5
 ,,Spatial Presence,VR,C1,6
 ,,Spatial Presence,VR,C1,5
@@ -149,7 +149,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,7
 ,,Realism,VR,C1,6
 ,,Realism,VR,C1,7
-,4,General Presence,AR,C1,6
+,4,General Presence,AR,C1,1
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,4
 ,,Spatial Presence,AR,C1,7
@@ -239,7 +239,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,AR,C3,2
 ,,Realism,AR,C3,6
 ,,Realism,AR,C3,4
-3,1,General Presence,VR,C1,6
+3,1,General Presence,VR,C1,5
 ,,Spatial Presence,VR,C1,2
 ,,Spatial Presence,VR,C1,6
 ,,Spatial Presence,VR,C1,3
@@ -249,7 +249,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,4
 ,,Realism,VR,C1,5
 ,,Realism,VR,C1,6
-,2,General Presence,AR,C1,7
+,2,General Presence,AR,C1,2
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,5
 ,,Spatial Presence,AR,C1,5
@@ -259,7 +259,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,AR,C1,6
 ,,Realism,AR,C1,7
 ,,Realism,AR,C1,4
-,3,General Presence,VR,C1,5
+,3,General Presence,VR,C1,3
 ,,Spatial Presence,VR,C1,5
 ,,Spatial Presence,VR,C1,6
 ,,Spatial Presence,VR,C1,5
@@ -269,7 +269,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,7
 ,,Realism,VR,C1,6
 ,,Realism,VR,C1,7
-,4,General Presence,AR,C1,6
+,4,General Presence,AR,C1,3
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,4
 ,,Spatial Presence,AR,C1,7
@@ -359,7 +359,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,AR,C3,2
 ,,Realism,AR,C3,6
 ,,Realism,AR,C3,4
-4,1,General Presence,VR,C1,6
+4,1,General Presence,VR,C1,3
 ,,Spatial Presence,VR,C1,2
 ,,Spatial Presence,VR,C1,6
 ,,Spatial Presence,VR,C1,3
@@ -369,7 +369,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,4
 ,,Realism,VR,C1,5
 ,,Realism,VR,C1,6
-,2,General Presence,AR,C1,7
+,2,General Presence,AR,C1,4
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,5
 ,,Spatial Presence,AR,C1,5
@@ -379,7 +379,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,AR,C1,6
 ,,Realism,AR,C1,7
 ,,Realism,AR,C1,4
-,3,General Presence,VR,C1,5
+,3,General Presence,VR,C1,3
 ,,Spatial Presence,VR,C1,5
 ,,Spatial Presence,VR,C1,6
 ,,Spatial Presence,VR,C1,5
@@ -389,7 +389,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,7
 ,,Realism,VR,C1,6
 ,,Realism,VR,C1,7
-,4,General Presence,AR,C1,6
+,4,General Presence,AR,C1,1
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,4
 ,,Spatial Presence,AR,C1,7
@@ -489,7 +489,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,4
 ,,Realism,VR,C1,5
 ,,Realism,VR,C1,6
-,2,General Presence,AR,C1,7
+,2,General Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,5
 ,,Spatial Presence,AR,C1,5
@@ -499,7 +499,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,AR,C1,6
 ,,Realism,AR,C1,7
 ,,Realism,AR,C1,4
-,3,General Presence,VR,C1,5
+,3,General Presence,VR,C1,2
 ,,Spatial Presence,VR,C1,5
 ,,Spatial Presence,VR,C1,6
 ,,Spatial Presence,VR,C1,5
@@ -509,7 +509,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,7
 ,,Realism,VR,C1,6
 ,,Realism,VR,C1,7
-,4,General Presence,AR,C1,6
+,4,General Presence,AR,C1,1
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,4
 ,,Spatial Presence,AR,C1,7
@@ -599,7 +599,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,AR,C3,2
 ,,Realism,AR,C3,6
 ,,Realism,AR,C3,4
-6,1,General Presence,VR,C1,6
+6,1,General Presence,VR,C1,5
 ,,Spatial Presence,VR,C1,2
 ,,Spatial Presence,VR,C1,6
 ,,Spatial Presence,VR,C1,3
@@ -609,7 +609,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,4
 ,,Realism,VR,C1,5
 ,,Realism,VR,C1,6
-,2,General Presence,AR,C1,7
+,2,General Presence,AR,C1,1
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,5
 ,,Spatial Presence,AR,C1,5
@@ -619,7 +619,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,AR,C1,6
 ,,Realism,AR,C1,7
 ,,Realism,AR,C1,4
-,3,General Presence,VR,C1,5
+,3,General Presence,VR,C1,4
 ,,Spatial Presence,VR,C1,5
 ,,Spatial Presence,VR,C1,6
 ,,Spatial Presence,VR,C1,5
@@ -629,7 +629,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,7
 ,,Realism,VR,C1,6
 ,,Realism,VR,C1,7
-,4,General Presence,AR,C1,6
+,4,General Presence,AR,C1,2
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,4
 ,,Spatial Presence,AR,C1,7
@@ -719,7 +719,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,AR,C3,2
 ,,Realism,AR,C3,6
 ,,Realism,AR,C3,4
-7,1,General Presence,VR,C1,6
+7,1,General Presence,VR,C1,2
 ,,Spatial Presence,VR,C1,2
 ,,Spatial Presence,VR,C1,6
 ,,Spatial Presence,VR,C1,3
@@ -729,7 +729,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,4
 ,,Realism,VR,C1,5
 ,,Realism,VR,C1,6
-,2,General Presence,AR,C1,7
+,2,General Presence,AR,C1,1
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,5
 ,,Spatial Presence,AR,C1,5
@@ -749,7 +749,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,7
 ,,Realism,VR,C1,6
 ,,Realism,VR,C1,7
-,4,General Presence,AR,C1,6
+,4,General Presence,AR,C1,4
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,4
 ,,Spatial Presence,AR,C1,7
@@ -839,7 +839,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,AR,C3,2
 ,,Realism,AR,C3,6
 ,,Realism,AR,C3,4
-8,1,General Presence,VR,C1,6
+8,1,General Presence,VR,C1,3
 ,,Spatial Presence,VR,C1,2
 ,,Spatial Presence,VR,C1,6
 ,,Spatial Presence,VR,C1,3
@@ -849,7 +849,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,4
 ,,Realism,VR,C1,5
 ,,Realism,VR,C1,6
-,2,General Presence,AR,C1,7
+,2,General Presence,AR,C1,3
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,5
 ,,Spatial Presence,AR,C1,5
@@ -859,7 +859,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,AR,C1,6
 ,,Realism,AR,C1,7
 ,,Realism,AR,C1,4
-,3,General Presence,VR,C1,5
+,3,General Presence,VR,C1,3
 ,,Spatial Presence,VR,C1,5
 ,,Spatial Presence,VR,C1,6
 ,,Spatial Presence,VR,C1,5
@@ -869,7 +869,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,7
 ,,Realism,VR,C1,6
 ,,Realism,VR,C1,7
-,4,General Presence,AR,C1,6
+,4,General Presence,AR,C1,1
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,4
 ,,Spatial Presence,AR,C1,7
@@ -959,7 +959,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,AR,C3,2
 ,,Realism,AR,C3,6
 ,,Realism,AR,C3,4
-9,1,General Presence,VR,C1,6
+9,1,General Presence,VR,C1,4
 ,,Spatial Presence,VR,C1,2
 ,,Spatial Presence,VR,C1,6
 ,,Spatial Presence,VR,C1,3
@@ -969,7 +969,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,4
 ,,Realism,VR,C1,5
 ,,Realism,VR,C1,6
-,2,General Presence,AR,C1,7
+,2,General Presence,AR,C1,4
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,5
 ,,Spatial Presence,AR,C1,5
@@ -989,7 +989,7 @@ grp,id,params,vrar,conditions,score
 ,,Involvement,VR,C1,7
 ,,Realism,VR,C1,6
 ,,Realism,VR,C1,7
-,4,General Presence,AR,C1,6
+,4,General Presence,AR,C1,3
 ,,Spatial Presence,AR,C1,6
 ,,Spatial Presence,AR,C1,4
 ,,Spatial Presence,AR,C1,7

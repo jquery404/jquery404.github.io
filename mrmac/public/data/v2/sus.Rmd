@@ -140,7 +140,71 @@ bxp <- ggplot(df, aes(x = role, y = sus_score)) +
 
 bxp
 
+# saving the final figure
+ggsave("out/usability.pdf", bxp, width = 6, height =4, dpi = 1000)
+
 ```
+
+
+Task completion time
+
+```{r}
+data=read.csv('csv/TaskCompletionTime.csv', sep=",")
+
+# Create the box plot
+boxplot_data <- gather(data, key = "C", value = "value", -group)
+
+# Plot the box plot
+ggplot(boxplot_data, aes(x = C, y = value)) +
+  geom_boxplot() +
+  stat_boxplot(aes(fill = C), geom = "errorbar", width = 0.2, position = position_dodge(dodge)) +
+  geom_boxplot(aes(fill = C), width = dodge, coef = 0, outlier.alpha = 0, show.legend = F) +
+  stat_summary(aes(fill = C), fun.y = mean, 
+               geom= "point", shape = 4, size = 5, colour= "black", 
+               position = position_dodge(width = dodge)) +
+  stat_summary(aes(fill = C), fun = median,
+               geom = "crossbar", fatten = .1, width = .4*dodge, color = "black",
+               position = position_dodge(width = dodge)) +
+  scale_fill_manual(name= "conditions", values = coloring) +
+  scale_color_manual(name = "conditions", values = coloring) +
+  xlab(NULL) +
+  ylab("Time (seconds)") +
+  theme_minimal()+
+  theme(
+    axis.line = element_blank(),
+    axis.title.x=element_blank(),
+    axis.text.x = element_text(color="black", size=fontsize),
+    axis.text.y = element_text(color="black", size=fontsize),
+    text = element_text(size=fontsize),
+    strip.background = element_blank(),
+    plot.background = element_blank(),
+    plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+    panel.border = element_blank(),
+    panel.spacing = unit(c(0, 0, 0, 0), "null"),
+    panel.grid.major.x = element_blank(),
+    legend.key = element_blank(),
+    legend.key.size = unit(1, "cm"),
+    legend.key.height = unit(1.5, 'cm'), 
+    legend.key.width = unit(1, 'cm'), 
+    legend.position="none",
+    legend.direction = "horizontal",
+    legend.justification = c("center", "top"),
+    legend.title=element_blank(),
+    legend.text=element_text(size=fontsize),
+    legend.box.just = "right",
+    legend.box.background = element_blank()
+  ) + 
+  guides(fill = guide_legend(override.aes = list(color = "transparent")))
+
+
+# saving the final figure
+ggsave("out/TaskCompletionTime.pdf", width = 4, height =4, dpi = 1000)
+
+
+
+```
+
+
 
 
 ## Run ANOVA then Tukey's post-hoc test
