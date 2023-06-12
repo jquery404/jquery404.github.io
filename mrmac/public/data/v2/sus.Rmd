@@ -60,8 +60,9 @@ ggsave("out/usability.pdf", width = 6.5, height = 4, dpi = 1000)
 ## Lets calculate the descriptive statistics
 
 ```{r}
+data=read.csv('csv/sus.csv', sep=",")
 my_summary <- data %>%
-  group_by(conditions) %>%
+  group_by(conditions, role) %>%
   summarize(
     Mean = mean(sus_score),
     Median = median(sus_score),
@@ -73,6 +74,74 @@ my_summary <- data %>%
 # Print the table
 my_summary
 ```
+
+```{r}
+
+df=read.csv('csv/sus.csv', sep=",")
+condition_order <- c("C1", "C2", "C3")
+df$conditions <- factor(df$conditions, levels = condition_order)
+
+x_order <- c("VR", "AR")
+df$role <- factor(df$role, levels = x_order)
+
+stats <- df %>%
+  group_by(role) %>%
+  wilcox_test(sus_score~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>%
+  add_xy_position(x = "role")
+
+tukey <- df %>% 
+  tukey_hsd(sus_score ~ role) %>% 
+  add_significance() %>% 
+  add_xy_position()
+
+bxp <- ggplot(df, aes(x = role, y = sus_score)) + 
+  stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.2, position = position_dodge(dodge)) +
+  geom_boxplot(aes(fill = conditions), width = dodge, coef = 0, outlier.alpha = 0, show.legend = F) +
+  stat_summary(aes(fill = conditions), fun.y = mean, 
+               geom= "point", shape = 4, size = 5, colour= "black", 
+               position = position_dodge(width = dodge)) +
+  stat_summary(aes(fill = conditions), fun = median,
+               geom = "crossbar", fatten = .1, width = .4*dodge, color = "black",
+               position = position_dodge(width = dodge)) +
+  labs(x = NULL, y = NULL) + 
+  scale_fill_manual(name= "conditions", values = coloring) +
+  scale_color_manual(name = "conditions", values = coloring) +
+  stat_pvalue_manual(stats, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) +
+  annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+  geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5),color="#F2F2F2")+ 
+  theme_bw() + 
+  theme(
+    axis.line = element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),
+    axis.text.x = element_text(color="black", size=fontsize),
+    axis.text.y = element_text(color="black", size=fontsize),
+    text = element_text(size=fontsize),
+    strip.background = element_blank(),
+    plot.background = element_blank(),
+    plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+    panel.border = element_blank(),
+    panel.spacing = unit(c(0, 0, 0, 0), "null"),
+    panel.grid.major.x = element_blank(),
+    legend.key = element_blank(),
+    legend.key.size = unit(1, "cm"),
+    legend.key.height = unit(1.5, 'cm'), 
+    legend.key.width = unit(1, 'cm'), 
+    legend.position="none",
+    legend.direction = "horizontal",
+    legend.justification = c("center", "top"),
+    legend.title=element_blank(),
+    legend.text=element_text(size=fontsize),
+    legend.box.just = "right",
+    legend.box.background = element_blank()
+  ) + 
+  guides(fill = guide_legend(override.aes = list(color = "transparent")))
+
+bxp
+
+```
+
 
 ## Run ANOVA then Tukey's post-hoc test
 
@@ -138,8 +207,8 @@ results
 
 ```{r}
 # # Set the mean and standard deviation
-mean_value <- 73.8
-std_value <- 7.6
+mean_value <- 85.1
+std_value <- 6.9
 
 set.seed(42)
 
@@ -159,20 +228,10 @@ reverse_function <- function(Total) {
   average <- combined / 2
   X <- average - 5
   Y <- 25 - average
+  p <- generate_numbers(X)
+  q <- generate_numbers(Y)
   
-  numbers <- vector("numeric", 10)
-  for (i in 1:10) {
-    if (i %% 2 == 1) {
-      generated <- sample(1:5, 1)
-      X <- X + generated
-    } else {
-      generated <- sample(1:5, 1)
-      Y <- Y - generated
-    }
-    numbers[i] <- generated
-  }
-  
-  return(list(numbers = numbers, X = X, Y = Y, Total = 2.5*(X+Y)))
+  return(list(p = p, q = q))
 }
 
 
@@ -196,11 +255,11 @@ generate_numbers <- function(desired_number) {
 }
 
 # Example usage
-desired_number <- 25
-result <- generate_numbers(desired_number)
-print(result)
+# desired_number <- 25
+# result <- generate_numbers(desired_number)
+# print(result)
 
-
+generate_numbers(17)
 
 
 ```
