@@ -26,6 +26,27 @@ df=read.csv('csv/spatial.csv', sep=",")
 
 head(df, n = 9)
 ```
+
+
+## Lets calculate the descriptive statistics
+
+```{r}
+data=read.csv('csv/spatial.csv', sep=",")
+my_summary <- data %>%
+  group_by(conditions) %>%
+  summarize(
+    Mean = mean(score),
+    Median = median(score),
+    SD = sd(score),
+    Min = min(score),
+    Max = max(score)
+  )
+
+# Print the table
+my_summary
+```
+
+
 Running analysis and box plot:
 
 ```{r}

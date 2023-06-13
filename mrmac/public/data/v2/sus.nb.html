@@ -1797,12 +1797,26 @@ understand.</li>
 </ol>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsaWJyYXJ5XG5saWJyYXJ5KGdncGxvdDIpXG5saWJyYXJ5KGdncHVicilcbmxpYnJhcnkoZHBseXIpXG5saWJyYXJ5KGxpa2VydCkgXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsaWJyYXJ5XG5saWJyYXJ5KGdncGxvdDIpXG5saWJyYXJ5KGdncHVicilcbmxpYnJhcnkoZHBseXIpXG5gYGAifQ== -->
 <pre class="r"><code># library
 library(ggplot2)
 library(ggpubr)
-library(dplyr)
-library(likert) </code></pre>
+library(dplyr)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYZHBseXLigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOnN0YXRz4oCZOlxuXG4gICAgZmlsdGVyLCBsYWdcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmJhc2XigJk6XG5cbiAgICBpbnRlcnNlY3QsIHNldGRpZmYsIHNldGVxdWFsLCB1bmlvblxuIn0= -->
+<pre><code>
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShsaWtlcnQpIFxuYGBgIn0= -->
+<pre class="r"><code>library(likert) </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiB4dGFibGVcblxuQXR0YWNoaW5nIHBhY2thZ2U6IOKAmGxpa2VydOKAmVxuXG5UaGUgZm9sbG93aW5nIG9iamVjdCBpcyBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmRwbHly4oCZOlxuXG4gICAgcmVjb2RlXG4ifQ== -->
 <pre><code>Loading required package: xtable
@@ -1851,7 +1865,7 @@ ggsave(&quot;out/usability.pdf&quot;, width = 6.5, height = 4, dpi = 1000)</code
 <h2>Lets calculate the descriptive statistics</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YT1yZWFkLmNzdignY3N2L3N1cy5jc3YnLCBzZXA9XCIsXCIpXG5teV9zdW1tYXJ5IDwtIGRhdGEgJT4lXG4gIGdyb3VwX2J5KGNvbmRpdGlvbnMsIHJvbGUpICU+JVxuICBzdW1tYXJpemUoXG4gICAgTWVhbiA9IG1lYW4oc3VzX3Njb3JlKSxcbiAgICBNZWRpYW4gPSBtZWRpYW4oc3VzX3Njb3JlKSxcbiAgICBTRCA9IHNkKHN1c19zY29yZSksXG4gICAgTWluID0gbWluKHN1c19zY29yZSksXG4gICAgTWF4ID0gbWF4KHN1c19zY29yZSlcbiAgKVxuXG4jIFByaW50IHRoZSB0YWJsZVxubXlfc3VtbWFyeVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YT1yZWFkLmNzdignY3N2L3N1cy5jc3YnLCBzZXA9XCIsXCIpXG5teV9zdW1tYXJ5IDwtIGRhdGEgJT4lXG4gIGdyb3VwX2J5KGNvbmRpdGlvbnMsIHJvbGUpICU+JVxuICBzdW1tYXJpemUoXG4gICAgTWVhbiA9IG1lYW4oc3VzX3Njb3JlKSxcbiAgICBNZWRpYW4gPSBtZWRpYW4oc3VzX3Njb3JlKSxcbiAgICBTRCA9IHNkKHN1c19zY29yZSksXG4gICAgTWluID0gbWluKHN1c19zY29yZSksXG4gICAgTWF4ID0gbWF4KHN1c19zY29yZSlcbiAgKVxuYGBgIn0= -->
 <pre class="r"><code>data=read.csv(&#39;csv/sus.csv&#39;, sep=&quot;,&quot;)
 my_summary &lt;- data %&gt;%
   group_by(conditions, role) %&gt;%
@@ -1861,11 +1875,22 @@ my_summary &lt;- data %&gt;%
     SD = sd(sus_score),
     Min = min(sus_score),
     Max = max(sus_score)
-  )
-
-# Print the table
+  )</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiYHN1bW1hcmlzZSgpYCBoYXMgZ3JvdXBlZCBvdXRwdXQgYnkgJ2NvbmRpdGlvbnMnLiBZb3UgY2FuIG92ZXJyaWRlIHVzaW5nIHRoZSBgLmdyb3Vwc2AgYXJndW1lbnQuXG4ifQ== -->
+<pre><code>`summarise()` has grouped output by &#39;conditions&#39;. You can override using the `.groups` argument.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBQcmludCB0aGUgdGFibGVcbm15X3N1bW1hcnlcbmBgYCJ9 -->
+<pre class="r"><code># Print the table
 my_summary</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImdyb3VwZWRfZGYiLCJ0YmxfZGYiLCJ0YmwiLCJkYXRhLmZyYW1lIl0sIm5yb3ciOjYsIm5jb2wiOjcsInN1bW1hcnkiOnsiQSB0aWJibGUiOlsiNiDDlyA3Il0sIkdyb3VwcyI6WyJjb25kaXRpb25zIFszXSJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUJndHlpVERtaXVCaVlHQmdabUJoQXBLc1FDWURhMmlJbTY0RkExaUVnWkdCaFlFVFJGY0FwWVdCREhZZ0ZnQmlOcWdFazdNaEZwWVJGcFl4RWd2TkRNY2dHQ3NzaUdneEJnWStrQmtPdmphRngyVUtqenNFTUlJb0dZZWdpMUJhSEVRVk9ZVEtRT1JEUzBOQkFLN1B1d0hrV3dhSEFBY0lIWFFBUWdkQ3hVTWRVR2k0UGdXbTROb3R4emtkRkZmTFhuNGxhK0dnYlBzLzYrdkVNdzRLcTcwOVhPT1RIT1NZVGg3VitadnJJQ01jZW9WVFJBcXV6eE5paUlNcjFGd3ZLQTF6UnlBcURkY1hBdFVYc2dCQ2h5dEEzZlVBUWtja1FPaEltRGFVaUdOTnpra3NMb1lHT0V5UUt5V3hKRkV2clNneE54Vk5PV2RSZnJsZUhsQWNwSVVYRk5JZzEvei8vLzhYdXJrd1JRTGdSQUUxTnprL0x5V3pKRE0vcnhncXdsS1VuNU1LWS91bUp1WkIyV3krcVNtWmNCNVRzQXVVeGV5Ym1RZG5KZ0lUSGNNL05Jdlo4d3NnRmpBd2dkSWpLNXJYR0l2UUJQaEw4MEJPVGRGTnppak55OVlGcFQwdXNEUUU4RUxaYkVoc2RvaVZMUCtoUnJIQ0hKMmFsNTZaQi9NT2EwNWlVbW9PbE1NSEREZHdpT2dWRkdYbWxjRENBeWhhckZlU1g1S1lnd2loSEpnSTJHOE0vd0FIa3hnNWhnTUFBQT09In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["conditions"],"name":[1],"type":["chr"],"align":["left"]},{"label":["role"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Median"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["SD"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Min"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Max"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"C1","2":"AR","3":"58.47222","4":"55","5":"8.004543","6":"50.0","7":"80.0"},{"1":"C1","2":"VR","3":"64.02778","4":"65","5":"8.834212","6":"42.5","7":"82.5"},{"1":"C2","2":"AR","3":"75.27778","4":"75","5":"9.621089","6":"52.5","7":"92.5"},{"1":"C2","2":"VR","3":"72.36111","4":"70","5":"8.334559","6":"55.0","7":"87.5"},{"1":"C3","2":"AR","3":"84.44444","4":"85","5":"7.502723","6":"70.0","7":"97.5"},{"1":"C3","2":"VR","3":"85.83333","4":"85","5":"7.018882","6":"70.0","7":"100.0"}],"options":{"columns":{"min":{},"max":[10],"total":[7]},"rows":{"min":[10],"max":[10],"total":[6]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
