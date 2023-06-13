@@ -26,10 +26,15 @@ output: html_notebook
 library(ggplot2)
 library(ggpubr)
 library(dplyr)
+library(tidyr)
+library(gridExtra)
+library(grid)
 library(likert) 
+library(rstatix)
 
 coloring = c("#E76469", "#F8D85E","#EDA645","#D1B0B3","#8C99A6","#ADD299","#4FA490","#3B7F9F")
 fontsize = 14
+dodge = .75
 
 data=read.csv('csv/sus.csv', sep=",")
 data <- as.data.frame(data) 
@@ -81,7 +86,7 @@ df=read.csv('csv/sus.csv', sep=",")
 condition_order <- c("C1", "C2", "C3")
 df$conditions <- factor(df$conditions, levels = condition_order)
 
-x_order <- c("VR", "AR")
+x_order <- c("AR", "VR")
 df$role <- factor(df$role, levels = x_order)
 
 stats <- df %>%
@@ -104,7 +109,7 @@ bxp <- ggplot(df, aes(x = role, y = sus_score)) +
   stat_summary(aes(fill = conditions), fun = median,
                geom = "crossbar", fatten = .1, width = .4*dodge, color = "black",
                position = position_dodge(width = dodge)) +
-  labs(x = NULL, y = NULL) + 
+  labs(x = "(a)", y = 'SUS Score') + 
   scale_fill_manual(name= "conditions", values = coloring) +
   scale_color_manual(name = "conditions", values = coloring) +
   stat_pvalue_manual(stats, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) +
@@ -113,14 +118,12 @@ bxp <- ggplot(df, aes(x = role, y = sus_score)) +
   theme_bw() + 
   theme(
     axis.line = element_blank(),
-    axis.title.x=element_blank(),
-    axis.title.y=element_blank(),
     axis.text.x = element_text(color="black", size=fontsize),
     axis.text.y = element_text(color="black", size=fontsize),
     text = element_text(size=fontsize),
     strip.background = element_blank(),
     plot.background = element_blank(),
-    plot.margin = unit(c(0.005, .025, 0, 0), "null"),
+    plot.margin = unit(c(0.005, .1, 0, 0), "null"),
     panel.border = element_blank(),
     panel.spacing = unit(c(0, 0, 0, 0), "null"),
     panel.grid.major.x = element_blank(),
@@ -154,8 +157,13 @@ data=read.csv('csv/TaskCompletionTime.csv', sep=",")
 # Create the box plot
 boxplot_data <- gather(data, key = "C", value = "value", -group)
 
+stats <- boxplot_data %>%
+  wilcox_test(value~C, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance("p") %>%
+  add_xy_position(x = "C")
+
 # Plot the box plot
-ggplot(boxplot_data, aes(x = C, y = value)) +
+bxq <- ggplot(boxplot_data, aes(x = C, y = value)) +
   geom_boxplot() +
   stat_boxplot(aes(fill = C), geom = "errorbar", width = 0.2, position = position_dodge(dodge)) +
   geom_boxplot(aes(fill = C), width = dodge, coef = 0, outlier.alpha = 0, show.legend = F) +
@@ -167,12 +175,15 @@ ggplot(boxplot_data, aes(x = C, y = value)) +
                position = position_dodge(width = dodge)) +
   scale_fill_manual(name= "conditions", values = coloring) +
   scale_color_manual(name = "conditions", values = coloring) +
-  xlab(NULL) +
+  stat_pvalue_manual(stats, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) +
+  scale_y_continuous(minor_breaks = seq(200, 650, 100), breaks = seq(200, 650, by=100), limits=c(200, 650)) +
+  annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+  xlab("(b)") +
   ylab("Time (seconds)") +
   theme_minimal()+
   theme(
     axis.line = element_blank(),
-    axis.title.x=element_blank(),
+    # axis.title.x=element_blank(),
     axis.text.x = element_text(color="black", size=fontsize),
     axis.text.y = element_text(color="black", size=fontsize),
     text = element_text(size=fontsize),
@@ -196,9 +207,12 @@ ggplot(boxplot_data, aes(x = C, y = value)) +
   ) + 
   guides(fill = guide_legend(override.aes = list(color = "transparent")))
 
+final_plot <- grid.arrange(bxp, bxq, nrow = 1, ncol = 2, widths = c(2, 1))
 
 # saving the final figure
-ggsave("out/TaskCompletionTime.pdf", width = 4, height =4, dpi = 1000)
+ggsave("out/usability.pdf", final_plot, width = 8, height =4, dpi = 1000)
+
+# ggsave("out/TaskCompletionTime.pdf", width = 4, height =4, dpi = 1000)
 
 
 
@@ -270,17 +284,22 @@ results
 
 
 ```{r}
-# # Set the mean and standard deviation
-mean_value <- 85.1
-std_value <- 6.9
+mean_value <- 389.5
+std_value <- 59.16
+n <- 9
 
-set.seed(42)
-
-random_numbers <- rnorm(36, mean = mean_value, sd = std_value)
+random_numbers <- rnorm(n, mean = mean_value, sd = std_value)
 
 for (number in random_numbers) {
   cat(number, "\n")
 }
+
+mean_random <- mean(random_numbers)
+std_random <- sd(random_numbers)
+
+cat("Mean:", mean_random, "\n")
+cat("Standard Deviation:", std_random, "\n")
+
 
 ```
 

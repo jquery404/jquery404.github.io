@@ -12,7 +12,6 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 library(ggplot2)
 library(ggpubr)
 library(dplyr)
-library(ggplot2)
 library(gridExtra)
 library(grid)
 library(rstatix)

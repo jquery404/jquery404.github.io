@@ -13,7 +13,7 @@ library(ggplot2)
 library(dplyr)
 library(broom)
 library(tidyr)
-library(stats)
+library(rstatix)
 library(gridExtra)
 library(grid)
 
@@ -23,6 +23,142 @@ dodge = .75
 ```
 
 
+stats
+
+```{r}
+perform_wilcoxon_test <- function(df, t) {
+  
+  if (t == 2){
+    # Wilcoxon test by role within each condition
+    stats_role <- df %>%
+      group_by(conditions) %>%
+      wilcox_test(score ~ role, p.adjust.method = 'holm', paired = TRUE) %>%
+      add_significance("p") %>%
+      add_xy_position(x = "conditions")
+    
+    # Wilcoxon test between conditions
+    stats_condition <- df %>%
+      wilcox_test(score ~ conditions, p.adjust.method = 'holm', paired = FALSE) %>%
+      add_significance("p") %>%
+      add_xy_position(x = "conditions")
+    
+    result <- list(stats_condition = stats_condition, stats_role = stats_role)
+  }
+  else if(t==1){
+    # Wilcoxon test by role within each condition
+    stats_role <- df %>%
+      group_by(conditions) %>%
+      wilcox_test(score ~ role, p.adjust.method = 'holm', paired = TRUE) %>%
+      add_significance("p") %>%
+      add_xy_position(x = "conditions")
+    
+    result <- stats_role
+  }
+  else {
+    # Wilcoxon test between conditions
+    stats_condition <- df %>%
+      wilcox_test(score ~ conditions, p.adjust.method = 'holm', paired = FALSE) %>%
+      add_significance("p") %>%
+      add_xy_position(x = "conditions")
+    
+    result <- stats_condition
+  }
+  
+  
+  return(result)
+}
+
+df=read.csv('csv/tlx.csv', sep=",")
+condition_order <- c("C1", "C2", "C3")
+param_order <- c("Mental", "Physical", "Temporal", "Performance", "Effort", "Frustration", "Overall")
+
+my_summary <- df %>%
+  group_by(params, conditions, role) %>%
+  summarize(
+    Mean = mean(score),
+    Median = median(score),
+    SD = sd(score),
+    Min = min(score),
+    Max = max(score)
+  )
+
+# Print the table
+my_summary
+
+df_me <- df[df$params == 'Mental', ]
+df_ph <- df[df$params == 'Physical', ]
+df_tm <- df[df$params == 'Temporal', ]
+df_pf <- df[df$params == 'Performance', ]
+df_ef <- df[df$params == 'Effort', ]
+df_fr <- df[df$params == 'Frustration', ]
+df_ov <- df[df$params == 'Overall' & (df$role == "VR" | df$role == "AR"), ]
+
+perform_wilcoxon_test(df_ov, 2)
+
+ggqqplot(df_ov, "score", ggtheme = theme_bw()) + facet_grid(role~conditions)
+
+```
+
+
+ANOVA
+
+
+```{r}
+library(datarium)
+selfest <- selfesteem2 %>%
+  gather(key = 'time', value = 'score', t1, t2, t3) %>%
+  convert_as_factor(id, time)
+
+selfest %>%
+  sample_n_by(treatment, time, size = 1)
+
+
+anova_test(
+  data = selfest, dv = score, wid = id,
+  within = c(treatment, time)
+)
+
+
+## within subject
+
+# Remote User
+# df_vr <- df[df$role == 'VR', ]
+# 
+# df_vr=read.csv('csv/rtlxx.csv', sep=",")
+# df_vr <- df_vr  %>%
+#   convert_as_factor(id)
+# 
+# anova_test(
+#   data = df_vr, dv = score, wid = id,
+#   within = c(params, conditions)
+# )
+
+
+# Local User
+# df_ar <- df[df$role == 'AR', ]
+# 
+# df_ar=read.csv('csv/rtlxx.csv', sep=",")
+# df_ar <- df_ar  %>%
+#   convert_as_factor(id)
+# 
+# anova_test(
+#   data = df_ar, dv = score, wid = id,
+#   within = c(params, conditions)
+# )
+
+
+# Between subject
+
+anova_test(
+  data = df_vr, dv = score, wid = id, between = c(role)
+)
+
+
+
+```
+
+
+
 
 ```{r}
 df=read.csv('csv/tlx.csv', sep=",")
@@ -30,7 +166,7 @@ condition_order <- c("C1", "C2", "C3")
 param_order <- c("Mental", "Physical", "Temporal", "Performance", "Effort", "Frustration", "Overall")
 
 
-cp <- function(df, dodge, lab) {
+cp <- function(df, dodge, lab, stat) {
     ggplot(df, aes(x = conditions, y = score)) +
     stat_boxplot(aes(fill = role), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
     geom_boxplot(aes(fill = role), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
@@ -39,14 +175,14 @@ cp <- function(df, dodge, lab) {
                  geom= "point", shape = 4, size = 2, colour= "black",
                  position = position_dodge(1.1*dodge)) +
     geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5),color="#F2F2F2")+ 
-    xlab(NULL) +
+    xlab(lab) +
     ylab(NULL) +
-    # stat_pvalue_manual(stat, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) +
+    stat_pvalue_manual(stat, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) +
     scale_fill_manual(name= "conditions", values = coloring) +
     scale_color_manual(name = "conditions", values = coloring) +
-    scale_y_continuous(minor_breaks = seq(0, 100, 20), breaks = seq(0, 100, by=20), limits=c(0, 100)) +
+    # scale_y_continuous(minor_breaks = seq(0, 100, 20), breaks = seq(0, 100, by=20), limits=c(0, 100)) +
     annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
-    labs(title = lab) +
+    # labs(title = lab) +
     theme_bw()  +
     theme(
       axis.line = element_blank(),
@@ -88,22 +224,27 @@ df_ef <- df[df$params == 'Effort', ]
 df_fr <- df[df$params == 'Frustration', ]
 df_ov <- df[df$params == 'Overall' & (df$role == "VR" | df$role == "AR"), ]
 
+# shapiro.test(df_me$score)
+# shapiro.test(df_ph$score)
+# shapiro.test(df_tm$score)
+
+
 # Create boxplots
-a <- cp(df_me, dodge, 'Mental') + theme(axis.text.y = element_text(color="black", size=fontsize))
-b <- cp(df_ph, dodge, 'Physical') + theme(axis.ticks = element_blank())
-c <- cp(df_tm, dodge, 'Temporal') + theme(axis.ticks = element_blank())
-d <- cp(df_ef, dodge, 'Effort') + theme(axis.text.y = element_text(color="black", size=fontsize), 
+a <- cp(df_me, dodge, 'Mental', perform_wilcoxon_test(df_me,3)) + theme(axis.text.y = element_text(color="black", size=fontsize))
+b <- cp(df_ph, dodge, 'Physical', perform_wilcoxon_test(df_ph,3)) + theme(axis.ticks = element_blank())
+c <- cp(df_tm, dodge, 'Temporal', perform_wilcoxon_test(df_tm,3)) + theme(axis.ticks = element_blank())
+d <- cp(df_ef, dodge, 'Effort', perform_wilcoxon_test(df_ef,3)) + theme(axis.text.y = element_text(color="black", size=fontsize), 
                                         plot.margin = unit(c(0.0, .025, 0, 0), "null"))
-e <- cp(df_fr, dodge, 'Frustration') + theme(axis.ticks.y = element_blank())
-f <- cp(df_pf, dodge, 'Performance') + theme(axis.ticks.y = element_blank(), plot.margin = unit(c(0.0, .025, 0, 0), "null"))
-g <- cp(df_ov, dodge, 'Overall') + theme(axis.ticks.y = element_blank(), plot.margin = unit(c(0.0, .025, 0, 0), "null"))
+e <- cp(df_fr, dodge, 'Frustration', perform_wilcoxon_test(df_fr,3)) + theme(axis.ticks.y = element_blank())
+f <- cp(df_pf, dodge, 'Performance', perform_wilcoxon_test(df_pf,3)) + theme(axis.ticks.y = element_blank(), plot.margin = unit(c(0.0, .025, 0, 0), "null"))
+g <- cp(df_ov, dodge, 'Overall', perform_wilcoxon_test(df_ov,3)) + theme(axis.ticks.y = element_blank(), plot.margin = unit(c(0.0, .025, 0, 0), "null"))
 
 final_plot <- grid.arrange(a, e, d, g, nrow = 2, ncol = 2)
 # final_plot <- grid.arrange(b, c, f, nrow = 2, ncol = 2)
 # grid.arrange(final_plot)
 
 
-ggsave("out/rtlx.pdf", final_plot, width = 6.65, height = 5, dpi = 1000)
+ggsave("out/rtlx.pdf", final_plot, width = 6.65, height = 6, dpi = 1000)
 ```
 
 ### Lets find out about Task complexity 
@@ -127,6 +268,13 @@ task_stats <- completion_times %>%
   summarize(mean_time = mean(time), median_time = median(time), sd_time = sd(time))
 
 task_stats
+
+df_c1 <- df_long[df_long$task == 'task1', ]
+df_c2 <- df_long[df_long$task == 'task2', ]
+df_c3 <- df_long[df_long$task == 'task3', ]
+shapiro.test(df_c1$time)
+shapiro.test(df_c2$time)
+shapiro.test(df_c3$time)
 ```
 
 ## ANOVA and Bartlett's test
@@ -181,6 +329,28 @@ write.csv(task_stats, file = "out/task_stats.csv", row.names = FALSE)
 write.csv(bartlett_stats, file = "out/task_f_bartlett.csv", row.names = FALSE)
 write.csv(summary_data, file = "out/summary_data.csv", row.names = FALSE)
 ```
+
+
+```{r}
+df=read.csv('csv/task-completion.csv', sep=",")
+
+# Convert the data from wide format to long format
+df_long <- df %>%
+  pivot_longer(cols = c(task1, task2, task3), names_to = "task", values_to = "time")
+
+# Sort the data by task and time
+completion_times <- df_long %>%
+  arrange(task, time)
+
+boxplot(completion_times$time ~ completion_times$task,
+        main = "Task Completion Time by Group",
+        xlab = "Group",
+        ylab = "Task Completion Time",
+        col = "lightblue",
+        border = "black")
+
+```
+
 
 
 ```{r}
