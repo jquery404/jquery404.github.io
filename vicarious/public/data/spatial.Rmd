@@ -260,3 +260,40 @@ boxplot(data[, 1], main = "Plot 5")
 boxplot(data[, 2], main = "Plot 6")
 
 ```
+
+
+
+```{r}
+library(rstatix)
+library(ggplot2)
+library(ggpubr)
+
+df=read.csv('csv/spatial.csv', sep=",")
+
+
+avg_df <- aggregate(score ~ grp + id + params + role + conditions, data = df, FUN = mean)
+
+# avg_df %>%
+#   group_by(role, conditions) %>%
+#   shapiro_test(score)
+
+
+# ggqqplot(avg_df, "score", ggtheme = theme_bw()) + facet_grid(conditions~role)
+# 
+# ggsave("out/spatial_ggqq.pdf", width = 8, height = 8, dpi = 1000)  
+
+
+
+
+
+res.aov <- anova_test(
+  data = avg_df, dv = score, wid = id,
+  within = c(params, conditions)
+)
+
+get_anova_table(res.aov)
+
+
+
+
+```
