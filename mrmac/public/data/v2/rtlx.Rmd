@@ -124,14 +124,14 @@ anova_test(
 # Remote User
 # df_vr <- df[df$role == 'VR', ]
 # 
-# df_vr=read.csv('csv/rtlxx.csv', sep=",")
-# df_vr <- df_vr  %>%
-#   convert_as_factor(id)
-# 
-# anova_test(
-#   data = df_vr, dv = score, wid = id,
-#   within = c(params, conditions)
-# )
+df_vr=read.csv('csv/rtlxx.csv', sep=",")
+df_vr <- df_vr  %>%
+  convert_as_factor(id)
+
+anova_test(
+  data = df_vr, dv = score, wid = id,
+  within = c(params, conditions)
+)
 
 
 # Local User

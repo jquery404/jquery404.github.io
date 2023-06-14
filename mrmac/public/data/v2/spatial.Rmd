@@ -25,6 +25,91 @@ df=read.csv('csv/spatial.csv', sep=",")
 
 head(df, n = 9)
 ```
+
+
+## Lets calculate the descriptive statistics
+
+```{r}
+data=read.csv('csv/spatial.csv', sep=",")
+my_summary <- data %>%
+  group_by(role, conditions) %>%
+  summarize(
+    Mean = mean(score),
+    Median = median(score),
+    SD = sd(score),
+    Min = min(score),
+    Max = max(score)
+  )
+
+# Print the table
+my_summary
+```
+
+```{r}
+
+df=read.csv('csv/spatial.csv', sep=",")
+
+ggqqplot(df, "score", ggtheme = theme_bw()) + facet_grid(conditions~role)
+
+df_ar_c1 <- df[df$role == 'AR' &  df$conditions == 'C1', ]
+df_ar_c2 <- df[df$role == 'AR' &  df$conditions == 'C2', ]
+df_ar_c3 <- df[df$role == 'AR' &  df$conditions == 'C3', ]
+
+shapiro.test(df_ar_c1$score)
+shapiro.test(df_ar_c2$score)
+shapiro.test(df_ar_c3$score)
+
+df_vr_c1 <- df[df$role == 'VR' &  df$conditions == 'C1', ]
+df_vr_c2 <- df[df$role == 'VR' &  df$conditions == 'C2', ]
+df_vr_c3 <- df[df$role == 'VR' &  df$conditions == 'C3', ]
+
+shapiro.test(df_vr_c1$score)
+shapiro.test(df_vr_c2$score)
+shapiro.test(df_vr_c3$score)
+
+```
+
+ANOVA
+```{r}
+
+df=read.csv('csv/spatial.csv', sep=",")
+
+
+## within subject
+# df_ar <- df[df$role == 'AR', ]
+# Remote User
+# df <- df  %>%
+#   convert_as_factor(id)
+
+# anova_test(
+#   data = df, dv = score, wid = id,
+#   within = c(params, conditions)
+# )
+
+
+# Local User
+# df_ar <- df[df$role == 'AR', ]
+# 
+# df_ar=read.csv('csv/rtlxx.csv', sep=",")
+# df_ar <- df_ar  %>%
+#   convert_as_factor(id)
+# 
+# anova_test(
+#   data = df_ar, dv = score, wid = id,
+#   within = c(params, conditions)
+# )
+
+
+# Between subject
+
+anova_test(
+  data = df, dv = score, wid = id, between = c(role)
+)
+
+```
+
+
+
 Running analysis and box plot:
 
 ```{r}
@@ -116,7 +201,7 @@ df_sp.stat2 <- df_sp %>% wilcox_test(score~condition, p.adjust.method = 'holm', 
   add_significance("p") %>% add_xy_position(x = "condition")
 
 
-cp <- function(df, stat, stat2, dodge, lab) {
+cp <- function(df, dodge, lab) {
     ggplot(df, aes(x = conditions, y = score)) +
     stat_boxplot(aes(fill = role), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
     geom_boxplot(aes(fill = role), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
@@ -165,18 +250,18 @@ cp <- function(df, stat, stat2, dodge, lab) {
     ) 
 }
 
-a <- cp(df_be, df_be.stat, df_be.stat2, dodge, 'General Presence')+ theme(
+a <- cp(df_gp, dodge, 'General Presence')+ theme(
     axis.text.x = element_text(color="black", size=fontsize*.7),
     plot.margin = unit(c(0.0, .025, .05, 0), "null"),
   ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
-b <- cp(df_cp, df_ma.stat, df_ma.stat2, dodge, 'Involvement')+ theme(
+b <- cp(df_in, dodge, 'Involvement')+ theme(
     axis.text.x = element_text(color="black", size=fontsize*.7),
     plot.margin = unit(c(0.0, .025, .05, 0), "null"),
   ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
-c <- cp(df_ma, df_ma.stat, df_ma.stat2, dodge, 'Realism') + theme(
+c <- cp(df_rl, dodge, 'Realism') + theme(
     axis.text.x = element_text(color="black", size=fontsize*.7)
   ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
-d <- cp(df_mu, df_mu.stat, df_mu.stat2, dodge, 'Spatial Presence') + theme(
+d <- cp(df_sp, dodge, 'Spatial Presence') + theme(
     axis.text.x = element_text(color="black", size=fontsize*.7),
   ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
 
