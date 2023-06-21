@@ -6,6 +6,8 @@ output: html_notebook
 library(ggplot2)
 library(ggpubr)
 library(dplyr)
+library(emmeans)
+library(ARTool)
 library(ggplot2)
 library(gridExtra)
 library(grid)
@@ -20,125 +22,61 @@ dodge = .75
 
 ```{r}
 df=read.csv('csv/spatial.csv', sep=",")
-result<-shapiro.test(df$score)
 
-print(paste("Test Statistic (W):", result$statistic, "p=", result$p.value))
-print(if (result$p.value > 0.05) "The data follows a normal distribution." else "The data does not follow a normal distribution.")
-
-qqnorm(df$score)
-qqline(df$score)
-```
-
-```{r}
-df=read.csv('csv/spatial.csv', sep=",")
-# Assuming df is your data frame
+options(scipen = 999)
 summary_df <- df %>%
   group_by(conditions) %>%
-  summarise(min = min(score),
+  summarise(mean = mean(score),
+            sd = sd(score),
+            min = min(score),
             lq = quantile(score, 0.25),
             hq = quantile(score, 0.75),
             max = max(score),
-            mean = mean(score),
-            median = median(score),
-            sd = sd(score))
-
-# Print the summary
+            median = median(score))
 print(summary_df)
+
+df %>%
+  group_by(params, conditions) %>%
+  shapiro_test(score) %>%
+  mutate(sig = ifelse(p < 0.05, "*", ""))
+
+qqnorm(df$score);qqline(df$score)
+
+ggqqplot(df, "score", ggtheme = theme_bw()) + facet_grid(params~conditions)
+
+hist(df$score)
 ```
+#### ART
 
 ```{r}
 df=read.csv('csv/spatial.csv', sep=",")
 condition_order <- c("NS", "MS", "GS", "AS")
+role_order <- c("VR", "AR") 
 df$conditions <- factor(df$conditions, levels = condition_order)
+df$role <- factor(df$role, levels = role_order)
 
-df_ar <- df[df$role == 'AR', ]
-df_vr <- df[df$role == 'VR', ]
+m = art(score ~ conditions * role + (1|id), data = df)
+anova(m)
 
-custom_boxplot <- function(df, stats, dodge, fontsize, coloring, tag) {
-    ggplot(df, aes(x = params, y = score)) +
-    stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
-    geom_boxplot(aes(fill = conditions), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
-                 position = position_dodge(1.1*dodge)) +
-    stat_summary(aes(fill = conditions), fun.y = mean,
-                 geom= "point", shape = 4, size = 2, colour= "black",
-                 position = position_dodge(1.1*dodge)) +
-    stat_summary(aes(fill = conditions), fun.y = median, fatten = .1, 
-                 geom = "crossbar", width = 0.8*dodge, color = "black",
-                 position = position_dodge(1.1*dodge)) +
-    stat_pvalue_manual(stats, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02) + 
-    scale_fill_manual(name= "conditions", values = coloring) +
-    scale_color_manual(name = "conditions", values = coloring) +
-    geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5),color="#F2F2F2")+ 
-    scale_y_continuous(minor_breaks = seq(1, 10, 1), breaks = seq(1, 7, by=1), limits=c(1, 10)) +
-    annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
-    ylab(NULL) +
-    
-    labs(tag = tag) +
-    theme_bw() +
-    theme(
-      axis.line = element_blank(),
-      axis.title.x=element_blank(),
-      axis.title.y=element_blank(),
-      axis.text.x = element_blank(),
-      axis.text.y = element_text(color="black", size=fontsize),
-      text = element_text(size=fontsize),
-      strip.background = element_blank(),
-      plot.background = element_blank(),
-      plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
-      plot.tag.position = c(1, .5),
-      plot.margin = unit(c(0.0, .025, .0, 0), "null"),
-      panel.border = element_blank(),
-      panel.spacing = unit(c(0, 0, 0, 0), "null"),
-      panel.grid.major.x = element_blank(),
-      legend.key = element_blank(),
-      legend.key.size = unit(.5, "cm"),
-      legend.key.height = unit(1, 'cm'), 
-      legend.key.width = unit(.75, 'cm'), 
-      legend.position="null",
-      legend.direction = "horizontal",
-      legend.justification = c("center", "top"),
-      legend.title=element_blank(),
-      legend.text=element_text(size=fontsize, margin = margin(r = 5)),
-      legend.margin = margin(0, 0, 0, 0),
-      legend.spacing.x = unit(0.1, "cm"),
-      legend.spacing.y = unit(0, "cm"),
-      legend.box.just = "right",
-      legend.box.background = element_blank()
-    ) 
-}
+shapiro.test(residuals(m))
+qqnorm(residuals(m));qqline(residuals(m))
 
-vr.stat.test <- df_vr %>% 
-  group_by(params) %>% 
-  wilcox_test(score~conditions, p.adjust.method = 'BH') %>%
-  add_significance("p") %>%
-  add_xy_position(x = "params")
+emmeans(artlm(m, "conditions"), pairwise ~ conditions)
+emmeans(artlm(m, "role"), pairwise ~ role)
 
-ar.stat.test <- df_ar %>% 
-  group_by(params) %>% 
-  wilcox_test(score~conditions, p.adjust.method = 'BH') %>%
-  add_significance("p") %>%
-  add_xy_position(x = "params")
+# contrast test
+art.con(m, ~ conditions) %>%
+  summary() %>%
+  mutate(sig = ifelse(p.value < 0.05, "*", ""))
 
+art.con(m, ~ role) %>%
+  summary() %>%
+  mutate(sig = ifelse(p.value < 0.05, "*", ""))
 
-bxp_vr <- custom_boxplot(df_vr, vr.stat.test, dodge, fontsize, coloring, "remote user")
-
-bxp_ar <- custom_boxplot(df_ar, ar.stat.test, dodge, fontsize, coloring, "local user") + 
-  theme(
-    plot.tag.position = c(1, .6),
-    axis.title.x=element_blank(),
-    axis.text.x = element_text(color="black", size=fontsize)
-  ) + 
-  guides(fill = guide_legend(override.aes = list(color = "transparent")))
-
-
-final_plot <- arrangeGrob(bxp_vr, bxp_ar, nrow = 2, heights = c(.45, .55))
-grid.arrange(final_plot)
-
-# saving the final figure
-ggsave("out/spatial.pdf", final_plot, width = 8, height = 5, dpi = 1000)
-  
+art.con(m, "conditions:role", interaction = TRUE) %>%
+  summary() %>%
+  mutate(sig = ifelse(p.value < 0.05, "*", ""))
 ```
-
 ```{r}
 df=read.csv('csv/spatial.csv', sep=",")
 condition_order <- c("NS", "MS", "GS", "AS")
@@ -236,9 +174,106 @@ d <- cp(df_sp, df_sp.stat, dodge, 'Spatial Presence') + theme(
   ) + guides(fill = guide_legend(override.aes = list(color = "transparent")))
 
 final_plot <- grid.arrange(a, b, c, d, nrow = 2, ncol = 2)
-grid.arrange(final_plot)
+
 ggsave("out/spatial.pdf", final_plot, width = 8, height = 5, dpi = 1000)  
 ```
+
+
+
+```{r}
+df=read.csv('csv/spatial.csv', sep=",")
+condition_order <- c("NS", "MS", "GS", "AS")
+df$conditions <- factor(df$conditions, levels = condition_order)
+
+df_ar <- df[df$role == 'AR', ]
+df_vr <- df[df$role == 'VR', ]
+
+custom_boxplot <- function(df, stats, dodge, fontsize, coloring, tag) {
+    ggplot(df, aes(x = params, y = score)) +
+    stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
+    geom_boxplot(aes(fill = conditions), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
+                 position = position_dodge(1.1*dodge)) +
+    stat_summary(aes(fill = conditions), fun.y = mean,
+                 geom= "point", shape = 4, size = 2, colour= "black",
+                 position = position_dodge(1.1*dodge)) +
+    stat_summary(aes(fill = conditions), fun.y = median, fatten = .1, 
+                 geom = "crossbar", width = 0.8*dodge, color = "black",
+                 position = position_dodge(1.1*dodge)) +
+    stat_pvalue_manual(stats, label = 'p.signif', hide.ns = TRUE, tip.length = 0.02) + 
+    scale_fill_manual(name= "conditions", values = coloring) +
+    scale_color_manual(name = "conditions", values = coloring) +
+    geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5),color="#F2F2F2")+ 
+    scale_y_continuous(minor_breaks = seq(1, 10, 1), breaks = seq(1, 7, by=1), limits=c(1, 10)) +
+    annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+    ylab(NULL) +
+    
+    labs(tag = tag) +
+    theme_bw() +
+    theme(
+      axis.line = element_blank(),
+      axis.title.x=element_blank(),
+      axis.title.y=element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(color="black", size=fontsize),
+      text = element_text(size=fontsize),
+      strip.background = element_blank(),
+      plot.background = element_blank(),
+      plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+      plot.tag.position = c(1, .5),
+      plot.margin = unit(c(0.0, .025, .0, 0), "null"),
+      panel.border = element_blank(),
+      panel.spacing = unit(c(0, 0, 0, 0), "null"),
+      panel.grid.major.x = element_blank(),
+      legend.key = element_blank(),
+      legend.key.size = unit(.5, "cm"),
+      legend.key.height = unit(1, 'cm'), 
+      legend.key.width = unit(.75, 'cm'), 
+      legend.position="null",
+      legend.direction = "horizontal",
+      legend.justification = c("center", "top"),
+      legend.title=element_blank(),
+      legend.text=element_text(size=fontsize, margin = margin(r = 5)),
+      legend.margin = margin(0, 0, 0, 0),
+      legend.spacing.x = unit(0.1, "cm"),
+      legend.spacing.y = unit(0, "cm"),
+      legend.box.just = "right",
+      legend.box.background = element_blank()
+    ) 
+}
+
+vr.stat.test <- df_vr %>% 
+  group_by(params) %>% 
+  wilcox_test(score~conditions, p.adjust.method = 'BH') %>%
+  add_significance("p") %>%
+  add_xy_position(x = "params")
+
+ar.stat.test <- df_ar %>% 
+  group_by(params) %>% 
+  wilcox_test(score~conditions, p.adjust.method = 'BH') %>%
+  add_significance("p") %>%
+  add_xy_position(x = "params")
+
+
+bxp_vr <- custom_boxplot(df_vr, vr.stat.test, dodge, fontsize, coloring, "remote user")
+
+bxp_ar <- custom_boxplot(df_ar, ar.stat.test, dodge, fontsize, coloring, "local user") + 
+  theme(
+    plot.tag.position = c(1, .6),
+    axis.title.x=element_blank(),
+    axis.text.x = element_text(color="black", size=fontsize)
+  ) + 
+  guides(fill = guide_legend(override.aes = list(color = "transparent")))
+
+
+final_plot <- arrangeGrob(bxp_vr, bxp_ar, nrow = 2, heights = c(.45, .55))
+grid.arrange(final_plot)
+
+# saving the final figure
+ggsave("out/spatial.pdf", final_plot, width = 8, height = 5, dpi = 1000)
+  
+```
+
+
 
 
 
@@ -260,3 +295,44 @@ boxplot(data[, 1], main = "Plot 5")
 boxplot(data[, 2], main = "Plot 6")
 
 ```
+
+
+
+
+```{r}
+library(rstatix)
+library(ggplot2)
+library(ggpubr)
+```
+
+```{r}
+coloring = c("#ffbd67", "#f6dbb8","#94d8e0","#537b7f")
+fontsize = 14
+dodge = .75
+```
+
+```{r}
+
+df=read.csv('csv/spatial.csv', sep=",")
+avg_df <- aggregate(score ~ grp + id + params + role + conditions, data = df, FUN = mean)
+
+avg_df %>%
+  group_by(role, conditions) %>%
+  shapiro_test(score)
+
+
+ggqqplot(avg_df, "score", ggtheme = theme_bw()) + facet_grid(conditions~role)
+
+# ggsave("out/spatial_ggqq.pdf", width = 8, height = 8, dpi = 1000)  
+
+```
+
+```{r}
+res.aov <- anova_test(
+  data = avg_df, dv = score, wid = id,
+  within = c(params, conditions)
+)
+
+get_anova_table(res.aov)
+```
+

@@ -255,30 +255,17 @@ grid.arrange(final_plot)
 ggsave("out/preference1.pdf", final_plot, width = 8, height = 6, dpi = 1000)
 ```
 
-```{r}
-library("MASS")  
-data(crabs)  
-melt_crabs <- melt(crabs,id.var=c("sp","sex","index"))   
-ggplot(melt_crabs, aes(x = variable, y = value)) +   
-  geom_line(aes(group = index), size = 0.05, alpha = 0.7) +   
-  geom_boxplot(aes(fill = sp), alpha = 0.5) + 
-  facet_grid(sex~.)
-```
 
 
 
 ### Chi-square stuffs
-#### Chi-Square Goodness-of-Fit Test: determine if these observed frequencies significantly differ from the expectations. This test compares the observed frequencies to the expected frequencies under the assumption that there is no association between preference and the conditions.
-  - H0: The observed distribution of viewpoint conditions matches the expected distribution.
-  - HA: The observed distribution of viewpoint conditions differs from the expected distribution.
-
-
 ```{r}
 df=read.csv('csv/pref.chi.csv', sep=",")
 
 print_chi_test <- function(qus_no, test_results) {
   cat(qus_no, ". Chi-square test statistic:", test_results$test_statistic, "\n")
   cat("p-value:", test_results$p_value, "\n")
+  cat("residual_tbl:", test_results$residual_tbl, "\n")
   cat("residual:", test_results$residual, "\n")
   cat("Significant categories contributing to the chi-square result:", test_results$significant_cat, "\n")
   cat("---------------------------------\n")
@@ -296,73 +283,197 @@ chi_square_test <- function(observed) {
   results <- list(
     test_statistic = test_statistic,
     p_value = p_value,
+    residual_tbl = residuals,
     residual = abs(residuals),
     significant_cat = significant_categories
   )
   return(results)
 }
 
+```
+
+#### Chi-Square Test of Independence: 
+investigate if there is an association between user roles (VR, AR) and viewpoint condition types (NS, MS, GS, AS). We want to determine if there is a significant relationship between user roles and viewpoint types in preference.
+  - H0: user role and viewpoint condition type are independent (no association).
+  - HA: user role and viewpoint condition type are not independent (there is an association).
+
+```{r}
+chi_square_test <- function(i, observed) {
+  result <- chisq.test(observed)
+  residuals <- residuals(result)
+  significant_categories <- which(abs(residuals) > 1.96) 
+  
+  test_statistic <- result$statistic
+  p_value <- result$p.value
+  results <- list(
+    test_statistic = test_statistic,
+    p_value = p_value,
+    residual_tbl = residuals,
+    residual = abs(residuals),
+    significant_cat = significant_categories
+  )
+  cat(i, ". Chi-square goodness of fit:\n")
+  print(results)
+  cat("---------------------------------\n")
+}
+
+df=read.csv('csv/pref.chi.csv', sep=",")
+
+Q1 <- df[1:2, ] 
+Q1[, c("NS", "MS", "GS", "AS")] <- lapply(Q1[, c("NS", "MS", "GS", "AS")], as.numeric)
+q1_mat_data <- matrix(c(Q1[1, c("NS", "MS", "GS", "AS")], Q1[2, c("NS", "MS", "GS", "AS")]), ncol = 2)
+colnames(q1_mat_data) <- c("VR", "AR")
+rownames(q1_mat_data) <- c("NS", "MS", "GS", "AS")
+q1_mat_data <- apply(q1_mat_data, c(1, 2), as.numeric)
+chi_square_test('Q1', q1_mat_data)
+
+Q2 <- df[4:5, ] 
+Q2[, c("NS", "MS", "GS", "AS")] <- lapply(Q2[, c("NS", "MS", "GS", "AS")], as.numeric)
+q2_mat_data <- matrix(c(Q2[1, c("NS", "MS", "GS", "AS")], Q2[2, c("NS", "MS", "GS", "AS")]), ncol = 2)
+colnames(q2_mat_data) <- c("VR", "AR")
+rownames(q2_mat_data) <- c("NS", "MS", "GS", "AS")
+q2_mat_data <- apply(q2_mat_data, c(1, 2), as.numeric)
+chi_square_test('Q2', q2_mat_data)
+
+Q3 <- df[7:8, ]
+Q3[, c("NS", "MS", "GS", "AS")] <- lapply(Q3[, c("NS", "MS", "GS", "AS")], as.numeric)
+q3_mat_data <- matrix(c(Q3[1, c("NS", "MS", "GS", "AS")], Q3[2, c("NS", "MS", "GS", "AS")]), ncol = 2)
+colnames(q3_mat_data) <- c("VR", "AR")
+rownames(q3_mat_data) <- c("NS", "MS", "GS", "AS")
+q3_mat_data <- apply(q3_mat_data, c(1, 2), as.numeric)
+chi_square_test('Q3', q3_mat_data)
+
+Q4 <- df[10:11, ]
+Q4[, c("NS", "MS", "GS", "AS")] <- lapply(Q4[, c("NS", "MS", "GS", "AS")], as.numeric)
+q4_mat_data <- matrix(c(Q4[1, c("NS", "MS", "GS", "AS")], Q4[2, c("NS", "MS", "GS", "AS")]), ncol = 2)
+colnames(q4_mat_data) <- c("VR", "AR")
+rownames(q4_mat_data) <- c("NS", "MS", "GS", "AS")
+q4_mat_data <- apply(q4_mat_data, c(1, 2), as.numeric)
+chi_square_test('Q4', q4_mat_data)
+
+Q5 <- df[13:14, ]
+Q5[, c("NS", "MS", "GS", "AS")] <- lapply(Q5[, c("NS", "MS", "GS", "AS")], as.numeric)
+q5_mat_data <- matrix(c(Q5[1, c("NS", "MS", "GS", "AS")], Q5[2, c("NS", "MS", "GS", "AS")]), ncol = 2)
+colnames(q5_mat_data) <- c("VR", "AR")
+rownames(q5_mat_data) <- c("NS", "MS", "GS", "AS")
+q5_mat_data <- apply(q5_mat_data, c(1, 2), as.numeric)
+chi_square_test('Q5', q5_mat_data)
+
+Q6 <- df[16:17, ]
+Q6[, c("NS", "MS", "GS", "AS")] <- lapply(Q6[, c("NS", "MS", "GS", "AS")], as.numeric)
+q6_mat_data <- matrix(c(Q6[1, c("NS", "MS", "GS", "AS")], Q6[2, c("NS", "MS", "GS", "AS")]), ncol = 2)
+colnames(q6_mat_data) <- c("VR", "AR")
+rownames(q6_mat_data) <- c("NS", "MS", "GS", "AS")
+q6_mat_data <- apply(q6_mat_data, c(1, 2), as.numeric)
+chi_square_test('Q6', q6_mat_data)
+
+```
+
+
+#### Chi-Square Goodness of Fit: 
+determine whether the four view selection condition (NS, MS, GS, AS) were equally preferred.
+  - H0: four view selection conditions (NS, MS, GS, AS) were equally preferred by the participants.
+  - HA: four view selection conditions (NS, MS, GS, AS) were not equally preferred by the participants.
+
+```{r}
+
+chi_square_goodness_fit <- function(i, observed) {
+  # Calculate the expected frequencies assuming random choice
+  expected <- rep(1/length(observed), length(observed))
+  
+  # Perform the chi-square goodness-of-fit test
+  # result <- chisq.test(rbind(observed, expected))
+  result <- chisq.test(observed, p=expected)
+  residuals <- residuals(result)
+  significant_categories <- which(abs(residuals) > 1.96) 
+  
+  test_statistic <- result$statistic
+  p_value <- result$p.value
+  results <- list(
+    test_statistic = test_statistic,
+    p_value = p_value,
+    residual_tbl = residuals,
+    residual = abs(residuals),
+    expected = expected,
+    significant_cat = significant_categories
+  )
+  cat(i, ". Chi-square goodness of fit:\n")
+  print(results)
+  cat("---------------------------------\n")
+}
+
+df=read.csv('csv/pref.chi.csv', sep=",")
 
 Q1 <- df[1:2, ] 
 Q1[, c("NS", "MS", "GS", "AS")] <- lapply(Q1[, c("NS", "MS", "GS", "AS")], as.numeric)
 Q1sums <- colSums(Q1[, c("NS", "MS", "GS", "AS")])
-test_results <- chi_square_test(Q1sums)
-print_chi_test("Q1", test_results)
+chi_square_goodness_fit('Q1', Q1sums)
 
 
 Q2 <- df[4:5, ] 
 Q2[, c("NS", "MS", "GS", "AS")] <- lapply(Q2[, c("NS", "MS", "GS", "AS")], as.numeric)
 Q2sums <- colSums(Q2[, c("NS", "MS", "GS", "AS")])
-test_results <- chi_square_test(Q2sums)
-print_chi_test("Q2", test_results)
+chi_square_goodness_fit('Q2', Q2sums)
 
 
 Q3 <- df[7:8, ]
 Q3[, c("NS", "MS", "GS", "AS")] <- lapply(Q3[, c("NS", "MS", "GS", "AS")], as.numeric)
 Q3sums <- colSums(Q3[, c("NS", "MS", "GS", "AS")])
-test_results <- chi_square_test(Q3sums)
-print_chi_test("Q3", test_results)
+chi_square_goodness_fit('Q3', Q3sums)
 
 
 Q4 <- df[10:11, ]
 Q4[, c("NS", "MS", "GS", "AS")] <- lapply(Q4[, c("NS", "MS", "GS", "AS")], as.numeric)
 Q4sums <- colSums(Q4[, c("NS", "MS", "GS", "AS")])
-test_results <- chi_square_test(Q4sums)
-print_chi_test("Q4", test_results)
+chi_square_goodness_fit('Q4', Q4sums)
 
 
 Q5 <- df[13:14, ]
 Q5[, c("NS", "MS", "GS", "AS")] <- lapply(Q5[, c("NS", "MS", "GS", "AS")], as.numeric)
 Q5sums <- colSums(Q5[, c("NS", "MS", "GS", "AS")])
-test_results <- chi_square_test(Q5sums)
-print_chi_test("Q5", test_results)
+chi_square_goodness_fit('Q5', Q5sums)
 
 
 Q6 <- df[16:17, ]
 Q6[, c("NS", "MS", "GS", "AS")] <- lapply(Q6[, c("NS", "MS", "GS", "AS")], as.numeric)
 Q6sums <- colSums(Q6[, c("NS", "MS", "GS", "AS")])
-test_results <- chi_square_test(Q6sums)
-print_chi_test("Q6", test_results)
-
+chi_square_goodness_fit('Q6', Q6sums)
 ```
 
-#### Chi-Square Test of Independence: investigate if there is an association between user roles (VR, AR) and viewpoint condition types (NS, MS, GS, AS). We want to determine if there is a significant relationship between user roles and viewpoint types in preference.
-  - H0: user role and viewpoint condition type are independent (no association).
-  - HA: user role and viewpoint condition type are not independent (there is an association).
 
-```{r}
-# TODO
-```
+
 
 
 ```{r}
-df=read.csv('csv/pref.chi.csv', sep=",")
+# # Load the ggplot2 package
+# df <- data.frame(level = c("a", "b", "c", 'd'), outcome = c(2.3, 1.9, 3.2, 1))
+# 
+# ggplot(df) +
+#   geom_col_pattern(
+#     aes(level, outcome, pattern_fill = level), 
+#     pattern = 'stripe',
+#     fill    = 'white',
+#     colour  = 'black'
+#   ) +
+#   theme_bw(18)
+# 
+# # Sample data
+# data <- data.frame(
+#   Category = rep(c("A", "B", "C"), each = 3),
+#   Group = rep(c("Group 1", "Group 2", "Group 3"), 3),
+#   Value = c(10, 15, 5, 8, 12, 7, 6, 9, 11)
+# )
+# # Create the stacked bar chart
+# ggplot(data, aes(x = Category, y = Value, fill = Group)) +
+#   geom_bar_pattern(stat = "identity",
+#                    pattern = c("none", "none", "none","stripe", "stripe", "stripe","none", "none", "none"),
+#                    pattern_fill = c(NA, NA, NA,"black", NA, NA,"white", NA, NA),
+#                    pattern_density = 0.01,
+#                    pattern_angle = 45) +
+#   coord_flip() +
+#   labs(x = "Category", y = "Value", title = "Vertical Stacked Bar Chart") +
+#   scale_fill_manual(values = c("Group 1" = "#537b7f", "Group 2" = "#94d8e0", "Group 3" = "#ffbd67"))
 
-print_chi_test <- function(qus_no, test_results) {
-  cat(qus_no, ". Chi-square test statistic:", test_results$test_statistic, "\n")
-  cat("p-value:", test_results$p_value, "\n")
-  cat("residual:", test_results$residual, "\n")
-  cat("Significant categories contributing to the chi-square result:", test_results$significant_cat, "\n")
-  cat("---------------------------------\n")
-}
+
 ```
+

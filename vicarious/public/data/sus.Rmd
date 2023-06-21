@@ -9,6 +9,7 @@ library(afex)
 library(ggResidpanel)
 library(psych)
 library(emmeans)
+library(ARTool)
 library(rstatix)
 library(gridExtra)
 library(grid)
@@ -19,51 +20,40 @@ dodge = .75
 ```
 
 #### Normality test
+  - 80.3 or higher = good, 
+  - 68 and above = average, 
+  - 51 and above = OK and
+  - below 51 = poor
 
 ```{r}
 df=read.csv('csv/sus.csv', sep=",")
 
-# Subset the data
-vr_as <- subset(df, conditions == "AS" & role == "VR")
-vr_gs <- subset(df, conditions == "GS" & role == "VR")
-vr_ms <- subset(df, conditions == "MS" & role == "VR")
-vr_ns <- subset(df, conditions == "NS" & role == "VR")
-ar_as <- subset(df, conditions == "AS" & role == "AR")
-ar_gs <- subset(df, conditions == "GS" & role == "AR")
-ar_ms <- subset(df, conditions == "MS" & role == "AR")
-ar_ns <- subset(df, conditions == "NS" & role == "AR")
-
-sh_vr_as <- shapiro.test(vr_as$sus_score)
-sh_vr_gs <- shapiro.test(vr_gs$sus_score)
-sh_vr_ms <- shapiro.test(vr_ms$sus_score)
-sh_vr_ns <- shapiro.test(vr_ns$sus_score)
-sh_ar_as <- shapiro.test(ar_as$sus_score)
-sh_ar_gs <- shapiro.test(ar_gs$sus_score)
-sh_ar_ms <- shapiro.test(ar_ms$sus_score)
-sh_ar_ns <- shapiro.test(ar_ns$sus_score)
-
-# Interpret normality based on p-values
-interpret_normality <- function(p_value) {
-  if (p_value > 0.05) {
-    return("The data follows a normal distribution.")
-  } else {
-    return("The data does not follow a normal distribution.")
-  }
-}
-
-# Print interpretation of normality for each subset
-print(paste("vr_as:", interpret_normality(sh_vr_as$p.value), "W:", sh_vr_as$statistic, "p:", sh_vr_as$p.value))
-print(paste("vr_gs:", interpret_normality(sh_vr_gs$p.value), "W:", sh_vr_gs$statistic, "p:", sh_vr_gs$p.value))
-print(paste("vr_ms:", interpret_normality(sh_vr_ms$p.value), "W:", sh_vr_ms$statistic, "p:", sh_vr_ms$p.value))
-print(paste("vr_ns:", interpret_normality(sh_vr_ns$p.value), "W:", sh_vr_ns$statistic, "p:", sh_vr_ns$p.value))
-print(paste("ar_as:", interpret_normality(sh_ar_as$p.value), "W:", sh_ar_as$statistic, "p:", sh_ar_as$p.value))
-print(paste("ar_gs:", interpret_normality(sh_ar_gs$p.value), "W:", sh_ar_gs$statistic, "p:", sh_ar_gs$p.value))
-print(paste("ar_ms:", interpret_normality(sh_ar_ms$p.value), "W:", sh_ar_ms$statistic, "p:", sh_ar_ms$p.value))
-print(paste("ar_ns:", interpret_normality(sh_ar_ns$p.value), "W:", sh_ar_ns$statistic, "p:", sh_ar_ns$p.value))
+summary_df <- df %>%
+  group_by(role) %>%
+  summarise(mean = mean(sus_score),
+            # min = min(sus_score),
+            # max = max(sus_score),
+            # median = median(sus_score),
+            sd = sd(sus_score)) %>%
+  mutate(rating = case_when(
+    mean >= 80.3 ~ "good",
+    mean >= 68 ~ "average",
+    mean >= 51 ~ "ok",
+    TRUE ~ "poor"
+  ))
 
 
-# balance 
-table(df$role, df$conditions)
+# Print the summary
+print(summary_df)
+
+df %>%
+  group_by(role, conditions) %>%
+  shapiro_test(sus_score) %>%
+  mutate(sig = ifelse(p < 0.05, "*", ""))
+
+qqnorm(df$sus_score);qqline(df$sus_score)
+
+ggqqplot(df, "sus_score", ggtheme = theme_bw()) + facet_grid(conditions~role)
 
 hist(df$sus_score)
 ```
@@ -81,10 +71,45 @@ boxplot(sus_score ~ conditions, data = df,
         ylab = "Value")
 # Calculate mean for each category
 means <- aggregate(sus_score ~ conditions, data = df, mean)
-
-# Add mean points
 points(x = as.numeric(means$conditions), y = means$sus_score, pch = 4)
+
+ggplot(df, aes(x = conditions, y = sus_score)) +
+  geom_boxplot() +
+  labs(title = "Boxplot Example", x = "Category", y = "Value") +
+  facet_grid(. ~ role)
 ```
+#### ART
+
+```{r}
+df=read.csv('csv/sus.csv', sep=",")
+condition_order <- c("NS", "MS", "GS", "AS")
+role_order <- c("VR", "AR") 
+df$conditions <- factor(df$conditions, levels = condition_order)
+df$role <- factor(df$role, levels = role_order)
+
+m = art(sus_score ~ conditions * role + (1|participant), data = df)
+anova(m)
+
+shapiro.test(residuals(m))
+qqnorm(residuals(m));qqline(residuals(m))
+
+
+# contrast test
+art.con(m, ~ conditions) %>%
+  summary() %>%
+  mutate(sig = ifelse(p.value < 0.05, "*", ""))
+
+art.con(m, ~ role) %>%
+  summary() %>%
+  mutate(sig = ifelse(p.value < 0.05, "*", ""))
+
+art.con(m, "conditions:role", interaction = TRUE) %>%
+  summary() %>%
+  mutate(sig = ifelse(p.value < 0.05, "*", ""))
+
+
+```
+
 
 SUS data is normally distributed, one-way ANOVA to compare the means of the SUS scores between the different conditions. 
 

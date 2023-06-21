@@ -1,7 +1,7 @@
 qus,cond,value
-Q1,NS,8
-Q1,MS,1
-Q1,GS,6
+Q1,NS,1
+Q1,MS,6
+Q1,GS,8
 Q1,AS,3
 Q2,NS,1
 Q2,MS,9
@@ -21,5 +21,5 @@ Q5,GS,10
 Q5,AS,4
 Q6,NS,1
 Q6,MS,3
-Q6,GS,7
-Q6,AS,7
+Q6,GS,8
+Q6,AS,6

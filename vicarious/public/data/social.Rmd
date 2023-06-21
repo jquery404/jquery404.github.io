@@ -6,6 +6,8 @@ output: html_notebook
 library(ggplot2)
 library(ggpubr)
 library(dplyr)
+library(emmeans)
+library(ARTool)
 library(ggplot2)
 library(gridExtra)
 library(grid)
@@ -21,65 +23,63 @@ dodge = .75
 ```{r}
 df=read.csv('csv/social.csv', sep=",")
 
-# Normality assumption
+options(scipen = 999)
+summary_df <- df %>%
+  group_by(conditions) %>%
+  summarise(mean = mean(score),
+            sd = sd(score),
+            min = min(score),
+            lq = quantile(score, 0.25),
+            hq = quantile(score, 0.75),
+            max = max(score),
+            median = median(score))
+print(summary_df)
+
 df %>%
-  group_by(conditions) %>%
-  shapiro_test(score)
+  group_by(params, conditions) %>%
+  shapiro_test(score) %>%
+  mutate(sig = ifelse(p < 0.05, "*", ""))
 
-ggqqplot(df, "score", facet.by = "conditions")
+qqnorm(df$score);qqline(df$score)
 
+ggqqplot(df, "score", ggtheme = theme_bw()) + facet_grid(params~conditions)
 
-df_ar <- df[df$role == 'AR', ]
-df_vr <- df[df$role == 'VR', ]
-
-# Normality assumption ar
-df_ar %>%
-  group_by(conditions) %>%
-  shapiro_test(score)
-
-ggqqplot(df_ar, "score", facet.by = "conditions")
-
-# Normality assumption vr
-df_vr %>%
-  group_by(conditions) %>%
-  shapiro_test(score)
-
-ggqqplot(df_vr, "score", facet.by = "conditions")
-
-
-with(df, interaction.plot(role, conditions, score)) # interaction plot
-
-boxplot(score~role*conditions, data=df) # boxplot
-
-
-# Create the first boxplot
-plot1 <- ggboxplot(df, x = "conditions", y = "score", add = "jitter") +
-  labs(title = "overall")
-
-# Create the second boxplot
-plot2 <- ggboxplot(df_vr, x = "conditions", y = "score", add = "jitter") +
-  labs(title = "remote")
-
-# Create the third boxplot
-plot3 <- ggboxplot(df_ar, x = "conditions", y = "score", add = "jitter") +
-  labs(title = "local")
-
-# Arrange the plots in a grid
-grid.arrange(plot1, arrangeGrob(plot2,plot3, ncol=2), ncol = 1)
-
-
-# Interpret normality based on p-values
-interpret_normality <- function(p_value) {
-  if (p_value > 0.05) {
-    return("The data follows a normal distribution.")
-  } else {
-    return("The data does not follow a normal distribution.")
-  }
-}
+hist(df$score)
 
 
 ```
+#### ART
 
+```{r}
+df=read.csv('csv/social.csv', sep=",")
+condition_order <- c("NS", "MS", "GS", "AS")
+role_order <- c("VR", "AR") 
+df$conditions <- factor(df$conditions, levels = condition_order)
+df$role <- factor(df$role, levels = role_order)
+df$participant <- as.factor(df$participant)
+
+m = art(score ~ conditions * role + (1|participant), data = df)
+anova(m)
+
+shapiro.test(residuals(m))
+qqnorm(residuals(m));qqline(residuals(m))
+
+emmeans(artlm(m, "conditions"), pairwise ~ conditions)
+emmeans(artlm(m, "role"), pairwise ~ role)
+
+# contrast test
+art.con(m, ~ conditions) %>%
+  summary() %>%
+  mutate(sig = ifelse(p.value < 0.05, "*", ""))
+
+art.con(m, ~ role) %>%
+  summary() %>%
+  mutate(sig = ifelse(p.value < 0.05, "*", ""))
+
+art.con(m, "conditions:role", interaction = TRUE) %>%
+  summary() %>%
+  mutate(sig = ifelse(p.value < 0.05, "*", ""))
+```
 
 
 
@@ -579,3 +579,6 @@ tukey_results <- TukeyHSD(a)
 print(tukey_results)
 
 ```
+
+
+

@@ -10,8 +10,11 @@ RTlx calculation
 ```{r}
 # library
 library(ggplot2)
+library(ggpubr)
 library(dplyr)
 library(broom)
+library(emmeans)
+library(ARTool)
 library(tidyr)
 library(stats)
 
@@ -20,7 +23,186 @@ fontsize = 14
 dodge = .75
 ```
 
-#### Quick box-plot and Descriptive stats
+
+### Lets find out about Task complexity 
+
+```{r}
+
+data=read.csv('csv/TaskCompletionTime.csv', sep=",")
+df <- data %>%
+  pivot_longer(
+    cols = starts_with("task"),
+    names_to = "task",
+    values_to = "time"
+  ) %>%
+  arrange(conditions, task)
+
+df <- df %>%
+  mutate(category = ifelse(task %in% c('task1', 'task2', 'task3', 'task4'), 'Total', 
+                    ifelse(task %in% c('task5', 'task6', 'task7', 'task8'), 'Search', 
+                    ifelse(task %in% c('task9', 'task10', 'task11', 'task12'), 'Assembly',NA))))
+
+# Assuming df is your data frame
+summary_df <- df %>%
+  group_by(category) %>%
+  summarise(mean = mean(time),
+            sd = sd(time),
+            median = median(time),
+            min = min(time),
+            max = max(time))
+
+# Print the summary
+print(summary_df)
+
+
+condition_order <- c("NS", "MS", "GS", "AS")
+df$conditions <- factor(df$conditions, levels = condition_order)
+boxplot(time ~ conditions, data = df, 
+        main = "Boxplot Example",
+        xlab = "Category",
+        ylab = "Value")
+# Calculate mean for each category
+means <- aggregate(time ~ conditions, data = df, mean)
+points(x = as.numeric(means$conditions), y = means$time, pch = 4)
+```
+
+```{r}
+options(scipen = 999)
+df %>%
+  group_by(category, conditions) %>%
+  shapiro_test(time) %>%
+  mutate(sig = ifelse(p < 0.05, "*", ""))
+
+qqnorm(df$time);qqline(df$time)
+
+ggqqplot(df, "time", ggtheme = theme_bw()) + facet_grid(conditions~category)
+
+hist(df$time)
+
+```
+
+
+
+```{r}
+# Search time for Lego task
+## One-Way ANOVA & Bartlett's test - posthoc
+model <- aov(time ~ conditions, data = df %>%
+  filter(category == "Search") %>%
+  group_by(conditions))
+summary(model)
+
+bartlett.test(time ~ conditions, data = df %>%
+  filter(category == "Search") %>%
+  group_by(conditions))
+
+emmeans(model, pairwise ~ conditions, adjust = "holm")
+
+# Assembly time for Lego task
+## One-Way ANOVA & Bartlett's test - posthoc
+model <- aov(time ~ conditions, data = df %>%
+  filter(category == "Assembly") %>%
+  group_by(conditions))
+summary(model)
+
+bartlett.test(time ~ conditions, data = df %>%
+  filter(category == "Assembly") %>%
+  group_by(conditions))
+
+emmeans(model, pairwise ~ conditions, adjust = "holm")
+
+# Total time for Lego task
+## One-Way ANOVA & Bartlett's test - posthoc
+model <- aov(time ~ conditions, data = df %>%
+  filter(category == "Total") %>%
+  group_by(conditions))
+summary(model)
+
+bartlett.test(time ~ conditions, data = df %>%
+  filter(category == "Total") %>%
+  group_by(conditions))
+
+emmeans(model, pairwise ~ conditions, adjust = "holm")
+
+
+
+model <- aov(time ~ conditions * category, data = df)
+summary(model)
+contrasts <- emmeans(model, pairwise ~ conditions | category, adjust = "holm")
+
+```
+
+
+```{r}
+custom_boxplot <- function(df, stats, dodge, fontsize, coloring) {
+    ggplot(df, aes(x = category, y = time)) + 
+    stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
+    geom_boxplot(aes(fill = conditions), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
+                 position = position_dodge(1.1*dodge)) +
+    stat_summary(aes(fill = conditions), fun.y = mean,
+                 geom= "point", shape = 4, size = 2, colour= "black",
+                 position = position_dodge(1.1*dodge)) +
+    stat_summary(aes(fill = conditions), fun.y = median, fatten = .1, 
+                 geom = "crossbar", width = 0.8*dodge, color = "black",
+                 position = position_dodge(1.1*dodge)) +
+    stat_pvalue_manual(stats, hide.ns = T) +
+    scale_fill_manual(name= "conditions", values = coloring) +
+    scale_color_manual(name = "conditions", values = coloring) +
+    geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5,5.5),color="#F2F2F2")+ 
+    labs(x = NULL, y = NULL) + 
+    theme_bw() + 
+    annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+    theme(
+      axis.line = element_blank(),
+      axis.title.x=element_blank(),
+      axis.title.y=element_blank(),
+      axis.text.x = element_text(color="black", size=fontsize),
+      axis.text.y = element_text(color="black", size=fontsize),
+      text = element_text(size=fontsize),
+      strip.background = element_blank(),
+      plot.background = element_blank(),
+      plot.margin = unit(c(0.005, .05, 0, 0), "null"),
+      panel.border = element_blank(),
+      panel.spacing = unit(c(0, 0, 0, 0), "null"),
+      panel.grid.major.x = element_blank(),
+      legend.key = element_blank(),
+      legend.key.size = unit(.5, "cm"),
+      legend.key.height = unit(1, 'cm'), 
+      legend.key.width = unit(.75, 'cm'), 
+      legend.position="none",
+      legend.direction = "horizontal",
+      legend.justification = c("center", "top"),
+      legend.title=element_blank(),
+      legend.text=element_text(size=fontsize, margin = margin(r = 5)),
+      legend.margin = margin(0, 0, 0, 0),
+      legend.spacing.x = unit(0.1, "cm"),
+      legend.spacing.y = unit(0, "cm"),
+      legend.box.just = "right",
+      legend.box.background = element_blank()
+    ) 
+}
+
+stattest <- df %>%
+  group_by(category) %>%
+  tukey_hsd(time~conditions) %>% 
+  # wilcox_test(time~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
+  add_significance() %>% 
+  add_xy_position(x = "category")
+
+# stat.test <- tribble(
+#         ~category, ~group1, ~group2, ~p.adj, ~p.adj.signif,
+#         "Assembly", "NS", "MS", 0.0038, "**"
+#       )
+
+custom_boxplot(df, stattest, dodge, fontsize, coloring) + 
+  guides(fill = guide_legend(override.aes = list(color = "transparent")))
+
+# saving the final figure
+ggsave("out/TaskCompletionTime.pdf", width = 8, height = 4, dpi = 1000)
+```
+
+
+
+#### NASA-TLX
 
 ```{r}
 data=read.csv('csv/nasa_tlx.csv', sep=",")
@@ -35,13 +217,13 @@ df <- data %>%
 summary_df <- df %>%
   filter(params == "Overall") %>%
   group_by(conditions) %>%
-  summarise(min = min(scores),
+  summarise(mean = mean(scores),
+            sd = sd(scores),
+            min = min(scores),
             lq = quantile(scores, 0.25),
             hq = quantile(scores, 0.75),
             max = max(scores),
-            mean = mean(scores),
-            median = median(scores),
-            sd = sd(scores))
+            median = median(scores))
 
 # Print the summary
 print(summary_df)
@@ -50,10 +232,7 @@ boxplot(scores ~ conditions, data = df,
         main = "Boxplot Example",
         xlab = "Category",
         ylab = "Value")
-# Calculate mean for each category
 means <- aggregate(scores ~ conditions, data = df, mean)
-
-# Add mean points
 points(x = as.numeric(means$conditions), y = means$scores, pch = 4)
 ```
 
@@ -65,15 +244,230 @@ condition_order <- c("NS", "MS", "GS", "AS")
 df <- data %>%
   gather(key = "conditions", value = "scores", NS:AS) %>%
   mutate(conditions = factor(conditions, levels = condition_order))
-result<-shapiro.test(df$scores)
 
-print(paste("Test Statistic (W):", result$statistic, "p=", result$p.value))
-print(if (result$p.value > 0.05) "The data follows a normal distribution." else "The data does not follow a normal distribution.")
 
-qqnorm(df$scores)
-qqline(df$scores)
+options(scipen = 999)
+df %>%
+  group_by(params, conditions) %>%
+  shapiro_test(scores) %>%
+  mutate(sig = ifelse(p < 0.05, "*", ""))
+
+qqnorm(df$scores);qqline(df$scores)
+
+ggqqplot(df, "scores", ggtheme = theme_bw()) + facet_grid(params ~ conditions)
+
+ggsave("out/rtlx_ggqq.pdf", width = 8, height = 8, dpi = 1000)  
+
+
 ```
 
+#### ART
+
+```{r}
+data=read.csv('csv/nasa_tlx.csv', sep=",")
+condition_order <- c("NS", "MS", "GS", "AS")
+role_order <- c("VR", "AR") 
+df <- data %>%
+  gather(key = "conditions", value = "scores", NS:AS) %>%
+  mutate(conditions = factor(conditions, levels = condition_order), role = factor(role, levels = role_order))
+
+x_order <- c("VR", "AR", "Overall")
+
+dfx <- df %>%
+  filter(params == "Overall") %>%
+  group_by(conditions)
+
+dfx$role <- factor(dfx$role, levels = x_order)
+
+m = art(scores ~ conditions * role + (1|participant), data = df)
+anova(m)
+
+shapiro.test(residuals(m))
+qqnorm(residuals(m));qqline(residuals(m))
+
+
+# contrast test
+art.con(m, ~ conditions) %>%
+  summary() %>%
+  mutate(sig = ifelse(p.value < 0.05, "*", ""))
+
+art.con(m, ~ role) %>%
+  summary() %>%
+  mutate(sig = ifelse(p.value < 0.05, "*", ""))
+
+art.con(m, "conditions:role", interaction = TRUE) %>%
+  summary() %>%
+  mutate(sig = ifelse(p.value < 0.05, "*", ""))
+
+
+```
+
+
+```{r}
+
+data=read.csv('csv/nasa_tlx.csv', sep=",")
+condition_order <- c("NS", "MS", "GS", "AS")
+param_order <- c("Mental", "Physical", "Temporal", "Performance", "Effort", "Frustration", "Overall")
+df <- data %>%
+  gather(key = "conditions", value = "scores", NS:AS) %>%
+  mutate(conditions = factor(conditions, levels = condition_order)) %>%
+  mutate(params = factor(params, levels = param_order))
+
+x_order <- c("VR", "AR", "Overall")
+
+dfx <- df %>%
+  filter(params == "Overall") %>%
+  group_by(conditions)
+
+dfx$role <- factor(dfx$role, levels = x_order)
+write.csv(dfx, "csv/rtlx-df.csv", row.names = FALSE)
+
+stats <- dfx %>% 
+  group_by(role) %>% 
+  wilcox_test(scores~conditions, p.adjust.method = 'holm') %>%
+  add_significance("p") %>%
+  add_xy_position(x = "role")
+
+ggplot(dfx, aes(x = role, y = scores)) +
+    stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
+    geom_boxplot(aes(fill = conditions), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
+                 position = position_dodge(1.1*dodge)) +
+    stat_summary(aes(fill = conditions), fun.y = mean,
+                 geom= "point", shape = 4, size = 2, colour= "black",
+                 position = position_dodge(1.1*dodge)) +
+    stat_summary(aes(fill = conditions), fun.y = median, fatten = .1, 
+                 geom = "crossbar", width = 0.8*dodge, color = "black",
+                 position = position_dodge(1.1*dodge)) +
+    scale_fill_manual(name= "conditions", values = coloring) +
+    scale_color_manual(name = "conditions", values = coloring) +
+    stat_pvalue_manual(stats, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) +
+    geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5),color="#F2F2F2")+ 
+    scale_y_continuous(minor_breaks = seq(0, 110, 20), breaks = seq(0, 100, by=20), limits=c(0, 110)) +
+    annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+    ylab(NULL) +
+    theme_bw() +
+    theme(
+      axis.line = element_blank(),
+      axis.title.x=element_blank(),
+      axis.title.y=element_blank(),
+      axis.text.x = element_text(color="black", size=fontsize),
+      axis.text.y = element_text(color="black", size=fontsize),
+      text = element_text(size=fontsize),
+      strip.background = element_blank(),
+      plot.background = element_blank(),
+      plot.margin = unit(c(0.0, .025, .0, 0), "null"),
+      panel.border = element_blank(),
+      panel.spacing = unit(c(0, 0, 0, 0), "null"),
+      panel.grid.major.x = element_blank(),
+      legend.key = element_blank(),
+      legend.key.size = unit(.5, "cm"),
+      legend.key.height = unit(1, 'cm'), 
+      legend.key.width = unit(.75, 'cm'), 
+      legend.position="null",
+      legend.direction = "horizontal",
+      legend.justification = c("center", "top"),
+      legend.title=element_blank(),
+      legend.text=element_text(size=fontsize, margin = margin(r = 5)),
+      legend.margin = margin(0, 0, 0, 0),
+      legend.spacing.x = unit(0.1, "cm"),
+      legend.spacing.y = unit(0, "cm"),
+      legend.box.just = "right",
+      legend.box.background = element_blank()
+    ) 
+
+# saving the final figure
+ggsave("out/rtlx.pdf", width = 8, height = 4, dpi = 1000)
+  
+```
+
+
+```{r}
+data=read.csv('csv/nasa_tlx.csv', sep=",")
+condition_order <- c("NS", "MS", "GS", "AS")
+param_order <- c("Mental", "Physical", "Temporal", "Performance", "Effort", "Frustration", "Overall")
+coloring = c("#ffbd67", "#94d8e0")
+df <- data %>%
+  gather(key = "conditions", value = "scores", NS:AS) %>%
+  mutate(conditions = factor(conditions, levels = condition_order)) %>%
+  mutate(params = factor(params, levels = param_order))
+write.csv(df, "csv/rtlx-df.csv", row.names = FALSE)
+
+cp <- function(df, dodge, lab) {
+    ggplot(df, aes(x = conditions, y = scores)) +
+    stat_boxplot(aes(fill = role), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
+    geom_boxplot(aes(fill = role), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
+                 position = position_dodge(1.1*dodge)) +
+    stat_summary(aes(fill = role), fun.y = mean,
+                 geom= "point", shape = 4, size = 2, colour= "black",
+                 position = position_dodge(1.1*dodge)) +
+    geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5),color="#F2F2F2")+ 
+    xlab(lab) +
+    ylab(NULL) +
+    # stat_pvalue_manual(stat, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) +
+    scale_fill_manual(name= "conditions", values = coloring) +
+    scale_color_manual(name = "conditions", values = coloring) +
+    scale_y_continuous(minor_breaks = seq(0, 100, 20), breaks = seq(0, 100, by=20), limits=c(0, 100)) +
+    annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
+    theme_bw() +
+    theme(
+      axis.line = element_blank(),
+      axis.title.y=element_blank(),
+      axis.text.x = element_text(color="black", size=.65*fontsize),
+      axis.text.y = element_blank(),
+      text = element_text(size=fontsize),
+      strip.background = element_blank(),
+      plot.background = element_blank(),
+      plot.title = element_text(hjust = 0.5, color="black", size=.75*fontsize, face = "bold"),
+      plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
+      plot.tag.position = c(1, .5),
+      plot.margin = unit(c(0.0, .025, .1, 0), "null"),
+      panel.border = element_blank(),
+      panel.spacing = unit(c(0, 0, 0, 0), "null"),
+      panel.grid.major.x = element_blank(),
+      legend.key = element_blank(),
+      legend.key.size = unit(.5, "cm"),
+      legend.key.height = unit(1, 'cm'), 
+      legend.key.width = unit(.75, 'cm'), 
+      legend.position="null",
+      legend.direction = "horizontal",
+      legend.justification = c("center", "top"),
+      legend.title=element_blank(),
+      legend.text=element_text(size=fontsize, margin = margin(r = 5)),
+      legend.margin = margin(0, 0, 0, 0),
+      legend.spacing.x = unit(0.1, "cm"),
+      legend.spacing.y = unit(0, "cm"),
+      legend.box.just = "right",
+      legend.box.background = element_blank()
+    ) 
+}
+
+df_me <- df[df$params == 'Mental', ]
+df_ph <- df[df$params == 'Physical', ]
+df_tm <- df[df$params == 'Temporal', ]
+df_pf <- df[df$params == 'Performance', ]
+df_ef <- df[df$params == 'Effort', ]
+df_fr <- df[df$params == 'Frustration', ]
+df_ov <- df[df$params == 'Overall' & (df$role == "VR" | df$role == "AR"), ]
+
+# Create boxplots
+
+p <- cp(df_ph, dodge, 'Physical') + theme(axis.ticks = element_blank())
+t <- cp(df_pf, dodge, 'Temporal') + theme(axis.ticks = element_blank())
+
+m <- cp(df_me, dodge, 'Mental') + theme(axis.text.y = element_text(color="black", size=fontsize))
+f <- cp(df_fr, dodge, 'Frustration') + theme(axis.ticks = element_blank())
+
+e <- cp(df_ef, dodge, 'Effort') + theme(axis.text.y = element_text(color="black", size=fontsize),)
+o <- cp(df_ov, dodge, 'Overall') + theme(axis.ticks = element_blank())
+
+final_plot <- grid.arrange(m, f, e, o, nrow = 2, ncol = 2)
+
+
+
+# saving the final figure
+ggsave("out/rtlx.pdf", final_plot, width = 8, height = 4, dpi = 1000)
+
+```
 
 ### Lets plot 
 bar plot
@@ -217,359 +611,12 @@ grid.arrange(final_plot)
 ggsave("out/rtlx.pdf", final_plot, width = 10, height = 6, dpi = 1000)
   
 ```
-```{r}
-
-data=read.csv('csv/nasa_tlx.csv', sep=",")
-condition_order <- c("NS", "MS", "GS", "AS")
-param_order <- c("Mental", "Physical", "Temporal", "Performance", "Effort", "Frustration", "Overall")
-df <- data %>%
-  gather(key = "conditions", value = "scores", NS:AS) %>%
-  mutate(conditions = factor(conditions, levels = condition_order)) %>%
-  mutate(params = factor(params, levels = param_order))
-
-x_order <- c("VR", "AR", "Overall")
-
-dfx <- df %>%
-  filter(params == "Overall") %>%
-  group_by(conditions)
-
-dfx$role <- factor(dfx$role, levels = x_order)
-
-stats <- dfx %>% 
-  group_by(role) %>% 
-  wilcox_test(scores~conditions, p.adjust.method = 'holm') %>%
-  add_significance("p") %>%
-  add_xy_position(x = "role")
-
-ggplot(dfx, aes(x = role, y = scores)) +
-    stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
-    geom_boxplot(aes(fill = conditions), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
-                 position = position_dodge(1.1*dodge)) +
-    stat_summary(aes(fill = conditions), fun.y = mean,
-                 geom= "point", shape = 4, size = 2, colour= "black",
-                 position = position_dodge(1.1*dodge)) +
-    stat_summary(aes(fill = conditions), fun.y = median, fatten = .1, 
-                 geom = "crossbar", width = 0.8*dodge, color = "black",
-                 position = position_dodge(1.1*dodge)) +
-    scale_fill_manual(name= "conditions", values = coloring) +
-    scale_color_manual(name = "conditions", values = coloring) +
-    stat_pvalue_manual(stats, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) +
-    geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5),color="#F2F2F2")+ 
-    scale_y_continuous(minor_breaks = seq(0, 110, 20), breaks = seq(0, 100, by=20), limits=c(0, 110)) +
-    annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
-    ylab(NULL) +
-    theme_bw() +
-    theme(
-      axis.line = element_blank(),
-      axis.title.x=element_blank(),
-      axis.title.y=element_blank(),
-      axis.text.x = element_text(color="black", size=fontsize),
-      axis.text.y = element_text(color="black", size=fontsize),
-      text = element_text(size=fontsize),
-      strip.background = element_blank(),
-      plot.background = element_blank(),
-      plot.margin = unit(c(0.0, .025, .0, 0), "null"),
-      panel.border = element_blank(),
-      panel.spacing = unit(c(0, 0, 0, 0), "null"),
-      panel.grid.major.x = element_blank(),
-      legend.key = element_blank(),
-      legend.key.size = unit(.5, "cm"),
-      legend.key.height = unit(1, 'cm'), 
-      legend.key.width = unit(.75, 'cm'), 
-      legend.position="null",
-      legend.direction = "horizontal",
-      legend.justification = c("center", "top"),
-      legend.title=element_blank(),
-      legend.text=element_text(size=fontsize, margin = margin(r = 5)),
-      legend.margin = margin(0, 0, 0, 0),
-      legend.spacing.x = unit(0.1, "cm"),
-      legend.spacing.y = unit(0, "cm"),
-      legend.box.just = "right",
-      legend.box.background = element_blank()
-    ) 
-
-# saving the final figure
-ggsave("out/rtlx.pdf", width = 8, height = 4, dpi = 1000)
-  
-```
-grid layout - 3x2
-
-```{r}
-
-data=read.csv('csv/nasa_tlx.csv', sep=",")
-condition_order <- c("NS", "MS", "GS", "AS")
-param_order <- c("Mental", "Physical", "Temporal", "Performance", "Effort", "Frustration", "Overall")
-df <- data %>%
-  gather(key = "conditions", value = "scores", NS:AS) %>%
-  mutate(conditions = factor(conditions, levels = condition_order)) %>%
-  mutate(params = factor(params, levels = param_order))
-
-cp <- function(df, dodge, lab) {
-    ggplot(df, aes(x = conditions, y = scores)) +
-    stat_boxplot(aes(fill = role), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
-    geom_boxplot(aes(fill = role), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
-                 position = position_dodge(1.1*dodge)) +
-    stat_summary(aes(fill = role), fun.y = mean,
-                 geom= "point", shape = 4, size = 2, colour= "black",
-                 position = position_dodge(1.1*dodge)) +
-    geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5),color="#F2F2F2")+ 
-    xlab(NULL) +
-    ylab(NULL) +
-    # stat_pvalue_manual(stat, label = 'p.adj.signif', hide.ns = TRUE, tip.length = 0.02) +
-    scale_fill_manual(name= "conditions", values = coloring) +
-    scale_color_manual(name = "conditions", values = coloring) +
-    scale_y_continuous(minor_breaks = seq(0, 100, 20), breaks = seq(0, 100, by=20), limits=c(0, 100)) +
-    annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
-    labs(title = lab) +
-    theme_bw() +
-    theme(
-      axis.line = element_blank(),
-      axis.title.y=element_blank(),
-      axis.text.x = element_text(color="black", size=.65*fontsize),
-      axis.text.y = element_blank(),
-      text = element_text(size=fontsize),
-      strip.background = element_blank(),
-      plot.background = element_blank(),
-      plot.title = element_text(hjust = 0.5, color="black", size=.75*fontsize, face = "bold"),
-      plot.tag = element_text(angle = 90, vjust = 1, size=fontsize),
-      plot.tag.position = c(1, .5),
-      plot.margin = unit(c(0.0, .025, .1, 0), "null"),
-      panel.border = element_blank(),
-      panel.spacing = unit(c(0, 0, 0, 0), "null"),
-      panel.grid.major.x = element_blank(),
-      legend.key = element_blank(),
-      legend.key.size = unit(.5, "cm"),
-      legend.key.height = unit(1, 'cm'), 
-      legend.key.width = unit(.75, 'cm'), 
-      legend.position="null",
-      legend.direction = "horizontal",
-      legend.justification = c("center", "top"),
-      legend.title=element_blank(),
-      legend.text=element_text(size=fontsize, margin = margin(r = 5)),
-      legend.margin = margin(0, 0, 0, 0),
-      legend.spacing.x = unit(0.1, "cm"),
-      legend.spacing.y = unit(0, "cm"),
-      legend.box.just = "right",
-      legend.box.background = element_blank()
-    ) 
-}
-
-df_me <- df[df$params == 'Mental', ]
-df_ph <- df[df$params == 'Physical', ]
-df_tm <- df[df$params == 'Temporal', ]
-df_pf <- df[df$params == 'Performance', ]
-df_ef <- df[df$params == 'Effort', ]
-df_fr <- df[df$params == 'Frustration', ]
-df_ov <- df[df$params == 'Overall' & (df$role == "VR" | df$role == "AR"), ]
-
-# Create boxplots
-a <- cp(df_me, dodge, 'Mental') + theme(axis.text.y = element_text(color="black", size=fontsize))
-b <- cp(df_ph, dodge, 'Physical') + theme(axis.ticks = element_blank())
-c <- cp(df_pf, dodge, 'Temporal') + theme(axis.ticks = element_blank())
-d <- cp(df_ef, dodge, 'Effort') + theme(axis.text.y = element_text(color="black", size=fontsize), 
-                                        plot.margin = unit(c(0.0, .025, 0, 0), "null"))
-e <- cp(df_fr, dodge, 'Frustration') + theme(axis.ticks = element_blank(), plot.margin = unit(c(0.0, .025, 0, 0), "null"))
-f <- cp(df_ov, dodge, 'Overall') + theme(axis.ticks = element_blank(), plot.margin = unit(c(0.0, .025, 0, 0), "null"))
-
-final_plot <- grid.arrange(a, b, c, d, e, f, nrow = 2, ncol = 3)
-grid.arrange(final_plot)
-# saving the final figure
-ggsave("out/rtlx.pdf", final_plot, width = 8, height = 4, dpi = 1000)
-```
 
 
 
-### -------------------------------------
-### Lets find out about Task complexity 
-
-
-```{r}
-
-data=read.csv('csv/TaskCompletionTime.csv', sep=",")
-df <- data %>%
-  pivot_longer(
-    cols = starts_with("task"),
-    names_to = "task",
-    values_to = "time"
-  ) %>%
-  arrange(conditions, task)
-
-# Assuming df is your data frame
-summary_df <- df %>%
-  group_by(conditions) %>%
-  summarise(min = min(time),
-            max = max(time),
-            mean = mean(time),
-            median = median(time),
-            sd = sd(time))
-
-# Print the summary
-print(summary_df)
-
-df <- df %>%
-  mutate(category = ifelse(task %in% c('task1', 'task2', 'task3', 'task4'), 'Total', 
-                    ifelse(task %in% c('task5', 'task6', 'task7', 'task8'), 'Search', 
-                    ifelse(task %in% c('task9', 'task10', 'task11', 'task12'), 'Assembly',NA))))
 
 
 
-condition_order <- c("NS", "MS", "GS", "AS")
-df$conditions <- factor(df$conditions, levels = condition_order)
-boxplot(time ~ conditions, data = df, 
-        main = "Boxplot Example",
-        xlab = "Category",
-        ylab = "Value")
-# Calculate mean for each category
-means <- aggregate(time ~ conditions, data = df, mean)
-
-# Add mean points
-points(x = as.numeric(means$conditions), y = means$time, pch = 4)
-```
-
-```{r}
-model <- aov_4(time ~ conditions + (conditions|group), type= 3, data = df)
-summary(model)
-
-print('# Perform repeated measures ANOVA with nice()')
-modelnice <- nice(model, intercept = TRUE, correction = "GG")
-
-print(modelnice) # ges: generalized eta-squared, measure of effect size indicating the proportion of variance explained by the independent variable.
-
-emmip(model, ~conditions, CIs = TRUE)
-```
-```{r}
-posthoc <- emmeans(model, specs = pairwise ~ conditions, model = "multivariate", adjust = "tukey")
-posthoc$emmeans
-posthoc$contrasts
-```
-
-Extract residual/predicted values
-```{r}
-new_data <- fitted(model, append = TRUE)
-residual_data <- residuals(model, append = TRUE)
-new_data$.residuals <- residual_data$.residuals
-head(new_data, 20)
-
-describe(new_data$.residuals, type=1)
-
-shapiro.test(new_data$.residuals)
-
-resid_auxpanel(residuals=new_data$.residuals, predicted=new_data$.fitted, smoother = TRUE, qqbands=TRUE, 
-               plots=c('resid', 'qq', 'index', 'hist'))
-```
-
-
-```{r}
-custom_boxplot <- function(df, stats, dodge, fontsize, coloring) {
-    ggplot(df, aes(x = category, y = time)) + 
-    stat_boxplot(aes(fill = conditions), geom = "errorbar", width = 0.3, position = position_dodge(1.1*dodge)) +
-    geom_boxplot(aes(fill = conditions), width = 0.8*dodge, coef = 0, outlier.alpha = 0, show.legend = F,
-                 position = position_dodge(1.1*dodge)) +
-    stat_summary(aes(fill = conditions), fun.y = mean,
-                 geom= "point", shape = 4, size = 2, colour= "black",
-                 position = position_dodge(1.1*dodge)) +
-    stat_summary(aes(fill = conditions), fun.y = median, fatten = .1, 
-                 geom = "crossbar", width = 0.8*dodge, color = "black",
-                 position = position_dodge(1.1*dodge)) +
-    stat_pvalue_manual(stats, hide.ns = T) +
-    scale_fill_manual(name= "conditions", values = coloring) +
-    scale_color_manual(name = "conditions", values = coloring) +
-    geom_vline(xintercept=c(0.5,1.5,2.5,3.5,4.5,5.5),color="#F2F2F2")+ 
-    labs(x = NULL, y = NULL) + 
-    theme_bw() + 
-    annotation_custom(grid::linesGrob(y = c(0,0), gp = grid::gpar(lwd=3))) +
-    theme(
-      axis.line = element_blank(),
-      axis.title.x=element_blank(),
-      axis.title.y=element_blank(),
-      axis.text.x = element_text(color="black", size=fontsize),
-      axis.text.y = element_text(color="black", size=fontsize),
-      text = element_text(size=fontsize),
-      strip.background = element_blank(),
-      plot.background = element_blank(),
-      plot.margin = unit(c(0.005, .05, 0, 0), "null"),
-      panel.border = element_blank(),
-      panel.spacing = unit(c(0, 0, 0, 0), "null"),
-      panel.grid.major.x = element_blank(),
-      legend.key = element_blank(),
-      legend.key.size = unit(.5, "cm"),
-      legend.key.height = unit(1, 'cm'), 
-      legend.key.width = unit(.75, 'cm'), 
-      legend.position="none",
-      legend.direction = "horizontal",
-      legend.justification = c("center", "top"),
-      legend.title=element_blank(),
-      legend.text=element_text(size=fontsize, margin = margin(r = 5)),
-      legend.margin = margin(0, 0, 0, 0),
-      legend.spacing.x = unit(0.1, "cm"),
-      legend.spacing.y = unit(0, "cm"),
-      legend.box.just = "right",
-      legend.box.background = element_blank()
-    ) 
-}
-
-# stat.test <- df %>% 
-#   t_test(sus_score~conditions, p.adjust.method = 'bonferroni') %>%
-#   add_significance("p") %>%
-#   add_xy_position(x = "conditions")
-
-stattest <- df %>%
-  group_by(category) %>%
-  wilcox_test(time~conditions, p.adjust.method = 'holm', paired = TRUE) %>%
-  add_significance("p") %>%
-  add_xy_position(x = "category")
-
-custom_boxplot(df, stattest, dodge, fontsize, coloring) + 
-  guides(fill = guide_legend(override.aes = list(color = "transparent")))
-
-# saving the final figure
-ggsave("out/TaskCompletionTime.pdf", width = 8, height = 4, dpi = 1000)
-```
-
-
-## ANOVA and Bartlett's test
-
-```{r}
-# One-Way ANOVA
-model <- aov(time ~ task, data = completion_times)
-anova_table <- anova(model)
-F_val <- anova_table$F[1]
-df1 <- anova_table$Df[1]
-df2 <- anova_table$Df[2]
-
-# print the results
-summary(model)
-cat("F(", df1, ", ", df2, ") = ", F_val, "\n")
-```
-
-## Bartlett's test
-
-```{r}
-bartlett_test <- bartlett.test(time ~ task, data = completion_times)
-
-# Create a data frame to store the test results
-test_results <- data.frame(
-  statistic = bartlett_test$statistic,
-  p.value = bartlett_test$p.value,
-  parameter = bartlett_test$parameter
-)
-test_results
-```
-
-## Everything together
-
-```{r}
-# Create a string
-my_string <- paste(
-  "Bartlett's K-squared = ", bartlett_test$statistic, 
-  ", df=", bartlett_test$parameter, 
-  ", p-value =", bartlett_test$p.value, 
-  ", Sigf = ", bartlett_test$p.value < 0.05,
-  ", F-stats: ", capture.output(cat("F(", df1, ", ", df2, ") = ", F_val, "\n")))
-bartlett_stats <- data.frame(my_string)
-bartlett_stats
-
-```
 
 
 ## Save the resulting data frame as a CSV file
@@ -620,10 +667,6 @@ ggsave("out/ActivityVis.pdf", width = 8, height = 3, dpi = 1000)
 
 ```
 
-```{r}
-write.csv(df, file = "csv/task_df.csv", row.names = FALSE)
-
-```
 
 ```{r}
 
