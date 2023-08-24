@@ -68,6 +68,8 @@ h2 {
 
 #sideNav .navbar-nav .nav-item .nav-link.active{color: #ffffff;}
 
+.container-fluid{overflow: hidden;}
+
 .subheading {
   text-transform: uppercase;
   font-weight: 500;
@@ -176,7 +178,7 @@ section.resume-section .resume-item .resume-date {
 }
 
 a {
-  color: #FDC204;
+  color: #ffa700;
 }
 
 a:hover, a:focus, a:active {
