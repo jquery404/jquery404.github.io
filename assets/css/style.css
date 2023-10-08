@@ -167,7 +167,14 @@ section.resume-section .resume-item .resume-date {
   min-width: none;
 }
 
-
+.event-award {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  color: #dc3545;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
 
 .bg-primary {
   background-color: #FDC204 !important;
