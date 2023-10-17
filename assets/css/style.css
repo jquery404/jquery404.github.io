@@ -496,3 +496,32 @@ width: 100%;
   font-size: 0.85rem;
   letter-spacing: 0.0625rem;
 }
+
+/* research details */
+p.author-affiliation {
+  font-size: .85rem;
+  line-height: 1rem;
+}
+
+.author-boxes {
+  background: #fffae8;
+}
+
+.journal{
+  font-family: 'Ubuntu';
+  font-size: .95rem;
+}
+
+.bibtex-wrap {
+  background: #fffae8;
+}
+
+.bibtex-pre {
+  font-family: monospace;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  font-size: 1rem;
+}
