@@ -1,0 +1,38 @@
+{
+    "research": [
+      {
+        "title": "MRMAC: Mixed Reality Multi-user Asymmetric Collaboration",
+        "slug": "mrmac",
+        "slogan": "",
+        "desc": "We present MRMAC, a Mixed Reality Multi-user Asymmetric Collaboration system that allows remote users to teleport virtually into a real-world collaboration space to communicate and collaborate with local users. Our system enables telepresence for remote users by live-streaming the physical environment of local users using a 360-degree camera while blending 3D virtual assets into the mixed-reality collaboration space. Our novel client-server architecture enables asymmetric collaboration for multiple AR and VR users and incorporates avatars, view controls, as well as synchronized low-latency audio, video, and asset streaming. We evaluated our implementation with two baseline conditions: conventional 2D and standard 360-degree videoconferencing. Results show that MRMAC outperformed both baselines in inducing a sense of presence, improving task performance, usability, and overall user preference, demonstrating its potential for immersive multi-user telecollaboration.",
+        "thumbnail": "mrmac/mrmac-teaser.png",
+        "paper_thumb": "mrmac/mrmac-pdf.jpg",
+        "journal": "IEEE International Symposium on Mixed and Augmented Reality (ISMAR 2023)",
+        "authors": [
+            {
+                "name": "Faisal Zaman",
+                "url": "https://jquery404.github.io",
+                "affiliation": "CMIC, Victoria University of Wellington"
+            },
+            {
+                "name": "Craig Anslow",
+                "url": "https://homepages.ecs.vuw.ac.nz/~craig/",
+                "affiliation": "ECS, Victoria University of Wellington"
+            },
+            {
+                "name": "Andrew Chalmers",
+                "url": "https://people.wgtn.ac.nz/andrew.chalmers",
+                "affiliation": "CMIC, Victoria University of Wellington"
+            },
+            {
+                "name": "Taehyun Rhee",
+                "url": "https://people.wgtn.ac.nz/taehyun.rhee",
+                "affiliation": "CMIC, Victoria University of Wellington"
+            }
+        ],
+        "url": "https://jquery404.github.io/assets/papers/5663557.997664.pdf",
+        "tags": "vr, ar, 360-video, collaboration",
+        "bibtex": "@inproceedings{zaman2023vicarious,\ntitle={Vicarious: Context-aware Viewpoints Selection for Mixed Reality Collaboration},\nauthor={Zaman, Faisal and Anslow, Craig and Rhee, Taehyun James},\nbooktitle={Proceedings of the 29th ACM Symposium on Virtual Reality Software and Technology},\npages={1--11},\nyear={2023}}"
+      }
+    ]
+}
