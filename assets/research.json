@@ -32,7 +32,7 @@
         ],
         "url": "https://jquery404.github.io/assets/papers/5663557.997664.pdf",
         "tags": "vr, ar, 360-video, collaboration",
-        "bibtex": "@inproceedings{zaman2023vicarious,\ntitle={Vicarious: Context-aware Viewpoints Selection for Mixed Reality Collaboration},\nauthor={Zaman, Faisal and Anslow, Craig and Rhee, Taehyun James},\nbooktitle={Proceedings of the 29th ACM Symposium on Virtual Reality Software and Technology},\npages={1--11},\nyear={2023}}"
+        "bibtex": "@inproceedings{zaman2023mrmac,\ntitle={MRMAC: Mixed Reality Multi-user Asymmetric Collaboration},\nauthor={Zaman, Faisal and Anslow, Craig and Chalmers, Andrew and Rhee, Taehyun James},\nbooktitle={Proceedings of the IEEE International Symposium on Mixed and Augmented Reality (ISMAR)},\npages={1--10},\nyear={2023}}"
       }
     ]
 }
