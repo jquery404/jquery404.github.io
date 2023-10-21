@@ -30,9 +30,26 @@
                 "affiliation": "CMIC, Victoria University of Wellington"
             }
         ],
-        "url": "https://jquery404.github.io/assets/papers/5663557.997664.pdf",
+        "url": "assets/papers/5663557.997664.pdf",
+        "file_info": "PDF, 7.6mb",
         "tags": "vr, ar, 360-video, collaboration",
-        "bibtex": "@inproceedings{zaman2023mrmac,\ntitle={MRMAC: Mixed Reality Multi-user Asymmetric Collaboration},\nauthor={Zaman, Faisal and Anslow, Craig and Chalmers, Andrew and Rhee, Taehyun James},\nbooktitle={Proceedings of the IEEE International Symposium on Mixed and Augmented Reality (ISMAR)},\npages={1--10},\nyear={2023}}"
+        "bibtex": "@inproceedings{zaman2023mrmac,\ntitle={MRMAC: Mixed Reality Multi-user Asymmetric Collaboration},\nauthor={Zaman, Faisal and Anslow, Craig and Chalmers, Andrew and Rhee, Taehyun James},\nbooktitle={Proceedings of the IEEE International Symposium on Mixed and Augmented Reality (ISMAR)},\npages={1--10},\nyear={2023}}",
+        "gallery": [
+            {
+                "header": "Submission Video",
+                "type": "video",
+                "ratio": "landscape",
+                "url": "https://www.youtube.com/embed/ReZbxpT1LqE"
+            }
+        ],
+        "slides": [
+            {
+                "slide_thumb": "mrmac/mrmac_10m_slides.png",
+                "title": "10min ISMAR talk",
+                "file_info": "PDF, 1.8mb",
+                "pdf": "mrmac/ISMAR2023_MRMAC_slides.pdf"
+            }
+        ]
       }
     ]
 }
