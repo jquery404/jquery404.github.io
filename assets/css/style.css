@@ -525,3 +525,15 @@ p.author-affiliation {
   word-wrap: break-word;
   font-size: 1rem;
 }
+
+.thumbnail-box {
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.4), 9px 9px 0px rgba(0, 0, 0, .2);
+}
+
+.bd-callout {
+  margin: .25rem 1.25rem;
+  border: 1px solid #eee;
+  border-left-width: 0.5rem;
+  border-radius: .25rem;
+  border-left-color: #fec201;
+}
