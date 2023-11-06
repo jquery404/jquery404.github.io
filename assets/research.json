@@ -48,14 +48,17 @@
                 "url": "https://www.youtube.com/embed/rRfPdnijaiI"
             }
         ],
-        "slides": [
-            {
-                "slide_thumb": "mrmac/mrmac_10m_slides.png",
-                "title": "10min ISMAR talk",
-                "file_info": "PDF, 1.8mb",
-                "pdf": "mrmac/ISMAR2023_MRMAC_slides.pdf"
-            }
-        ]
+        "slides": {
+            "header": "Slides",
+            "list": [
+                {
+                    "slide_thumb": "mrmac/mrmac_10m_slides.png",
+                    "title": "10min ISMAR talk",
+                    "file_info": "PDF, 1.8mb",
+                    "pdf": "mrmac/ISMAR2023_MRMAC_slides.pdf"
+                }
+            ]
+        }
       },
       {
         "title": "Vicarious: Context-aware Viewpoints Selection for Mixed Reality Collaboration",
@@ -100,14 +103,17 @@
                 "url": "https://www.youtube.com/embed/QYR45GyM4Iw"
             }
         ],
-        "slides": [
-            {
-                "slide_thumb": "vicarious/slide_thumb.jpg",
-                "title": "15min VRST talk",
-                "file_info": "PDF, 1.2mb",
-                "pdf": "vicarious/VRST2023_Vicarious_slides.pdf"
-            }
-        ]
+        "slides": {
+            "header": "Slides",
+            "list": [
+                {
+                    "slide_thumb": "vicarious/slide_thumb.jpg",
+                    "title": "15min VRST talk",
+                    "file_info": "PDF, 1.2mb",
+                    "pdf": "vicarious/VRST2023_Vicarious_slides.pdf"
+                }
+            ]
+        }
       },
       {
         "title": "Real-time Stage Modelling and Visual Effects for Live Performances.",
@@ -157,24 +163,24 @@
                 "url": "https://www.youtube.com/embed/7dhnX0XRwew"
             }
         ],
-        "slides": [
-            
-        ],
 
-        "articles": [
-            {
-                "header": "Step Into the Virtual Arena With Real-time Stage Modeling and Visual Effects",
-                "url": "https://blog.siggraph.org/2023/10/step-into-the-virtual-arena-with-real-time-stage-modeling-and-visual-effects.html/"
-            },
-            {
-                "header": "CMIC wins Audience Choice Award at Real-Time Live! SIGGRAPH 2023",
-                "url": "https://www.wgtn.ac.nz/cmic/news/real-time-live-wins-peoples-choice-award-at-siggraph-2023"
-            },
-            {
-                "header": "University project wins award at international computer graphics conference",
-                "url": "https://www.wgtn.ac.nz/engineering/news/university-project-wins-award-at-international-computer-graphics-conference"
-            }
-        ]
+        "articles": {
+            "header": "News",
+            "list": [
+                {
+                    "header": "Step Into the Virtual Arena With Real-time Stage Modeling and Visual Effects",
+                    "url": "https://blog.siggraph.org/2023/10/step-into-the-virtual-arena-with-real-time-stage-modeling-and-visual-effects.html/"
+                },
+                {
+                    "header": "CMIC wins Audience Choice Award at Real-Time Live! SIGGRAPH 2023",
+                    "url": "https://www.wgtn.ac.nz/cmic/news/real-time-live-wins-peoples-choice-award-at-siggraph-2023"
+                },
+                {
+                    "header": "University project wins award at international computer graphics conference",
+                    "url": "https://www.wgtn.ac.nz/engineering/news/university-project-wins-award-at-international-computer-graphics-conference"
+                }
+            ]
+        }
       },
       {
         "title": "Mixed Reality Multi-user Asymmetric Telecollaboration",
