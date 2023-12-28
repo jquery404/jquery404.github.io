@@ -183,6 +183,77 @@
         }
       },
       {
+        "title": "Real-time Auditorium Modelling and Visual Effects for Live Performances.",
+        "slug": "rtauditorium",
+        "slogan": "Why work remotely when you can work Vicariously",
+        "desc": "We present a novel live platform enhancing stage performances with real-time visual effects. Our demo showcases real-time 3D modeling, rendering and blending of assets, and interaction between real and virtual performers. We demonstrate our platform's capabilities with a mixed reality performance featuring virtual and real actors engaged with in-person audiences.",
+        "thumbnail": "rtauditorium/teaser.jpg",
+        "paper_thumb": "rtstage/paper_thumb.jpg",
+        "journal": "ACM SIGGRAPH Asia Real-Time Live! (SIGGRAPH Asia 2023)",
+        "authors": [
+            {
+                "name": "Andrew Chalmers",
+                "url": "https://people.wgtn.ac.nz/andrew.chalmers",
+                "affiliation": "CMIC, Victoria University of Wellington"
+            },
+            {
+                "name": "Faisal Zaman",
+                "url": "https://jquery404.github.io",
+                "affiliation": "CMIC, Victoria University of Wellington"
+            },
+            {
+                "name": "Anna Stangnes",
+                "url": "https://www.wgtn.ac.nz/cmic",
+                "affiliation": "CMIC, Victoria University of Wellington"
+            },
+            {
+                "name": "Taehyun Rhee",
+                "url": "https://people.wgtn.ac.nz/taehyun.rhee",
+                "affiliation": "CMIC, Victoria University of Wellington"
+            }
+        ],
+        "url": "assets/papers/3588430.3597245.pdf",
+        "file_info": "PDF, 3.4mb",
+        "tags": "live visual effects, real-time performance, mixed reality, televerse",
+        "bibtex": "@incollection{chalmers2023real,\ntitle={Real-time Auditorium Modelling and Visual Effects for Live Performances},\nauthor={Chalmers, Andrew and Zaman, Faisal and Stangnes, Anna and Rhee, Taehyun},\nbooktitle={ACM SIGGRAPH ASIA   2023 Real-Time Live!},\npages={1--2},\nyear={2023}}",
+        "gallery": [
+            {
+                "header": "Presentation",
+                "type": "video",
+                "ratio": "landscape",
+                "url": "https://www.youtube.com/embed/P3kS95vIv-Q"
+            },
+            {
+                "header": "Presentation",
+                "type": "video",
+                "ratio": "landscape",
+                "url": "https://www.youtube.com/embed/_UXg0zN6JqI"
+            },
+            {
+                "type": "image",
+                "url": "rtauditorium/pic.jpg"
+            },
+            {
+                "type": "image",
+                "url": "rtauditorium/pic1.jpg"
+            },
+            {
+                "type": "image",
+                "url": "rtauditorium/pic2.jpg"
+            }
+        ],
+
+        "articles": {
+            "header": "Press Coverage",
+            "list": [
+                {
+                    "header": "SIGGRAPH Asia 2023, Day3 : Real-Time Live! and Omniverse steal the show",
+                    "url": "https://3dvf.com/en/siggraph-asia-2023-day3-real-time-live-and-omniverse-steal-the-show/"
+                }
+            ]
+        }
+      },
+      {
         "title": "Mixed Reality Multi-user Asymmetric Telecollaboration",
         "slug": "thesis",
         "slogan": "Why work remotely when you can work Vicariously",
