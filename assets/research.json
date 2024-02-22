@@ -1,6 +1,46 @@
 {
     "research": [
       {
+        "title": "Avatar360: Emulating 6-DoF Perception in 360° Panoramas through Avatar-Assisted Navigation.",
+        "slug": "avatar360",
+        "slogan": "",
+        "desc": "360° images offer panoramic views of captured environments, placing users within an egocentric perspective. While users can freely rotate their viewpoint, they don’t experience 6-DoF navigation with translational movement. In this research, we introduce Avatar360, a novel method to elicit 6-DoF perception in 360° panoramas, using avatar-assisted navigation combined with an exocentric view of the 360° panorama. We seamlessly integrate a 3D avatar into 360° panoramas, allowing users to navigate a 3D virtual landscape congruent with the 360° background. By aligning the exocentric perspective of the 360° panorama with the avatar’s movements, we replicate a sensation of 6-DoF navigation in 360° panoramas. We explore mechanisms for simultaneous avatar and viewpoint controls, as well as procedures for transitions between spatially connected 360° panoramas. A user study was conducted to assess the perception of 6-DoF navigation in 360° panoramas via a 3D avatar, evaluating users’ sense of movement, disorientation, and presence. We also gained insight into perspective view controls and transition techniques between panoramas. Statistical analysis shows avatar-assisted navigation elicits a user’s sense of movement within 360° panoramas. Our results also provide guidelines for effective view control and transition strategies in avatar-assisted 360° navigation.",
+        "thumbnail": "avatar360/avatar360.png",
+        "paper_thumb": "avatar360/paper_thumb.jpg",
+        "journal": "IEEE Conference on Virtual Reality and 3D User Interfaces (IEEE VR 2024)",
+        "authors": [
+            {
+                "name": "Andrew Chalmers",
+                "url": "https://people.wgtn.ac.nz/andrew.chalmers",
+                "affiliation": "CMIC, Victoria University of Wellington"
+            },
+            {
+                "name": "Faisal Zaman",
+                "url": "https://jquery404.github.io",
+                "affiliation": "CMIC, Victoria University of Wellington"
+            },
+            {
+                "name": "Taehyun Rhee",
+                "url": "https://people.wgtn.ac.nz/taehyun.rhee",
+                "affiliation": "CMIC, Victoria University of Wellington"
+            }
+        ],
+        "url": "assets/papers/2344.98885.777.pdf",
+        "file_info": "PDF, 306kb",
+        "tags": "vr, ar, 360-video, collaboration",
+        "bibtex": "@inproceedings{zaman2023mrmac,\ntitle={MRMAC: Mixed Reality Multi-user Asymmetric Collaboration},\nauthor={Zaman, Faisal and Anslow, Craig and Chalmers, Andrew and Rhee, Taehyun James},\nbooktitle={Proceedings of the IEEE International Symposium on Mixed and Augmented Reality (ISMAR)},\npages={1--10},\nyear={2023}}",
+        "gallery": [
+            {
+                "header": "Submission Video",
+                "type": "video",
+                "ratio": "landscape",
+                "url": "https://www.youtube.com/embed/ucvvg1_1eR0"
+            }
+            
+        ]
+        
+      },
+      {
         "title": "MRMAC: Mixed Reality Multi-user Asymmetric Collaboration",
         "slug": "mrmac",
         "slogan": "",
