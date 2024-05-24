@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0;url=./index.html">
+  <script>
+    // This script will redirect the user to the index.html while preserving the path
+    (function() {
+      var pathname = window.location.pathname;
+      var search = window.location.search;
+      var hash = window.location.hash;
+      var newUrl = './index.html?pathname=' + encodeURIComponent(pathname + search + hash);
+      window.location.replace(newUrl);
+    })();
+  </script>
+  <title>Page Not Found</title>
+</head>
+<body></body>
+</html>

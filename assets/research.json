@@ -14,6 +14,7 @@
               "project": "/r/thesis",
               "pdf": "/r/avatar360.pdf",
               "abstract": "Creating a seamless mixed reality (MR) collaborative environment to facilitate natural collaboration between multiple remote and local users within a shared physical space is challenging. Existing collaboration technologies, such as 2D and 3D videoconferencing, as well as virtual reality (VR) solutions, fall short of delivering a fully immersive, real-time, and cohesive collaborative experience for multiple users. Remote users often feel disconnected from the shared physical space. This thesis aims to overcome these limitations by developing a multi-user immersive MR system. The primary objective is to enable remote users to perceive the physical environment and collaborate effectively with local users in real-time. The contributions made in this thesis have effectively addressed critical challenges in multi-user asymmetric collaboration and viewpoint selection, thereby enabling more immersive, inclusive, and effective collaborative experiences. As MR continues to evolve, this work serves as a strong foundation upon which future innovations can be built.",
+              "slides": "/assets/papers/thesis/thesis_slides.pdf",
               "bibtex": "@inproceedings{zaman2024mixed,\n  title={Mixed Reality Multi-user Asymmetric Telecollaboration.},\n  author={Zaman, Faisal},\n  school={Victoria Univerisy of Wellington},\n  year={2024}\n}",
               "video": "/r/thesis"
             }
@@ -540,6 +541,12 @@
           "slides": {
               "header": "Slides",
               "list": [
+                  {
+                      "slide_thumb": "thesis/thesis_slides.jpg",
+                      "title": "15min Thesis talk",
+                      "file_info": "PDF, 4.6mb",
+                      "pdf": "thesis/thesis_slides.pdf"
+                  },
                   {
                       "slide_thumb": "mrmac/mrmac_10m_slides.png",
                       "title": "10min ISMAR talk",
