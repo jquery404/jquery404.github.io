@@ -523,6 +523,12 @@
                   "header": "Presentation",
                   "type": "video",
                   "ratio": "landscape",
+                  "url": "https://www.youtube.com/embed/YRA6Aitr4Ek"
+              },
+              {
+                  "header": "Presentation",
+                  "type": "video",
+                  "ratio": "landscape",
                   "url": "https://www.youtube.com/embed/rRfPdnijaiI"
               },
               {
@@ -544,7 +550,7 @@
                   {
                       "slide_thumb": "thesis/thesis_slides.jpg",
                       "title": "15min Thesis talk",
-                      "file_info": "PDF, 4.6mb",
+                      "file_info": "PDF, 3.7mb",
                       "pdf": "thesis/thesis_slides.pdf"
                   },
                   {
