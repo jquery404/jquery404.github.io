@@ -1,0 +1,10 @@
+{
+  "path": "assets/kb/browser_kb_v1.json",
+  "bytes": 640248,
+  "recordCount": 69,
+  "vectorCount": 69,
+  "dimensions": 384,
+  "configId": "hybrid_minilm_keyword_v1",
+  "generatedAt": "2026-09-05T20:59:13.458Z",
+  "modelDownloadNote": "Query embeddings use Xenova/all-MiniLM-L6-v2 quantized ONNX (~22MB) via @xenova/transformers in the browser (CDN/HF cache). Document vectors ship in this artifact."
+}
